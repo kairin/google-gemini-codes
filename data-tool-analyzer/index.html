@@ -122,13 +122,13 @@
                 </div>
                 <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 items-center text-center">
                     <div class="bg-white p-6 rounded-xl border">
-                        <div class="text-4xl mb-3">📂</div>
+                        <div class="text-4xl mb-3 text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg></div>
                         <h3 class="font-semibold text-lg">Messy Raw Files</h3>
                         <p class="text-sm text-gray-500">Your data starts as CSVs, JSON, or other files with errors, missing values, and inconsistent formats.</p>
                     </div>
                     <div class="text-5xl font-bold text-[#D4A373] transform rotate-90 md:rotate-0">→</div>
                      <div class="bg-white p-6 rounded-xl border">
-                        <div class="text-4xl mb-3">✨</div>
+                        <div class="text-4xl mb-3 text-yellow-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div>
                         <h3 class="font-semibold text-lg">Actionable Insights</h3>
                         <p class="text-sm text-gray-500">The goal is clean, structured data ready for analysis, visualization, and decision-making.</p>
                     </div>
@@ -240,10 +240,19 @@ print(summary)</code></pre>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const icons = {
+                duckdb: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+                planetscale: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+                postgresql: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`,
+                mongodb: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path><path d="M15 12c0 3.31-2.69 6-6 6"></path></svg>`,
+                cloud: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>`,
+                sqlite: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`,
+            };
+
             const toolData = [
                 {
                     name: "DuckDB",
-                    icon: "🦆",
+                    icon: icons.duckdb,
                     tagline: "The In-Process Analytical Database",
                     verdict: "The best choice for initial raw data processing. Its ability to directly query local files with SQL, combined with high performance and zero setup overhead, makes it the ideal 'workbench' for data exploration and transformation.",
                     strengths: ["Direct raw file querying (SQL on CSV/Parquet)", "High local analytical performance", "Extremely easy setup (pip install)", "Strong Python/Pandas integration"],
@@ -252,7 +261,7 @@ print(summary)</code></pre>
                 },
                 {
                     name: "PlanetScale",
-                    icon: "🪐",
+                    icon: icons.planetscale,
                     tagline: "The Infinitely Scalable MySQL Database",
                     verdict: "An exceptional platform for building and scaling applications that need a transactional database. Its strengths lie in providing a managed, serverless, and highly reliable backend for applications, not in initial raw data processing.",
                     strengths: ["Massive horizontal scaling (Vitess)", "Excellent developer experience (branching)", "Non-blocking schema migrations", "Serverless and fully managed"],
@@ -261,7 +270,7 @@ print(summary)</code></pre>
                 },
                 {
                     name: "PostgreSQL",
-                    icon: "🐘",
+                    icon: icons.postgresql,
                     tagline: "The World's Most Advanced Open Source RDBMS",
                     verdict: "A powerful, reliable, and feature-rich database that serves as an excellent system of record or analytical database after data has been structured. Requires an explicit data loading step, making it less direct for raw file exploration than DuckDB.",
                     strengths: ["Strong ACID compliance and reliability", "Highly extensible (FDWs, custom types)", "Excellent SQL standard compliance", "Mature and robust ecosystem"],
@@ -270,7 +279,7 @@ print(summary)</code></pre>
                 },
                 {
                     name: "MongoDB",
-                    icon: "🍃",
+                    icon: icons.mongodb,
                     tagline: "The Developer Data Platform",
                     verdict: "A great choice for applications with evolving or semi-structured data needs. Its flexible document model simplifies development but is a different paradigm from the SQL-based, tabular analysis that is often the goal for raw CSV/Parquet files.",
                     strengths: ["Flexible schema for evolving data", "Designed for horizontal scaling", "Developer-friendly document model (JSON/BSON)", "Good for a wide variety of use cases"],
@@ -279,7 +288,7 @@ print(summary)</code></pre>
                 },
                 {
                     name: "BigQuery / Snowflake",
-                    icon: "☁️",
+                    icon: icons.cloud,
                     tagline: "Cloud Data Warehouses for Massive Scale",
                     verdict: "The ultimate powerhouses for large-scale analytics once data is prepared and centralized. They are overkill and inefficient for the initial, local exploration of raw files, but represent a powerful destination for data processed by tools like DuckDB.",
                     strengths: ["Massively parallel processing (MPP)", "Separation of storage and compute", "Elastic scalability for huge datasets", "Managed service for enterprise analytics"],
@@ -288,7 +297,7 @@ print(summary)</code></pre>
                 },
                 {
                     name: "SQLite",
-                    icon: "🪶",
+                    icon: icons.sqlite,
                     tagline: "The Embedded Transactional Database",
                     verdict: "Ubiquitous and simple, but designed for transactional (OLTP) workloads, not complex analytics. Its row-oriented nature makes it slow for the kind of analytical scans DuckDB excels at.",
                     strengths: ["Simple, ubiquitous, zero-config", "Reliable for embedded application data", "Single file, highly portable", "Good for low-concurrency writes/reads"],
@@ -326,7 +335,7 @@ print(summary)</code></pre>
                     card.innerHTML = `
                         <div class="flex-grow">
                             <div class="flex items-center mb-4">
-                                <div class="text-4xl mr-4">${tool.icon}</div>
+                                <div class="text-gray-500 mr-4">${tool.icon}</div>
                                 <div>
                                     <h3 class="font-bold text-xl">${tool.name}</h3>
                                     <p class="text-sm text-gray-500">${tool.tagline}</p>
