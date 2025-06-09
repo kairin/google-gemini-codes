@@ -1,1 +1,80 @@
-a
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step-by-Step Guide to Power Query</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.8; margin: 0; padding: 2em; background-color: #f8f9fa; color: #343a40; }
+        .container { max-width: 900px; margin: 2rem auto; background: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+        h1, h2, h3 { color: #0056b3; }
+        h1 { font-size: 2.4em; border-bottom: 3px solid #007bff; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.8em; margin-top: 3rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem; }
+        a { color: #007bff; text-decoration: none; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+        .step { margin-bottom: 2.5rem; }
+        .step-number { font-weight: 700; color: #0056b3; font-size: 1.2em; display: block; margin-bottom: 0.5rem; }
+        .infographic { background: #e9f7ff; border-left: 5px solid #007bff; padding: 1.5rem; border-radius: 8px; margin: 2rem 0; }
+        .infographic-title { font-weight: bold; margin-bottom: 1rem; display: block; }
+        .workflow-diagram { display: flex; justify-content: space-around; align-items: center; text-align: center; }
+        .workflow-item { display: flex; flex-direction: column; align-items: center; }
+        .workflow-icon { width: 60px; height: 60px; background: #007bff; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .workflow-arrow { font-size: 24px; color: #007bff; }
+        .ui-element { background-color: #e9ecef; color: #495057; padding: 0.2rem 0.6rem; border-radius: 4px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="GraphRAG-Power-Query-vs-DuckDB.html">← Back to Comparison</a>
+        <h1>Step-by-Step Guide to Power Query</h1>
+        <p><strong>Scenario:</strong> You are a business analyst with monthly sales data stored in separate Excel files. Your goal is to combine them into one master table for a report.</p>
+
+        <div class="infographic">
+            <span class="infographic-title">Power Query Workflow</span>
+            <div class="workflow-diagram">
+                <div class="workflow-item">
+                    <div class="workflow-icon">1</div>
+                    <span>Connect</span>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-item">
+                    <div class="workflow-icon">2</div>
+                    <span>Transform</span>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-item">
+                    <div class="workflow-icon">3</div>
+                    <span>Load</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>Phase 1: Connect to Data</h2>
+        <div class="step">
+            <span class="step-number">Step 1: Get Data from Folder</span>
+            <p>Instead of connecting to each file individually, connect to the entire folder.</p>
+            <p>In Excel or Power BI, navigate to <span class="ui-element">Data > Get Data > From File > From Folder</span>. This tells Power Query to treat all files in that folder as a single source.</p>
+        </div>
+
+        <h2>Phase 2: Transform and Clean</h2>
+        <div class="step">
+            <span class="step-number">Step 2: Combine Files</span>
+            <p>Power Query will show you a list of the files. Click the <span class="ui-element">Combine & Transform Data</span> button. Power Query will automatically analyze the files and suggest how to combine them based on sheet names (e.g., "Sheet1").</p>
+        </div>
+        <div class="step">
+            <span class="step-number">Step 3: Use the Query Editor</span>
+            <p>The Power Query Editor window will open. This is your visual workbench. On the right, you'll see a list of <span class="ui-element">Applied Steps</span>. Every change you make is recorded here.</p>
+            <ul>
+                <li><strong>Remove unwanted columns:</strong> Right-click the header of a column you don't need and select "Remove".</li>
+                <li><strong>Correct data types:</strong> Click the icon in the column header (e.g., ABC, 123) to change text to numbers, dates, etc. This is crucial for calculations.</li>
+            </ul>
+        </div>
+        
+        <h2>Phase 3: Load the Result</h2>
+        <div class="step">
+            <span class="step-number">Step 4: Close & Load</span>
+            <p>Once your data looks clean, click the <span class="ui-element">Close & Load</span> button in the top-left. Power Query will execute all your applied steps and load the final, combined table into an Excel sheet or a Power BI data model, ready for analysis.</p>
+        </div>
+    </div>
+</body>
+</html>
