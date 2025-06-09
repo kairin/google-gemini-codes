@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigating the Data Maze: An Interactive Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Chart.js Annotation Plugin CDN for source labels on bars -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8; /* Calm Analytics: Light background */
+            color: #383736; /* Calm Analytics: Dark text */
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+            font-weight: 500; /* Slightly bolder for nav */
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #D4A373; /* Calm Analytics: Accent color */
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .tool-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            display: flex; /* Ensure flex for consistent height */
+            flex-direction: column;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tag {
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 600; /* Bolder tag text */
+        }
+        .filter-btn {
+            @apply px-5 py-2 text-sm font-medium rounded-full border border-gray-300 hover:bg-gray-100 transition-colors duration-200;
+        }
+        .filter-btn.active {
+            background-color: #4A7C59; /* Calm Analytics: Primary color */
+            color: #FFFFFF;
+            font-weight: 600;
+            border-color: #4A7C59;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px; /* Constrain max width for desktop */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Default height */
+        }
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+        .source-btn {
+            background-color: #e5e7eb;
+            color: #4b5563;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .source-btn:hover {
+            background-color: #d1d5db;
+        }
+        #source-modal {
+            transition: opacity 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+        }
+        .code-block {
+            position: relative;
+            background-color: #2D3748; /* Darker background for code */
+            color: #E2E8F0; /* Light text for code */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            overflow-x: auto; /* Allow horizontal scrolling for code */
+        }
+        .code-block pre {
+            margin: 0;
+        }
+        .code-block .copy-btn {
+            background-color: #4A5568; /* Darker gray for copy button */
+            transition: background-color 0.2s, transform 0.2s;
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .code-block .copy-btn:hover {
+            background-color: #2D3748;
+            transform: translateY(-1px);
+        }
+        .modal-content {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 1rem; /* More rounded modal */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header with sticky navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="#hero" class="text-xl font-bold text-[#4A7C59] hover:text-[#3e664b] transition-colors">Data Tool Navigator</a>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#challenge" class="nav-link px-3 py-2 rounded-md text-gray-700 hover:text-[#4A7C59]">The Challenge</a>
+                            <a href="#comparison" class="nav-link px-3 py-2 rounded-md text-gray-700 hover:text-[#4A7C59]">Tool Comparison</a>
+                            <a href="#showdown" class="nav-link px-3 py-2 rounded-md text-gray-700 hover:text-[#4A7C59]">The Showdown</a>
+                            <a href="#getting-started" class="nav-link px-3 py-2 rounded-md text-gray-700 hover:text-[#4A7C59]">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <a href="https://github.com/kairin/google-gemini-codes/tree/data-tool-analyzer" target="_blank" rel="noopener noreferrer" class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></svg>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-gray-900">Your Data Journey Starts Here.</h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-gray-700">You have raw data. You need insights. But where do you begin? This guide cuts through the noise of complex database systems to give you a clear starting point.</p>
+                <div class="mt-8 bg-[#F8F5F2] p-8 rounded-2xl max-w-4xl mx-auto border border-gray-200 shadow-lg">
+                    <h2 class="text-2xl font-bold text-[#4A7C59] mb-4">The Core Recommendation: Start with <strong>DuckDB</strong></h2>
+                    <p class="text-gray-700 leading-relaxed">For the critical first step—transforming raw, local files (like CSVs or Parquet) into something usable—<strong>DuckDB</strong> is the standout solution. It's a powerful, fast, and easy-to-use analytical database that runs directly on your machine without any server setup. It lets you query your raw files instantly with SQL, making it the perfect "workbench" for initial data exploration and cleaning.</p>
+                    <a href="#comparison" class="mt-6 inline-block bg-[#4A7C59] text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-[#3e664b] transition-all duration-300 ease-in-out transform hover:-translate-y-1">Explore the Comparison</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Challenge Section -->
+        <section id="challenge" class="py-20 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">The "Data Genesis" Problem</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-700">Raw data is rarely clean or structured. Before you can analyze it, you have to wrestle with inconsistencies, formatting issues, and the sheer overhead of setting up complex tools. The right tool for this first mile can make all the difference.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 items-center text-center">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="text-4xl mb-3 text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg></div>
+                        <h3 class="font-semibold text-lg text-gray-800">Messy Raw Files</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">Your data starts as CSVs, JSON, or other files with errors, missing values, and inconsistent formats.</p>
+                    </div>
+                    <div class="text-5xl font-bold text-[#D4A373] transform rotate-90 md:rotate-0">→</div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="text-4xl mb-3 text-[#4A7C59]"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div>
+                        <h3 class="font-semibold text-lg text-gray-800">Actionable Insights</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">The goal is clean, structured data ready for analysis, visualization, and decision-making.</p>
+                    </div>
+                </div>
+                <p class="mt-8 text-center text-gray-700 max-w-2xl mx-auto leading-relaxed">Many powerful databases are designed for the final state, not the messy journey. They expect clean data, creating a frustrating gap for analysts. We need a tool that bridges this gap.</p>
+            </div>
+        </section>
+
+        <!-- Tool Comparison Section -->
+        <section id="comparison" class="py-20 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">An Interactive Comparison of Data Tools</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-700">Different tools solve different problems. Use the filters below to find the right tool for your specific task, from initial analysis to scaling a global application.</p>
+                </div>
+
+                <div id="filter-container" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10">
+                </div>
+
+                <div id="tools-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Feature Showdown Section -->
+        <section id="showdown" class="py-20 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Feature Showdown with Evidence</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-700">How do these tools stack up on key features? Select a feature to see a visual comparison. Click the "Source" button on any bar to see the data and rationale behind its rating.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-2xl border border-gray-200 shadow-lg">
+                    <div class="flex justify-center mb-4">
+                        <select id="feature-selector" class="block w-full max-w-xs p-2 border border-gray-300 rounded-md shadow-sm focus:ring-[#4A7C59] focus:border-[#4A7C59] focus:outline-none">
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="showdown-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Started Section -->
+        <section id="getting-started" class="py-20 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Get Started with <strong>DuckDB</strong></h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-700">Ready to try the recommended tool? Here are some practical Python code snippets to get you started on your data journey in minutes.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <div class="bg-[#F8F5F2] rounded-xl p-6 border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-gray-800">1. Installation & Connection</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-4 leading-relaxed">It's as simple as a pip install. You can connect to a temporary in-memory database or a persistent file.</p>
+                        <div class="code-block">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code># Install DuckDB
+pip install duckdb
+
+import duckdb
+import pandas as pd
+
+# Connect to a persistent file-based database
+con = duckdb.connect(database='my_analysis.duckdb')</code></pre>
+                        </div>
+                    </div>
+                    <div class="bg-[#F8F5F2] rounded-xl p-6 border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-gray-800">2. Query Raw Files Directly</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-4 leading-relaxed">This is <strong>DuckDB</strong>'s superpower. Use SQL to query CSV or Parquet files without any import steps.</p>
+                        <div class="code-block">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code># Query a CSV and get a Pandas DataFrame
+df = con.execute("""
+    SELECT * FROM read_csv_auto('path/to/your/data.csv') 
+    LIMIT 10
+""").df()
+
+print(df)</code></pre>
+                        </div>
+                    </div>
+                    <div class="bg-[#F8F5F2] rounded-xl p-6 border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-gray-800">3. Transform Data and Create New Tables</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-4 leading-relaxed">Use the full power of SQL to clean, aggregate, and reshape your data, saving the results to a new table.</p>
+                        <div class="code-block">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code># Create a summary table from a raw Parquet file
+con.execute("""
+    CREATE OR REPLACE TABLE sales_summary AS
+    SELECT
+        product_category,
+        SUM(sale_amount) AS total_sales
+    FROM read_parquet('path/to/raw_sales.parquet')
+    GROUP BY product_category;
+""")
+
+# Query your new, clean table
+summary = con.table('sales_summary').df()
+print(summary)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#F8F5F2] border-t border-gray-200 py-6">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+            <p>Interactive application designed from the report "Navigating the Data Maze".</p>
+        </div>
+    </footer>
+    
+    <!-- Source Modal -->
+    <div id="source-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+        <div class="modal-content relative bg-white p-6 w-full max-w-2xl rounded-xl shadow-xl">
+            <div class="mt-3 text-center">
+                <h3 class="text-xl leading-6 font-medium text-gray-900 mb-4" id="modal-title">Source Information</h3>
+                <div class="px-2 py-3 text-left space-y-3">
+                    <p class="text-sm text-gray-800 font-semibold">Claim:</p>
+                    <p class="text-sm text-gray-600 mb-4" id="modal-claim"></p>
+                    <p class="text-sm text-gray-800 font-semibold">Rationale:</p>
+                    <p class="text-sm text-gray-600 mb-4" id="modal-rationale"></p>
+                    <p class="text-sm text-gray-800 font-semibold">Source Document:</p>
+                    <a href="#" id="modal-link" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:underline break-all block"></a>
+                </div>
+                <div class="mt-4 px-4 py-3">
+                    <button id="modal-close-btn" class="px-6 py-2 bg-gray-800 text-white font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Data and Sources ---
+            const sources = {
+                'duckdb_setup': {
+                    claim: "DuckDB has 'Excellent' setup complexity (lower is better).",
+                    rationale: "Rated 'Excellent' because setup involves a single package manager command (`pip install duckdb`) with no separate server installation, configuration files, or user management required. The database runs embedded within the host process.",
+                    link: "https://duckdb.org/docs/api/python/overview.html"
+                },
+                'sqlite_setup': {
+                    claim: "SQLite has 'Excellent' setup complexity (lower is better).",
+                    rationale: "Rated 'Excellent' because it's typically included with Python's standard library. Like DuckDB, it requires no separate server and runs from a single file, making it zero-configuration.",
+                    link: "https://docs.python.org/3/library/sqlite3.html"
+                },
+                'pg_setup': {
+                    claim: "PostgreSQL has 'Fair' setup complexity.",
+                    rationale: "Rated 'Fair' as it requires installing a separate server application, initializing a database cluster, managing user roles, and configuring network access. This is significantly more complex than embedded databases.",
+                    link: "https://www.postgresql.org/docs/current/server-start.html"
+                },
+                'planetscale_setup': {
+                    claim: "PlanetScale has 'Good' setup complexity for a cloud database.",
+                    rationale: "Rated 'Good' for a cloud-based solution. While it involves cloud account setup and database creation, PlanetScale abstracts away much of the traditional MySQL operational complexity, offering a more streamlined setup compared to self-hosting or other managed services.",
+                    link: "https://planetscale.com/docs/getting-started/quickstart"
+                },
+                'mongodb_setup': {
+                    claim: "MongoDB has 'Fair' setup complexity.",
+                    rationale: "Rated 'Fair' as it can be simple with MongoDB Atlas (managed service) but requires more manual setup for self-hosting (installation, configuration, replica sets, sharding). It's more involved than embedded databases but often simpler than traditional relational databases for basic use.",
+                    link: "https://docs.mongodb.com/manual/installation/"
+                },
+                'cloud_dw_setup': {
+                    claim: "BigQuery / Snowflake have 'Fair' setup complexity.",
+                    rationale: "Rated 'Fair' for setup. While they are fully managed, initial setup involves cloud project configuration, data loading pipelines, and understanding cloud-specific security and billing models, which can be more complex than local databases.",
+                    link: "https://cloud.google.com/bigquery/docs/quickstarts/quickstart-web-ui" // Example for BigQuery
+                },
+                'duckdb_raw_query': {
+                    claim: "DuckDB is 'Excellent' for Ideal for Raw File Querying.",
+                    rationale: "DuckDB is specifically designed to query Parquet, CSV, and JSON files directly using SQL without an import/ingestion step, making it ideal for this task.",
+                    link: "https://duckdb.org/docs/data/overview.html"
+                },
+                'pg_raw_query': {
+                    claim: "PostgreSQL is 'Poor' for Ideal for Raw File Querying.",
+                    rationale: "PostgreSQL requires data to be explicitly loaded into a pre-defined table schema using commands like `COPY` or extensions like `file_fdw`. It cannot query raw files directly out-of-the-box in the same way as DuckDB.",
+                    link: "https://www.postgresql.org/docs/current/sql-copy.html"
+                },
+                'sqlite_raw_query': {
+                    claim: "SQLite is 'Poor' for Ideal for Raw File Querying.",
+                    rationale: "SQLite's `.import` command can load CSV files, but it's an ingestion step into a table, not a direct query on the external file. It lacks the rich, direct querying capabilities of DuckDB for various file formats.",
+                    link: "https://www.sqlite.org/cli.html#importing_files"
+                },
+                'planetscale_raw_query': {
+                    claim: "PlanetScale is 'Poor' for Ideal for Raw File Querying.",
+                    rationale: "As a managed MySQL-compatible transactional database, PlanetScale requires data to be explicitly imported into tables using standard SQL `INSERT` statements or bulk import tools. It does not support direct querying of local raw files.",
+                    link: "https://planetscale.com/docs/concepts/importing-data"
+                },
+                'mongodb_raw_query': {
+                    claim: "MongoDB is 'Poor' for Ideal for Raw File Querying.",
+                    rationale: "MongoDB handles JSON/BSON documents natively, but querying local raw files (like CSVs or external JSON files not in its collections) directly with its query language is not its primary design. Data typically needs to be imported or ingested first.",
+                    link: "https://www.mongodb.com/docs/database-tools/mongoimport/"
+                },
+                'cloud_dw_raw_query': {
+                    claim: "BigQuery / Snowflake are 'Poor' for Ideal for Raw File Querying at the local stage.",
+                    rationale: "While these cloud data warehouses can query external files in cloud storage (e.g., S3, GCS), they are not designed for direct querying of *local* raw files on an individual's machine without prior upload to cloud storage, which adds an extra step not present with DuckDB.",
+                    link: "https://cloud.google.com/bigquery/docs/external-data-sources" // Example for BigQuery external data
+                },
+                'duckdb_perf': {
+                    claim: "DuckDB has 'Excellent' Local Analytical Performance.",
+                    rationale: "DuckDB is an OLAP database that uses a columnar-vectorized query execution engine, which is optimized for complex analytical queries (aggregations, joins) and significantly outperforms row-oriented databases like SQLite for these tasks.",
+                    link: "https://duckdb.org/docs/why_duckdb/main.html"
+                },
+                'sqlite_perf': {
+                    claim: "SQLite has 'Poor' Local Analytical Performance.",
+                    rationale: "SQLite is an OLTP database with a row-oriented storage engine, which is inefficient for the full-column scans typical in analytical queries. It is designed for transactional workloads, not complex analytics.",
+                    link: "https://www.sqlite.org/whentouse.html"
+                },
+                'pg_analytical_perf': {
+                    claim: "PostgreSQL has 'Good' Local Analytical Performance when configured for OLAP workloads.",
+                    rationale: "While primarily an OLTP database, PostgreSQL can achieve good analytical performance with proper indexing, partitioning, and extensions (like Citus or TimescaleDB) to support columnar storage or parallel processing. However, out-of-the-box it's not optimized for this as DuckDB.",
+                    link: "https://www.postgresql.org/docs/current/perf-optimize.html"
+                },
+                'planetscale_perf': {
+                    claim: "PlanetScale has 'Fair' Local Analytical Performance.",
+                    rationale: "PlanetScale (MySQL-compatible) is an OLTP database, optimized for transactional queries. While it can handle analytical queries, it's not designed for deep, complex analytical workloads locally like DuckDB or cloud data warehouses. Performance for large analytical queries would be limited by its transactional architecture.",
+                    link: "https://planetscale.com/docs/concepts/vitess"
+                },
+                'mongodb_perf': {
+                    claim: "MongoDB has 'Fair' Local Analytical Performance.",
+                    rationale: "MongoDB's aggregation framework is powerful, but its document-oriented storage can be less efficient than columnar stores for certain analytical operations (e.g., specific column aggregations over large datasets). Its performance is better suited for operational analytics on documents.",
+                    link: "https://www.mongodb.com/docs/manual/core/aggregation-pipeline/"
+                },
+                'cloud_dw_perf': {
+                    claim: "BigQuery / Snowflake have 'Excellent' Local Analytical Performance (assuming data is in cloud).",
+                    rationale: "These are purpose-built for massive-scale analytical processing with highly optimized columnar storage and MPP (Massively Parallel Processing) architectures. They offer unparalleled performance for complex analytical queries on huge datasets once data is in the cloud.",
+                    link: "https://cloud.google.com/bigquery/docs/best-practices-performance-overview" // Example for BigQuery
+                },
+                'duckdb_scalability': {
+                    claim: "DuckDB has 'Poor' Application Scalability.",
+                    rationale: "As an in-process, embedded database, DuckDB does not inherently scale for multi-user, concurrent web application backends or distributed systems. It's designed for single-user analytical workloads on a local machine.",
+                    link: "https://duckdb.org/docs/why_duckdb/main.html"
+                },
+                'sqlite_scalability': {
+                    claim: "SQLite has 'Poor' Application Scalability.",
+                    rationale: "SQLite excels in embedded single-user scenarios but struggles with high concurrency (many concurrent writes) and distributed environments. Its file-based nature limits its use as a scalable application backend.",
+                    link: "https://www.sqlite.org/whentouse.html"
+                },
+                'pg_scalability': {
+                    claim: "PostgreSQL has 'Very Good' Application Scalability.",
+                    rationale: "PostgreSQL is highly scalable, supporting replication, sharding (with extensions or tools), and connection pooling. It can serve as a robust backend for large applications with proper setup and scaling strategies.",
+                    link: "https://www.postgresql.org/docs/current/high-availability.html"
+                },
+                'planetscale_scalability': {
+                    claim: "PlanetScale has 'Excellent' Application Scalability.",
+                    rationale: "Built on Vitess, PlanetScale offers horizontal sharding, non-blocking schema changes, and automatic scaling capabilities that make it ideal for handling high-traffic, rapidly growing web applications without downtime.",
+                    link: "https://planetscale.com/docs/concepts/vitess"
+                },
+                'mongodb_scalability': {
+                    claim: "MongoDB has 'Very Good' Application Scalability.",
+                    rationale: "MongoDB is designed for horizontal scaling via sharding and replication, making it well-suited for high-throughput, large-scale applications with flexible data needs. Its document model facilitates distributed data management.",
+                    link: "https://www.mongodb.com/docs/manual/sharding/"
+                },
+                'cloud_dw_scalability': {
+                    claim: "BigQuery / Snowflake have 'Excellent' Application Scalability for analytics.",
+                    rationale: "These services are built to handle petabytes of data and thousands of concurrent analytical queries, providing virtually limitless scalability for data warehousing and business intelligence needs.",
+                    link: "https://cloud.google.com/bigquery/docs/capacity-reservations" // Example for BigQuery
+                }
+            };
+
+            const icons = {
+                duckdb: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+                planetscale: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+                postgresql: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`,
+                mongodb: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path><path d="M15 12c0 3.31-2.69 6-6 6"></path></svg>`,
+                cloud: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>`,
+                sqlite: `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`,
+            };
+
+            const toolData = [
+                {
+                    name: "DuckDB",
+                    icon: icons.duckdb,
+                    tagline: "The In-Process Analytical Database",
+                    verdict: "The best choice for initial raw data processing. Its ability to directly query local files with SQL, combined with high performance and zero setup overhead, makes it the ideal 'workbench' for data exploration and transformation.",
+                    strengths: ["Direct raw file querying (SQL on CSV/Parquet)", "High local analytical performance", "Extremely easy setup (pip install)", "Strong Python/Pandas integration"],
+                    bestFor: "Initial Raw Data Analysis",
+                    tags: ["Initial Raw Data Analysis", "Local Development", "Analytical", "Embedded"]
+                },
+                {
+                    name: "PlanetScale",
+                    icon: icons.planetscale,
+                    tagline: "The Infinitely Scalable MySQL Database",
+                    verdict: "An exceptional platform for building and scaling applications that need a transactional database. Its strengths lie in providing a managed, serverless, and highly reliable backend for applications, not in initial raw data processing.",
+                    strengths: ["Massive horizontal scaling (Vitess)", "Excellent developer experience (branching)", "Non-blocking schema migrations", "Serverless and fully managed"],
+                    bestFor: "Scaling a Web App",
+                    tags: ["Scaling a Web App", "Application Backend", "Transactional", "Cloud-managed"]
+                },
+                {
+                    name: "PostgreSQL",
+                    icon: icons.postgresql,
+                    tagline: "The World's Most Advanced Open Source RDBMS",
+                    verdict: "A powerful, reliable, and feature-rich database that serves as an excellent system of record or analytical database after data has been structured. Requires an explicit data loading step, making it less direct for raw file exploration than DuckDB.",
+                    strengths: ["Strong ACID compliance and reliability", "Highly extensible (FDWs, custom types)", "Excellent SQL standard compliance", "Mature and robust ecosystem", "Handles large datasets"],
+                    bestFor: "Reliable System of Record",
+                    tags: ["Application Backend", "Reliable System of Record", "Server-based", "Transactional", "Analytical"]
+                },
+                {
+                    name: "MongoDB",
+                    icon: icons.mongodb,
+                    tagline: "The Developer Data Platform",
+                    verdict: "A great choice for applications with evolving or semi-structured data needs. Its flexible document model simplifies development but is a different paradigm from the SQL-based, tabular analysis that is often the goal for raw CSV/Parquet files.",
+                    strengths: ["Flexible schema for evolving data", "Designed for horizontal scaling", "Developer-friendly document model (JSON/BSON)", "Good for a wide variety of use cases"],
+                    bestFor: "Flexible Data Models",
+                    tags: ["Flexible Data Models", "Application Backend", "NoSQL", "Cloud-managed"]
+                },
+                {
+                    name: "BigQuery / Snowflake",
+                    icon: icons.cloud,
+                    tagline: "Cloud Data Warehouses for Massive Scale",
+                    verdict: "The ultimate powerhouses for large-scale analytics once data is prepared and centralized. They are overkill and inefficient for the initial, local exploration of raw files, but represent a powerful destination for data processed by tools like DuckDB.",
+                    strengths: ["Massively parallel processing (MPP)", "Separation of storage and compute", "Elastic scalability for huge datasets", "Managed service for enterprise analytics"],
+                    bestFor: "Large-Scale Warehousing",
+                    tags: ["Large-Scale Warehousing", "Cloud-managed", "Analytical"]
+                },
+                {
+                    name: "SQLite",
+                    icon: icons.sqlite,
+                    tagline: "The Embedded Transactional Database",
+                    verdict: "Ubiquitous and simple, but designed for transactional (OLTP) workloads, not complex analytics. Its row-oriented nature makes it slow for the kind of analytical scans DuckDB excels at.",
+                    strengths: ["Simple, ubiquitous, zero-config", "Reliable for embedded application data", "Single file, highly portable", "Good for low-concurrency writes/reads"],
+                    bestFor: "Simple Embedded Storage",
+                    tags: ["Local Development", "Reliable System of Record", "Transactional", "Embedded"]
+                }
+            ];
+
+            // --- Modal Handling ---
+            const modal = document.getElementById('source-modal');
+            const modalClaim = document.getElementById('modal-claim');
+            const modalRationale = document.getElementById('modal-rationale');
+            const modalLink = document.getElementById('modal-link');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+
+            const openModal = (sourceKey) => {
+                const source = sources[sourceKey];
+                if (!source) return;
+                modalClaim.textContent = source.claim;
+                modalRationale.textContent = source.rationale;
+                modalLink.href = source.link;
+                modalLink.textContent = source.link;
+                modal.classList.remove('hidden');
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+            };
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // --- App Logic ---
+            const toolsGrid = document.getElementById('tools-grid');
+            const filterContainer = document.getElementById('filter-container');
+
+            const allTags = new Set(toolData.flatMap(tool => tool.tags));
+            const filterButtons = ['All', ...Array.from(allTags).sort()]; // Sort tags alphabetically
+            
+            filterButtons.forEach(tag => {
+                const button = document.createElement('button');
+                button.textContent = tag;
+                button.className = 'filter-btn';
+                if (tag === 'All') {
+                    button.classList.add('active');
+                }
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderTools(tag);
+                });
+                filterContainer.appendChild(button);
+            });
+
+            function renderTools(tag) {
+                const filteredData = tag === 'All' ? toolData : toolData.filter(tool => tool.tags.includes(tag));
+                toolsGrid.innerHTML = '';
+                if (filteredData.length === 0) {
+                    toolsGrid.innerHTML = '<p class="col-span-full text-center text-gray-600 text-lg">No tools match the selected filter.</p>';
+                    return;
+                }
+                filteredData.forEach(tool => {
+                    const card = document.createElement('div');
+                    card.className = 'tool-card bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between'; // Added justify-between
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="text-gray-500 mr-4 flex-shrink-0">${tool.icon}</div>
+                                <div>
+                                    <h3 class="font-bold text-xl text-gray-900">${tool.name}</h3>
+                                    <p class="text-sm text-gray-500">${tool.tagline}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 mb-4 text-base leading-relaxed">${tool.verdict}</p>
+                            <h4 class="font-semibold text-sm mb-2 text-gray-800">Key Strengths:</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1 text-gray-600 mb-4 pl-4">
+                                ${tool.strengths.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="mt-auto"> <!-- Pushes tag to the bottom -->
+                            <span class="tag inline-block bg-[#D4A373]/20 text-[#D4A373] font-semibold px-3 py-1 text-xs rounded-full">${tool.bestFor}</span>
+                        </div>
+                    `;
+                    toolsGrid.appendChild(card);
+                });
+            }
+
+            renderTools('All'); // Initial render
+
+            const chartData = {
+                'Setup Complexity (Lower is Better)': {
+                    'DuckDB': { value: 5, source: 'duckdb_setup' },
+                    'PlanetScale': { value: 2, source: 'planetscale_setup' },
+                    'PostgreSQL': { value: 2, source: 'pg_setup' },
+                    'MongoDB': { value: 2, source: 'mongodb_setup' },
+                    'BigQuery / Snowflake': { value: 2, source: 'cloud_dw_setup' },
+                    'SQLite': { value: 5, source: 'sqlite_setup' }
+                },
+                'Ideal for Raw File Querying': {
+                    'DuckDB': { value: 5, source: 'duckdb_raw_query' },
+                    'PlanetScale': { value: 1, source: 'planetscale_raw_query' },
+                    'PostgreSQL': { value: 1, source: 'pg_raw_query' },
+                    'MongoDB': { value: 1, source: 'mongodb_raw_query' },
+                    'BigQuery / Snowflake': { value: 1, source: 'cloud_dw_raw_query' },
+                    'SQLite': { value: 1, source: 'sqlite_raw_query' }
+                },
+                'Local Analytical Performance': {
+                    'DuckDB': { value: 5, source: 'duckdb_perf' },
+                    'PlanetScale': { value: 1, source: 'planetscale_perf' }, // PlanetScale is OLTP, not strong for local analytics
+                    'PostgreSQL': { value: 3, source: 'pg_analytical_perf' },
+                    'MongoDB': { value: 2, source: 'mongodb_perf' }, // MongoDB has aggregation but not columnar OLAP strengths
+                    'BigQuery / Snowflake': { value: 5, source: 'cloud_dw_perf' }, // Excellent for analytics once data is in cloud
+                    'SQLite': { value: 1, source: 'sqlite_perf' }
+                },
+                'Application Scalability': {
+                    'DuckDB': { value: 1, source: 'duckdb_scalability' },
+                    'PlanetScale': { value: 5, source: 'planetscale_scalability' },
+                    'PostgreSQL': { value: 4, source: 'pg_scalability' },
+                    'MongoDB': { value: 4, source: 'mongodb_scalability' },
+                    'BigQuery / Snowflake': { value: 5, source: 'cloud_dw_scalability' },
+                    'SQLite': { value: 1, source: 'sqlite_scalability' }
+                }
+            };
+
+            const featureSelector = document.getElementById('feature-selector');
+            Object.keys(chartData).forEach(feature => {
+                const option = document.createElement('option');
+                option.value = feature;
+                option.textContent = feature;
+                featureSelector.appendChild(option);
+            });
+
+            const ctx = document.getElementById('showdown-chart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '',
+                        data: [],
+                        backgroundColor: '#4A7C59', /* Primary green */
+                        borderColor: '#3e664b',
+                        borderWidth: 1,
+                        sourceKeys: [] // To store source keys for each bar
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const elementIndex = elements[0].index;
+                            const sourceKey = myChart.data.datasets[0].sourceKeys[elementIndex];
+                            openModal(sourceKey);
+                        }
+                    },
+                    onHover: (event, chartElement) => {
+                        event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                callback: function(value) {
+                                    const labels = ['N/A', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+                                    return labels[value] || '';
+                                }
+                            },
+                            grid: {
+                                color: '#e5e7eb' /* Light grid lines */
+                            }
+                        },
+                        y: {
+                            ticks: { autoSkip: false, color: '#383736' }, /* Ensure Y-axis labels are readable */
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }, // Custom "Source" button replaces default tooltip
+                        annotation: {
+                            annotations: {
+                                // Dynamic annotations (Source button) will be drawn manually in afterDraw
+                            }
+                        }
+                    },
+                    // Custom plugin to draw "Source" button on bars
+                    afterDraw: (chart) => {
+                        const ctx = chart.ctx;
+                        chart.data.datasets.forEach((dataset, i) => {
+                            const meta = chart.getDatasetMeta(i);
+                            if (!meta.hidden) {
+                                meta.data.forEach((bar, index) => {
+                                    const dataValue = dataset.data[index];
+                                    if (dataValue > 0) { // Only draw if there's a bar
+                                        const yPos = bar.y;
+                                        // Position the button text slightly to the right of the bar's end
+                                        const xPos = bar.x + 10;
+                                        
+                                        ctx.fillStyle = '#6b7280'; // Text color for the "Source" label
+                                        ctx.font = '12px Inter';
+                                        ctx.textAlign = 'left';
+                                        ctx.textBaseline = 'middle';
+                                        
+                                        const buttonText = 'Source';
+                                        const textMetrics = ctx.measureText(buttonText);
+                                        const buttonWidth = textMetrics.width + 16; // Text width + padding
+                                        const buttonHeight = 22; // Height of the button area
+
+                                        // Draw button background
+                                        ctx.fillStyle = '#e5e7eb'; /* Light gray button background */
+                                        ctx.beginPath();
+                                        // Use rect with rounded corners if roundRect is not widely supported or causes issues
+                                        // For current purposes, roundRect is generally fine in modern browsers
+                                        ctx.roundRect(xPos, yPos - buttonHeight / 2, buttonWidth, buttonHeight, 5); // Smaller border-radius for the button
+                                        ctx.fill();
+
+                                        // Draw button text
+                                        ctx.fillStyle = '#4b5563'; /* Darker gray text */
+                                        ctx.fillText(buttonText, xPos + 8, yPos);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+
+            function updateChart(feature) {
+                const data = chartData[feature];
+                // Sort data by value for consistent display (lowest to highest rating)
+                const sortedData = Object.entries(data).sort((a, b) => a[1].value - b[1].value);
+                
+                myChart.data.labels = sortedData.map(item => item[0]);
+                const chartValues = sortedData.map(item => item[1].value);
+                myChart.data.datasets[0].data = chartValues;
+                myChart.data.datasets[0].sourceKeys = sortedData.map(item => item[1].source); // Update sourceKeys for the chart
+                myChart.data.datasets[0].label = feature;
+                myChart.update();
+            }
+
+            featureSelector.addEventListener('change', (e) => {
+                updateChart(e.target.value);
+            });
+
+            // Initial chart render
+            updateChart(featureSelector.value);
+
+            // Copy to clipboard functionality
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const code = button.nextElementSibling.textContent;
+                    // Use modern Clipboard API if available, fallback to execCommand
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(code).then(() => {
+                            button.textContent = 'Copied!';
+                            setTimeout(() => {
+                                button.textContent = 'Copy';
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Failed to copy text using Clipboard API:', err);
+                            // Fallback if Clipboard API fails
+                            try {
+                                const textarea = document.createElement('textarea');
+                                textarea.value = code;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                document.execCommand('copy');
+                                document.body.removeChild(textarea);
+                                button.textContent = 'Copied!';
+                                setTimeout(() => {
+                                    button.textContent = 'Copy';
+                                }, 2000);
+                            } catch (fallbackErr) {
+                                console.error('Failed to copy text using fallback:', fallbackErr);
+                                alert('Failed to copy code. Please copy manually.');
+                            }
+                        });
+                    } else {
+                        // Fallback for older browsers
+                        try {
+                            const textarea = document.createElement('textarea');
+                            textarea.value = code;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                            button.textContent = 'Copied!';
+                            setTimeout(() => {
+                                button.textContent = 'Copy';
+                            }, 2000);
+                        } catch (fallbackErr) {
+                            console.error('Failed to copy text using fallback:', fallbackErr);
+                            alert('Failed to copy code. Please copy manually.');
+                        }
+                    }
+                });
+            });
+
+            // Active navigation link on scroll
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main > section');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4 // Adjust threshold as needed
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
