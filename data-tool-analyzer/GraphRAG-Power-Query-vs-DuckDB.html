@@ -5,153 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Dive: Power Query vs. DuckDB vs. GraphRAG</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 2em;
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
-        .container {
-            max-width: 960px;
-            margin: 2rem auto;
-            background: #fff;
-            padding: 2rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.07);
-        }
-        .header h1 {
-            color: #0056b3;
-            font-size: 2.2em;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .header .subtitle {
-            font-size: 1.1em;
-            color: #6c757d;
-            margin-bottom: 2rem;
-        }
-        .tab-container {
-            margin-bottom: 2.5rem;
-        }
-        .tab-buttons {
-            display: flex;
-            border-bottom: 2px solid #dee2e6;
-        }
-        .tab-button {
-            padding: 1rem 1.5rem;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #6c757d;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .tab-button.active {
-            color: #0056b3;
-        }
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: #007bff;
-        }
-        .tab-content {
-            display: none;
-            padding: 1.5rem 0.5rem;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .tab-content h3 {
-            font-size: 1.5rem;
-            color: #0056b3;
-            margin-top: 0;
-        }
-        .tab-content ul {
-            list-style-type: '✓ ';
-            padding-left: 1.5rem;
-        }
-        .tab-content li {
-            margin-bottom: 0.75rem;
-        }
-        .section-title {
-            font-size: 1.8em;
-            color: #0056b3;
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .scenario-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .scenario-card {
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-left: 5px solid #007bff;
-            padding: 1.5rem;
-            border-radius: 8px;
-        }
-        .scenario-card h4 {
-            margin-top: 0;
-            font-size: 1.2em;
-        }
-        .scenario-card .tool-pick {
-            font-weight: bold;
-            color: #0056b3;
-        }
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        .matrix-table th, .matrix-table td {
-            border: 1px solid #dee2e6;
-            padding: 1rem;
-            text-align: left;
-        }
-        .matrix-table th {
-            background-color: #e9ecef;
-            font-weight: 600;
-        }
-        footer {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #dee2e6;
-            font-size: 0.9em;
-            color: #6c757d;
-        }
-        footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        a.home-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a.home-link:hover {
-            text-decoration: underline;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; margin: 0; padding: 2em; background-color: #f8f9fa; color: #343a40; }
+        .container { max-width: 960px; margin: 2rem auto; background: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+        .header h1 { color: #0056b3; font-size: 2.2em; border-bottom: 3px solid #007bff; padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
+        .header .subtitle { font-size: 1.1em; color: #6c757d; margin-bottom: 2rem; }
+        .tab-container { margin-bottom: 2.5rem; }
+        .tab-buttons { display: flex; border-bottom: 2px solid #dee2e6; }
+        .tab-button { padding: 1rem 1.5rem; border: none; background: none; cursor: pointer; font-size: 1.1em; font-weight: 600; color: #6c757d; position: relative; transition: color 0.3s ease; }
+        .tab-button.active { color: #0056b3; }
+        .tab-button.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background-color: #007bff; }
+        .tab-content { display: none; padding: 1.5rem 0.5rem; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { display: block; }
+        .tab-content h3 { font-size: 1.5rem; color: #0056b3; margin-top: 0; }
+        .tab-content ul { list-style-type: '✓ '; padding-left: 1.5rem; }
+        .tab-content li { margin-bottom: 0.75rem; }
+        /* --- NEW STYLE FOR GUIDE LINK --- */
+        .guide-link { display: inline-block; margin-top: 1rem; padding: 0.6rem 1.2rem; background-color: #007bff; color: #fff; font-weight: bold; border-radius: 6px; text-decoration: none; transition: background-color 0.2s ease; }
+        .guide-link:hover { background-color: #0056b3; text-decoration: none; }
+        .section-title { font-size: 1.8em; color: #0056b3; margin-top: 3rem; margin-bottom: 1.5rem; text-align: center; }
+        .scenario-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .scenario-card { background-color: #f8f9fa; border: 1px solid #e9ecef; border-left: 5px solid #007bff; padding: 1.5rem; border-radius: 8px; }
+        .scenario-card h4 { margin-top: 0; font-size: 1.2em; }
+        .scenario-card .tool-pick { font-weight: bold; color: #0056b3; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .matrix-table th, .matrix-table td { border: 1px solid #dee2e6; padding: 1rem; text-align: left; }
+        .matrix-table th { background-color: #e9ecef; font-weight: 600; }
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #dee2e6; font-size: 0.9em; color: #6c757d; }
+        footer a { color: #007bff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        a.home-link { display: inline-block; margin-bottom: 2rem; color: #007bff; text-decoration: none; font-weight: bold; }
+        a.home-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -173,87 +57,47 @@
 
             <div id="powerquery" class="tab-content active">
                 <h3>The Business Analyst's Toolkit</h3>
-                <p>Power Query is the data transformation and preparation engine in Power BI and Excel. It's designed for users who need to connect to, clean, and reshape data without writing complex code.</p>
-                <ul>
-                    <li><strong>Best For:</strong> Business Intelligence (BI) and self-service data prep.</li>
-                    <li><strong>Key Strengths:</strong> User-friendly graphical interface, hundreds of data connectors, and the powerful M language for custom transformations.</li>
-                    <li><strong>Limitations:</strong> Not designed for terabyte-scale data processing on a single machine or complex analytical queries that require pure SQL. Performance can be a bottleneck with very large datasets.</li>
-                </ul>
+                <p>Power Query is the data transformation engine in Power BI and Excel, designed for users to connect, clean, and reshape data without writing complex code.</p>
+                <ul><li><strong>Best For:</strong> Business Intelligence (BI) and self-service data prep.</li></ul>
+                <a href="power-query-guide.html" class="guide-link">View Step-by-Step Guide →</a>
             </div>
 
             <div id="duckdb" class="tab-content">
                 <h3>The Developer's Analytical Engine</h3>
-                <p>DuckDB is an in-process analytical database (OLAP) system. It's incredibly fast and designed to run complex SQL queries directly on data files like Parquet or CSV, making it a favorite for data scientists and developers.</p>
-                <ul>
-                    <li><strong>Best For:</strong> Interactive data analysis in Python or R, fast analytics on local files.</li>
-                    <li><strong>Key Strengths:</strong> Blazing speed for analytical queries, zero-dependency installation, direct querying on modern data formats, and a rich SQL dialect.</li>
-                    <li><strong>Limitations:</strong> It is not a transactional database (OLTP) like MySQL or a replacement for GUI-based ETL tools for non-technical users.</li>
-                </ul>
+                <p>DuckDB is an in-process analytical database (OLAP) system. It's incredibly fast and designed to run complex SQL queries directly on data files like Parquet or CSV.</p>
+                <ul><li><strong>Best For:</strong> Interactive data analysis in Python or R, fast analytics on local files.</li></ul>
+                <a href="duckdb-guide.html" class="guide-link">View Step-by-Step Guide →</a>
             </div>
 
             <div id="graphrag" class="tab-content">
                 <h3>The Knowledge Explorer's Framework</h3>
-                <p>GraphRAG is not a single tool, but a methodology (Retrieval-Augmented Generation) that uses a Knowledge Graph to provide context to Large Language Models (LLMs). It answers questions by reasoning over interconnected data.</p>
-                <ul>
-                    <li><strong>Best For:</strong> Complex question-answering on private/unstructured data.</li>
-                    <li><strong>Key Strengths:</strong> Unlocks insights from relationships in data, reduces LLM "hallucinations" by grounding answers in facts, and understands nuanced, multi-hop queries.</li>
-                    <li><strong>Limitations:</strong> It is a complex framework to set up, requiring expertise in data modeling, graph databases, and LLMs. Not suitable for simple data aggregation or transformation.</li>
-                </ul>
+                <p>GraphRAG is a methodology using a Knowledge Graph to provide context to LLMs. It answers questions by reasoning over interconnected data.</p>
+                <ul><li><strong>Best For:</strong> Complex question-answering on private/unstructured data.</li></ul>
+                <a href="graphrag-guide.html" class="guide-link">View Conceptual Guide →</a>
             </div>
         </section>
 
         <!-- Scenario Showdown -->
         <h2 class="section-title">Scenario-Based Showdown</h2>
         <section class="scenario-grid">
-            <div class="scenario-card">
-                <h4>Scenario: "I need to combine three messy Excel files and a SharePoint list for a weekly sales dashboard."</h4>
-                <p><span class="tool-pick">Winner: Power Query.</span> Its graphical interface and connectors are built precisely for this business-focused ETL task.</p>
-            </div>
-            <div class="scenario-card">
-                <h4>Scenario: "I have a 50GB Parquet file and need to run fast, complex SQL aggregations on my laptop for a data science project."</h4>
-                <p><span class="tool-pick">Winner: DuckDB.</span> Its performance for in-process analytical queries on Parquet is unmatched and requires no server setup.</p>
-            </div>
-            <div class="scenario-card">
-                <h4>Scenario: "I need to build a chatbot that can answer 'Which engineers worked on projects with the 'Alpha' codename that also involved the legal team?'"</h4>
-                <p><span class="tool-pick">Winner: GraphRAG.</span> This question requires understanding relationships between people, projects, and teams—a perfect use case for a knowledge graph.</p>
-            </div>
+            <div class="scenario-card"><h4>Scenario: "I need to combine three messy Excel files and a SharePoint list for a weekly sales dashboard."</h4><p><span class="tool-pick">Winner: Power Query.</span></p></div>
+            <div class="scenario-card"><h4>Scenario: "I have a 50GB Parquet file and need to run fast, complex SQL aggregations on my laptop."</h4><p><span class="tool-pick">Winner: DuckDB.</span></p></div>
+            <div class="scenario-card"><h4>Scenario: "I need to build a chatbot that can answer 'Which engineers worked on projects with the 'Alpha' codename?'"</h4><p><span class="tool-pick">Winner: GraphRAG.</span></p></div>
         </section>
 
         <!-- Decision Matrix -->
         <h2 class="section-title">At-a-Glance Decision Matrix</h2>
         <table class="matrix-table">
-            <thead>
-                <tr>
-                    <th>Factor</th>
-                    <th>Power Query</th>
-                    <th>DuckDB</th>
-                    <th>GraphRAG</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Factor</th><th>Power Query</th><th>DuckDB</th><th>GraphRAG</th></tr></thead>
             <tbody>
-                <tr>
-                    <td><strong>Primary Use Case</strong></td>
-                    <td>BI Data Preparation & ETL</td>
-                    <td>Fast Analytical SQL Queries</td>
-                    <td>Contextual Q&A on private data</td>
-                </tr>
-                <tr>
-                    <td><strong>Ideal User</strong></td>
-                    <td>Business Analyst</td>
-                    <td>Data Scientist / Developer</td>
-                    <td>AI/ML Engineer / Knowledge Manager</td>
-                </tr>
-                <tr>
-                    <td><strong>Core Technology</strong></td>
-                    <td>M-Language / Mashup Engine</td>
-                    <td>In-Process Columnar OLAP</td>
-                    <td>LLM + Knowledge Graph</td>
-                </tr>
+                <tr><td><strong>Primary Use Case</strong></td><td>BI Data Preparation & ETL</td><td>Fast Analytical SQL Queries</td><td>Contextual Q&A on private data</td></tr>
+                <tr><td><strong>Ideal User</strong></td><td>Business Analyst</td><td>Data Scientist / Developer</td><td>AI/ML Engineer / Knowledge Manager</td></tr>
+                <tr><td><strong>Core Technology</strong></td><td>M-Language / Mashup Engine</td><td>In-Process Columnar OLAP</td><td>LLM + Knowledge Graph</td></tr>
             </tbody>
         </table>
 
         <footer>
-            <h3>Further Reading & Official Resources</h3>
+             <h3>Further Reading & Official Resources</h3>
             <p>This analysis was compiled using information from the following authoritative sources:</p>
             <ul>
                 <li><a href="https://docs.microsoft.com/en-us/power-query/" target="_blank" rel="noopener noreferrer">Microsoft Power Query Documentation</a></li>
@@ -265,23 +109,11 @@
 
     <script>
         function showTab(tabId) {
-            // Hide all tab content
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Deactivate all tab buttons
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // Show the selected tab content and activate the button
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
         }
     </script>
-
 </body>
 </html>
