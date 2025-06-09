@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step-by-Step Guide to DuckDB</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.8; margin: 0; padding: 2em; background-color: #f8f9fa; color: #343a40; }
+        .container { max-width: 900px; margin: 2rem auto; background: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+        h1, h2, h3 { color: #2c6e49; }
+        h1 { font-size: 2.4em; border-bottom: 3px solid #4c956c; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.8em; margin-top: 3rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem; }
+        a { color: #4c956c; text-decoration: none; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+        .infographic { text-align: center; background: #f0f7f3; border: 1px solid #d3e5db; padding: 1.5rem; border-radius: 8px; margin: 2rem 0; }
+        .infographic-title { font-weight: bold; margin-bottom: 1.5rem; display: block; font-size: 1.2em; }
+        code { background-color: #e9ecef; color: #212529; padding: 0.2em 0.4em; border-radius: 4px; font-family: 'Courier New', Courier, monospace; }
+        pre code { display: block; padding: 1rem; overflow-x: auto; }
+        .step-icon { float: left; font-size: 48px; color: #4c956c; margin-right: 1rem; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="GraphRAG-Power-Query-vs-DuckDB.html">← Back to Comparison</a>
+        <h1>Step-by-Step Guide to DuckDB</h1>
+        <p><strong>Scenario:</strong> You are a data scientist with a large (5 GB) Parquet file of user events. You need to quickly calculate monthly active users without loading the entire file into memory with Pandas.</p>
 
+        <div class="infographic">
+            <span class="infographic-title">DuckDB In-Process Workflow</span>
+            <svg width="80%" height="100" viewBox="0 0 400 60">
+                <rect x="0" y="10" width="100" height="40" rx="5" fill="#f0f7f3" stroke="#4c956c"/>
+                <text x="50" y="35" text-anchor="middle">Python Script</text>
+                <path d="M110 30 L140 30" stroke="#4c956c" stroke-width="2" marker-end="url(#arrow)"/>
+                <circle cx="175" cy="30" r="30" fill="#4c956c"/>
+                <text x="175" y="35" text-anchor="middle" fill="#fff">DuckDB</text>
+                <path d="M215 30 L245 30" stroke="#4c956c" stroke-width="2" marker-end="url(#arrow)"/>
+                <rect x="255" y="10" width="140" height="40" rx="5" fill="#f0f7f3" stroke="#4c956c"/>
+                <text x="325" y="35" text-anchor="middle">Pandas DataFrame</text>
+                <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4c956c"/></marker></defs>
+            </svg>
+        </div>
+
+        <h2>Step 1: Installation</h2>
+        <p><span class="step-icon">①</span>First, install DuckDB and Pandas. DuckDB requires zero dependencies, making installation trivial.</p>
+        <pre><code>pip install duckdb pandas pyarrow</code></pre>
+        
+        <h2>Step 2: Connect and Query</h2>
+        <p><span class="step-icon">②</span>In your Python script, import DuckDB and connect. A "connection" here means creating an in-memory database instance. Then, you can write a SQL query as if the Parquet file were a database table.</p>
+        <pre><code>import duckdb
+import pandas as pd
+
+# Connect to an in-memory DuckDB database
+con = duckdb.connect(database=':memory:', read_only=False)
+
+# Directly query the Parquet file and fetch the result as a Pandas DataFrame
+# DuckDB handles reading the file and executing the query efficiently.
+query = """
+SELECT
+    strftime(event_timestamp, '%Y-%m') AS month,
+    COUNT(DISTINCT user_id) AS monthly_active_users
+FROM 'path/to/your/large_events_file.parquet'
+GROUP BY month
+ORDER BY month;
+"""
+df_results = con.execute(query).fetchdf()
+
+# Close the connection
+con.close()
+</code></pre>
+
+        <h2>Step 3: Analyze the Result</h2>
+        <p><span class="step-icon">③</span>The result, `df_results`, is now a small, aggregated Pandas DataFrame. You performed the heavy lifting inside DuckDB's fast engine and only pulled the lightweight summary into your Python environment.</p>
+        <pre><code># Now you can work with the much smaller, aggregated DataFrame
+print(df_results)
+
+# Example output:
+#       month  monthly_active_users
+# 0   2024-01                150234
+# 1   2024-02                162845
+# 2   2024-03                175932
+</code></pre>
+    </div>
+</body>
+</html>
