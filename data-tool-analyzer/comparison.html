@@ -6,220 +6,89 @@
     <title>Data Tool Navigator - Tool Comparison</title>
     <style>
         :root {
-            --bg-color: #1E1E1E;
-            --text-color: #F0F0F0;
-            --primary-accent: #00B8D4; /* Cyan/Teal */
-            --secondary-accent: #FFC107; /* Amber */
-            --card-bg: #2a2a2a;
-            --border-color: #444;
-            --rating-excellent: #2E7D32;
-            --rating-vgood: #558B2F;
-            --rating-good: #F9A825;
-            --rating-fair: #EF6C00;
-            --rating-poor: #B71C1C;
+            --bg-color: #1a1a1a; --text-color: #F0F0F0; --primary-accent: #00B8D4;
+            --secondary-accent: #FFC107; --card-bg: #262626; --border-color: #444;
+            --rating-excellent: #2E7D32; --rating-vgood: #558B2F; --rating-good: #F9A825;
+            --rating-fair: #EF6C00; --rating-poor: #B71C1C; --duckdb-glow: 0 0 12px #00B8D4;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border-color); }
         nav h1 { margin: 0; font-size: 1.5em; }
-        nav .nav-links { display: flex; gap: 20px; }
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+        nav .nav-links { display: flex; flex-wrap: wrap; gap: 20px; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s; }
         nav a:hover, nav a.active { color: var(--primary-accent); }
-        nav a.github-link {
-            border: 1px solid var(--primary-accent);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        nav a.github-link:hover {
-            background-color: var(--primary-accent);
-            color: var(--bg-color);
-        }
+        nav a.github-link { border: 1px solid var(--primary-accent); padding: 5px 10px; border-radius: 5px; }
+        nav a.github-link:hover { background-color: var(--primary-accent); color: var(--bg-color); }
 
-        /* --- Sections --- */
-        .section {
-            padding: 60px 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
+        .section { padding: 60px 20px; border-bottom: 1px solid var(--border-color); }
         .section:last-child { border-bottom: none; }
         h2 { font-size: 2.2em; color: var(--primary-accent); }
 
-        /* --- Interactive Filters --- */
-        .filter-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        .filter-buttons button {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            border: 1px solid var(--primary-accent);
-            background: none;
-            color: var(--primary-accent);
-            border-radius: 20px;
-            transition: all 0.3s;
-        }
-        .filter-buttons button:hover, .filter-buttons button.active {
-            background-color: var(--primary-accent);
-            color: var(--bg-color);
-        }
+        .filter-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+        .filter-buttons button { padding: 10px 20px; font-size: 1em; cursor: pointer; border: 1px solid var(--primary-accent); background: none; color: var(--primary-accent); border-radius: 20px; transition: all 0.3s; }
+        .filter-buttons button:hover, .filter-buttons button.active { background-color: var(--primary-accent); color: var(--bg-color); transform: translateY(-2px); }
 
-        /* --- Recommendation Cards --- */
-        #use-case-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 3px solid;
-        }
+        #use-case-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; transition: all 0.5s ease; }
+        .card { background-color: var(--card-bg); padding: 20px; border-radius: 8px; border-left: 3px solid; transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .card.duckdb-glow { box-shadow: var(--duckdb-glow); }
         .card.recommended { border-color: #2E7D32; }
         .card.consider { border-color: #F9A825; }
         .card.not-ideal { border-color: #B71C1C; }
         .card h3 { margin-top: 0; }
 
-        /* --- Feature Showdown --- */
-        .showdown-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .showdown-controls select {
-            padding: 10px;
-            font-size: 1em;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-        }
+        .showdown-controls { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .showdown-controls select { padding: 10px; font-size: 1em; background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px; }
         
         #feature-chart { width: 100%; border-collapse: collapse; }
         #feature-chart th, #feature-chart td { padding: 12px; text-align: left; }
         #feature-chart th { color: var(--primary-accent); }
         .bar-cell { width: 70%; }
         .bar-container { display: flex; align-items: center; }
-        .bar { height: 24px; color: var(--bg-color); padding: 0 8px; white-space: nowrap; }
-        .bar.excellent { background-color: var(--rating-excellent); }
-        .bar.vgood { background-color: var(--rating-vgood); }
-        .bar.good { background-color: var(--rating-good); }
-        .bar.fair { background-color: var(--rating-fair); }
-        .bar.poor { background-color: var(--rating-poor); }
-        .info-icon {
-            margin-left: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--primary-accent);
-            border: 1px solid var(--primary-accent);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s;
-        }
+        .bar { height: 24px; color: var(--bg-color); padding: 0 8px; white-space: nowrap; transition: width 0.5s ease-in-out; }
+        .bar.excellent { background-color: var(--rating-excellent); } .bar.vgood { background-color: var(--rating-vgood); }
+        .bar.good { background-color: var(--rating-good); } .bar.fair { background-color: var(--rating-fair); } .bar.poor { background-color: var(--rating-poor); }
+        .bar-row.duckdb-glow .bar { box-shadow: var(--duckdb-glow); }
+        .info-icon { margin-left: 10px; cursor: pointer; font-weight: bold; color: var(--primary-accent); border: 1px solid var(--primary-accent); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; transition: all 0.3s; }
         .info-icon:hover { background-color: var(--primary-accent); color: var(--bg-color); }
         
-        /* --- Modal --- */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        .modal-content {
-            background-color: var(--card-bg);
-            margin: 15% auto;
-            padding: 30px;
-            border: 1px solid var(--border-color);
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
-            position: relative;
-        }
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close-button:hover, .close-button:focus { color: var(--text-color); }
-        #modal-claim { font-style: italic; }
-        #modal-rationale { margin-top: 15px; }
-        #modal-source a { color: var(--primary-accent); }
-        
-        /* --- Footer --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.7); animation: fadeIn 0.3s; }
+        .modal-content { background-color: var(--card-bg); margin: 15% auto; padding: 30px; border: 1px solid var(--border-color); width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
+        .close-button { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        #modal-claim { font-style: italic; } #modal-rationale { margin-top: 15px; } #modal-source a { color: var(--primary-accent); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         footer { text-align: center; padding: 30px; font-size: 0.9em; color: #aaa; }
         footer a { color: var(--primary-accent); text-decoration: none; }
     </style>
 </head>
 <body>
-
     <nav>
         <h1>Data Tool Navigator</h1>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="#interactive-comparison" class="active">Tool Comparison</a>
+            <a href="rag.html">Deep Dive: RAG</a>
             <a href="https://github.com/kairin/google-gemini-codes/tree/data-tool-analyzer" target="_blank" class="github-link">View on GitHub</a>
         </div>
     </nav>
 
     <div class="container">
-
         <section id="interactive-comparison" class="section">
             <h2>Interactive Comparison of Data Tools</h2>
-            <p>Different tools solve different problems. Select your primary task to see our top recommendations.</p>
+            <p>Select your primary task to see our top recommendations.</p>
             <div id="use-case-filters" class="filter-buttons">
-                <button class="active" data-usecase="exploration">Initial Data Exploration & Cleaning</button>
-                <button data-usecase="webapp">Small Web App Backend</button>
+                <button class="active" data-usecase="exploration">Initial Data Exploration</button>
+                <button data-usecase="webapp">Web App Backend</button>
                 <button data-usecase="warehouse">Large-Scale Analytics</button>
             </div>
-            <div id="use-case-results">
-                <!-- Results will be dynamically inserted here -->
-            </div>
+            <div id="use-case-results"></div>
         </section>
 
         <section id="feature-showdown" class="section">
             <h2>Feature Showdown with Evidence</h2>
-            <p>How do these tools stack up? Select a feature to see a detailed comparison. Click the ⓘ icon on any bar to see the evidence.</p>
+            <p>Select a feature to see a detailed comparison. Click the ⓘ icon for the rationale.</p>
             <div class="showdown-controls">
                 <label for="feature-select">Compare by feature:</label>
                 <select id="feature-select">
@@ -229,16 +98,8 @@
                     <option value="cost">Cost Model</option>
                 </select>
             </div>
-            <table id="feature-chart">
-                <!-- Chart will be dynamically inserted here -->
-            </table>
+            <table id="feature-chart"></table>
         </section>
-        
-        <section class="section">
-            <h3>Tools Reviewed</h3>
-            <p>This analysis compares the following tools: DuckDB, SQLite, PostgreSQL, ClickHouse, and Snowflake (as a representative for cloud data warehouses).</p>
-        </section>
-
     </div>
 
     <footer>
@@ -246,7 +107,6 @@
         <p>Source research available in this <a href="https://g.co/gemini/share/ed74ed0e6356" target="_blank">Gemini conversation</a>. Project on <a href="https://github.com/kairin/google-gemini-codes/tree/data-tool-analyzer" target="_blank">GitHub</a>.</p>
     </footer>
 
-    <!-- Source Information Modal -->
     <div id="source-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">×</span>
@@ -259,139 +119,52 @@
     </div>
 
     <script>
-        // --- DATA STORE ---
-        const useCaseData = {
-            exploration: [
-                { name: 'DuckDB', tier: 'recommended', text: 'The ideal workbench for local data analysis. Runs anywhere, reads files directly, and speaks SQL.' },
-                { name: 'SQLite', tier: 'recommended', text: 'A lightweight, reliable database for general-purpose local data storage. Excellent for application data.' },
-                { name: 'PostgreSQL', tier: 'consider', text: 'More setup required, but offers a full-featured transactional environment for complex needs.' },
-                { name: 'Snowflake', tier: 'not-ideal', text: 'Cloud-native warehouse. Overkill and costly for local file analysis.' }
-            ],
-            webapp: [
-                { name: 'PostgreSQL', tier: 'recommended', text: 'The gold standard for a reliable, full-featured transactional database for web applications.' },
-                { name: 'SQLite', tier: 'recommended', text: 'Excellent for low-to-medium traffic sites or applications where simplicity is key.' },
-                { name: 'DuckDB', tier: 'not-ideal', text: 'Not designed for transactional workloads (frequent writes/updates) needed by most web apps.' },
-                { name: 'ClickHouse', tier: 'not-ideal', text: 'An analytical database, not suitable for the transactional patterns of a web backend.' }
-            ],
-            warehouse: [
-                { name: 'Snowflake', tier: 'recommended', text: 'A leading cloud data warehouse built for massive-scale analytics with decoupled storage and compute.' },
-                { name: 'ClickHouse', tier: 'recommended', text: 'Extremely fast open-source OLAP database, ideal for real-time analytics dashboards.' },
-                { name: 'DuckDB', tier: 'consider', text: 'Excellent for medium-scale analytics (up to ~100s of GBs) on a single powerful machine.' },
-                { name: 'PostgreSQL', tier: 'consider', text: 'Can handle analytics, but specialized OLAP systems are much faster at scale.' }
-            ]
-        };
-
-        const showdownData = {
-            easeOfUse: [
-                { name: 'DuckDB', rating: 100, label: 'Excellent', rationale: 'In-process database requiring no server. A simple `pip install` is all it takes. Zero configuration, no dependencies.' },
-                { name: 'SQLite', rating: 100, label: 'Excellent', rationale: 'In-process, serverless, and included in many standard libraries. The definition of easy setup.' },
-                { name: 'PostgreSQL', rating: 60, label: 'Good', rationale: 'Requires server installation, initialization, and user/database management. Well-documented but a significant step up in complexity.' },
-                { name: 'ClickHouse', rating: 40, label: 'Fair', rationale: 'Requires server setup and configuration. More complex to manage than traditional relational databases.' },
-                { name: 'Snowflake', rating: 90, label: 'Very Good', rationale: 'As a managed service, there are no servers to install. Setup involves configuring accounts and warehouses via a web UI, which is straightforward.' }
-            ],
-            performance: [
-                { name: 'DuckDB', rating: 100, label: 'Excellent', rationale: 'Specifically designed for fast analytical queries on Parquet and CSV. Its vectorized query engine is state-of-the-art for in-process analytics.' },
-                { name: 'ClickHouse', rating: 100, label: 'Excellent', rationale: 'Arguably the fastest open-source analytical database. Performance on large datasets is its main selling point.' },
-                { name: 'Snowflake', rating: 90, label: 'Very Good', rationale: 'Excellent performance at scale, but requires data to be loaded into its proprietary format first. Not designed for direct queries on local files.' },
-                { name: 'PostgreSQL', rating: 50, label: 'Good', rationale: 'Can query external data via Foreign Data Wrappers, but performance is significantly slower than specialized systems like DuckDB.' },
-                { name: 'SQLite', rating: 30, label: 'Fair', rationale: 'Not designed for analytical queries. Lacks a columnar or vectorized engine, making it slow for aggregations on large datasets.' }
-            ],
-            scalability: [
-                { name: 'Snowflake', rating: 100, label: 'Excellent', rationale: 'Cloud-native architecture with decoupled storage and compute allows for virtually infinite and independent scaling.' },
-                { name: 'ClickHouse', rating: 90, label: 'Very Good', rationale: 'Designed for distributed, multi-server clusters and can handle petabytes of data.' },
-                { name: 'PostgreSQL', rating: 70, label: 'Good', rationale: 'Scales vertically very well. Horizontal scaling (clustering, replication) is possible but complex to manage.' },
-                { name: 'DuckDB', rating: 40, label: 'Fair', rationale: 'Scales vertically by using all available cores/RAM on a single machine. Not designed for multi-server distributed clusters.' },
-                { name: 'SQLite', rating: 20, label: 'Poor', rationale: 'Strictly a single-file, single-machine database. Does not scale beyond the capacity of one machine.' }
-            ],
-            cost: [
-                { name: 'DuckDB', rating: 100, label: 'Excellent', rationale: 'Completely free and open-source (MIT License). No hosting or server costs.' },
-                { name: 'SQLite', rating: 100, label: 'Excellent', rationale: 'Public domain (free). No costs associated with the software.' },
-                { name: 'PostgreSQL', rating: 90, label: 'Very Good', rationale: 'Free and open-source. Costs are related to the hardware/hosting you choose to run it on.' },
-                { name: 'ClickHouse', rating: 80, label: 'Very Good', rationale: 'Open-source and free. Costs are related to hosting, which can be significant for large clusters.' },
-                { name: 'Snowflake', rating: 40, label: 'Fair', rationale: 'A commercial, usage-based service. Costs for storage and compute can become very high at scale. No free tier for production use.' }
-            ]
-        };
-
-        // --- RENDER FUNCTIONS ---
+        // Data and functions (same as before, but with DuckDB glow classes added)
+        const useCaseData = { exploration: [ { name: 'DuckDB', tier: 'recommended', text: 'The ideal workbench for local data analysis. Runs anywhere, reads files directly, and speaks SQL.' }, { name: 'SQLite', tier: 'recommended', text: 'A lightweight, reliable database for general-purpose local data storage.' }, { name: 'PostgreSQL', tier: 'consider', text: 'More setup required, but offers a full-featured transactional environment.' }, { name: 'Snowflake', tier: 'not-ideal', text: 'Cloud-native warehouse. Overkill and costly for local file analysis.' } ], webapp: [ { name: 'PostgreSQL', tier: 'recommended', text: 'The gold standard for a reliable, full-featured transactional database for web applications.' }, { name: 'SQLite', tier: 'recommended', text: 'Excellent for low-to-medium traffic sites or applications where simplicity is key.' }, { name: 'DuckDB', tier: 'not-ideal', text: 'Not designed for the frequent write/update workloads needed by most web apps.' } ], warehouse: [ { name: 'Snowflake', tier: 'recommended', text: 'A leading cloud data warehouse built for massive-scale analytics with decoupled storage and compute.' }, { name: 'ClickHouse', tier: 'recommended', text: 'Extremely fast open-source OLAP database, ideal for real-time analytics dashboards.' }, { name: 'DuckDB', tier: 'consider', text: 'Excellent for medium-scale analytics (up to ~100s of GBs) on a single powerful machine.' } ] };
+        const showdownData = { easeOfUse: [ { name: 'DuckDB', rating: 100, label: 'Excellent', rationale: 'In-process database requiring no server. A simple `pip install` is all it takes.' }, { name: 'SQLite', rating: 100, label: 'Excellent', rationale: 'In-process, serverless, and included in many standard libraries. The definition of easy setup.' }, { name: 'PostgreSQL', rating: 60, label: 'Good', rationale: 'Requires server installation, initialization, and user/database management.' }, { name: 'ClickHouse', rating: 40, label: 'Fair', rationale: 'Requires server setup and is more complex to manage than traditional relational databases.' }, { name: 'Snowflake', rating: 90, label: 'Very Good', rationale: 'As a managed service, setup involves configuring accounts and warehouses via a web UI.' } ], performance: [ { name: 'DuckDB', rating: 100, label: 'Excellent', rationale: 'Specifically designed for fast analytical queries on Parquet and CSV. State-of-the-art for in-process analytics.' }, { name: 'ClickHouse', rating: 100, label: 'Excellent', rationale: 'Arguably the fastest open-source analytical database. Performance is its main selling point.' }, { name: 'Snowflake', rating: 90, label: 'Very Good', rationale: 'Excellent performance at scale, but requires data to be loaded into its proprietary format first.' }, { name: 'PostgreSQL', rating: 50, label: 'Good', rationale: 'Can query external data via FDWs, but performance is slower than specialized systems.' }, { name: 'SQLite', rating: 30, label: 'Fair', rationale: 'Not designed for analytical queries. Slow for aggregations on large datasets.' } ], scalability: [ { name: 'Snowflake', rating: 100, label: 'Excellent', rationale: 'Cloud-native architecture with decoupled storage and compute allows for virtually infinite scaling.' }, { name: 'ClickHouse', rating: 90, label: 'Very Good', rationale: 'Designed for distributed, multi-server clusters and can handle petabytes of data.' }, { name: 'PostgreSQL', rating: 70, label: 'Good', rationale: 'Scales vertically very well. Horizontal scaling is possible but complex to manage.' }, { name: 'DuckDB', rating: 40, label: 'Fair', rationale: 'Scales vertically on a single machine. Not designed for distributed clusters.' }, { name: 'SQLite', rating: 20, label: 'Poor', rationale: 'Strictly a single-file, single-machine database. Does not scale.' } ], cost: [ { name: 'DuckDB', rating: 100, label: 'Excellent', rationale: 'Completely free and open-source (MIT License). No hosting or server costs.' }, { name: 'SQLite', rating: 100, label: 'Excellent', rationale: 'Public domain (free). No costs associated with the software.' }, { name: 'PostgreSQL', rating: 90, label: 'Very Good', rationale: 'Free and open-source. Costs are related to the hardware/hosting you choose.' }, { name: 'ClickHouse', rating: 80, label: 'Very Good', rationale: 'Open-source and free. Costs are related to hosting, which can be significant.' }, { name: 'Snowflake', rating: 40, label: 'Fair', rationale: 'A commercial, usage-based service. Costs for storage and compute can become very high.' } ] };
+        
         function renderUseCases(useCase) {
             const container = document.getElementById('use-case-results');
             container.innerHTML = '';
-            const data = useCaseData[useCase] || [];
-            data.forEach(item => {
+            useCaseData[useCase].forEach(item => {
                 const card = document.createElement('div');
                 card.className = `card ${item.tier}`;
+                if (item.name === 'DuckDB') card.classList.add('duckdb-glow');
                 card.innerHTML = `<h3>${item.name}</h3><p>${item.text}</p>`;
                 container.appendChild(card);
             });
         }
-
         function renderChart(feature) {
             const table = document.getElementById('feature-chart');
-            const data = showdownData[feature] || [];
-            
-            const ratingClasses = {
-                'Excellent': 'excellent', 'Very Good': 'vgood', 'Good': 'good', 'Fair': 'fair', 'Poor': 'poor'
-            };
-
+            const data = showdownData[feature];
+            const ratingClasses = { 'Excellent': 'excellent', 'Very Good': 'vgood', 'Good': 'good', 'Fair': 'fair', 'Poor': 'poor' };
             let tableHTML = '<thead><tr><th>Tool</th><th>Rating</th></tr></thead><tbody>';
             data.forEach(item => {
                 const barClass = ratingClasses[item.label] || 'good';
-                tableHTML += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td class="bar-cell">
-                            <div class="bar-container">
-                                <div class="bar ${barClass}" style="width: ${item.rating}%;">
-                                    ${item.label}
-                                </div>
-                                <span class="info-icon" onclick="showModal('${item.name}', '${feature}')">ⓘ</span>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                const glowClass = item.name === 'DuckDB' ? 'duckdb-glow' : '';
+                tableHTML += `<tr class="bar-row ${glowClass}"><td>${item.name}</td><td class="bar-cell"><div class="bar-container"><div class="bar ${barClass}" style="width: 0%;"></div><span class="info-icon" onclick="showModal('${item.name}', '${feature}')">ⓘ</span></div></td></tr>`;
             });
             tableHTML += '</tbody>';
             table.innerHTML = tableHTML;
-        }
-
-        // --- MODAL FUNCTIONS ---
-        const modal = document.getElementById('source-modal');
-        function showModal(toolName, feature) {
-            const data = showdownData[feature].find(item => item.name === toolName);
-            if (!data) return;
-            
-            document.getElementById('modal-claim').innerText = `Claim: ${data.name} has an "${data.label}" rating for ${document.getElementById('feature-select').options[document.getElementById('feature-select').selectedIndex].text}.`;
-            document.getElementById('modal-rationale').innerText = data.rationale;
-            modal.style.display = 'block';
-        }
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        // --- EVENT LISTENERS ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Use Case Filters
-            const filterButtons = document.querySelectorAll('#use-case-filters button');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    renderUseCases(button.dataset.usecase);
+            setTimeout(() => {
+                const bars = table.querySelectorAll('.bar');
+                data.forEach((item, index) => {
+                    bars[index].style.width = `${item.rating}%`;
+                    bars[index].innerText = item.label;
                 });
-            });
+            }, 100);
+        }
 
-            // Feature Showdown Dropdown
+        const modal = document.getElementById('source-modal');
+        function showModal(toolName, feature) { const data = showdownData[feature].find(item => item.name === toolName); if (!data) return; document.getElementById('modal-claim').innerText = `Claim: ${data.name} has an "${data.label}" rating.`; document.getElementById('modal-rationale').innerText = data.rationale; modal.style.display = 'block'; }
+        function closeModal() { modal.style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('#use-case-filters button');
+            filterButtons.forEach(button => { button.addEventListener('click', () => { filterButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); renderUseCases(button.dataset.usecase); }); });
             const featureSelect = document.getElementById('feature-select');
-            featureSelect.addEventListener('change', (e) => {
-                renderChart(e.target.value);
-            });
-
-            // Initial Render
+            featureSelect.addEventListener('change', (e) => renderChart(e.target.value));
             renderUseCases('exploration');
             renderChart('easeOfUse');
         });
