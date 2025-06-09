@@ -1,339 +1,124 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DuckDB for GraphRAG: An Interactive Guide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <title>A Deep Dive into GraphRAG</title>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
-            color: #1e293b; /* slate-800 */
-        }
-        .nav-link {
-            position: relative;
-            transition: color 0.3s;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4f46e5; /* indigo-600 */
-            transition: width 0.3s ease-in-out;
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
-        }
-        .tab-btn.active {
-            background-color: #4f46e5;
-            color: #ffffff;
-        }
-        .code-block {
-            font-family: 'Source Code Pro', monospace;
-        }
-        .flow-diagram-arrow {
-            position: relative;
-            padding: 0 1rem;
-        }
-        .flow-diagram-arrow::after {
-            content: '→';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            color: #94a3b8; /* slate-400 */
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.8; margin: 0; padding: 2em; background-color: #f8f9fa; color: #343a40; }
+        .container { max-width: 900px; margin: 2rem auto; background: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+        h1, h2, h3 { color: #6a4c93; }
+        h1 { font-size: 2.4em; border-bottom: 3px solid #8a6eb3; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.8em; margin-top: 3rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem; }
+        a { color: #8a6eb3; text-decoration: none; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+        .infographic { background: #f3f0f7; border: 1px solid #dcd3e5; padding: 2rem; border-radius: 8px; margin: 2rem 0; }
+        .infographic-title { text-align: center; font-weight: bold; margin-bottom: 1.5rem; display: block; font-size: 1.4em; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 20px 1fr; align-items: start; gap: 1.5rem; }
+        .comparison-box { border: 2px solid #ccc; padding: 1.5rem; border-radius: 8px; }
+        .comparison-box h3 { margin-top: 0; color: #343a40; }
+        .comparison-box.graphrag { border-color: #8a6eb3; }
+        .vs { text-align: center; font-size: 2em; font-weight: bold; color: #ccc; padding-top: 3rem; }
+        .flowchart { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); align-items: center; gap: 1rem; text-align: center; }
+        .flow-box { border: 2px solid #8a6eb3; padding: 1rem; border-radius: 8px; background: #f3f0f7; }
+        .flow-arrow { font-size: 2rem; color: #8a6eb3; }
+        .checklist ul { list-style-type: '✅'; padding-left: 1.5rem; }
+        .checklist li { margin-bottom: 0.75rem; }
+        .tool-links a { display: inline-block; background: #8a6eb3; color: white; padding: 0.8rem 1.5rem; border-radius: 6px; margin: 0.5rem; transition: background-color 0.2s ease; }
+        .tool-links a:hover { background-color: #6a4c93; text-decoration: none; }
     </style>
 </head>
-<body class="antialiased">
-    <!-- Chosen Palette: Indigo Slate -->
-    <!-- Application Structure Plan: The SPA is structured as a narrative journey from concept to implementation. It starts with a high-level "Why?" (What is GraphRAG?), moves to the "How?" (translating tables to graphs), then dives into the "With What?" (the DuckDB-centric workflow). This workflow is presented in an interactive tabbed interface to break down the complex process into digestible steps: Prepare, Query, Update, and Connect. This task-oriented structure allows users to understand each stage independently while seeing how they connect. The final section provides a strategic comparison to directly answer the user's "DuckDB vs. Neo4j" question, making the application a complete decision-making tool. -->
-    <!-- Visualization & Content Choices: Report Info -> The core of the source document is the workflow for building a GraphRAG system with DuckDB. Goal -> Make this abstract workflow concrete and easy to follow. Viz/Presentation Method -> An interactive tabbed component built with HTML/CSS/JS. Interaction -> Clicking each tab reveals the content for that specific stage (Prepare, Query, Update, Connect), complete with explanatory text and code snippets. Justification -> This progressive disclosure prevents overwhelming the user and allows them to focus on one part of the process at a time, enhancing comprehension of the multi-stage workflow. It's a more engaging and less intimidating way to present dense technical information than a long, scrolling page. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<body>
+    <div class="container">
+        <a href="GraphRAG-Power-Query-vs-DuckDB.html">← Back to Comparison</a>
+        <h1>A Deep Dive into GraphRAG</h1>
+        <p>This guide explains the what, why, and how of GraphRAG, a powerful technique for unlocking deeper insights from your connected data.</p>
 
-    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <a href="#hero" class="text-xl font-bold text-indigo-600">DuckDB GraphRAG Guide</a>
-                    </div>
-                     <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="#what-is-graphrag" class="nav-link px-3 py-2 rounded-md text-sm font-medium">What is GraphRAG?</a>
-                            <a href="#the-workflow" class="nav-link px-3 py-2 rounded-md text-sm font-medium">The Workflow</a>
-                            <a href="#strategy" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Strategic Choice</a>
-                            <a href="#recommendations" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Recommendations</a>
-                        </div>
-                    </div>
+        <h2>What is GraphRAG, Exactly?</h2>
+        <p>GraphRAG (Graph-based Retrieval Augmented Generation) enhances Large Language Models (LLMs) by giving them a "map" of your data's relationships, not just a list of isolated facts. This rich, structured context leads to dramatically more accurate and insightful answers.</p>
+
+        <div class="infographic">
+            <div class="comparison-grid">
+                <div class="comparison-box">
+                    <h3>Standard RAG</h3>
+                    <p>Retrieves a list of disconnected text chunks. It finds documents that are relevant, but doesn't understand how they relate to each other.</p>
+                    <svg viewBox="0 0 100 60" width="100%"><rect x="10" y="10" width="80" height="15" fill="#ccc"/><rect x="10" y="35" width="80" height="15" fill="#ccc"/></svg>
                 </div>
-                <div class="hidden md:block">
-                    <a href="https://github.com/kairin/google-gemini-codes/tree/data-tool-analyzer" target="_blank" rel="noopener noreferrer" class="flex items-center text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></svg>
-                        View Project on GitHub
-                    </a>
+                <div class="vs">vs</div>
+                <div class="comparison-box graphrag">
+                    <h3>GraphRAG ✨</h3>
+                    <p>Retrieves an interconnected subgraph of knowledge. It finds the relevant entities and the precise relationships that connect them.</p>
+                    <svg viewBox="0 0 100 60" width="100%"><circle cx="20" cy="30" r="10" fill="#8a6eb3"/><circle cx="80" cy="30" r="10" fill="#8a6eb3"/><line x1="20" y1="30" x2="80" y2="30" stroke="#8a6eb3" stroke-width="2"/></svg>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="hero" class="py-20 md:py-28 text-center bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-slate-900">Unlock Your Data's Hidden Connections.</h1>
-                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600">You don't need to abandon your existing tools to leverage the power of graph-based AI. This guide reveals how you can use **DuckDB** to build a powerful **GraphRAG** system, transforming your tabular data into a rich, interconnected knowledge base for smarter, context-aware insights.</p>
-                <div class="mt-8">
-                    <a href="#what-is-graphrag" class="inline-block bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 transition-colors">Start Exploring</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="what-is-graphrag" class="py-20 md:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">What is GraphRAG, Basically?</h2>
-                    <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">GraphRAG (Graph-based Retrieval Augmented Generation) is a technique that makes Large Language Models (LLMs) smarter by giving them a "map" of your data's relationships, not just isolated facts.</p>
-                </div>
-
-                <div class="max-w-5xl mx-auto">
-                    <h3 class="text-xl font-semibold text-center mb-8">Standard RAG vs. GraphRAG</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="bg-white p-6 rounded-lg border border-slate-200">
-                            <h4 class="font-bold text-lg">Standard RAG</h4>
-                            <p class="text-sm text-slate-500 mb-4">Retrieves disconnected text chunks.</p>
-                            <p class="text-slate-700">Imagine asking an LLM about a customer issue. Standard RAG might find the support ticket, the customer's purchase history, and a product manual page—but it doesn't understand how they connect. It just provides a list of documents.</p>
-                        </div>
-                        <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-200 ring-2 ring-indigo-100">
-                            <h4 class="font-bold text-lg text-indigo-800">GraphRAG ✨</h4>
-                            <p class="text-sm text-indigo-600 mb-4">Retrieves an interconnected subgraph of knowledge.</p>
-                            <p class="text-indigo-900">GraphRAG finds the `Customer` node, traverses the `FILED_TICKET` relationship to the `Ticket` node, which is related to a `Product` node, which in turn is connected to other `Customers` who bought the same `Product`. The LLM gets a rich, contextual map, leading to far more insightful answers.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-20">
-                     <h3 class="text-xl font-semibold text-center mb-8">How Your Tabular Data Benefits</h3>
-                     <p class="text-center max-w-2xl mx-auto text-slate-600 mb-10">Your tables are already a graph in disguise. By making the relationships explicit, you unlock the ability to answer complex, multi-part questions that are nearly impossible with standard SQL `JOIN`s.</p>
-                     <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl border border-slate-200">
-                        <div class="grid md:grid-cols-3 gap-4 items-center text-center">
-                            <div class="p-4 rounded-lg bg-slate-50">
-                                <p class="font-mono text-sm text-slate-500">Customers Table</p>
-                                <p class="font-semibold mt-2 flex items-center justify-center gap-2">`Rows` → <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg> Customer Nodes</p>
-                            </div>
-                            <div class="text-5xl font-bold text-indigo-400">+</div>
-                             <div class="p-4 rounded-lg bg-slate-50">
-                                <p class="font-mono text-sm text-slate-500">Orders Table</p>
-                                <p class="font-semibold mt-2 flex items-center justify-center gap-2">`Foreign Keys` → <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" /></svg> Relationships</p>
-                            </div>
-                        </div>
-                        <div class="text-center text-5xl font-bold text-indigo-400 my-4">↓</div>
-                        <div class="p-6 rounded-lg bg-indigo-50 text-center">
-                            <p class="font-semibold text-lg text-indigo-800">Answering Deeper Questions</p>
-                            <p class="text-indigo-700 mt-2">"Show me common issues for customers who bought products similar to those purchased by Customer X, and also live in their region."</p>
-                        </div>
-                     </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="the-workflow" class="py-20 md:py-24 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">The DuckDB-Powered GraphRAG Workflow</h2>
-                    <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">Here’s a practical, step-by-step approach to building a GraphRAG system, leveraging DuckDB at key stages. This is an iterative process, not a one-time setup.</p>
-                </div>
-
-                <div class="max-w-5xl mx-auto">
-                    <div class="mb-8 flex flex-wrap justify-center gap-2 border-b border-slate-200">
-                        <button class="tab-btn active px-4 py-2 text-sm font-semibold rounded-t-md" data-target="prepare">1. Prepare & Model</button>
-                        <button class="tab-btn px-4 py-2 text-sm font-semibold rounded-t-md" data-target="query">2. Define & Query Graph</button>
-                        <button class="tab-btn px-4 py-2 text-sm font-semibold rounded-t-md" data-target="update">3. Continuously Update</button>
-                        <button class="tab-btn px-4 py-2 text-sm font-semibold rounded-t-md" data-target="connect">4. Connect to LLM</button>
-                    </div>
-
-                    <div id="tab-content" class="bg-slate-50 p-8 rounded-lg border border-slate-200 min-h-[300px]">
-                        <div id="prepare" class="tab-pane active">
-                            <h3 class="font-bold text-xl mb-2 text-slate-800">Step 1: Prepare & Model Data with DuckDB</h3>
-                            <p class="text-slate-600 mb-6">This is DuckDB's superpower. Before you have a graph, you need clean, structured tables for your nodes and relationships. Use DuckDB's fast SQL engine to ingest raw files (CSV, Parquet), clean them, join them, and create the foundational tables for your graph.</p>
-                            <div class="code-block bg-slate-800 text-white p-4 rounded-md text-sm">
-<pre><code>-- Use DuckDB to create clean node and edge tables
-CREATE TABLE customer_nodes AS SELECT customerId, name, region FROM read_csv_auto('raw_customers.csv');
-
-CREATE TABLE placed_order_edges AS SELECT customerId, orderId FROM read_csv_auto('raw_orders.csv');
-</code></pre>
-                            </div>
-                        </div>
-
-                        <div id="query" class="tab-pane hidden">
-                            <h3 class="font-bold text-xl mb-2 text-slate-800">Step 2: Define & Query the Graph with DuckPGQ</h3>
-                            <p class="text-slate-600 mb-6">You don't need to move your data. The **DuckPGQ** extension lets you create a "graph view" directly on top of your existing DuckDB tables. You can then use SQL/PGQ syntax to query graph patterns, like finding mutual connections or shortest paths.</p>
-                            <div class="code-block bg-slate-800 text-white p-4 rounded-md text-sm">
-<pre><code>-- Install and load the graph extension
-INSTALL duckpgq FROM community;
-LOAD duckpgq;
-
--- Create a graph view over your prepared tables
-CREATE PROPERTY GRAPH my_graph
-  VERTEX TABLES (customer_nodes LABEL Customer)
-  EDGE TABLES (placed_order_edges LABEL PlacedOrder
-    SOURCE KEY (customerId) REFERENCES customer_nodes(customerId)
-    DESTINATION ... );
-
--- Query the graph to find patterns
-FROM GRAPH_TABLE (my_graph
-  MATCH (c1:Customer)-[:PlacedOrder]->(o:Order)<-[:PlacedOrder]-(c2:Customer)
-  COLUMNS (c1.name, c2.name)
-);
-</code></pre>
-                            </div>
-                        </div>
-                        
-                        <div id="update" class="tab-pane hidden">
-                            <h3 class="font-bold text-xl mb-2 text-slate-800">Step 3: Continuously Update with dbt + DuckDB</h3>
-                            <p class="text-slate-600 mb-6">Your data changes, and your graph must stay current. Use a tool like **dbt (data build tool)** with the `dbt-duckdb` adapter to create a reliable, repeatable pipeline. dbt can run your DuckDB transformation models incrementally, processing only new data and efficiently updating your base tables. Since the graph is a view, it updates automatically.</p>
-                             <div class="text-center p-6 bg-white rounded-lg border border-slate-200">
-                                <p class="font-semibold text-lg">Raw Data → dbt → DuckDB Tables → Graph View is always fresh!</p>
-                            </div>
-                        </div>
-
-                        <div id="connect" class="tab-pane hidden">
-                            <h3 class="font-bold text-xl mb-2 text-slate-800">Step 4: Connect to the RAG Pipeline</h3>
-                            <p class="text-slate-600 mb-4">The final step is retrieval. Your RAG application (built with a library like LlamaIndex or LangChain) will execute a graph query against DuckDB based on the user's prompt. It retrieves the relevant subgraph of information, which provides rich, structured context to the LLM for generating its answer.</p>
-                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center">
-                                <div class="bg-white p-4 rounded-lg border">User Query: "Find related products"</div>
-                                <div class="flow-diagram-arrow"></div>
-                                <div class="bg-white p-4 rounded-lg border">DuckDB returns a subgraph of related products and customers</div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="strategy" class="py-20 md:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">The Strategic Choice: DuckDB vs. Native Graph DB</h2>
-                    <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">The decision to use DuckDB + DuckPGQ versus a native graph database like Neo4j is about choosing the right tool for the job. It's a trade-off between simplicity/integration and specialized performance.</p>
-                </div>
-                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-xl mb-3">Stick with DuckDB when...</h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start"><span class="text-indigo-500 font-bold mr-2 mt-1">✓</span> Your data already lives in DuckDB or you have a strong DuckDB-based pipeline.</li>
-                            <li class="flex items-start"><span class="text-indigo-500 font-bold mr-2 mt-1">✓</span> Your primary need is analytical querying, and you want to add graph-style queries to your existing workflow.</li>
-                            <li class="flex items-start"><span class="text-indigo-500 font-bold mr-2 mt-1">✓</span> You value a simplified tech stack without adding another database server to manage.</li>
-                             <li class="flex items-start"><span class="text-indigo-500 font-bold mr-2 mt-1">✓</span> Your graph queries are not extremely deep (e.g., 10+ levels) or you don't require high-concurrency graph writes.</li>
-                        </ul>
-                    </div>
-                     <div class="bg-white p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-xl mb-3">Consider a Native Graph DB (like Neo4j) when...</h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start"><span class="text-slate-400 font-bold mr-2 mt-1">●</span> Your primary application is a graph problem (e.g., fraud detection, real-time recommendations).</li>
-                             <li class="flex items-start"><span class="text-slate-400 font-bold mr-2 mt-1">●</span> You need extreme performance for very deep, complex graph traversals.</li>
-                              <li class="flex items-start"><span class="text-slate-400 font-bold mr-2 mt-1">●</span> You require a mature ecosystem of graph-specific algorithms, visualization tools, and enterprise support.</li>
-                               <li class="flex items-start"><span class="text-slate-400 font-bold mr-2 mt-1">●</span> Your application needs to handle many simultaneous writes and updates to the graph structure.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="recommendations" class="py-20 md:py-24 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Your Action Plan</h2>
-                    <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">Here are clear recommendations for moving forward with your goal of building a GraphRAG system.</p>
-                </div>
-                <div class="max-w-3xl mx-auto space-y-4">
-                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-semibold text-lg">1. Embrace DuckDB for Data Pipelines</h3>
-                        <p class="text-slate-600 mt-1">Use DuckDB and `dbt-duckdb` as the core engine for transforming your raw data into the clean, structured tables needed for your graph. This is its greatest strength.</p>
-                    </div>
-                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-semibold text-lg">2. Explore DuckPGQ for In-Database Analytics</h3>
-                        <p class="text-slate-600 mt-1">For many analytical use cases, DuckPGQ will provide sufficient graph querying capabilities directly within your existing DuckDB environment, simplifying your stack significantly.</p>
-                    </div>
-                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-semibold text-lg">3. Start Small and Iterate</h3>
-                        <p class="text-slate-600 mt-1">You don't need to model your entire dataset as a graph at once. Start with the most critical entities and relationships, build an initial version of your graph, and expand it over time as you discover new insights.</p>
-                    </div>
-                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-semibold text-lg">4. Plan for Incremental Updates</h3>
-                        <p class="text-slate-600 mt-1">Design your data pipelines with incremental updates in mind from the start. This will ensure your GraphRAG system stays current with your evolving data without costly full re-builds.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <footer class="bg-slate-100 border-t border-slate-200">
-        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-slate-500">
-            <p>An interactive guide to building GraphRAG systems with DuckDB.</p>
         </div>
-    </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const panes = document.querySelectorAll('.tab-pane');
+        <h2>The Core Architecture: How It Works</h2>
+        <p>A GraphRAG system has two main pipelines: one for building the knowledge graph, and one for using it to answer questions.</p>
+        
+        <h3>1. The Indexing & Graph Building Pipeline</h3>
+        <p>This pipeline turns your raw data into a structured knowledge graph.</p>
+        <div class="infographic">
+            <div class="flowchart">
+                <div class="flow-box"><strong>Unstructured Data</strong> (Docs, PDFs)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>LLM Extraction</strong> (Finds entities & relations)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Knowledge Graph</strong> (Stored in DB)</div>
+            </div>
+        </div>
+        <ul>
+            <li><strong>Data Ingestion:</strong> Your raw documents (text, PDFs, etc.) are broken into manageable chunks.</li>
+            <li><strong>Entity & Relationship Extraction:</strong> An LLM reads each chunk and identifies key entities (e.g., people, products, companies) and the relationships between them (e.g., `WORKED_AT`, `PURCHASED`, `MENTIONED`).</li>
+            <li><strong>Graph Storage:</strong> These entities (nodes) and relationships (edges) are stored in a graph database (like Neo4j) or queried via a graph layer (like DuckPGQ).</li>
+        </ul>
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
+        <h3>2. The Query & Answer Pipeline</h3>
+        <p>This pipeline activates when a user asks a question.</p>
+        <div class="infographic">
+            <div class="flowchart">
+                <div class="flow-box"><strong>User Question</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Graph Search</strong> (Finds relevant subgraph)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>LLM Synthesis</strong> (Generates answer)</div>
+            </div>
+        </div>
+        <ul>
+            <li><strong>Interpret Question:</strong> An LLM may first interpret the user's query to understand its core intent.</li>
+            <li><strong>Graph Search:</strong> The system searches the knowledge graph to find nodes and relationships relevant to the query, retrieving a "subgraph" of rich, connected context.</li>
+            <li><strong>LLM Synthesis:</strong> This retrieved subgraph—the factual, contextual map—is provided to the LLM along with the original question. The LLM then generates a final, human-readable answer that is grounded in these facts.</li>
+        </ul>
 
-                    const targetId = tab.dataset.target;
-                    panes.forEach(pane => {
-                        if (pane.id === targetId) {
-                            pane.classList.remove('hidden');
-                            pane.classList.add('active');
-                        } else {
-                            pane.classList.add('hidden');
-                            pane.classList.remove('active');
-                        }
-                    });
-                });
-            });
+        <h2>Key Benefits: Why Bother?</h2>
+        <div class="checklist">
+            <ul>
+                <li><strong>Dramatically Reduced Hallucinations:</strong> By grounding the LLM in a factual graph of your data, you prevent it from making up incorrect information. The answer is tied to real relationships.</li>
+                <li><strong>Deeper, Multi-Hop Insights:</strong> GraphRAG can answer complex questions that require connecting multiple pieces of information (e.g., "Find customers who bought product A and had a support ticket handled by engineer B"). This is nearly impossible for standard RAG.</li>
+                <li><strong>Knowledge Discovery:</strong> The graph itself becomes a valuable asset. Visualizing and querying it can reveal patterns and connections in your data that you never knew existed.</li>
+            </ul>
+        </div>
+        
+        <h2>When Should You Use GraphRAG?</h2>
+        <p>GraphRAG is a powerful but complex technique. It's the right choice when:</p>
+        <div class="checklist">
+            <ul>
+                <li>Your data is highly interconnected (e.g., social networks, supply chains, project management, customer journeys).</li>
+                <li>You need to answer complex, multi-part questions, not just find simple facts.</li>
+                <li>The relationships between data points are as important as the data points themselves.</li>
+                <li>You have a high volume of unstructured or semi-structured text from which you need to extract consistent, reliable insights.</li>
+                <li>Reducing LLM hallucinations and ensuring factual accuracy is a critical business requirement.</li>
+            </ul>
+        </div>
 
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('main > section');
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.3
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-        });
-    </script>
+        <h2>Getting Started: Tools & Resources</h2>
+        <p>You can build a GraphRAG system using a combination of frameworks and databases. Here are some of the most common tools in the ecosystem:</p>
+        <div class="tool-links">
+            <a href="https://github.com/microsoft/graphrag" target="_blank" rel="noopener noreferrer">Microsoft GraphRAG</a>
+            <a href="https://www.llamaindex.ai/" target="_blank" rel="noopener noreferrer">LlamaIndex</a>
+            <a href="https://www.langchain.com/" target="_blank" rel="noopener noreferrer">LangChain</a>
+            <a href="https://neo4j.com/" target="_blank" rel="noopener noreferrer">Neo4j Graph Database</a>
+        </div>
+    </div>
 </body>
 </html>
