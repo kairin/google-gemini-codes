@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Tool Navigator - Your Starting Point</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #F0F0F0;
+            --primary-accent: #00B8D4; /* Cyan/Teal */
+            --secondary-accent: #FFC107; /* Amber */
+            --card-bg: #262626;
+            --code-bg: #2D2D2D;
+            --border-color: #444;
+            --duckdb-glow: 0 0 12px #00B8D4, 0 0 20px #00B8D4;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border-color); }
+        nav h1 { margin: 0; font-size: 1.5em; }
+        nav .nav-links { display: flex; flex-wrap: wrap; gap: 20px; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        nav a:hover, nav a.active { color: var(--primary-accent); }
+        nav a.github-link { border: 1px solid var(--primary-accent); padding: 5px 10px; border-radius: 5px; }
+        nav a.github-link:hover { background-color: var(--primary-accent); color: var(--bg-color); }
+
+        .section { padding: 60px 20px; border-bottom: 1px solid var(--border-color); }
+        .section:last-child { border-bottom: none; }
+        h1 { font-size: 3em; line-height: 1.2; }
+        h2 { font-size: 2.2em; color: var(--primary-accent); }
+        h3 { font-size: 1.5em; }
+
+        .hero { text-align: center; padding: 80px 20px; }
+        .hero p { font-size: 1.2em; max-width: 600px; margin: 1em auto; }
+        
+        .flowchart { display: flex; justify-content: space-around; align-items: center; background-color: var(--card-bg); padding: 30px; border-radius: 8px; margin: 40px 0; flex-wrap: wrap; }
+        .flowchart-item { text-align: center; max-width: 250px; }
+        .flowchart-arrow { font-size: 2.5em; color: var(--primary-accent); margin: 20px; }
+
+        .key-features { display: flex; justify-content: space-around; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+        .feature { background-color: var(--card-bg); padding: 20px; border-radius: 8px; flex: 1; min-width: 200px; border-left: 3px solid var(--primary-accent); transition: all 0.3s ease; }
+        .feature:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .feature.duckdb-glow {
+            border-left-color: var(--primary-accent);
+            box-shadow: var(--duckdb-glow);
+            animation: glow-pulse 2s infinite alternate;
+        }
+
+        @keyframes glow-pulse {
+            from { box-shadow: 0 0 8px #00B8D4; }
+            to { box-shadow: 0 0 18px #00B8D4, 0 0 25px #00B8D4; }
+        }
+
+        .button { display: inline-block; background-color: var(--secondary-accent); color: var(--bg-color); padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s; border: none; cursor: pointer; }
+        .button:hover { transform: translateY(-2px); }
+        .button.pulsing { animation: pulse 2s infinite; }
+        .button-secondary { background: none; color: var(--primary-accent); margin-left: 15px; }
+
+        .code-block { background-color: var(--code-bg); border-radius: 8px; padding: 20px; margin-top: 15px; position: relative; overflow-x: auto; }
+        pre { margin: 0; color: var(--text-color); }
+        .copy-button { position: absolute; top: 15px; right: 15px; background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; }
+        .copy-button:hover { background-color: var(--primary-accent); color: var(--bg-color); }
+        
+        footer { text-align: center; padding: 30px; font-size: 0.9em; color: #aaa; }
+        footer a { color: var(--primary-accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>Data Tool Navigator</h1>
+        <div class="nav-links">
+            <a href="#challenge">The Challenge</a>
+            <a href="comparison.html">Tool Comparison</a>
+            <a href="rag.html">Deep Dive: RAG</a>
+            <a href="https://github.com/kairin/google-gemini-codes/tree/data-tool-analyzer" target="_blank" class="github-link">View on GitHub</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Your Data Journey Starts Here.</h1>
+            <p>You have raw data. You need insights. This guide cuts through the noise of complex database systems to give you a clear, actionable starting point.</p>
+        </section>
+
+        <section id="challenge" class="section">
+            <h2>The "Data Genesis" Problem</h2>
+            <p>Raw data is rarely ready for analysis. Before building dashboards or training models, you must wrestle with messy files and complex tools. The right tool for this "first mile" makes all the difference.</p>
+            <div class="flowchart">
+                <div class="flowchart-item">
+                    <h3>Messy Raw Files</h3>
+                    <p>CSVs, JSON, or Parquet files with errors, missing values, and inconsistent formats.</p>
+                </div>
+                <div class="flowchart-arrow">→</div>
+                <div class="flowchart-item">
+                    <h3>Actionable Insights</h3>
+                    <p>Clean, structured data ready for analysis, visualization, and decision-making.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendation" class="section">
+            <h2>The Core Recommendation: Start with DuckDB</h2>
+            <p>For transforming raw, local files into something usable, <strong>DuckDB</strong> is the standout solution. It's a fast, free, and easy-to-use analytical database that runs on your machine without any server setup.</p>
+            <div class="key-features">
+                <div class="feature duckdb-glow">
+                    <h3>Instant Queries</h3>
+                    <p>Directly query CSV and Parquet files with SQL. No import needed.</p>
+                </div>
+                <div class="feature">
+                    <h3>Zero Setup</h3>
+                    <p>A simple `pip install` is all it takes. No servers, no user management.</p>
+                </div>
+                <div class="feature">
+                    <h3>Powerful Analytics</h3>
+                    <p>Built for the complex analytical queries needed for data cleaning and exploration.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="comparison.html" class="button pulsing">Explore Full Comparison</a>
+                <a href="#get-started" class="button button-secondary">Or, Get Started Now ↓</a>
+            </div>
+        </section>
+
+        <section id="get-started" class="section">
+            <h2>Get Started with DuckDB in 3 Steps</h2>
+            <h3>1. Installation & Connection</h3>
+            <div class="code-block"><button class="copy-button" onclick="copyCode(this)">Copy</button><pre><code># Install DuckDB
+pip install duckdb
+
+import duckdb
+# Connect to a persistent file-based database
+con = duckdb.connect(database='my_analysis.duckdb')</code></pre></div>
+
+            <h3>2. Query Raw Files Directly</h3>
+            <div class="code-block"><button class="copy-button" onclick="copyCode(this)">Copy</button><pre><code># Query a CSV and get a Pandas DataFrame
+df = con.sql("SELECT * FROM 'path/to/your/data.csv' LIMIT 10").df()
+print(df)</code></pre></div>
+
+            <h3>3. Transform Data and Create New Tables</h3>
+            <div class="code-block"><button class="copy-button" onclick="copyCode(this)">Copy</button><pre><code># Create a summary table from a raw Parquet file
+con.sql("""
+   CREATE OR REPLACE TABLE sales_summary AS
+   SELECT category, SUM(sales) AS total_sales
+   FROM 'path/to/raw_sales.parquet'
+   GROUP BY category;
+""")
+summary_df = con.table('sales_summary').df()
+print(summary_df)</code></pre></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Interactive application designed from the report "Navigating the Data Maze".</p>
+        <p>Source research available in this <a href="https://g.co/gemini/share/ed74ed0e6356" target="_blank">Gemini conversation</a>. Project on <a href="https://github.com/kairin/google-gemini-codes/tree/data-tool-analyzer" target="_blank">GitHub</a>.</p>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const pre = button.nextElementSibling;
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                button.innerText = 'Copied!';
+                setTimeout(() => { button.innerText = 'Copy'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
