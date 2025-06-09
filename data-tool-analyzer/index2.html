@@ -8,8 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <!-- Chart.js Annotation Plugin CDN for source labels on bars -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
+    <!-- Chart.js Annotation Plugin CDN (Removed as no longer needed for custom button drawing) -->
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,22 +78,13 @@
                 height: 500px;
             }
         }
-        .source-btn {
-            background-color: #e5e7eb;
-            color: #4b5563;
-            padding: 2px 8px;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: background-color 0.2s;
-            cursor: pointer;
-        }
-        .source-btn:hover {
-            background-color: #d1d5db;
-        }
-        #source-modal {
-            transition: opacity 0.3s ease;
-            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+        /* Custom tooltip styles */
+        #chartjs-tooltip {
+            pointer-events: none; /* Default to none, enable when visible */
+            z-index: 100; /* Ensure it's above other content */
+            transition: opacity 0.15s ease-in-out;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            white-space: nowrap; /* Prevent text wrapping inside tooltip */
         }
         .code-block {
             position: relative;
@@ -299,7 +289,7 @@ print(summary)</code></pre>
         </div>
     </footer>
     
-    <!-- Source Modal -->
+    <!-- Source Modal (remains unchanged, opened by custom tooltip button) -->
     <div id="source-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
         <div class="modal-content relative bg-white p-6 w-full max-w-2xl rounded-xl shadow-xl">
             <div class="mt-3 text-center">
@@ -321,9 +311,13 @@ print(summary)</code></pre>
         </div>
     </div>
 
+    <!-- Custom Chart.js Tooltip Container -->
+    <!-- This element will be controlled by Chart.js to display custom tooltip content -->
+    <div id="chartjs-tooltip" class="absolute bg-white p-3 rounded-md shadow-lg border border-gray-200 text-sm opacity-0 pointer-events-none" style="min-width: 150px; z-index: 100;"></div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Data and Sources ---
+            // --- Data and Sources (unchanged) ---
             const sources = {
                 'duckdb_setup': {
                     claim: "DuckDB has 'Excellent' setup complexity (lower is better).",
@@ -513,7 +507,7 @@ print(summary)</code></pre>
                 }
             ];
 
-            // --- Modal Handling ---
+            // --- Modal Handling (unchanged) ---
             const modal = document.getElementById('source-modal');
             const modalClaim = document.getElementById('modal-claim');
             const modalRationale = document.getElementById('modal-rationale');
@@ -541,7 +535,7 @@ print(summary)</code></pre>
                 }
             });
             
-            // --- App Logic ---
+            // --- App Logic (rendering tools and filtering) ---
             const toolsGrid = document.getElementById('tools-grid');
             const filterContainer = document.getElementById('filter-container');
 
@@ -598,6 +592,7 @@ print(summary)</code></pre>
 
             renderTools('All'); // Initial render
 
+            // --- Chart Data (expanded, unchanged) ---
             const chartData = {
                 'Setup Complexity (Lower is Better)': {
                     'DuckDB': { value: 5, source: 'duckdb_setup' },
@@ -617,10 +612,10 @@ print(summary)</code></pre>
                 },
                 'Local Analytical Performance': {
                     'DuckDB': { value: 5, source: 'duckdb_perf' },
-                    'PlanetScale': { value: 1, source: 'planetscale_perf' }, // PlanetScale is OLTP, not strong for local analytics
+                    'PlanetScale': { value: 1, source: 'planetscale_perf' },
                     'PostgreSQL': { value: 3, source: 'pg_analytical_perf' },
-                    'MongoDB': { value: 2, source: 'mongodb_perf' }, // MongoDB has aggregation but not columnar OLAP strengths
-                    'BigQuery / Snowflake': { value: 5, source: 'cloud_dw_perf' }, // Excellent for analytics once data is in cloud
+                    'MongoDB': { value: 2, source: 'mongodb_perf' },
+                    'BigQuery / Snowflake': { value: 5, source: 'cloud_dw_perf' },
                     'SQLite': { value: 1, source: 'sqlite_perf' }
                 },
                 'Application Scalability': {
@@ -641,6 +636,20 @@ print(summary)</code></pre>
                 featureSelector.appendChild(option);
             });
 
+            // Global function to handle clicks on the source button within the custom tooltip
+            function handleSourceButtonClick(event) {
+                const sourceKey = event.target.dataset.sourceKey;
+                if (sourceKey) {
+                    // Hide the custom tooltip after click
+                    const tooltipEl = document.getElementById('chartjs-tooltip');
+                    if (tooltipEl) {
+                        tooltipEl.style.opacity = 0;
+                        tooltipEl.style.pointerEvents = 'none'; // Make it non-interactive when hidden
+                    }
+                    openModal(sourceKey);
+                }
+            }
+
             const ctx = document.getElementById('showdown-chart').getContext('2d');
             let myChart = new Chart(ctx, {
                 type: 'bar',
@@ -659,14 +668,12 @@ print(summary)</code></pre>
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    onClick: (event, elements) => {
-                        if (elements.length > 0) {
-                            const elementIndex = elements[0].index;
-                            const sourceKey = myChart.data.datasets[0].sourceKeys[elementIndex];
-                            openModal(sourceKey);
-                        }
-                    },
+                    // Remove onClick on the main chart itself if the tooltip button is the primary interaction
+                    // onClick: (event, elements) => { /* ... */ },
                     onHover: (event, chartElement) => {
+                        // The cursor change is now handled by the external tooltip itself via CSS 'pointer-events: auto'
+                        // and by the custom tooltip's internal button styling on hover.
+                        // However, we still want the bar itself to show a pointer cursor if it's clickable
                         event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
                     },
                     scales: {
@@ -693,52 +700,83 @@ print(summary)</code></pre>
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: { enabled: false }, // Custom "Source" button replaces default tooltip
-                        annotation: {
-                            annotations: {
-                                // Dynamic annotations (Source button) will be drawn manually in afterDraw
+                        tooltip: {
+                            enabled: false, // Disable Chart.js default tooltip
+                            external: function(context) {
+                                let tooltipEl = document.getElementById('chartjs-tooltip');
+
+                                // Hide if no tooltip or if the tooltip is going away
+                                if (context.tooltip.opacity === 0 || !context.tooltip.body || context.tooltip.dataPoints.length === 0) {
+                                    tooltipEl.style.opacity = 0;
+                                    tooltipEl.style.pointerEvents = 'none'; // Make it non-interactive when hidden
+                                    return;
+                                }
+
+                                // Set Text and HTML
+                                const tooltipModel = context.tooltip;
+                                const title = tooltipModel.title[0]; // e.g., "DuckDB"
+                                const featureLabel = myChart.data.datasets[0].label; // e.g., "Setup Complexity (Lower is Better)"
+                                const value = tooltipModel.dataPoints[0].parsed.x; // The rating value (1-5)
+                                const sourceKey = myChart.data.datasets[0].sourceKeys[tooltipModel.dataPoints[0].dataIndex];
+
+                                const labels = ['N/A', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+                                const ratingText = labels[value];
+
+                                tooltipEl.innerHTML = `
+                                    <div class="font-bold text-gray-800 text-base">${title}</div>
+                                    <div class="text-gray-600 text-sm">${featureLabel}: <span class="font-semibold">${ratingText}</span></div>
+                                    <button data-source-key="${sourceKey}" class="source-tooltip-btn mt-2 px-3 py-1 bg-blue-600 text-white rounded-md text-xs hover:bg-blue-700 transition-colors duration-200 shadow-sm">
+                                        Click for Source Details
+                                    </button>
+                                `;
+
+                                // Re-attach event listener for the dynamically created button
+                                const sourceButton = tooltipEl.querySelector('.source-tooltip-btn');
+                                if (sourceButton) {
+                                    sourceButton.removeEventListener('click', handleSourceButtonClick); // Prevent multiple listeners
+                                    sourceButton.addEventListener('click', handleSourceButtonClick);
+                                }
+
+                                // Position the tooltip
+                                const position = context.chart.canvas.getBoundingClientRect();
+                                const chartLeft = position.left + window.pageXOffset;
+                                const chartTop = position.top + window.pageYOffset;
+
+                                // Determine tooltip position to avoid going off-screen
+                                let tooltipX = chartLeft + tooltipModel.caretX;
+                                let tooltipY = chartTop + tooltipModel.caretY;
+
+                                // Basic adjustment for tooltip width/height
+                                // You might need more complex logic for perfect placement in all scenarios
+                                const tooltipWidth = tooltipEl.offsetWidth;
+                                const tooltipHeight = tooltipEl.offsetHeight;
+
+                                // Prevent tooltip from going off right edge
+                                if (tooltipX + tooltipWidth > window.innerWidth) {
+                                    tooltipX = window.innerWidth - tooltipWidth - 10;
+                                }
+                                // Prevent tooltip from going off bottom edge
+                                if (tooltipY + tooltipHeight > window.innerHeight) {
+                                    tooltipY = window.innerHeight - tooltipHeight - 10;
+                                }
+                                // Ensure tooltip is not off left edge
+                                if (tooltipX < 0) {
+                                    tooltipX = 10;
+                                }
+                                // Ensure tooltip is not off top edge
+                                if (tooltipY < 0) {
+                                    tooltipY = 10;
+                                }
+
+
+                                tooltipEl.style.left = tooltipX + 'px';
+                                tooltipEl.style.top = tooltipY + 'px';
+                                tooltipEl.style.opacity = 1;
+                                tooltipEl.style.pointerEvents = 'auto'; // Make it interactive when visible
                             }
                         }
                     },
-                    // Custom plugin to draw "Source" button on bars
-                    afterDraw: (chart) => {
-                        const ctx = chart.ctx;
-                        chart.data.datasets.forEach((dataset, i) => {
-                            const meta = chart.getDatasetMeta(i);
-                            if (!meta.hidden) {
-                                meta.data.forEach((bar, index) => {
-                                    const dataValue = dataset.data[index];
-                                    if (dataValue > 0) { // Only draw if there's a bar
-                                        const yPos = bar.y;
-                                        // Position the button text slightly to the right of the bar's end
-                                        const xPos = bar.x + 10;
-                                        
-                                        ctx.fillStyle = '#6b7280'; // Text color for the "Source" label
-                                        ctx.font = '12px Inter';
-                                        ctx.textAlign = 'left';
-                                        ctx.textBaseline = 'middle';
-                                        
-                                        const buttonText = 'Source';
-                                        const textMetrics = ctx.measureText(buttonText);
-                                        const buttonWidth = textMetrics.width + 16; // Text width + padding
-                                        const buttonHeight = 22; // Height of the button area
-
-                                        // Draw button background
-                                        ctx.fillStyle = '#e5e7eb'; /* Light gray button background */
-                                        ctx.beginPath();
-                                        // Use rect with rounded corners if roundRect is not widely supported or causes issues
-                                        // For current purposes, roundRect is generally fine in modern browsers
-                                        ctx.roundRect(xPos, yPos - buttonHeight / 2, buttonWidth, buttonHeight, 5); // Smaller border-radius for the button
-                                        ctx.fill();
-
-                                        // Draw button text
-                                        ctx.fillStyle = '#4b5563'; /* Darker gray text */
-                                        ctx.fillText(buttonText, xPos + 8, yPos);
-                                    }
-                                });
-                            }
-                        });
-                    }
+                    // Removed afterDraw as custom tooltip replaces this functionality
                 }
             });
 
@@ -762,7 +800,7 @@ print(summary)</code></pre>
             // Initial chart render
             updateChart(featureSelector.value);
 
-            // Copy to clipboard functionality
+            // Copy to clipboard functionality (unchanged)
             const copyButtons = document.querySelectorAll('.copy-btn');
             copyButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -814,7 +852,7 @@ print(summary)</code></pre>
                 });
             });
 
-            // Active navigation link on scroll
+            // Active navigation link on scroll (unchanged)
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('main > section');
             
