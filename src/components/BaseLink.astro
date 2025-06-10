@@ -5,11 +5,13 @@ import type { HTMLAttributes } from 'astro/types';
 interface Props extends HTMLAttributes<'a'> {
   href: string;
 }
+
 const { href, ...props } = Astro.props;
 
-// import.meta.env.BASE_URL is Astro's rock-solid way to get the correct base path.
-// It will be '/' in dev and '/google-gemini-codes' in the production build.
-const resolvedUrl = new URL(href, import.meta.env.BASE_URL).pathname;
+// This is the corrected logic.
+// It takes the base path (e.g., '/google-gemini-codes') and the link href (e.g., '/data-tools')
+// and joins them, then cleans up any double slashes. This is a reliable way to build paths.
+const resolvedUrl = (import.meta.env.BASE_URL + href).replace(/\/+/g, '/');
 ---
 <a href={resolvedUrl} {...props}>
   <slot />
