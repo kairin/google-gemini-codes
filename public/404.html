@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+      // Get the current path, including the repository name (base path).
+      const repoPath = '/google-gemini-codes';
+      const path = window.location.pathname.startsWith(repoPath) 
+        ? window.location.pathname.substring(repoPath.length) 
+        : '/';
+      
+      // Store the path to be redirected to after the main script loads.
+      sessionStorage.redirect = path;
+
+      // Redirect to the home page. The home page's script will handle the rest.
+      window.location.href = repoPath + '/';
+    </script>
+  </head>
+  <body>
+    <p>If you are not redirected automatically, <a href="/google-gemini-codes/">click here</a>.</p>
+  </body>
+</html>
+```We can add a script to the homepage later to handle the redirect, but this is a solid start.
+
+---
+
+### Your Final Action Plan
+
+1.  **Confirm `deploy.yml`:** Ensure it contains the official Astro workflow you provided.
+2.  **Update `astro.config.mjs`:** Use the full version with both `site` and `base` defined.
+3.  **(Recommended) Create `src/components/BaseLink.astro`:** and update your other components to use it for internal links.
+4.  **Create `public/404.html`:** Add the fallback file.
+5.  **Commit and Push:**
+    ```bash
+    git add .
+    git commit -m "feat: implement official Astro deployment workflow and config"
+    git push origin main
+    ```
+
+This aligns with all best practices and should result in a perfectly working site, both locally and on GitHub Pages.

@@ -1,4 +1,6 @@
 ---
+import BaseLink from './BaseLink.astro'; // <-- STEP 1: Import the component
+
 interface Props {
   title: string;
   description: string;
@@ -7,7 +9,8 @@ interface Props {
 }
 const { title, description, href, icon } = Astro.props;
 ---
-<a href={href} class="group block bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-200">
+{/* STEP 2: Replace <a> with <BaseLink> */}
+<BaseLink href={href} class="group block bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-200">
     <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 text-blue-600 mb-4 transition-colors group-hover:bg-blue-600 group-hover:text-white">
         <i class:list={[icon, "fa-lg"]}></i>
     </div>
@@ -16,4 +19,4 @@ const { title, description, href, icon } = Astro.props;
     <div class="mt-4 font-semibold text-blue-600 group-hover:underline">
         Explore <i class="fa-solid fa-arrow-right ml-1"></i>
     </div>
-</a>
+</BaseLink>

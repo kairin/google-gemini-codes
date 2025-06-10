@@ -1,26 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BaseLink from '../../../components/BaseLink.astro'; // <-- STEP 1: Import
 
-// This function runs at build time to tell Astro which pages to create.
-export async function getStaticPaths() {
-  const guideEntries = await getCollection('data-tools');
-
-  // We map over the guide entries to create an array of pages.
-  return guideEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
-}
-
-// This part runs for each individual page that gets generated.
+export async function getStaticPaths() { /* ... */ }
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
-
 <BaseLayout title={entry.data.title} description={entry.data.description}>
     <article class="prose lg:prose-xl mx-auto">
-        <a href="/data-tools" class="no-underline mb-8 block text-blue-600 hover:underline">← Back to Data Tools Hub</a>
+        {/* STEP 2: Replace the "Back" link */}
+        <BaseLink href="/data-tools" class="no-underline mb-8 block text-blue-600 hover:underline">← Back to Data Tools Hub</BaseLink>
         
         <h1>{entry.data.title}</h1>
         <p class="text-lg text-gray-600">{entry.data.description}</p>
