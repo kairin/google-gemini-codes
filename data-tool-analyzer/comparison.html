@@ -7,10 +7,11 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.8; margin: 0; padding: 2em; background-color: #f8f9fa; color: #343a40; }
         .container { max-width: 960px; margin: 2rem auto; background: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
-        h1, h2, h3 { color: #0056b3; }
+        h1, h2, h3, h4 { color: #0056b3; }
         h1 { font-size: 2.4em; border-bottom: 3px solid #007bff; padding-bottom: 0.5rem; margin-bottom: 1rem; }
         h2 { font-size: 1.8em; margin-top: 3.5rem; border-bottom: 2px solid #e9ecef; padding-bottom: 0.5rem; }
         h3 { color: #343a40; font-size: 1.4em; }
+        h4 { font-size: 1.25em; margin-bottom: 0.5rem; }
         a { color: #007bff; text-decoration: none; font-weight: 500; }
         a:hover { text-decoration: underline; }
         .feature-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
@@ -18,17 +19,17 @@
         .feature-btn.active { background: #007bff; color: #fff; }
         .comparison-content { display: none; }
         .comparison-content.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .tool-card { border: 1px solid #dee2e6; border-top: 5px solid; border-radius: 8px; padding: 1.5rem; }
+        .tool-card { display: flex; flex-direction: column; border: 1px solid #dee2e6; border-top: 5px solid; border-radius: 8px; padding: 1.5rem; }
         .tool-card.power-query { border-top-color: #007bff; }
         .tool-card.duckdb { border-top-color: #4c956c; }
         .tool-card.graphrag { border-top-color: #8a6eb3; }
-        .tool-card h4 { margin-top: 0; font-size: 1.2em; }
-        .tool-card .rating { font-weight: bold; }
+        .tool-card p { margin-top: 0.5rem; }
+        .tool-card .label { font-size: 0.9em; font-weight: bold; color: #6c757d; display: block; margin-top: 1rem; }
         .persona-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; text-align: center; }
         .persona-card { background: #f8f9fa; padding: 2rem 1.5rem; border-radius: 8px; }
-        .persona-icon { font-size: 3em; margin-bottom: 1rem; }
+        .persona-icon { width: 48px; height: 48px; margin-bottom: 1rem; color: #0056b3; }
         .persona-card h3 { color: #0056b3; }
         .emerging-tech { background: #e9f7ff; border-left: 5px solid #007bff; padding: 1.5rem 2rem; border-radius: 8px; margin-top: 2rem; }
     </style>
@@ -40,7 +41,7 @@
         <p>This guide provides a detailed, interactive comparison to help you choose the best tool—or combination of tools—for your specific needs.</p>
 
         <h2>Interactive Feature Showdown</h2>
-        <p>Select a feature to see a detailed, side-by-side comparison.</p>
+        <p>Select a feature to see how each tool stacks up for different users and their goals.</p>
         <div class="feature-selector">
             <button class="feature-btn active" onclick="showFeature('use-case')">Primary Use Case</button>
             <button class="feature-btn" onclick="showFeature('performance')">Performance</button>
@@ -51,52 +52,49 @@
         <!-- Comparison Content Panels -->
         <div id="use-case" class="comparison-content active">
             <div class="comparison-grid">
-                <div class="tool-card power-query"><h4>Power Query</h4><p>The definitive tool for <strong>self-service ETL and data preparation</strong> for business intelligence within the Microsoft ecosystem.</p></div>
-                <div class="tool-card duckdb"><h4>DuckDB</h4><p>An engine for <strong>fast, in-process analytical SQL queries</strong> on local or remote data files. The go-to for data science and embedded analytics.</p></div>
-                <div class="tool-card graphrag"><h4>GraphRAG</h4><p>A framework for <strong>context-aware question-answering</strong> over private, interconnected data. Solves problems of knowledge discovery, not just aggregation.</p></div>
+                <div class="tool-card power-query"><h4>Power Query</h4><p>The definitive tool for self-service ETL and data preparation for business intelligence.</p><span class="label">Best for:</span><p>Business Analyst</p><span class="label">Typical Goal:</span><p>"I need to combine messy Excel files and a SharePoint list into a clean table for my weekly Power BI dashboard."</p></div>
+                <div class="tool-card duckdb"><h4>DuckDB</h4><p>An engine for fast, in-process analytical SQL queries on local or remote data files.</p><span class="label">Best for:</span><p>Data Scientist / Developer</p><span class="label">Typical Goal:</span><p>"I have a 50GB Parquet file on my laptop and need to run complex SQL aggregations for an exploratory analysis in Python."</p></div>
+                <div class="tool-card graphrag"><h4>GraphRAG</h4><p>A framework for context-aware question-answering over private, interconnected data.</p><span class="label">Best for:</span><p>AI/ML Engineer</p><span class="label">Typical Goal:</span><p>"I need to build a chatbot that can answer nuanced questions by understanding the relationships between employees and projects."</p></div>
             </div>
         </div>
         <div id="performance" class="comparison-content">
             <div class="comparison-grid">
-                <div class="tool-card power-query"><h4>Power Query</h4><p><span class="rating">Good:</span> Optimized for BI-scale data (millions of rows). Performance depends on the source and complexity of transformations.</p></div>
-                <div class="tool-card duckdb"><h4>DuckDB</h4><p><span class="rating">Exceptional:</span> Blistering speed for complex SQL aggregations on large Parquet/CSV files, often outperforming server-based databases.</p></div>
-                <div class="tool-card graphrag"><h4>GraphRAG</h4><p><span class="rating">Variable:</span> Performance is tied to two components: the query speed of the underlying graph database and the token-per-second latency of the LLM.</p></div>
+                <div class="tool-card power-query"><h4>Power Query</h4><p>Optimized for BI-scale data (millions of rows), with performance tied to data sources and transformation complexity.</p><span class="label">Best for:</span><p>Business Analyst</p><span class="label">Typical Goal:</span><p>"My data refresh needs to finish in a few minutes, not hours. It handles my typical sales data from SQL Server without issues."</p></div>
+                <div class="tool-card duckdb"><h4>DuckDB</h4><p>Exceptional speed for complex SQL aggregations on raw files, often outperforming server-based databases.</p><span class="label">Best for:</span><p>Data Scientist</p><span class="label">Typical Goal:</span><p>"I need to interactively query terabytes of data sitting in cloud storage without waiting. My queries should return in seconds."</p></div>
+                <div class="tool-card graphrag"><h4>GraphRAG</h4><p>Variable performance, dependent on the query speed of the graph database and the token latency of the LLM.</p><span class="label">Best for:</span><p>AI Engineer</p><span class="label">Typical Goal:</span><p>"The system must retrieve factual context from the graph in under 500ms so the LLM can generate a response without noticeable lag."</p></div>
             </div>
         </div>
         <div id="ease-of-use" class="comparison-content">
              <div class="comparison-grid">
-                <div class="tool-card power-query"><h4>Power Query</h4><p><span class="rating">Very High:</span> A user-friendly, graphical interface allows non-developers to perform complex data transformations with minimal code.</p></div>
-                <div class="tool-card duckdb"><h4>DuckDB</h4><p><span class="rating">High (for developers):</span> If you know SQL, it's trivial to use. Zero-dependency installation makes it incredibly easy to integrate into Python/Node.js/etc.</p></div>
-                <div class="tool-card graphrag"><h4>GraphRAG</h4><p><span class="rating">Low to Medium:</span> Requires significant expertise in data modeling, graph databases, and LLM orchestration. This is a framework, not an out-of-the-box tool.</p></div>
+                <div class="tool-card power-query"><h4>Power Query</h4><p>Very high ease of use, thanks to a graphical interface that allows for complex transformations with minimal code.</p><span class="label">Best for:</span><p>Non-developer / Business User</p><span class="label">Typical Goal:</span><p>"I want to merge, pivot, and clean my data by clicking buttons in a visual interface, without writing any code."</p></div>
+                <div class="tool-card duckdb"><h4>DuckDB</h4><p>High ease of use for developers who know SQL. Zero-dependency installation makes integration trivial.</p><span class="label">Best for:</span><p>Developer / Data Analyst</p><span class="label">Typical Goal:</span><p>"I want to `pip install duckdb` and immediately start running SQL queries in my script. No servers, no setup."</p></div>
+                <div class="tool-card graphrag"><h4>GraphRAG</h4><p>Low to medium ease of use. It is a complex framework requiring significant expertise to implement.</p><span class="label">Best for:</span><p>Specialized AI/Data Team</p><span class="label">Typical Goal:</span><p>"My team needs to orchestrate a data pipeline, a graph database, and an LLM API. This is a multi-month project, not a plug-and-play tool."</p></div>
             </div>
         </div>
         <div id="scalability" class="comparison-content">
             <div class="comparison-grid">
-                <div class="tool-card power-query"><h4>Power Query</h4><p><span class="rating">Desktop to Cloud:</span> Scales well for its intended BI use cases, especially when backed by Power BI dataflows in the cloud. Not for "big data" processing.</p></div>
-                <div class="tool-card duckdb"><h4>DuckDB</h4><p><span class="rating">Vertical Scalability:</span> Excels on a single, powerful machine. Can process datasets much larger than RAM. Not designed for distributed, multi-cluster computing.</p>
-                <div class="tool-card graphrag"><h4>GraphRAG</h4><p><span class="rating">Component-Based:</span> Scalability depends on its parts. The graph database can scale to billions of nodes, and LLM APIs can handle high request volumes.</p></div>
+                <div class="tool-card power-query"><h4>Power Query</h4><p>Scales from the desktop to the cloud via Power BI dataflows for departmental BI workloads.</p><span class="label">Best for:</span><p>Enterprise BI Analyst</p><span class="label">Typical Goal:</span><p>"My personal report needs to be promoted to a shared dataset in the Power BI service that refreshes automatically for the entire department."</p></div>
+                <div class="tool-card duckdb"><h4>DuckDB</h4><p>Excels at vertical scalability, processing datasets much larger than RAM on a single powerful machine.</p><span class="label">Best for:</span><p>Backend Developer</p><span class="label">Typical Goal:</span><p>"Our web app needs an embedded analytical engine that can handle thousands of users on a single server without the overhead of a distributed cluster."</p></div>
+                <div class="tool-card graphrag"><h4>GraphRAG</h4><p>Scalability is component-based, depending on the underlying graph database and LLM provider.</p><span class="label">Best for:</span><p>Platform Engineer / MLOps</p><span class="label">Typical Goal:</span><p>"Our knowledge graph is growing to billions of relationships. We need a graph DB that can scale, and an LLM that handles thousands of requests per minute."</p></div>
             </div>
         </div>
 
         <h2>Who Are You? The Ideal User Profile</h2>
         <div class="persona-grid">
             <div class="persona-card">
-                <div class="persona-icon">📊</div>
+                <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" /></svg>
                 <h3>The Business Analyst</h3>
-                <p><strong>Goal:</strong> Clean messy data from various sources to build a weekly report.
-                <br><strong>Top Choice:</strong> Power Query</p>
+                <p><strong>Goal:</strong> Clean messy data from various sources to build a weekly report.<br><strong>Top Choice:</strong> Power Query</p>
             </div>
             <div class="persona-card">
-                <div class="persona-icon">💻</div>
+                <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>
                 <h3>The Data Scientist/Developer</h3>
-                <p><strong>Goal:</strong> Quickly explore and analyze a large dataset on a laptop using SQL.
-                <br><strong>Top Choice:</strong> DuckDB</p>
+                <p><strong>Goal:</strong> Quickly explore and analyze a large dataset on a laptop using SQL.<br><strong>Top Choice:</strong> DuckDB</p>
             </div>
             <div class="persona-card">
-                <div class="persona-icon">🧠</div>
+                 <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9.75-1.5a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z" /></svg>
                 <h3>The AI Engineer</h3>
-                <p><strong>Goal:</strong> Build a system that can answer complex questions about interconnected data.
-                <br><strong>Top Choice:</strong> GraphRAG</p>
+                <p><strong>Goal:</strong> Build a system that can answer complex questions about interconnected data.<br><strong>Top Choice:</strong> GraphRAG</p>
             </div>
         </div>
 
