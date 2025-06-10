@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <h1 class="text-3xl font-bold mb-6">Data Tools Hub</h1>
+  <p class="mb-4">This section explores various data tools through guides, comparisons, and practical usage examples.</p>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <a href="/data-tools/comparison" class="block bg-white shadow-md rounded-xl p-6 hover:ring-2 ring-blue-500 transition">
+      <h2 class="text-xl font-semibold mb-2">🧪 Tool Comparison</h2>
+      <p>Explore a high-level comparison of Power Query, DuckDB, and GraphRAG for different data tasks.</p>
+    </a>
+
+    <a href="/data-tools/guides/power-query-guide" class="block bg-white shadow-md rounded-xl p-6 hover:ring-2 ring-blue-500 transition">
+      <h2 class="text-xl font-semibold mb-2">📊 Power Query Guide</h2>
+      <p>A practical walkthrough on how to use Power Query for data transformations.</p>
+    </a>
+
+    <a href="/data-tools/guides/duckdb-guide" class="block bg-white shadow-md rounded-xl p-6 hover:ring-2 ring-blue-500 transition">
+      <h2 class="text-xl font-semibold mb-2">🦆 DuckDB Guide</h2>
+      <p>Learn how DuckDB fits into modern analytics workflows.</p>
+    </a>
+
+    <a href="/data-tools/guides/graphrag-guide" class="block bg-white shadow-md rounded-xl p-6 hover:ring-2 ring-blue-500 transition">
+      <h2 class="text-xl font-semibold mb-2">📚 GraphRAG Guide</h2>
+      <p>Understand how to use graph-based retrieval-augmented generation with your data.</p>
+    </a>
+  </div>
+</BaseLayout>
+

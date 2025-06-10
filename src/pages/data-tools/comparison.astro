@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <h1 class="text-3xl font-bold mb-6">🧪 Tool Comparison</h1>
+  <p class="mb-6">Compare Power Query, DuckDB, and GraphRAG across dimensions like usability, performance, and integration.</p>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-sm md:text-base">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="py-3 px-4 text-left font-semibold">Feature</th>
+          <th class="py-3 px-4 text-left font-semibold">Power Query</th>
+          <th class="py-3 px-4 text-left font-semibold">DuckDB</th>
+          <th class="py-3 px-4 text-left font-semibold">GraphRAG</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr>
+          <td class="py-3 px-4 font-medium">Ease of Use</td>
+          <td class="py-3 px-4">✅ Beginner friendly (GUI-based)</td>
+          <td class="py-3 px-4">🟡 CLI/SQL-based, steeper learning</td>
+          <td class="py-3 px-4">🔧 Requires LLM + DevOps knowledge</td>
+        </tr>
+        <tr>
+          <td class="py-3 px-4 font-medium">Speed</td>
+          <td class="py-3 px-4">🟢 Moderate on small data</td>
+          <td class="py-3 px-4">🚀 Blazing fast on local columnar data</td>
+          <td class="py-3 px-4">⚠️ Dependent on LLM + vector index</td>
+        </tr>
+        <tr>
+          <td class="py-3 px-4 font-medium">Best Use Case</td>
+          <td class="py-3 px-4">✅ Excel/Power BI data shaping</td>
+          <td class="py-3 px-4">🧪 Data science pipelines, ad-hoc SQL</td>
+          <td class="py-3 px-4">📚 Semantic search, complex querying</td>
+        </tr>
+        <tr>
+          <td class="py-3 px-4 font-medium">Offline/Local?</td>
+          <td class="py-3 px-4">🟡 Needs Excel/Power BI</td>
+          <td class="py-3 px-4">✅ Fully local</td>
+          <td class="py-3 px-4">🟡 Possible with local LLM setup</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</BaseLayout>
+

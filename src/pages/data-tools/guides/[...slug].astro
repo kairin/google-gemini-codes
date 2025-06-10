@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { MarkdownInstance } from 'astro';
+import { getCollection, getEntryBySlug } from 'astro:content';
+import type { APIContext } from 'astro';
+
+export async function getStaticPaths() {
+  const allPages = await getCollection('data-tools');
+  return allPages.map((entry) => ({
+    params: { slug: entry.slug.split('/') },
+    props: { entry },
+  }));
+}
+
+export async function get({ props }) {
+  return {
+    props,
+  };
+}
+
+const { entry } = Astro.props;
+---
+
+<BaseLayout>
+  <article class="prose prose-sky max-w-none">
+    <h1>{entry.data.title}</h1>
+    <entry.Content />
+  </article>
+</BaseLayout>
+

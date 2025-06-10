@@ -1,16 +1,18 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <h1 class="text-4xl font-bold mb-6">Welcome to Google Gemini Codes</h1>
+  <p>This website is a playground to document my learning on data tools, coding, and web development.</p>
+
+  <section class="mt-8">
+    <h2 class="text-2xl font-semibold mb-3">Explore:</h2>
+    <ul class="list-disc list-inside space-y-2">
+      <li><a href="/data-tools/" class="text-blue-600 hover:underline">Data Tools Hub</a></li>
+      <li><a href="/learning/github-pages-ssg" class="text-blue-600 hover:underline">Learning Projects</a></li>
+      <li><a href="https://kairin.github.io/google-gemini-codes/data-tool-analyzer/index.html" target="_blank" class="text-blue-600 hover:underline">Data Tool Analyzer (external)</a></li>
+    </ul>
+  </section>
+</BaseLayout>
+

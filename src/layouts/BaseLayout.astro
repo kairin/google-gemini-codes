@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Google Gemini Codes</title>
+  </head>
+  <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+    <header class="bg-blue-600 text-white p-4">
+      <nav class="container mx-auto flex justify-between items-center">
+        <a href="/" class="font-bold text-xl">Google Gemini Codes</a>
+        <ul class="flex space-x-4">
+          <li><a href="/" class="hover:underline">Home</a></li>
+          <li><a href="/data-tools/" class="hover:underline">Data Tools</a></li>
+          <li><a href="/learning/github-pages-ssg" class="hover:underline">Learning</a></li>
+          <li><a href="https://kairin.github.io/google-gemini-codes/data-tool-analyzer/index.html" target="_blank" class="hover:underline">Analyzer</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container mx-auto flex-grow p-6">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4 mt-auto">
+      &copy; 2025 Your Name. All rights reserved.
+    </footer>
+  </body>
+</html>
+
