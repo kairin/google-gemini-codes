@@ -1,6 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card from '../../components/Card.astro';
+
+// 1. Get all guides from the 'data-tools' collection
+const guides = await getCollection('data-tools');
+
+// 2. Sort them by the 'order' property we defined in the markdown files
+guides.sort((a, b) => a.data.order - b.data.order);
+
+const iconMap = {
+    'Power Query': 'fa-solid fa-file-excel',
+    'DuckDB': 'fa-solid fa-database',
+    'GraphRAG': 'fa-solid fa-diagram-project'
+}
 ---
 <BaseLayout title="Data Tool Analyzer" description="A hub for comparing data analysis tools.">
     <header class="text-center my-12">
@@ -15,18 +28,15 @@ import Card from '../../components/Card.astro';
             href="/data-tools/comparison"
             icon="fa-solid fa-table-list"
         />
-        <!-- We will link to the guides later -->
-        <Card
-            title="Power Query Guide"
-            description="A practical guide for business analysts to combine and clean Excel files."
-            href="#"
-            icon="fa-solid fa-file-excel"
-        />
-        <Card
-            title="DuckDB Guide"
-            description="Quickly analyze large Parquet files using DuckDB and Python without high memory usage."
-            href="#"
-            icon="fa-solid fa-database"
-        />
+
+        <!-- 3. Loop through the sorted guides and create a card for each one -->
+        {guides.map(guide => (
+            <Card
+                title={guide.data.title}
+                description={guide.data.description}
+                href={`/data-tools/guides/${guide.slug}`}
+                icon={iconMap[guide.data.title.split(' ').pop()] || 'fa-solid fa-book'}
+            />
+        ))}
     </div>
 </BaseLayout>
