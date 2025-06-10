@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Static Sites with Astro</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      background-color: #f7f9fc;
+      color: #333;
+    }
+    header, footer {
+      background-color: #1a1a1a;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav a {
+      color: #61dafb;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .card h2 {
+      margin-top: 0;
+    }
+    .icon {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Modern Static Sites with Astro</h1>
+    <nav>
+      <a href="#astro">Astro</a>
+      <a href="#jekyll">Jekyll</a>
+      <a href="#eleventy">Eleventy</a>
+      <a href="#hugo">Hugo</a>
+      <a href="https://kairin.github.io/google-gemini-codes/data-tool-analyzer/index.html">↗ Data Tool Analyzer</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section id="astro" class="card">
+      <h2><span class="icon">🚀</span>Using Astro with GitHub Pages</h2>
+      <p>Astro is a modern static site generator built for performance and flexibility. Here's how to get started:</p>
+      <ul>
+        <li>Install Astro: <code>npm create astro@latest</code></li>
+        <li>Develop your site locally: <code>npm run dev</code></li>
+        <li>Build your static site: <code>npm run build</code></li>
+        <li>Deploy with GitHub Actions using <code>withastro/action</code>.</li>
+      </ul>
+      <p><strong>Benefits:</strong> partial hydration, supports React/Svelte, fast performance, clean output.</p>
+    </section>
+
+    <section id="jekyll" class="card">
+      <h2><span class="icon">💎</span>Using Jekyll with GitHub Pages</h2>
+      <p>Jekyll is supported natively by GitHub Pages. To use it:</p>
+      <ul>
+        <li>Structure content in <code>_data</code> and <code>_layouts</code></li>
+        <li>Write pages in Markdown or HTML with Liquid templates</li>
+        <li>Push to GitHub; Pages will build automatically</li>
+      </ul>
+    </section>
+
+    <section id="eleventy" class="card">
+      <h2><span class="icon">🕚</span>Using Eleventy (11ty)</h2>
+      <p>Eleventy is a simple and flexible SSG for building content-rich sites:</p>
+      <ul>
+        <li>Install: <code>npm init @11ty/eleventy</code></li>
+        <li>Supports multiple template languages (Markdown, Nunjucks, etc.)</li>
+        <li>Use GitHub Actions to automate builds</li>
+      </ul>
+    </section>
+
+    <section id="hugo" class="card">
+      <h2><span class="icon">⚙️</span>Using Hugo</h2>
+      <p>Hugo is known for speed. It's Go-based and easy to use:</p>
+      <ul>
+        <li>Install: <code>brew install hugo</code> (Mac) or follow site instructions</li>
+        <li>Generate site: <code>hugo</code></li>
+        <li>Deploy using GitHub Actions with the Hugo build step</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2><span class="icon">🔁</span>Reuse & Automation</h2>
+      <p>Every setup shares this reusable pattern:</p>
+      <ul>
+        <li>Write content in Markdown, YAML, or JSON</li>
+        <li>Use layout/templates to control structure</li>
+        <li>Automate builds with GitHub Actions</li>
+        <li>Host for free on GitHub Pages</li>
+      </ul>
+      <p>This allows you to scale your learning and publish content fast.</p>
+    </section>
+  </div>
+
+  <footer>
+    <p>Built with ❤️ using GitHub Pages. Future-focused on Astro 🚀</p>
+  </footer>
+</body>
+</html>
