@@ -1,0 +1,23 @@
+---
+const links = [
+    { href: "/", label: "Home" },
+    { href: "/data-tools", label: "Data Tools" },
+    { href: "/f5-vpn", label: "F5 VPN" },
+    { href: "/learning/github-pages-ssg", label: "Learning" },
+];
+---
+<header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
+    <nav class="container mx-auto flex justify-between items-center p-4">
+        <a href="/" class="text-xl font-bold text-blue-600 hover:text-blue-800 transition-colors">
+            🚀 Google Gemini Codes
+        </a>
+        <div class="hidden md:flex space-x-6">
+            {links.map(link => (
+                <a href={link.href} class="text-gray-600 hover:text-blue-600 font-medium transition-colors">{link.label}</a>
+            ))}
+        </div>
+        <a href="https://github.com/kairin/google-gemini-codes" target="_blank" class="hidden sm:inline-block bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-900 transition-colors">
+            View on GitHub <i class="fa-brands fa-github ml-1"></i>
+        </a>
+    </nav>
+</header>

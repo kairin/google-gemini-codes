@@ -1,42 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
+<BaseLayout title="Modern Static Sites" description="A guide to modern static site generators.">
+    <div class="prose lg:prose-xl mx-auto">
+        <h1>Modern Static Sites with Astro</h1>
+        <p>This page explores modern static site generators and the power of GitHub Actions for automated deployment.</p>
 
-<BaseLayout>
-  <h1 class="text-3xl font-bold mb-6">🚀 Hosting Astro on GitHub Pages</h1>
-
-  <p class="mb-4">This guide walks you through deploying your Astro site to GitHub Pages using static site generation (SSG).</p>
-
-  <h2 class="text-xl font-semibold mt-8 mb-2">Step 1: Configure <code>astro.config.mjs</code></h2>
-  <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
-import { defineConfig } from "astro/config";
-import tailwind from "@tailwindcss/vite";
-import { githubPages } from "@astrojs/github";
-
-export default defineConfig({
-  output: "static",
-  vite: {
-    plugins: [tailwind()],
-  },
-  integrations: [githubPages()],
-});
-  </pre>
-
-  <h2 class="text-xl font-semibold mt-8 mb-2">Step 2: Build the site</h2>
-  <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
-npm run build
-  </pre>
-
-  <h2 class="text-xl font-semibold mt-8 mb-2">Step 3: Push to GitHub</h2>
-  <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
-git init
-git remote add origin https://github.com/your-username/your-repo.git
-git checkout -b gh-pages
-git add dist -f
-git commit -m "Deploy Astro site"
-git subtree push --prefix dist origin gh-pages
-  </pre>
-
-  <p class="mt-6">🔒 Don’t forget to enable GitHub Pages in the repo settings and point it to the <code>gh-pages</code> branch!</p>
+        <h2>Using Astro with GitHub Pages</h2>
+        <p>Astro is a modern static site generator built for performance and flexibility.</p>
+        <ul>
+            <li>Install Astro: <code>npm create astro@latest</code></li>
+            <li>Develop locally: <code>npm run dev</code></li>
+            <li>Build your site: <code>npm run build</code></li>
+            <li>Deploy with GitHub Actions.</li>
+        </ul>
+        <p><strong>Benefits:</strong> partial hydration, fast performance, and a great developer experience.</p>
+    </div>
 </BaseLayout>
-
