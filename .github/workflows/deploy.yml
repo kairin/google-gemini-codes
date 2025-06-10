@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Run automatically when you push to the "main" branch
+  push:
+    branches:
+      - main
+  # Allows you to run this workflow manually from the Actions tab on GitHub
+  workflow_dispatch:
+
+# Allow GITHUB_TOKEN to write to repo
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+      
+      - name: Install, build, and upload your site
+        uses: withastro/action@v2
+        # with:
+          # path: . # The root of your project (where package.json is)
+          # node-version: 20 # The specific version of Node.js to use
+          # package-manager: npm # The package manager to use
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy your site
+        id: deployment
+        uses: actions/deploy-pages@v4
