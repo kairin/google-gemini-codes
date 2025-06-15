@@ -1,49 +1,150 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentHeader from '@/components/ContentHeader.astro';
+import Card from '@/components/Card.astro';
+import BaseLink from '@/components/BaseLink.astro';
 ---
-<BaseLayout title="Dockerized F5 VPN Solution" description="A technical guide to containerizing the F5 BIG-IP APM client.">
+<BaseLayout 
+    title="Dockerized F5 VPN Solution"
+    description="A technical deep-dive into containerizing the F5 BIG-IP APM client for streamlined and secure intranet access."
+>
+    <!-- Page Header (reusing the component from the math page) -->
+    <ContentHeader
+        title="Dockerized F5 VPN Solution"
+        description="A technical deep-dive into containerizing the F5 BIG-IP APM client for streamlined and secure intranet access."
+    />
 
-    <header class="text-center my-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-slate-100">Dockerized F5 VPN Solution</h1>
-        <p class="mt-4 text-lg text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">An interactive guide to containerizing the F5 BIG-IP APM client for streamlined and secure intranet access.</p>
+    <!-- Scrollspy Navigation Header (unique to this page) -->
+    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-[72px] z-40 border-b dark:border-slate-700 -mx-4 px-4 mb-12">
+        <div class="container mx-auto flex justify-center items-center py-3">
+            <nav class="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-6 text-sm sm:text-base">
+                <a href="#challenge" class="nav-link active">The Challenge</a>
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#implementation" class="nav-link">Implementation</a>
+                <a href="#troubleshooting" class="nav-link">Troubleshooting</a>
+            </nav>
+        </div>
     </header>
 
-    <article class="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
-        
-        <h2>The Challenge: F5 Client Deep Dive</h2>
-        <p>
-            Successfully containerizing the F5 BIG-IP APM client requires a deep understanding of its specific characteristics and dependencies. The client is not a simple command-line tool, presenting several technical hurdles on modern Linux systems like Ubuntu 24.04 LTS.
-        </p>
-        
-        <h3>Primary Hurdles</h3>
-        <ul>
-            <li><strong>GUI-Dependent:</strong> Requires a graphical environment, as it's typically launched from a browser.</li>
-            <li><strong>Legacy Libraries:</strong> Critically depends on <code>libxml2.so.2</code> and OpenSSL 1.x, which are absent in modern Ubuntu.</li>
-            <li><strong>Bundled QT:</strong> F5 bundles its own QT libraries, which is helpful but requires careful handling of other system dependencies.</li>
-        </ul>
+    <!-- Main Content Sections -->
+    <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-12">
 
-        <h2>Solution Architecture</h2>
-        <p>The core architectural choice is how to provide a graphical user interface for the browser from within a headless Docker container. We strongly recommend the VNC/noVNC approach over X11 Forwarding due to its superior portability and security.</p>
+        <!-- Section 1: The Challenge -->
+        <section id="challenge">
+            <h2 class="!text-3xl !mb-6">The Challenge: Why F5 is Different</h2>
+            <p>Successfully containerizing the F5 BIG-IP APM client requires a deep understanding of its unique characteristics. Unlike many modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
+            <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-4 my-8 text-center">
+                <div class="p-4 bg-red-100 dark:bg-red-900/50 rounded-lg shadow"><strong class="text-red-800 dark:text-red-200">GUI-Dependent</strong><p class="text-sm text-red-700 dark:text-red-300">Requires a graphical environment.</p></div>
+                <div class="p-4 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg shadow"><strong class="text-yellow-800 dark:text-yellow-200">Legacy Libraries</strong><p class="text-sm text-yellow-700 dark:text-yellow-300">Depends on `libxml2.so.2`.</p></div>
+                <div class="p-4 bg-blue-100 dark:bg-blue-900/50 rounded-lg shadow"><strong class="text-blue-800 dark:text-blue-200">Bundled Runtimes</strong><p class="text-sm text-blue-700 dark:text-blue-300">Requires careful dependency handling.</p></div>
+            </div>
+            <p>This project's goal was to create a self-contained, portable environment that abstracts away these complexities, providing secure intranet access from any machine with Docker.</p>
+        </section>
 
-        <h2>Step-by-Step Implementation</h2>
-        
-        <h3>Part 1: Dockerfile & Dependencies</h3>
-        <p>The Dockerfile serves as the blueprint for your container. It begins with a robust base image, typically <code>ubuntu:24.04</code> LTS for its stability and modern package support. The crucial steps involve installing the F5 VPN client and addressing its unique legacy dependencies.</p>
-        
-        <h3>Part 2: GUI & Browser Setup</h3>
-        <p>To provide a graphical interface, a virtual display and VNC server are installed, along with your chosen web browsers. It's recommended to install Firefox from the Mozilla Team PPA to avoid snap-related issues in Docker.</p>
+        <!-- Section 2: Architecture -->
+        <section id="architecture">
+            <h2 class="!text-3xl !mb-6">Architectural Decision: VNC vs. X11</h2>
+            <p>The core architectural choice is how to provide a graphical user interface from within a headless Docker container. While X11 forwarding is possible, it is often brittle and platform-dependent. We strongly recommend the VNC approach for its robustness and portability.</p>
+            <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
+                <div class="border border-red-300 dark:border-red-700 rounded-lg p-6 bg-red-50 dark:bg-red-900/30">
+                    <h3 class="text-xl font-bold text-red-800 dark:text-red-200">X11 Forwarding</h3>
+                    <p class="text-red-700 dark:text-red-300 mt-2">Directly forwards the container's display to the host's X server. Incurs high setup complexity and security risks.</p>
+                </div>
+                <div class="border border-green-300 dark:border-green-700 rounded-lg p-6 bg-green-50 dark:bg-green-900/30">
+                    <h3 class="text-xl font-bold text-green-800 dark:text-green-200">VNC / noVNC (Recommended)</h3>
+                    <p class="text-green-700 dark:text-green-300 mt-2">Runs a virtual display and VNC server *inside* the container, making it accessible from any modern web browser.</p>
+                </div>
+            </div>
+        </section>
 
-        <h3>Part 3: VPN Automation with <code>f5fpc</code> CLI</h3>
-        <p>Automating the VPN connection reliably is best achieved using the F5 command-line client, <code>f5fpc</code>, rather than relying on browser GUI automation. Use environment variables or Docker secrets to handle credentials securely.</p>
-        
-        <h3>Part 4: Docker Networking</h3>
-        <p>Correct network configuration is vital. The container must be run with <code>--cap-add=NET_ADMIN</code> to modify routing tables. A common issue is IP address conflicts between Docker's default network and your corporate VPN's IP range. Using <code>--net=host</code> is a simple fix, but modifying Docker's default bridge network (`bip`) is more secure.</p>
+        <!-- Section 3: Implementation -->
+        <section id="implementation">
+            <h2 class="!text-3xl !mb-6">Implementation Highlights</h2>
+            <p>The solution is built in four key stages within the Dockerfile and entrypoint scripts. Each stage addresses a specific technical requirement.</p>
+            <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
+                <Card icon="fa-brands fa-docker" title="Dockerfile & Dependencies" blurb="The Dockerfile starts with Ubuntu 24.04, installs the F5 client, and crucially, creates a symbolic link for the missing libxml2.so.2 library." href="#!" />
+                <Card icon="fa-solid fa-desktop" title="GUI & Browser Setup" blurb="Installs a virtual display (Xvfb), VNC server, and browsers like Firefox and Chrome using their official non-snap installation methods." href="#!" />
+                <Card icon="fa-solid fa-robot" title="VPN Automation" blurb="An entrypoint script uses the `f5fpc` command-line tool to establish the VPN connection, passing credentials securely via environment variables." href="#!" />
+                <Card icon="fa-solid fa-network-wired" title="Docker Networking" blurb="The container is run with --cap-add=NET_ADMIN. To avoid IP conflicts, using --net=host is the simplest solution for routing." href="#!" />
+            </div>
+        </section>
 
-        <h2>Troubleshooting</h2>
-        <ul>
-            <li><strong>Issue: <code>libxml2.so.2</code> not found.</strong><br>Resolution: This is expected on Ubuntu 22.04/24.04. You must manually install a compatible version or create a symlink in your Dockerfile.</li>
-            <li><strong>Issue: VPN connection reset errors / No intranet access.</strong><br>Resolution: This is almost always an IP address conflict. Use <code>--net=host</code> or change Docker's default IP range.</li>
-        </ul>
-        
-    </article>
+        <!-- Section 4: Troubleshooting -->
+        <section id="troubleshooting">
+            <h2 class="!text-3xl !mb-6">Key Troubleshooting Steps</h2>
+            <p>Two issues account for nearly all common failures with this setup:</p>
+            <ul class="list-decimal !pl-5 space-y-4">
+                <li>
+                    <strong>`libxml2.so.2` Not Found:</strong> This is expected on modern Ubuntu. You must manually create a symlink in your Dockerfile from an existing `libxml2.so` version to the name the F5 client expects.
+                    <div class="text-sm p-3 bg-gray-100 dark:bg-slate-800 rounded-md mt-2 font-mono">ln -s /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.14 /usr/lib/x86_64-linux-gnu/libxml2.so.2</div>
+                </li>
+                <li>
+                    <strong>VPN Connection Resets:</strong> This indicates an IP address conflict. The Docker container's default network (e.g., `172.17.0.0/16`) is likely clashing with your corporate VPN's IP range. The most reliable fix is to run the container with the `--net=host` flag.
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="text-center mt-16">
+        <BaseLink href="/" text="Back to Home" style="secondary" icon="fa-solid fa-arrow-left" />
+    </div>
 </BaseLayout>
+
+<!-- Page-specific styles for the scrollspy nav -->
+<style>
+  .nav-link {
+    @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent;
+  }
+  .nav-link.active {
+    @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold;
+  }
+</style>
+
+<!-- Page-specific scrollspy script, same as the one on the math page -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
+        const sections = document.querySelectorAll('section[id]');
+        const header = document.querySelector('header.sticky'); // Target the sticky header
+        const headerHeight = header ? header.offsetHeight : 72;
+
+        if (navLinks.length === 0 || sections.length === 0) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { 
+            // Adjust rootMargin to account for the sticky header's height
+            rootMargin: `-${headerHeight}px 0px -70% 0px` 
+        });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Add smooth scroll behavior
+         navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+    });
+</script>
