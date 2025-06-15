@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /*
  This file contains global styles and animations used across the site.
 */
