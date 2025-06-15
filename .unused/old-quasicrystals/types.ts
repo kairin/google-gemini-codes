@@ -1,3 +1,4 @@
+
 export enum ContentItemType {
   Heading1 = 'h1',
   Heading2 = 'h2',
@@ -23,20 +24,13 @@ export interface MainContentItem {
 }
 
 export interface RelatedArticle {
-  id:string;
+  id: string;
   title: string;
   sourceName: string;
   dateOrInfo: string;
   imageUrl: string;
-  url: string; 
-  summary: string; 
-  retrievedDate?: string;
-  sourceIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-}
-
-export interface ContentSection {
-  id: string; // Will be derived from titleItem.id or text
-  titleItem: MainContentItem;
-  contentItems: MainContentItem[];
-  initialOpen?: boolean;
+  url: string; // Added: Link to the actual article
+  summary: string; // Added: Brief description of the article
+  retrievedDate?: string; // Added: Optional date of retrieval
+  sourceIcon?: React.FC<React.SVGProps<SVGSVGElement>>; // Optional: for specific source icons
 }

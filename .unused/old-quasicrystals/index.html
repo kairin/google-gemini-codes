@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      /* Default text color for the body if not overridden by Tailwind utilities elsewhere */
-       color: #E5E7EB; /* gray-200 */
+      font-family: 'Inter', sans-serif; /* A nice default sans-serif font */
     }
     /* Custom scrollbar for webkit browsers */
     ::-webkit-scrollbar {
@@ -20,26 +19,15 @@
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #111827; /* gray-900 */
+      background: #1a202c; /* gray-900 */
     }
     ::-webkit-scrollbar-thumb {
-      background: #4B5563; /* gray-600 */
+      background: #4a5568; /* gray-600 */
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #6B7280; /* gray-500 */
+      background: #718096; /* gray-500 */
     }
-    /* Basic focus visibility for accessibility on non-input elements */
-    *:focus-visible {
-        outline: 2px solid #38BDF8; /* sky-400 */
-        outline-offset: 2px;
-        border-radius: 2px; /* Optional: adds rounded corners to the outline */
-    }
-    /* Remove default outline for elements that will have custom focus-visible (like buttons with rings) */
-    button:focus, [role="button"]:focus {
-        outline: none;
-    }
-
   </style>
 <script type="importmap">
 {
@@ -52,7 +40,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-gray-900 text-gray-200">
+<body class="bg-gray-900 text-gray-100">
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
