@@ -73,7 +73,7 @@ export const GirihTileDisplay: React.FC<GirihTileDisplayProps> = ({
       stroke={strokeColor}
       strokeWidth={strokeWidthForPath}
       vectorEffect="non-scaling-stroke" // Crucial for consistent stroke independent of CSS scale
-      transformOrigin="0 0" 
+      transform-origin="0 0" 
       style={{ transform: `scale(${scale}) rotate(${rotation}deg)` }}
     />
   );
