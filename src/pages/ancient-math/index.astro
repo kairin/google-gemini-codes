@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card from '../../components/Card.astro';
 ---
-<BaseLayout title="Ancient Sophistication" description="Islamic Architecture & Modern Science">
+<BaseLayout title="Ancient Sophistication" description="The mathematics of Girih tiles and tessellation in Islamic architecture.">
 
     <!-- Header & Sub-Navigation -->
     <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-[72px] z-40 border-b dark:border-slate-700 -mx-4 px-4 mb-12">
@@ -10,33 +10,75 @@ import Card from '../../components/Card.astro';
             <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Ancient Sophistication</h2>
             <nav class="hidden md:flex space-x-6">
                 <a href="#introduction" class="nav-link active">Introduction</a>
-                <a href="#patterns" class="nav-link">The Patterns</a>
-                <a href="#science" class="nav-link">The Science</a>
-                <a href="#legacy" class="nav-link">Legacy</a>
+                <a href="#the-tiles" class="nav-link">The Tiles</a>
+                <a href="#the-patterns" class="nav-link">The Patterns</a>
             </nav>
         </div>
     </header>
 
     <!-- Main Content Sections -->
     <div class="container mx-auto">
-        <!-- Section 1: Introduction, now with the correct non-linking cards -->
+        <!-- Section 1: Introduction (Unchanged) -->
         <section id="introduction" class="text-center py-16">
             <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">An Integration of Knowledge</h1>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">
-                This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. The mathematical genius in Islamic patterns represents a sophisticated, intuitive grasp of complex phenomena, achieved without modern computers and challenging a linear view of scientific progress.
+                The geometric ornamentation in Islamic art reveals a profound mathematical understanding. This exploration focuses on Girih patterns, which are based on a set of five fundamental tiles that interlock to form complex and intricate tessellations.
             </p>
-
-            <!-- Correctly using the Card component as non-links by omitting the 'href' prop -->
             <div class="grid md:grid-cols-3 gap-8 my-12 max-w-6xl mx-auto text-left">
-                <Card icon="fa-solid fa-infinity" title="Ancient Mathematical Wisdom">
-                    <p>Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.</p>
+                <Card icon="fa-solid fa-infinity" title="Mathematical Wisdom">
+                    <p>The beauty of Girih patterns stems from the fact that they can create aperiodic arrangements, meaning the patterns do not repeat themselves in a regularly translating manner, a concept that predates modern quasicrystal discovery.</p>
                 </Card>
                 <Card icon="fa-solid fa-compass-drafting" title="Artisans as Pioneers">
-                    <p>Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.</p>
+                    <p>Medieval Islamic artisans likely used tools like compasses and straightedges, relying on their deep knowledge of geometry and symmetry to create these elaborate patterns without modern computational aids.</p>
                 </Card>
                 <Card icon="fa-solid fa-eye" title="A Different Way of Seeing">
-                     <p>Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.</p>
+                     <p>The visual pattern is created by the lines or "strapwork" drawn on the tiles, not the tile boundaries themselves. These lines create a continuous network across the entire tiling, forming the intricate final designs.</p>
                 </Card>
+            </div>
+        </section>
+
+        <!-- Section 2: The Five Girih Tiles - NOW WITH SVGs -->
+        <section id="the-tiles" class="py-16">
+            <div class="text-center">
+                <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">The Five Fundamental Girih Tiles</h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">All Girih tiles have sides of the same length, and all their angles are multiples of 36°, allowing them to fit together seamlessly.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 my-12 max-w-7xl mx-auto text-center">
+                <!-- Decagon -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
+                    <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
+                        <polygon points="50,5 89,23 89,77 50,95 11,77 11,23" class="fill-blue-100 dark:fill-blue-900/50 stroke-blue-500 dark:stroke-blue-400" stroke-width="2"/>
+                    </svg>
+                    <h3 class="font-semibold dark:text-slate-200">Decagon</h3><p class="text-sm text-gray-500 dark:text-slate-400">10 sides, 144° angles</p>
+                </div>
+                <!-- Pentagon -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
+                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
+                        <polygon points="50,5 95,41 79,95 21,95 5,41" class="fill-green-100 dark:fill-green-900/50 stroke-green-500 dark:stroke-green-400" stroke-width="2"/>
+                    </svg>
+                    <h3 class="font-semibold dark:text-slate-200">Pentagon</h3><p class="text-sm text-gray-500 dark:text-slate-400">5 sides, 108° angles</p>
+                </div>
+                <!-- Bow Tie -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
+                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
+                        <polygon points="5,5 95,5 50,50 95,95 5,95 50,50" class="fill-purple-100 dark:fill-purple-900/50 stroke-purple-500 dark:stroke-purple-400" stroke-width="2"/>
+                    </svg>
+                    <h3 class="font-semibold dark:text-slate-200">Bow Tie</h3><p class="text-sm text-gray-500 dark:text-slate-400">Non-convex Hexagon</p>
+                </div>
+                 <!-- Elongated Hexagon -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
+                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
+                        <polygon points="21,5 79,5 95,50 79,95 21,95 5,50" class="fill-red-100 dark:fill-red-900/50 stroke-red-500 dark:stroke-red-400" stroke-width="2"/>
+                    </svg>
+                    <h3 class="font-semibold dark:text-slate-200">Elongated Hexagon</h3><p class="text-sm text-gray-500 dark:text-slate-400">Irregular Hexagon</p>
+                </div>
+                 <!-- Rhombus -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
+                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
+                        <polygon points="50,5 95,50 50,95 5,50" class="fill-yellow-100 dark:fill-yellow-900/50 stroke-yellow-500 dark:stroke-yellow-400" stroke-width="2"/>
+                    </svg>
+                    <h3 class="font-semibold dark:text-slate-200">Rhombus</h3><p class="text-sm text-gray-500 dark:text-slate-400">72° & 108° angles</p>
+                </div>
             </div>
         </section>
 

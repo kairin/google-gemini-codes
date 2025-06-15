@@ -1,48 +1,52 @@
-// An advanced, grid-based, non-overlapping Girih tile drawing library.
+// A new, mathematically correct, grid-based tessellation library.
 
 // --- Color Palettes (theme-aware) ---
 const palettes = {
-    // Inspired by your "DarkRainbow" / "sunflower" image
-    sunflower: {
-        light: ['#fde68a', '#facc15', '#eab308', '#ca8a04'], // Ambers/Yellows
-        dark: ['#a78bfa', '#8b5cf6', '#7c3aed', '#6d28d9'], // Purples
-        stroke: { light: '#b91c1c', dark: '#fca5a5' } // Red stroke
+    checkerboard: {
+        light: ['#e2e8f0', '#f1f5f9'], // slate-200, slate-100
+        dark: ['#1e293b', '#334155'],  // slate-900, slate-800
+        stroke: { light: '#94a3b8', dark: '#475569' }
     },
-    // Inspired by your "DarkBands" image
-    crystal: {
-        light: ['#a7f3d0', '#6ee7b7', '#34d399', '#10b981'], // Greens
-        dark: ['#7dd3fc', '#38bdf8', '#0ea5e9', '#0284c7'], // Light Blues
-        stroke: { light: '#4338ca', dark: '#a5b4fc' } // Indigo stroke
+    hexagonal: {
+        light: ['#a7f3d0', '#6ee7b7', '#34d399'],
+        dark: ['#a78bfa', '#8b5cf6', '#7c3aed'],
+        stroke: { light: '#4338ca', dark: '#a5b4fc' }
     },
-    // Inspired by your "LightTemperatureMap" image
-    carpet: {
-        light: ['#fecaca', '#fca5a5', '#f87171', '#ef4444'], // Reds
-        dark: ['#d946ef', '#c026d3', '#a21caf', '#86198f'], // Fuchsia
-        stroke: { light: '#b45309', dark: '#fcd34d' } // Amber stroke
+    rhombic: {
+        light: ['#fecaca', '#fca5a5', '#f87171'],
+        dark: ['#bae6fd', '#7dd3fc', '#38bdf8'],
+        stroke: { light: '#b45309', dark: '#fcd34d' }
     }
 };
 
-// --- Main Drawing Function (Internal) ---
+// --- Tile Geometry Definitions ---
+// All shapes are drawn relative to a center (0,0) with a consistent side length 's'
 function drawTile(ctx, type, x, y, size, rotation = 0, color, strokeColor) {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(rotation);
     ctx.beginPath();
-    // These shapes are designed to tessellate (fit together)
+    const s = size;
     switch (type) {
-        case 'hexagon':
-            for (let i = 0; i < 6; i++) ctx.lineTo(size * Math.cos(i * 2 * Math.PI / 6), size * Math.sin(i * 2 * Math.PI / 6));
+        case 'square':
+            ctx.rect(-s / 2, -s / 2, s, s);
             break;
-        case 'rhombus':
-            const angle = Math.PI / 3; // 60 degrees
-            ctx.moveTo(-size, 0); ctx.lineTo(0, size * Math.tan(angle / 2)); ctx.lineTo(size, 0); ctx.lineTo(0, -size * Math.tan(angle / 2));
+        case 'hexagon': // 120 degree angles
+            for (let i = 0; i < 6; i++) {
+                ctx.lineTo(s * Math.cos(i * Math.PI / 3), s * Math.sin(i * Math.PI / 3));
+            }
             break;
-        case 'triangle':
-            ctx.moveTo(0, -size * Math.sqrt(3) / 3); ctx.lineTo(-size / 2, size * Math.sqrt(3) / 6); ctx.lineTo(size / 2, size * Math.sqrt(3) / 6);
-            break;
+        case 'rhombus': // 72/108 degree angles
+             const rAngle1 = (72 / 2) * Math.PI / 180;
+             const rAngle2 = (108 / 2) * Math.PI / 180;
+             ctx.moveTo(0, -s * Math.sin(rAngle1));
+             ctx.lineTo(s * Math.cos(rAngle1), 0);
+             ctx.lineTo(0, s * Math.sin(rAngle1));
+             ctx.lineTo(-s * Math.cos(rAngle1), 0);
+             break;
     }
     ctx.closePath();
-    ctx.fillStyle = color + 'e6'; // 'e6' adds transparency for a layered look
+    ctx.fillStyle = color;
     ctx.fill();
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = 1.5;
@@ -50,72 +54,81 @@ function drawTile(ctx, type, x, y, size, rotation = 0, color, strokeColor) {
     ctx.restore();
 }
 
-// --- Shared Setup Function ---
+// --- Shared Canvas Setup ---
 function setupCanvas(canvas) {
     if (!canvas) return null;
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
-
     const width = canvas.width;
     const height = canvas.height;
     const isDark = document.documentElement.classList.contains('dark');
-    const bgColor = isDark ? '#1e293b' : '#f8fafc'; // slate-900 or slate-50
-
+    const bgColor = isDark ? '#0f172a' : '#f8fafc'; // slate-950 or slate-50
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, width, height);
     return { ctx, width, height, isDark };
 }
 
-// --- EXPORTED FUNCTION 1: For the "Random" button ---
-export function drawRandomPattern(canvas) {
+// --- EXPORTED PATTERN GENERATORS ---
+
+export function drawCheckerboardPattern(canvas) {
     const setup = setupCanvas(canvas);
     if (!setup) return;
     const { ctx, width, height, isDark } = setup;
+    const size = 50;
+    const palette = palettes.checkerboard;
+    const colors = isDark ? palette.dark : palette.light;
+    const stroke = isDark ? palette.stroke.dark : palette.stroke.light;
 
-    const size = 40;
-    const step = size * 1.75; // Step size to ensure no overlap
-    const tileTypes = ['hexagon', 'rhombus', 'triangle'];
-    const randomPalette = palettes[Object.keys(palettes)[Math.floor(Math.random() * 3)]];
-    const colors = isDark ? randomPalette.dark : randomPalette.light;
-    const stroke = isDark ? randomPalette.stroke.dark : randomPalette.stroke.light;
-
-    for (let y = -step; y < height + step; y += step) {
-        for (let x = -step; x < width + step; x += step) {
-            if (Math.random() > 0.3) { // 70% chance to place a tile
-                const rotation = Math.floor(Math.random() * 6) * (Math.PI / 3); // Snap to 60 degrees
-                const tile = tileTypes[Math.floor(Math.random() * tileTypes.length)];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                drawTile(ctx, tile, x, y, size, rotation, color, stroke);
-            }
+    for (let y = 0; y < height / size; y++) {
+        for (let x = 0; x < width / size; x++) {
+            const posX = x * size + size / 2;
+            const posY = y * size + size / 2;
+            const colorIndex = (x + y) % 2;
+            drawTile(ctx, 'square', posX, posY, size, 0, colors[colorIndex], stroke);
         }
     }
 }
 
-// --- EXPORTED FUNCTION 2: For the new preset buttons ---
-export function drawPresetPattern(canvas, presetName = 'sunflower') {
+export function drawHexagonalPattern(canvas) {
     const setup = setupCanvas(canvas);
     if (!setup) return;
     const { ctx, width, height, isDark } = setup;
-
-    const size = 35;
+    const size = 40; // This is the radius of the hexagon
     const stepX = size * 1.5;
     const stepY = size * Math.sqrt(3);
-    const palette = palettes[presetName];
+    const palette = palettes.hexagonal;
     const colors = isDark ? palette.dark : palette.light;
     const stroke = isDark ? palette.stroke.dark : palette.stroke.light;
-    
-    // A deterministic hexagonal grid algorithm
-    for (let y = 0; y < height / stepY + 1; y++) {
-        for (let x = 0; x < width / stepX + 1; x++) {
-            // Offset every other row to create a hexagonal pattern
+
+    for (let y = -1; y < height / stepY + 1; y++) {
+        for (let x = -1; x < width / stepX + 2; x++) {
             const posX = x * stepX + (y % 2) * (stepX / 2);
             const posY = y * stepY;
-            
-            // Use math to deterministically choose color and rotation
             const colorIndex = (x + y) % colors.length;
-            const rotation = ((x * 2 + y) % 6) * (Math.PI / 3);
-            
-            drawTile(ctx, 'hexagon', posX, posY, size, rotation, colors[colorIndex], stroke);
+            drawTile(ctx, 'hexagon', posX, posY, size, 0, colors[colorIndex], stroke);
+        }
+    }
+}
+
+export function drawRhombicPattern(canvas) {
+    const setup = setupCanvas(canvas);
+    if (!setup) return;
+    const { ctx, width, height, isDark } = setup;
+    const size = 40;
+    const palette = palettes.rhombic;
+    const colors = isDark ? palette.dark : palette.light;
+    const stroke = isDark ? palette.stroke.dark : palette.stroke.light;
+
+    const stepX = size * Math.cos((72/2) * Math.PI / 180) * 2;
+    const stepY = size * Math.sin((72/2) * Math.PI / 180) * 2;
+
+    for (let y = -1; y < height / stepY + 1; y++) {
+        for (let x = -1; x < width / stepX + 1; x++) {
+            const posX = x * stepX + (y % 2) * (stepX / 2);
+            const posY = y * stepY;
+            const colorIndex = (x + y) % colors.length;
+            const rotation = (y % 2 === 0) ? 0 : Math.PI;
+            drawTile(ctx, 'rhombus', posX, posY, size, rotation, colors[colorIndex], stroke);
         }
     }
 }

@@ -13,29 +13,18 @@ import Card from '../components/Card.astro';
     </header>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <Card
-            title="Data Tool Analyzer"
-            description="An interactive guide to choosing the right tool for your data needs, comparing Power Query, DuckDB, and GraphRAG."
-            href="/data-tools"
-            icon="fa-solid fa-magnifying-glass-chart"
-        />
-        <Card
-            title="Dockerized F5 VPN"
-            description="A technical deep-dive into containerizing the F5 BIG-IP client for secure, portable intranet access."
-            href="/f5-vpn"
-            icon="fa-solid fa-shield-halved"
-        />
-        <Card
-            title="Ancient Sophistication"
-            description="Explore the advanced mathematics of quasicrystals hidden within the beauty of Islamic architecture."
-            href="/ancient-math"
-            icon="fa-solid fa-atom"
-        />
-        <Card
-            title="Learning GitHub Pages"
-            description="Explore modern static site generators like Astro and learn the reusable patterns for automated deployment."
-            href="/learning/github-pages-ssg"
-            icon="fa-solid fa-book-open"
-        />
+        <!-- We now pass the blurb text as a child of the Card component -->
+        <Card href="/data-tools" icon="fa-solid fa-magnifying-glass-chart" title="Data Tool Analyzer">
+            <p>An interactive guide to choosing the right tool for your data needs, comparing Power Query, DuckDB, and GraphRAG.</p>
+        </Card>
+        <Card href="/f5-vpn" icon="fa-solid fa-shield-halved" title="Dockerized F5 VPN">
+            <p>A technical deep-dive into containerizing the F5 BIG-IP client for secure, portable intranet access.</p>
+        </Card>
+        <Card href="/ancient-math" icon="fa-solid fa-atom" title="Ancient Sophistication">
+            <p>Explore the advanced mathematics of quasicrystals hidden within the beauty of Islamic architecture.</p>
+        </Card>
+        <Card href="/learning/github-pages-ssg" icon="fa-solid fa-book-open" title="Learning">
+            <p>Explore modern static site generators like Astro and learn the reusable patterns for automated deployment.</p>
+        </Card>
     </div>
 </BaseLayout>
