@@ -1,5 +1,3 @@
-// FILE: src/pages/learning/github-pages-ssg.astro
-// This page is updated to use the Card component with the new features.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Card from '@/components/Card.astro';
@@ -29,7 +27,7 @@ import BaseLink from '@/components/BaseLink.astro';
             <div class="grid md:grid-cols-3 gap-8 text-center">
                 <Card href="https://astro.build" isExternal={true} icon="fa-solid fa-satellite-dish" title="Astro" blurb="The core static site generator." details="Astro's 'Islands Architecture' ensures fast performance by default, only loading JavaScript for interactive components where needed." />
                 <Card href="https://react.dev" isExternal={true} icon="fa-brands fa-react" title="React" blurb="Used for complex, stateful applications." details="For highly interactive applications like the 'Ancient Math' designers, Astro seamlessly integrates React components as isolated islands of interactivity." />
-                <Card href="https://github.com/features/actions" isExternal={true} icon="fa-brands fa-github" title="GitHub Actions & Pages" blurb="Provides automated CI/CD and hosting." details="The entire deployment process is automated. A push to the `main` branch triggers a GitHub Action that builds the site and deploys it for free to GitHub Pages." />
+                <Card href="https://github.com/features/actions" isExternal={true} icon="fa-brands fa-github" title="GitHub Actions & Pages" blurb="Provides automated CI/CD and hosting." details="The entire deployment process is automated. A push to the `main` branch triggers a build and deploys the static site to GitHub Pages." />
             </div>
         </section>
 
