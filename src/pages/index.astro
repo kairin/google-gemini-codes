@@ -19,16 +19,14 @@ import { homepageCards } from '@/data/navigation.ts';
 
     <!-- Cards Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- 
-            This loop now correctly passes the `blurb` property from your data file 
-            to the `Card` component, which will render the missing text.
-        -->
+        <!-- This loop correctly passes all necessary props to the Card component -->
         {homepageCards.map(card => (
             <Card 
                 href={card.href}
                 icon={card.icon}
                 title={card.title}
                 blurb={card.blurb}
+                isExternal={card.isExternal}
             />
         ))}
     </div>
