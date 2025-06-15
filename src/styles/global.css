@@ -2,73 +2,42 @@
  This file contains global styles and animations used across the site.
 */
 
-/* 1. Define the CSS Variables for our gradients at the root level */
 :root {
     --bg-color-light: white;
     --bg-color-dark: #0f172a; /* slate-900 */
     --rainbow-gradient: linear-gradient(
         to right,
-        #ef4444, /* red-500 */
-        #f97316, /* orange-500 */
-        #eab308, /* yellow-500 */
-        #22c55e, /* green-500 */
-        #3b82f6, /* blue-500 */
-        #8b5cf6, /* violet-500 */
-        #ef4444  /* red-500 again to complete the loop */
-    );
-    --greyscale-shimmer-gradient: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent
+        #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ef4444
     );
 }
 
-/* 2. Define the Keyframes for the scrolling animation */
-@keyframes rainbow-scroll-animation {
+/* Keyframes for the gradient animation */
+@keyframes rainbow-scroll {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* 3. Define the Utility Classes that your components apply */
-
-/* For the animated border */
-.animate-rainbow-border {
-    border: 2px solid transparent;
-    /* The background for the border is the gradient itself */
-    background-image: var(--rainbow-gradient);
-    background-origin: border-box;
-    background-clip: border-box; /* This is the key change */
-    animation: rainbow-scroll-animation 3s linear infinite;
-    background-size: 200% 100%;
-}
-
-/* For the faint background shimmer */
-.animate-rainbow-bg-shimmer {
-    position: relative;
-    overflow: hidden;
-}
-
-.animate-rainbow-bg-shimmer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 75%;
-    height: 100%;
-    background-image: var(--greyscale-shimmer-gradient);
-    transform: skewX(-25deg);
-    animation: rainbow-scroll-animation 5s linear infinite;
-    opacity: 0.5;
-}
-
-/* For the text shimmer */
+/* For the text shimmer (uses infinite animation) */
 .animate-rainbow-text-shimmer {
     background-image: var(--rainbow-gradient);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rainbow-scroll-animation 3s linear infinite;
+    animation: rainbow-scroll 3s linear infinite;
+}
+
+/*
+  NEW: For the one-time animated gradient background fill on the cards.
+  This is the crucial part that implements your "shimmer 1 time only" request.
+*/
+.animate-rainbow-fill-once {
+    background-image: var(--rainbow-gradient);
+    background-size: 250% 100%;
+    animation-name: rainbow-scroll;
+    animation-duration: 2s;
+    animation-iteration-count: 1;      /* Only play the animation once */
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;   /* Hold the final frame of the animation */
 }
