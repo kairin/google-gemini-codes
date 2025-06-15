@@ -49,32 +49,43 @@ const navLinks = [
 </header>
 
 <script>
-    // This script remains unchanged
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const darkIcon = document.getElementById('theme-toggle-dark-icon');
-    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    // This script runs on the client to add interactivity
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Theme Toggle Logic ---
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-    function updateIcons() {
-        if (document.documentElement.classList.contains('dark')) {
-            darkIcon?.classList.remove('hidden');
-            lightIcon?.classList.add('hidden');
-        } else {
-            darkIcon?.classList.add('hidden');
-            lightIcon?.classList.remove('hidden');
+        // Function to update icon visibility based on the current theme
+        function updateIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                darkIcon?.classList.remove('hidden');
+                lightIcon?.classList.add('hidden');
+            } else {
+                darkIcon?.classList.add('hidden');
+                lightIcon?.classList.remove('hidden');
+            }
         }
-    }
 
-    updateIcons();
-
-    themeToggleButton?.addEventListener('click', () => {
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        // Set the initial state of the icon when the page loads
         updateIcons();
-    });
 
-    const menuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuButton?.addEventListener('click', () => {
-        mobileMenu?.classList.toggle('hidden');
+        // Add click listener for the theme toggle button
+        themeToggleButton?.addEventListener('click', () => {
+            // Toggle the 'dark' class on the root <html> element
+            const isDark = document.documentElement.classList.toggle('dark');
+            // Save the user's preference to their browser's local storage
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            // Update the icon to reflect the new theme
+            updateIcons();
+        });
+
+        // --- Mobile Menu Logic ---
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuButton?.addEventListener('click', () => {
+            mobileMenu?.classList.toggle('hidden');
+        });
     });
 </script>

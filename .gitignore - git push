@@ -1,0 +1,3 @@
+git add .
+git commit -m "feat: Replace the content of src/components/Header.astro with this new code."
+git push origin main
