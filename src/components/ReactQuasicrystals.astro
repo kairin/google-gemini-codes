@@ -1,0 +1,13 @@
+---
+// This component acts as the bridge for your second React app.
+
+// 1. Import the main component from your new Quasicrystals application.
+import QuasicrystalsApp from '../scripts/quasicrystals/App.tsx';
+---
+<!--
+2. Render the React component.
+   The "client:visible" directive is slightly different. It tells Astro:
+   - "client:": This component needs JavaScript to run in the user's browser.
+   - ":visible": Wait to load this component's JavaScript until the user scrolls down and it becomes visible in the viewport. This improves initial page load performance.
+-->
+<QuasicrystalsApp client:visible />
