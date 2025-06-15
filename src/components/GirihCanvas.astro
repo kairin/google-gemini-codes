@@ -1,0 +1,61 @@
+---
+// This component has no props, it's self-contained.
+---
+<div class="bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-3xl mx-auto text-center">
+    <canvas id="girih-canvas" width="600" height="400" class="w-full h-auto bg-gray-50 rounded-md cursor-pointer"></canvas>
+    <button id="reset-btn" class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+        Reset Canvas
+    </button>
+</div>
+
+<script>
+    // Wait for the document to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('girih-canvas') as HTMLCanvasElement;
+        const resetButton = document.getElementById('reset-btn') as HTMLButtonElement;
+        
+        if (!canvas || !resetButton) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Simplified representation of Girih tiles
+        const tiles = [
+            { color: '#007bff', draw: (x, y) => { ctx.fillRect(x - 15, y - 15, 30, 30); } }, // Square
+            { color: '#6a4c93', draw: (x, y) => { ctx.beginPath(); ctx.moveTo(x, y - 15); ctx.lineTo(x + 15, y + 15); ctx.lineTo(x - 15, y + 15); ctx.closePath(); ctx.fill(); } }, // Triangle
+            { color: '#4c956c', draw: (x, y) => { ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fill(); } }, // Circle
+            { color: '#ffc107', draw: (x, y) => { ctx.save(); ctx.translate(x, y); ctx.rotate(Math.PI / 4); ctx.fillRect(-10, -10, 20, 20); ctx.restore(); } }, // Diamond
+            { color: '#d9534f', draw: (x, y) => { ctx.fillRect(x - 20, y - 10, 40, 20); } }  // Rectangle
+        ];
+
+        function placeRandomTile(event: MouseEvent) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
+            ctx.fillStyle = randomTile.color;
+            randomTile.draw(x, y);
+        }
+
+        function resetCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawInitialText();
+        }
+
+        function drawInitialText() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = '24px Inter, sans-serif';
+            ctx.fillStyle = '#6c757d';
+            ctx.textAlign = 'center';
+            ctx.fillText('Click anywhere to place a tile', canvas.width / 2, canvas.height / 2);
+        }
+
+        // Add event listeners
+        canvas.addEventListener('click', placeRandomTile);
+        resetButton.addEventListener('click', resetCanvas);
+
+        // Initial state
+        drawInitialText();
+    });
+</script>

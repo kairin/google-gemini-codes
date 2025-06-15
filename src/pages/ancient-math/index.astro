@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GirihCanvas from '../../components/GirihCanvas.astro';
+---
+<BaseLayout title="Ancient Sophistication" description="The mathematics of quasicrystals in Islamic architecture.">
+
+    <!-- Header Section -->
+    <header class="text-center my-12 md:my-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+            From Ancient Art to Modern Science
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            Discover how the quasicrystalline designs in Islamic architecture reveal a profound mathematical understanding that predates and parallels modern scientific discovery.
+        </p>
+    </header>
+
+    <!-- Introduction Section -->
+    <section class="max-w-3xl mx-auto mb-16 text-left">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">An Integration of Knowledge</h2>
+        <div class="prose prose-lg text-gray-700">
+            <p>
+                This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts—specifically, non-repeating patterns that exhibit long-range order, known as quasicrystals.
+            </p>
+            <p>
+                Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs. This demonstrates a deep, intuitive understanding of non-periodic mathematics and fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.
+            </p>
+        </div>
+    </section>
+
+    <!-- Interactive Girih Tiles Section -->
+    <section class="mb-16">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Exploring the Quasicrystal</h2>
+        <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-8">
+            "Girih" tiles are a set of five tile shapes used to create these patterns. Click on the canvas below to place a random tile. Notice how the pattern can extend infinitely without repeating, yet always maintains a visual harmony.
+        </p>
+        <GirihCanvas />
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="mb-16">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Periodic vs. Quasicrystalline</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
+            <div class="text-center border p-4 rounded-lg bg-white shadow">
+                <h3 class="text-xl font-semibold mb-2">Periodic (Repeating)</h3>
+                <img src="https://placehold.co/400x400/007bff/ffffff?text=Repeating\nPattern" alt="A repeating, periodic pattern" class="w-full rounded-md aspect-square object-cover">
+            </div>
+            <div class="text-center border p-4 rounded-lg bg-white shadow">
+                <h3 class="text-xl font-semibold mb-2">Quasicrystalline (Non-Repeating)</h3>
+                <img src="https://placehold.co/400x400/6a4c93/ffffff?text=Non-Repeating\nPattern" alt="A non-repeating, quasicrystalline pattern" class="w-full rounded-md aspect-square object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy Table Section -->
+    <section class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">An Enduring Legacy of Insight</h2>
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+            <table class="w-full text-left">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-4 font-semibold">Core Concept</th>
+                        <th class="p-4 font-semibold">Manifestation in Islamic Architecture</th>
+                        <th class="p-4 font-semibold">Modern Implication</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-t">
+                        <td class="p-4 font-medium">Quasicrystalline Geometry</td>
+                        <td class="p-4">Intricate Non-Repeating Patterns</td>
+                        <td class="p-4">Precursor to Modern Quasicrystals (materials science)</td>
+                    </tr>
+                    <tr class="border-t bg-gray-50">
+                        <td class="p-4 font-medium">Non-Periodicity</td>
+                        <td class="p-4">Girih Tiles & Self-Similar Transformations</td>
+                        <td class="p-4">Connection to Quantum Systems</td>
+                    </tr>
+                    <tr class="border-t">
+                        <td class="p-4 font-medium">Intuitive Mathematical Grasp</td>
+                        <td class="p-4">Artisanal Methods & Designs</td>
+                        <td class="p-4">Implicit Understanding of Complex Systems</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</BaseLayout>
