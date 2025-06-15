@@ -1,5 +1,7 @@
 // FILE: src/pages/f5-vpn/index.astro
-// This page is updated to use the Card component with the new features.
+// ANNOTATION: PROBLEMATIC FILE IDENTIFIED AND CORRECTED.
+// This file has the same structural error. The fix is to move the <style> and <script> tags
+// to be the first elements inside the <BaseLayout> component.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentHeader from '@/components/ContentHeader.astro';
@@ -10,6 +12,11 @@ import BaseLink from '@/components/BaseLink.astro';
     title="Dockerized F5 VPN Solution"
     description="A technical deep-dive into containerizing the F5 BIG-IP APM client for streamlined and secure intranet access."
 >
+    <style>
+      .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
+      .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
+    </style>
+
     <ContentHeader
         title="Dockerized F5 VPN Solution"
         description="A technical deep-dive into containerizing the F5 BIG-IP APM client for streamlined and secure intranet access."
@@ -56,42 +63,37 @@ import BaseLink from '@/components/BaseLink.astro';
     <div class="text-center mt-16">
         <BaseLink href="/" text="Back to Home" style="secondary" icon="fa-solid fa-arrow-left" />
     </div>
-</BaseLayout>
 
-<style is:global>
-  .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
-  .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
-        const sections = document.querySelectorAll('section[id]');
-        const header = document.querySelector('header.sticky');
-        const headerHeight = header ? header.offsetHeight : 72;
-        if (navLinks.length === 0 || sections.length === 0) return;
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    navLinks.forEach(link => {
-                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                    });
-                }
-            });
-        }, { rootMargin: `-${headerHeight}px 0px -70% 0px` });
-        sections.forEach(section => observer.observe(section));
-         navLinks.forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.scrollY - headerHeight;
-                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-                }
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
+            const sections = document.querySelectorAll('section[id]');
+            const header = document.querySelector('header.sticky');
+            const headerHeight = header ? header.offsetHeight : 72;
+            if (navLinks.length === 0 || sections.length === 0) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: `-${headerHeight}px 0px -70% 0px` });
+            sections.forEach(section => observer.observe(section));
+             navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+</BaseLayout>
