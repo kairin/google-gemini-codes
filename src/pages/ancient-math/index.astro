@@ -2,64 +2,72 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Modal from '../../components/Modal.astro';
 ---
-<BaseLayout title="Ancient Sophistication" description="The mathematics of quasicrystals in Islamic architecture.">
+<BaseLayout title="Unveiling Ancient Sophistication" description="Islamic Architecture and Modern Science">
+  <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8f7f4;
+        color: #1f2937;
+      }
+      .nav-link {
+        transition: color 0.3s, border-bottom-color 0.3s;
+        border-bottom: 2px solid transparent;
+      }
+      .nav-link:hover, .nav-link.active {
+        color: #3b82f6;
+        border-bottom-color: #3b82f6;
+      }
+      .section-title {
+        color: #111827;
+      }
+      .card {
+        background-color: #ffffff;
+        border: 1px solid #e5e7eb;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 300px;
+        max-height: 400px;
+      }
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 400px;
+        }
+      }
+      .interactive-canvas {
+        cursor: pointer;
+        border: 1px solid #d1d5db;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <main>
+      <!-- Content sections and canvas elements go here. You can reuse your existing HTML here within the Astro layout. -->
 
-    <header class="text-center my-12 md:my-16">
-        <p class="font-semibold text-blue-600 dark:text-blue-400">Interactive Report</p>
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-slate-100 tracking-tight mt-2">
-            Ancient Sophistication
-        </h1>
-    </header>
+      <!-- Just add your interactive HTML blocks below. Extract canvas logic to a .js file if needed and include with <script type="module"> -->
+    </main>
 
-    <!-- Main Introduction Section -->
-    <section id="introduction" class="text-center max-w-3xl mx-auto">
-        <h2 class="text-3xl font-bold dark:text-slate-200">An Integration of Knowledge</h2>
-        <p class="mt-4 text-lg text-gray-600 dark:text-slate-300">
-            This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. The mathematical genius in Islamic patterns represents a sophisticated, intuitive grasp of complex phenomena, achieved without modern computers and challenging a linear view of scientific progress.
-        </p>
-    </section>
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="container mx-auto px-6 text-center">
+        <p>An interactive exploration based on the report "Unveiling Ancient Sophistication."</p>
+      </div>
+    </footer>
 
-    <!-- Three-Card Layout -->
-    <section class="grid md:grid-cols-3 gap-8 my-16 max-w-6xl mx-auto">
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <h3 class="font-bold text-xl mb-3 text-gray-900 dark:text-slate-100">Ancient Mathematical Wisdom</h3>
-            <p class="text-gray-700 dark:text-slate-300">
-                Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.
-            </p>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <h3 class="font-bold text-xl mb-3 text-gray-900 dark:text-slate-100">Artisans as Pioneers</h3>
-            <p class="text-gray-700 dark:text-slate-300">
-                Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.
-            </p>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <h3 class="font-bold text-xl mb-3 text-gray-900 dark:text-slate-100">A Different Way of Seeing</h3>
-            <p class="text-gray-700 dark:text-slate-300">
-                Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.
-            </p>
-        </div>
-    </section>
-
-    <!-- Button to trigger the modal -->
-    <div class="text-center">
-         <button
-            type="button"
-            data-modal-toggle="research-modal"
-            class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-transform hover:scale-105"
-        >
-            <i class="fas fa-scroll mr-2"></i> View Full Research Text
-        </button>
-    </div>
-
-
-    <!-- Modal for the Full Research Text -->
-    <Modal modalId="research-modal" title="Full Research: Unveiling Ancient Sophistication">
-        <div class="prose dark:prose-invert max-w-none">
-            <!-- You can paste the entire, unformatted text from your research document here -->
-            <p>This is where the full, detailed text from the research document would go. It can be as long as needed, as it will have its own scrollbar, keeping the main page clean and focused.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.</p>
-        </div>
-    </Modal>
-
+    <script type="module" src="/google-gemini-codes/scripts/interactive.js"></script>
+  </body>
 </BaseLayout>

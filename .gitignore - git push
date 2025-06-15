@@ -1,3 +1,3 @@
 git add .
-git commit -m "feat: updated src/components/Modal.astro"
+git commit -m "feat: updated islamic maths"
 git push origin main
