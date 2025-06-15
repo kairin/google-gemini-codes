@@ -1,3 +1,3 @@
 git add .
-git commit -m "feat: updated islamic maths"
+git commit -m "fix: Explicitly define path alias in tsconfig for build"
 git push origin main
