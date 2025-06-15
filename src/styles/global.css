@@ -1,6 +1,5 @@
-/*
- This file contains global styles and animations used across the site.
-*/
+/* FILE: src/styles/global.css */
+/* This file defines the global animations and variables for the site. */
 
 :root {
     --bg-color-light: white;
@@ -18,7 +17,7 @@
     100% { background-position: 0% 50%; }
 }
 
-/* For the text shimmer (uses infinite animation) */
+/* For the hero title text shimmer */
 .animate-rainbow-text-shimmer {
     background-image: var(--rainbow-gradient);
     background-size: 200% 100%;
@@ -28,16 +27,16 @@
     animation: rainbow-scroll 3s linear infinite;
 }
 
-/*
-  NEW: For the one-time animated gradient background fill on the cards.
-  This is the crucial part that implements your "shimmer 1 time only" request.
-*/
-.animate-rainbow-fill-once {
-    background-image: var(--rainbow-gradient);
-    background-size: 250% 100%;
-    animation-name: rainbow-scroll;
-    animation-duration: 2s;
-    animation-iteration-count: 1;      /* Only play the animation once */
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;   /* Hold the final frame of the animation */
+/* For the animated BORDER on the cards */
+.animate-rainbow-border {
+    border: 2px solid transparent;
+    background-image: linear-gradient(var(--bg-color-light), var(--bg-color-light)), var(--rainbow-gradient);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: rainbow-scroll 3s linear infinite;
+    background-size: 200% 100%;
+}
+
+.dark .animate-rainbow-border {
+    background-image: linear-gradient(var(--bg-color-dark), var(--bg-color-dark)), var(--rainbow-gradient);
 }
