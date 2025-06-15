@@ -10,7 +10,6 @@ import { ExpandableSection } from './components/ExpandableSection';
 const App: React.FC = () => {
   const [selectedArticle, setSelectedArticle] = useState<RelatedArticle | null>(null);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const [isRelatedArticlesExpanded, setIsRelatedArticlesExpanded] = useState(false);
 
   const processedSections = useMemo((): ContentSection[] => {
     const sections: ContentSection[] = [];
@@ -32,15 +31,18 @@ const App: React.FC = () => {
           initialOpen: initialOpen,
         };
       } else if (currentSection) {
+        // Add other content types like paragraphs and lists to the current section
         if (item.type === ContentItemType.Paragraph || item.type === ContentItemType.UnorderedList || item.type === ContentItemType.Heading3) {
            currentSection.contentItems.push(item);
         }
-      } else if (sections.length === 0 && index === 0) { 
+      } else if (sections.length === 0 && index === 0) { // Corrected line: Removed redundant item.type check
+        // Handle cases where content might not start with H2.
+        // Create a default section for leading content.
         const initialOpen = !firstSectionOpened;
         if (initialOpen) firstSectionOpened = true;
         currentSection = {
           id: item.id || `section-default-${index}`,
-          titleItem: { type: ContentItemType.Heading2, text: "Overview", id: "overview-section"}, 
+          titleItem: { type: ContentItemType.Heading2, text: "Overview", id: "overview-section"}, // Placeholder title
           contentItems: [item],
           initialOpen: initialOpen,
         };
@@ -77,10 +79,6 @@ const App: React.FC = () => {
       ...prev,
       [sectionId]: !prev[sectionId],
     }));
-  };
-
-  const handleToggleRelatedArticles = () => {
-    setIsRelatedArticlesExpanded(prev => !prev);
   };
 
   useEffect(() => {
@@ -125,12 +123,7 @@ const App: React.FC = () => {
                 <SourceIcon className="w-5 h-5 mr-2 text-sky-400" />
                 <h2 className="text-lg font-semibold text-gray-100">{relatedArticlesData.length} sites</h2>
               </div>
-              <div 
-                id="related-articles-list"
-                className={`space-y-4 pr-2 overflow-y-auto transition-all duration-300 ease-in-out ${
-                  isRelatedArticlesExpanded ? 'max-h-none' : 'max-h-[calc(100vh-180px)]'
-                }`}
-              >
+              <div className="space-y-4 max-h-[calc(100vh-180px)] overflow-y-auto pr-2"> {/* Adjusted max-height */}
                 {relatedArticlesData.map((article: RelatedArticle) => (
                   <RelatedArticleCard 
                     key={article.id} 
@@ -140,12 +133,10 @@ const App: React.FC = () => {
                 ))}
               </div>
               <button 
-                className="mt-6 w-full bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-opacity-75"
-                onClick={handleToggleRelatedArticles}
-                aria-expanded={isRelatedArticlesExpanded}
-                aria-controls="related-articles-list"
+                className="mt-6 w-full bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out"
+                onClick={() => alert("Show all functionality not yet implemented.")}
               >
-                {isRelatedArticlesExpanded ? 'Show less' : 'Show all'}
+                Show all
               </button>
             </div>
           </aside>

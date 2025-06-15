@@ -11,10 +11,8 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      /* Default text color for the body if not overridden by Tailwind utilities elsewhere */
-       color: #E5E7EB; /* gray-200 */
+      color: #E5E7EB; /* gray-200 */
     }
-    /* Custom scrollbar for webkit browsers */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -29,15 +27,86 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #6B7280; /* gray-500 */
     }
-    /* Basic focus visibility for accessibility on non-input elements */
     *:focus-visible {
         outline: 2px solid #38BDF8; /* sky-400 */
         outline-offset: 2px;
-        border-radius: 2px; /* Optional: adds rounded corners to the outline */
+        border-radius: 2px;
     }
-    /* Remove default outline for elements that will have custom focus-visible (like buttons with rings) */
     button:focus, [role="button"]:focus {
         outline: none;
+    }
+
+    /* Animation Styles */
+    :root {
+      --rainbow-gradient: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red, orange, yellow, green, blue, indigo, violet);
+      
+      /* Greyscale gradients for shimmer effects */
+      --greyscale-bg-shimmer-gradient: linear-gradient(to right, 
+        rgba(128, 128, 128, 0.7), /* mid-grey */
+        rgba(160, 160, 160, 0.7), /* lighter-grey */
+        rgba(192, 192, 192, 0.7), /* light-grey */
+        rgba(160, 160, 160, 0.7), /* lighter-grey */
+        rgba(128, 128, 128, 0.7)  /* mid-grey */
+      );
+      --greyscale-text-shimmer-gradient: linear-gradient(to right, 
+        #9ca3af, /* gray-400 */
+        #e5e7eb, /* gray-200 */
+        #f9fafb, /* gray-50 */
+        #e5e7eb, /* gray-200 */
+        #9ca3af  /* gray-400 */
+      );
+    }
+
+    @keyframes rainbow-scroll-animation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 1. Greyscale Shimmery Faint Background */
+    .animate-rainbow-bg-shimmer {
+      position: relative; 
+      z-index: 0; 
+    }
+    .animate-rainbow-bg-shimmer::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: inherit; 
+      background-image: var(--greyscale-bg-shimmer-gradient); /* USE GREYSCALE */
+      background-size: 300% 100%;
+      animation: rainbow-scroll-animation 18s linear infinite; 
+      opacity: 0.15; /* Adjusted opacity for subtle greyscale shimmer */
+      z-index: -1; 
+      pointer-events: none; 
+    }
+
+    /* 2. Bold Rainbow Border (Unchanged - uses --rainbow-gradient) */
+    .animate-rainbow-border {
+      border-style: solid !important; 
+      border-color: transparent !important; 
+      background-image: var(--rainbow-gradient);
+      background-origin: border-box; 
+      border-image-source: var(--rainbow-gradient);
+      border-image-slice: 1; 
+      background-size: 300% 100%; 
+      animation: rainbow-scroll-animation 10s linear infinite;
+    }
+
+    /* 3. Greyscale Shimmery Rainbow Text */
+    .animate-rainbow-text-shimmer {
+      background-image: var(--greyscale-text-shimmer-gradient); /* USE GREYSCALE */
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important; 
+      animation: rainbow-scroll-animation 14s linear infinite; 
+    }
+    .animate-rainbow-text-shimmer span, 
+    .animate-rainbow-text-shimmer h2, 
+    .animate-rainbow-text-shimmer h3, 
+    .animate-rainbow-text-shimmer p {
+        display: inline-block; 
     }
 
   </style>
