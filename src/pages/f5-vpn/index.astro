@@ -4,30 +4,36 @@ import ContentHeader from '@/components/ContentHeader.astro';
 import Card from '@/components/Card.astro';
 import BaseLink from '@/components/BaseLink.astro';
 
-// Data for the SVG chart. This can be easily updated.
+// Data for the Waffle Chart
 const chartData = [
-    { label: 'Base OS (Ubuntu)', value: 20, color: 'stroke-blue-400' },
-    { label: 'F5 Client', value: 25, color: 'stroke-emerald-400' },
-    { label: 'VNC/noVNC', value: 20, color: 'stroke-yellow-400' },
-    { label: 'Web Browser', value: 20, color: 'stroke-violet-400' },
-    { label: 'Automation Scripts', value: 15, color: 'stroke-red-400' },
+    { label: 'Base OS (Ubuntu)', value: 20, color: 'fill-blue-500', highlight: 'hover:fill-blue-400' },
+    { label: 'F5 Client', value: 25, color: 'fill-emerald-500', highlight: 'hover:fill-emerald-400' },
+    { label: 'VNC/noVNC', value: 20, color: 'fill-yellow-500', highlight: 'hover:fill-yellow-400' },
+    { label: 'Web Browser', value: 20, color: 'fill-violet-500', highlight: 'hover:fill-violet-400' },
+    { label: 'Automation Scripts', value: 15, color: 'fill-red-500', highlight: 'hover:fill-red-400' },
 ];
 
-// SVG calculations
-const radius = 80;
-const circumference = 2 * Math.PI * radius;
-let accumulatedAngle = -90; // Start at the top
+// Pre-calculate the grid items for the SVG
+const gridSize = 10;
+const gridItems = [];
+let currentCount = 0;
+let categoryIndex = 0;
 
-const segments = chartData.map(item => {
-    const dasharray = (item.value / 100) * circumference;
-    const rotation = accumulatedAngle;
-    accumulatedAngle += (item.value / 100) * 360; // Update for the next segment
-    return {
-        ...item,
-        dasharray: `${dasharray} ${circumference}`,
-        rotation: `rotate(${rotation} 100 100)`
-    };
-});
+for (let i = 0; i < gridSize * gridSize; i++) {
+    if (currentCount >= chartData[categoryIndex].value) {
+        currentCount = 0;
+        categoryIndex++;
+    }
+    const category = chartData[categoryIndex];
+    gridItems.push({
+        x: (i % gridSize) * 22,
+        y: Math.floor(i / gridSize) * 22,
+        color: category.color,
+        label: category.label,
+        highlight: category.highlight,
+    });
+    currentCount++;
+}
 ---
 <BaseLayout 
     title="Dockerized F5 VPN Solution"
@@ -56,38 +62,33 @@ const segments = chartData.map(item => {
             <p>This guide details a robust, automated method for establishing secure access to an office intranet via an F5 BIG-IP APM VPN client within a Docker container. The solution integrates a modern web browser into a self-contained, portable environment, accessible through a web-based graphical interface.</p>
             
             <div class="not-prose grid md:grid-cols-2 gap-8 my-8 items-center">
+                <!-- Interactive Legend -->
                 <div>
-                    <h3 class="text-xl font-semibold mb-3">Key Architectural Components</h3>
-                    <p class="text-gray-700 dark:text-gray-300 mb-4">The solution is built on a layered architecture that encapsulates all dependencies within a single, portable Docker container.</p>
-                    <ul class="space-y-3 text-gray-700 dark:text-slate-300">
-                         {chartData.map((item, index) => (
-                            <li class="flex items-center">
-                                <span class:list={['w-4 h-4 rounded-full mr-3', item.color.replace('stroke', 'bg')]}></span>
-                                {item.label} ({item.value}%)
+                    <h3 class="text-xl font-semibold mb-4">Key Architectural Components</h3>
+                    <ul id="waffle-legend" class="space-y-3">
+                        {chartData.map(item => (
+                            <li class="flex items-center p-2 rounded-md transition-colors duration-200 cursor-pointer" data-label={item.label}>
+                                <span class:list={['w-4 h-4 rounded-sm mr-3', item.color]}></span>
+                                <span class="legend-label">{item.label} ({item.value}%)</span>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <!-- Interactive SVG Donut Chart -->
-                <div id="svg-chart-container" class="relative">
-                    <svg viewBox="0 0 200 200" class="w-full max-w-sm mx-auto transform -rotate-90">
-                        {segments.map(segment => (
-                            <circle
-                                cx="100" cy="100"
-                                r={radius}
-                                fill="transparent"
-                                stroke-width="25"
-                                stroke-dasharray={segment.dasharray}
-                                class:list={["svg-segment", segment.color]}
-                                transform={segment.rotation}
-                                data-label={segment.label}
-                                data-value={`${segment.value}%`}
+                
+                <!-- NEW Interactive Waffle Chart -->
+                <div class="w-full max-w-sm mx-auto">
+                    <svg viewBox="0 0 210 210" id="waffle-chart">
+                        {gridItems.map((item, index) => (
+                            <rect 
+                                x={item.x} y={item.y} 
+                                width="20" height="20" 
+                                rx="4"
+                                class:list={["waffle-square", item.color, item.highlight]}
+                                data-label={item.label}
+                                style={`animation-delay: ${index * 10}ms;`}
                             />
                         ))}
                     </svg>
-                    <div id="svg-tooltip" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2 bg-slate-800 text-white text-sm rounded-md shadow-lg pointer-events-none opacity-0 transition-opacity duration-200">
-                        Tooltip
-                    </div>
                 </div>
             </div>
         </section>
@@ -124,21 +125,34 @@ const segments = chartData.map(item => {
 </BaseLayout>
 
 <style is:global>
+  /* Scrollspy Nav styles */
   .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
   .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
-  .svg-segment {
-      transition: all 0.2s ease-in-out;
-      stroke-linecap: round;
+  
+  /* Waffle Chart styles */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
   }
-  .svg-segment:hover {
-      transform-origin: center;
-      transform: scale(1.05);
-      opacity: 0.8;
+  .waffle-square {
+    opacity: 0;
+    transform-origin: center;
+    animation: fadeIn 0.5s ease-out forwards;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .waffle-highlight .waffle-square {
+    opacity: 0.2;
+  }
+  .waffle-highlight .waffle-square.highlight {
+    opacity: 1;
+  }
+  #waffle-legend li.highlight {
+    @apply bg-gray-100 dark:bg-slate-700/50;
   }
 </style>
 
 <script>
-    // Scrollspy Navigation Script (unchanged)
+    // Scrollspy Navigation Script
     document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
         const sections = document.querySelectorAll('section[id]');
@@ -169,21 +183,35 @@ const segments = chartData.map(item => {
             });
         });
 
-        // SVG Tooltip Script
-        const segments = document.querySelectorAll('.svg-segment');
-        const tooltip = document.getElementById('svg-tooltip');
-        if(tooltip) {
-            segments.forEach(segment => {
-                segment.addEventListener('mousemove', (e) => {
-                    const label = e.target.getAttribute('data-label');
-                    const value = e.target.getAttribute('data-value');
-                    tooltip.innerHTML = `${label}: ${value}`;
-                    tooltip.style.opacity = '1';
-                });
-                segment.addEventListener('mouseleave', () => {
-                    tooltip.style.opacity = '0';
-                });
+        // Waffle Chart Interactivity Script
+        const legendItems = document.querySelectorAll('#waffle-legend li');
+        const waffleSquares = document.querySelectorAll('.waffle-square');
+        const waffleChart = document.getElementById('waffle-chart');
+
+        function handleHighlight(label) {
+            waffleChart.classList.add('waffle-highlight');
+            waffleSquares.forEach(sq => {
+                sq.classList.toggle('highlight', sq.dataset.label === label);
+            });
+            legendItems.forEach(item => {
+                item.classList.toggle('highlight', item.dataset.label === label);
             });
         }
+
+        function clearHighlight() {
+            waffleChart.classList.remove('waffle-highlight');
+            waffleSquares.forEach(sq => sq.classList.remove('highlight'));
+            legendItems.forEach(item => item.classList.remove('highlight'));
+        }
+
+        legendItems.forEach(item => {
+            item.addEventListener('mouseenter', () => handleHighlight(item.dataset.label));
+            item.addEventListener('mouseleave', clearHighlight);
+        });
+
+        waffleSquares.forEach(square => {
+            square.addEventListener('mouseenter', () => handleHighlight(square.dataset.label));
+            square.addEventListener('mouseleave', clearHighlight);
+        });
     });
 </script>
