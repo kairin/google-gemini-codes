@@ -4,7 +4,7 @@ import ContentHeader from '@/components/ContentHeader.astro';
 import Card from '@/components/Card.astro';
 import BaseLink from '@/components/BaseLink.astro';
 
-// Data for the new Area Chart. The 'value' now directly influences the flex-grow property.
+// Data for the new Stacked Block Chart
 const componentData = [
     { label: 'F5 Client', value: 25, color: 'bg-emerald-500', highlight: 'hover:bg-emerald-400' },
     { label: 'Base OS (Ubuntu)', value: 20, color: 'bg-blue-500', highlight: 'hover:bg-blue-400' },
@@ -34,18 +34,18 @@ const componentData = [
         </div>
     </header>
 
-    <!-- Main Content Sections with improved separation -->
-    <div class="space-y-8">
+    <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-12">
 
-        <!-- Section 1: Overview with NEW chart -->
-        <section id="overview" class="p-6 md:p-8 bg-white dark:bg-slate-800/50 rounded-lg border dark:border-slate-700 shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-slate-100">Solution at a Glance</h2>
-            <p class="text-lg text-gray-600 dark:text-slate-300 mb-8">This guide details a robust, automated method for containerizing the F5 VPN client. The solution encapsulates all dependencies into a portable environment accessible from any web browser.</p>
+        <!-- Section 1: Overview with the new Stacked Block Chart -->
+        <section id="overview">
+            <h2 class="!text-3xl !mb-6">Solution at a Glance</h2>
+            <p>This guide details a robust, automated method for establishing secure access to an office intranet via an F5 BIG-IP APM VPN client within a Docker container. The solution integrates a modern web browser into a self-contained, portable environment, accessible through a web-based graphical interface.</p>
             
-            <div class="grid md:grid-cols-5 gap-8 items-center">
-                <div class="md:col-span-2">
+            <div class="not-prose grid md:grid-cols-2 gap-8 my-8 items-center">
+                <!-- Interactive Legend -->
+                <div>
                     <h3 class="text-xl font-semibold mb-4">Key Architectural Components</h3>
-                    <ul id="area-chart-legend" class="space-y-2">
+                    <ul id="stacked-bar-legend" class="space-y-2">
                         {componentData.map(item => (
                             <li class="flex items-center p-2 rounded-md transition-colors duration-200 cursor-pointer" data-label={item.label}>
                                 <span class:list={['w-3 h-3 rounded-full mr-3', item.color]}></span>
@@ -56,43 +56,52 @@ const componentData = [
                     </ul>
                 </div>
                 
-                <div id="area-chart-container" class="md:col-span-3 min-h-[250px] flex flex-wrap gap-1 p-2 bg-slate-200 dark:bg-slate-900 rounded-lg">
-                    {componentData.map(item => (
-                        <div
-                            class:list={["area-block", item.color, item.highlight, "h-full rounded-md transition-all duration-300 ease-in-out flex items-center justify-center text-white font-bold text-lg"]}
-                            style={`flex-grow: ${item.value};`}
-                            data-label={item.label}
-                        >
-                           <span class="block-label opacity-0 transition-opacity duration-300">{item.value}%</span>
-                        </div>
-                    ))}
+                <!-- NEW Stacked Block Chart -->
+                <div class="w-full">
+                    <div id="stacked-bar-container" class="w-full h-12 flex rounded-lg overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700">
+                        {componentData.map(item => (
+                            <div
+                                class:list={["bar-segment", item.color, "h-full transition-all duration-300 ease-in-out flex items-center justify-center text-white font-bold text-lg"]}
+                                style={`width: ${item.value}%;`}
+                                data-label={item.label}
+                                title={`${item.label}: ${item.value}%`}
+                            >
+                                <span class="segment-label opacity-0 scale-75 transition-all duration-300">{item.value}%</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Other Sections, now wrapped in styled containers -->
-        <section id="challenge" class="p-6 md:p-8 bg-white dark:bg-slate-800/50 rounded-lg border dark:border-slate-700 shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-slate-100">The Challenge: Why F5 is Different</h2>
-            <p class="text-lg text-gray-600 dark:text-slate-300">Containerizing the F5 client requires understanding its unique dependencies, which present hurdles on modern Linux systems. It is not a simple command-line utility and depends on a graphical environment and legacy libraries.</p>
+        <!-- Other sections remain unchanged -->
+        <section id="challenge">
+            <h2 class="!text-3xl !mb-6">The Challenge: Why F5 is Different</h2>
+            <p>Containerizing the F5 client requires understanding its unique characteristics. Unlike modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
         </section>
 
-        <section id="architecture" class="p-6 md:p-8 bg-white dark:bg-slate-800/50 rounded-lg border dark:border-slate-700 shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-slate-100">Architectural Decision: VNC vs. X11</h2>
-            <p class="text-lg text-gray-600 dark:text-slate-300">The core choice is providing a GUI from a headless container. We strongly recommend the VNC approach for its robustness and portability over the brittle, platform-dependent X11 forwarding method.</p>
+        <section id="architecture">
+            <h2 class="!text-3xl !mb-6">Architectural Decision: VNC vs. X11</h2>
+            <p>The core architectural choice is how to provide a GUI from a headless container. We strongly recommend the VNC approach for its robustness and portability over the brittle, platform-dependent X11 forwarding method.</p>
         </section>
 
-        <section id="implementation" class="p-6 md:p-8 bg-white dark:bg-slate-800/50 rounded-lg border dark:border-slate-700 shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-slate-100">Implementation Highlights</h2>
-            <div class="grid md:grid-cols-2 gap-6">
+        <section id="implementation">
+            <h2 class="!text-3xl !mb-6">Implementation Highlights</h2>
+            <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
                 <Card icon="fa-brands fa-docker" title="Dockerfile & Dependencies" blurb="Starts with Ubuntu 24.04, installs the F5 client, and creates a symbolic link for the missing libxml2.so.2 library." href="#!" />
                 <Card icon="fa-solid fa-desktop" title="GUI & Browser Setup" blurb="Installs a virtual display (Xvfb), VNC server, and browsers like Firefox using official non-snap installation methods." href="#!" />
                 <Card icon="fa-solid fa-robot" title="VPN Automation" blurb="An entrypoint script uses the `f5fpc` command-line tool to establish the VPN connection, passing credentials securely via environment variables." href="#!" />
                 <Card icon="fa-solid fa-network-wired" title="Docker Networking" blurb="The container is run with --cap-add=NET_ADMIN. To avoid IP conflicts, using --net=host is the simplest solution for routing." href="#!" />
             </div>
         </section>
+
+        <section id="troubleshooting">
+            <h2 class="!text-3xl !mb-6">Key Troubleshooting Steps</h2>
+            <p>Two issues account for nearly all common failures with this setup: `libxml2.so.2` not being found and IP address conflicts between Docker and the corporate VPN. Both are solvable with specific configuration steps in the Dockerfile and at runtime.</p>
+        </section>
     </div>
 
-    <div class="text-center my-16">
+    <div class="text-center mt-16">
         <BaseLink href="/" text="Back to Home" style="secondary" icon="fa-solid fa-arrow-left" />
     </div>
 </BaseLayout>
@@ -102,19 +111,17 @@ const componentData = [
   .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
   .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
 
-  /* Area Chart Interactive Styles */
-  #area-chart-container.highlight .area-block {
-    flex-grow: 1 !important; /* Shrink non-highlighted blocks */
-    opacity: 0.5;
+  /* Stacked Bar Chart Interactive Styles */
+  #stacked-bar-container.highlight .bar-segment {
+    @apply opacity-50;
   }
-  #area-chart-container.highlight .area-block.highlight {
-    flex-grow: 40 !important; /* Dramatically expand highlighted block */
-    opacity: 1;
+  #stacked-bar-container.highlight .bar-segment.highlight {
+    @apply opacity-100 scale-105 z-10;
   }
-   #area-chart-container.highlight .area-block.highlight .block-label {
-    opacity: 1;
-   }
-  #area-chart-legend li.highlight {
+  #stacked-bar-container.highlight .bar-segment.highlight .segment-label {
+    @apply opacity-100 scale-100;
+  }
+  #stacked-bar-legend li.highlight {
     @apply bg-gray-100 dark:bg-slate-700/50;
   }
 </style>
@@ -151,15 +158,15 @@ const componentData = [
             });
         });
 
-        // Area Chart Interactivity Script
-        const legendItems = document.querySelectorAll('#area-chart-legend li');
-        const areaBlocks = document.querySelectorAll('.area-block');
-        const chartContainer = document.getElementById('area-chart-container');
+        // Stacked Bar Chart Interactivity Script
+        const legendItems = document.querySelectorAll('#stacked-bar-legend li');
+        const barSegments = document.querySelectorAll('.bar-segment');
+        const chartContainer = document.getElementById('stacked-bar-container');
 
         function handleHighlight(label) {
             chartContainer.classList.add('highlight');
-            areaBlocks.forEach(block => {
-                block.classList.toggle('highlight', block.dataset.label === label);
+            barSegments.forEach(segment => {
+                segment.classList.toggle('highlight', segment.dataset.label === label);
             });
             legendItems.forEach(item => {
                 item.classList.toggle('highlight', item.dataset.label === label);
@@ -168,13 +175,18 @@ const componentData = [
 
         function clearHighlight() {
             chartContainer.classList.remove('highlight');
-            areaBlocks.forEach(block => block.classList.remove('highlight'));
+            barSegments.forEach(segment => segment.classList.remove('highlight'));
             legendItems.forEach(item => item.classList.remove('highlight'));
         }
 
         legendItems.forEach(item => {
             item.addEventListener('mouseenter', () => handleHighlight(item.dataset.label));
             item.addEventListener('mouseleave', clearHighlight);
+        });
+
+        barSegments.forEach(segment => {
+            segment.addEventListener('mouseenter', () => handleHighlight(segment.dataset.label));
+            segment.addEventListener('mouseleave', clearHighlight);
         });
     });
 </script>
