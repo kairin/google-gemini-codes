@@ -22,6 +22,7 @@ The core idea of this repository is to tackle real-world problems with the best 
 
 This project is built with Astro and follows its standard conventions. All source code resides in the `src/` directory.
 
+```
 /
 ├── public/ # Static assets (images, fonts, etc.)
 └── src/
@@ -43,7 +44,7 @@ This project is built with Astro and follows its standard conventions. All sourc
 │ ├── f5-vpn/
 │ └── index.astro # Homepage
 └── styles/ # Global CSS (rarely used with Tailwind)
-
+```
 ---
 
 ## :dart: Core Projects on the Site
