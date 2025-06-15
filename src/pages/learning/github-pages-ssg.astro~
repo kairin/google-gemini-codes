@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Modern Static Sites with Astro" description="A guide to modern static site generators and automated deployment.">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100">Modern Static Sites & Deployment</h1>
+        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">Exploring modern tools and reusable patterns for publishing content on the web.</p>
+    </header>
+
+    <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
+            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-rocket text-orange-500 mr-2"></i>Astro with GitHub Pages</h2>
+            <div class="prose dark:prose-invert max-w-none">
+                <p>Astro is a modern static site generator built for performance and flexibility. This entire site is built with it.</p>
+                <ul>
+                    <li>Install Astro: <code>npm create astro@latest</code></li>
+                    <li>Develop locally: <code>npm run dev</code></li>
+                    <li>Build your static site: <code>npm run build</code></li>
+                    <li>Deploy with the official Astro GitHub Actions workflow.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
+            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-gem text-red-500 mr-2"></i>Jekyll with GitHub Pages</h2>
+            <p class="dark:text-slate-400">Jekyll is the original static site generator with native support on GitHub Pages.</p>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
+            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-bolt text-green-500 mr-2"></i>Hugo</h2>
+            <p class="dark:text-slate-400">Hugo is known for its incredible speed, as it's built with the Go programming language.</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-lg border border-blue-200 dark:border-slate-700">
+            <h2 class="text-2xl font-bold mb-3 text-blue-800 dark:text-blue-300"><i class="fa-solid fa-recycle mr-2"></i>The Reusable Pattern</h2>
+            <p class="text-blue-900 dark:text-blue-400">Every setup shares this core pattern: write content in simple formats (like Markdown), use templates to control structure, and automate builds with CI/CD tools like GitHub Actions to host for free on GitHub Pages.</p>
+        </div>
+    </div>
+</BaseLayout>
