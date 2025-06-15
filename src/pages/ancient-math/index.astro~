@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card from '../../components/Card.astro';
 import ReactGirihDesigner from '../../components/ReactGirihDesigner.astro';
-import ReactQuasicrystals from '../../components/ReactQuasicrystals.astro'; // <-- IMPORT THE NEW BRIDGE
+import ReactQuasicrystals from '../../components/ReactQuasicrystals.astro';
 ---
 <BaseLayout title="Ancient Sophistication" description="The mathematics of Girih tiles and tessellation in Islamic architecture.">
 
@@ -10,7 +10,7 @@ import ReactQuasicrystals from '../../components/ReactQuasicrystals.astro'; // <
     <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-[72px] z-40 border-b dark:border-slate-700 -mx-4 px-4 mb-12">
         <div class="container mx-auto flex justify-between items-center py-3">
             <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Ancient Sophistication</h2>
-            <nav class="hidden md:flex space-x-6">
+            <nav class="hidden md:flex flex-wrap justify-center items-center gap-x-6">
                 <a href="#introduction" class="nav-link active">Introduction</a>
                 <a href="#the-tiles" class="nav-link">The Tiles</a>
                 <a href="#designer" class="nav-link">Designer</a>
@@ -40,48 +40,18 @@ import ReactQuasicrystals from '../../components/ReactQuasicrystals.astro'; // <
             </div>
         </section>
 
- <!-- Section 2: The Five Girih Tiles - THIS IS THE ONLY SECTION THAT HAS BEEN MODIFIED -->
+        <!-- Section 2: The Five Girih Tiles with SVG visuals (Unchanged) -->
         <section id="the-tiles" class="py-16">
             <div class="text-center">
                 <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">The Five Fundamental Girih Tiles</h1>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">All Girih tiles have sides of the same length, and all their angles are multiples of 36°, allowing them to fit together seamlessly.</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 my-12 max-w-7xl mx-auto text-center">
-                <!-- Decagon with SVG -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
-                    <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
-                        <polygon points="50,5 89,23 89,77 50,95 11,77 11,23" class="fill-blue-100 dark:fill-blue-900/50 stroke-blue-500 dark:stroke-blue-400" stroke-width="2"/>
-                    </svg>
-                    <h3 class="font-semibold dark:text-slate-200">Decagon</h3><p class="text-sm text-gray-500 dark:text-slate-400">10 sides, 144° angles</p>
-                </div>
-                <!-- Pentagon with SVG -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
-                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
-                        <polygon points="50,5 95,41 79,95 21,95 5,41" class="fill-green-100 dark:fill-green-900/50 stroke-green-500 dark:stroke-green-400" stroke-width="2"/>
-                    </svg>
-                    <h3 class="font-semibold dark:text-slate-200">Pentagon</h3><p class="text-sm text-gray-500 dark:text-slate-400">5 sides, 108° angles</p>
-                </div>
-                <!-- Bow Tie with SVG -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
-                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
-                        <polygon points="5,5 95,5 50,50 95,95 5,95 50,50" class="fill-purple-100 dark:fill-purple-900/50 stroke-purple-500 dark:stroke-purple-400" stroke-width="2"/>
-                    </svg>
-                    <h3 class="font-semibold dark:text-slate-200">Bow Tie</h3><p class="text-sm text-gray-500 dark:text-slate-400">Non-convex Hexagon</p>
-                </div>
-                 <!-- Elongated Hexagon with SVG -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
-                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
-                        <polygon points="21,5 79,5 95,50 79,95 21,95 5,50" class="fill-red-100 dark:fill-red-900/50 stroke-red-500 dark:stroke-red-400" stroke-width="2"/>
-                    </svg>
-                    <h3 class="font-semibold dark:text-slate-200">Elongated Hexagon</h3><p class="text-sm text-gray-500 dark:text-slate-400">Irregular Hexagon</p>
-                </div>
-                 <!-- Rhombus with SVG -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700">
-                     <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2">
-                        <polygon points="50,5 95,50 50,95 5,50" class="fill-yellow-100 dark:fill-yellow-900/50 stroke-yellow-500 dark:stroke-yellow-400" stroke-width="2"/>
-                    </svg>
-                    <h3 class="font-semibold dark:text-slate-200">Rhombus</h3><p class="text-sm text-gray-500 dark:text-slate-400">72° & 108° angles</p>
-                </div>
+             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 my-12 max-w-7xl mx-auto text-center">
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="50,5 89,23 89,77 50,95 11,77 11,23" class="fill-blue-100 dark:fill-blue-900/50 stroke-blue-500 dark:stroke-blue-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Decagon</h3></div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="50,5 95,41 79,95 21,95 5,41" class="fill-green-100 dark:fill-green-900/50 stroke-green-500 dark:stroke-green-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Pentagon</h3></div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="5,5 95,5 50,50 95,95 5,95 50,50" class="fill-purple-100 dark:fill-purple-900/50 stroke-purple-500 dark:stroke-purple-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Bow Tie</h3></div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="21,5 79,5 95,50 79,95 21,95 5,50" class="fill-red-100 dark:fill-red-900/50 stroke-red-500 dark:stroke-red-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Elongated Hexagon</h3></div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="50,5 95,50 50,95 5,50" class="fill-yellow-100 dark:fill-yellow-900/50 stroke-yellow-500 dark:stroke-yellow-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Rhombus</h3></div>
             </div>
         </section>
 
@@ -96,29 +66,63 @@ import ReactQuasicrystals from '../../components/ReactQuasicrystals.astro'; // <
             </div>
         </section>
 
-        <!-- Section 4: Quasicrystals Deep Dive - THIS IS THE NEW SECTION -->
+        <!-- Section 4: Quasicrystals Deep Dive -->
         <section id="deep-dive" class="py-16">
             <div class="text-center">
                 <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">Quasicrystals Deep Dive</h1>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">For more information, this second interactive application provides a deeper exploration into the structure and properties of quasicrystalline patterns.</p>
             </div>
             <div class="my-12 text-center">
-                <!-- We place our new bridge component here -->
                 <ReactQuasicrystals />
             </div>
         </section>
     </div>
 </BaseLayout>
 
-<!-- Page-specific styles are unchanged -->
+<!-- Page-specific styles -->
 <style>
-  .nav-link { /* ... */ }
+  .nav-link { transition: all 0.3s; border-bottom: 2px solid transparent; padding-bottom: 0.25rem; white-space: nowrap; }
+  .nav-link:hover { color: #3b82f6; }
+  .nav-link.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+  .dark .nav-link:hover { color: #60a5fa; }
+  .dark .nav-link.active { color: #60a5fa; border-bottom-color: #60a5fa; }
 </style>
 
-<!-- The script is unchanged, as all logic is handled by the React components -->
+<!-- Complete and Final Script for this page -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- Scrollspy Navigation Logic ---
-        // ... (this script remains exactly the same) ...
+        const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
+        const sections = document.querySelectorAll('section[id]');
+
+        // Smooth scroll for anchor links
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                targetElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Highlight the correct link on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        constisActive = link.getAttribute('href') === `#${id}`;
+                        link.classList.toggle('active', isActive);
+                    });
+                }
+            });
+        }, { 
+            // Trigger when the section is near the top of the viewport
+            rootMargin: '-80px 0px -80% 0px' 
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     });
 </script>
