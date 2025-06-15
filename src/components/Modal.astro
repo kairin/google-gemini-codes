@@ -1,6 +1,6 @@
 ---
 interface Props {
-  triggerId: string; // The ID of the button that opens this modal
+  triggerId: string;
   title: string;
 }
 const { triggerId, title } = Astro.props;
@@ -18,15 +18,28 @@ const { triggerId, title } = Astro.props;
 </dialog>
 
 <script define:vars={{ triggerId }}>
-    const modal = document.getElementById(`modal-${triggerId}`);
-    const openButton = document.getElementById(triggerId);
-    const closeButton = document.getElementById(`close-${triggerId}`);
+    // This wrapper tells the script to wait until the entire page is loaded and ready.
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById(`modal-${triggerId}`);
+        const openButton = document.getElementById(triggerId);
+        const closeButton = document.getElementById(`close-${triggerId}`);
 
-    openButton?.addEventListener('click', () => {
-        (modal as HTMLDialogElement)?.showModal();
-    });
+        // Only add listeners if all three elements are found
+        if (modal && openButton && closeButton) {
+            openButton.addEventListener('click', () => {
+                (modal as HTMLDialogElement)?.showModal();
+            });
 
-    closeButton?.addEventListener('click', () => {
-        (modal as HTMLDialogElement)?.close();
+            closeButton.addEventListener('click', () => {
+                (modal as HTMLDialogElement)?.close();
+            });
+
+            // Optional: Close the modal if the user clicks the backdrop
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    (modal as HTMLDialogElement)?.close();
+                }
+            });
+        }
     });
 </script>
