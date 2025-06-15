@@ -1,14 +1,15 @@
 ---
 interface Props {
-  triggerId: string;
+  modalId: string; // We use a clearer prop name
   title: string;
 }
-const { triggerId, title } = Astro.props;
+const { modalId, title } = Astro.props;
 ---
-<dialog id={`modal-${triggerId}`} class="backdrop:bg-black/50 p-0 rounded-lg shadow-xl w-11/12 max-w-4xl bg-white dark:bg-slate-800 border dark:border-slate-700">
+<dialog id={modalId} class="backdrop:bg-black/50 p-0 rounded-lg shadow-xl w-11/12 max-w-4xl bg-white dark:bg-slate-800 border dark:border-slate-700">
     <header class="sticky top-0 bg-white dark:bg-slate-800 p-4 border-b dark:border-slate-700 flex justify-between items-center">
         <h2 class="text-xl font-bold dark:text-slate-100">{title}</h2>
-        <button id={`close-${triggerId}`} class="p-2 leading-none rounded-full hover:bg-gray-200 dark:hover:bg-slate-700" aria-label="Close modal">
+        <!-- This button now uses the data-modal-close attribute -->
+        <button type="button" data-modal-close class="p-2 leading-none rounded-full hover:bg-gray-200 dark:hover:bg-slate-700" aria-label="Close modal">
             <i class="fas fa-times"></i>
         </button>
     </header>
@@ -16,30 +17,3 @@ const { triggerId, title } = Astro.props;
         <slot />
     </div>
 </dialog>
-
-<script define:vars={{ triggerId }}>
-    // This wrapper tells the script to wait until the entire page is loaded and ready.
-    document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById(`modal-${triggerId}`);
-        const openButton = document.getElementById(triggerId);
-        const closeButton = document.getElementById(`close-${triggerId}`);
-
-        // Only add listeners if all three elements are found
-        if (modal && openButton && closeButton) {
-            openButton.addEventListener('click', () => {
-                (modal as HTMLDialogElement)?.showModal();
-            });
-
-            closeButton.addEventListener('click', () => {
-                (modal as HTMLDialogElement)?.close();
-            });
-
-            // Optional: Close the modal if the user clicks the backdrop
-            modal.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    (modal as HTMLDialogElement)?.close();
-                }
-            });
-        }
-    });
-</script>

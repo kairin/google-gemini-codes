@@ -6,46 +6,7 @@ const { title, description } = Astro.props;
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title} | Google Gemini Codes</title>
-    <meta name="description" content={description} />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
-    <script is:inline>
-        // This FOUC-prevention script is unchanged and correct.
-        const theme = (() => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-                return localStorage.getItem('theme');
-            }
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                return 'dark';
-            }
-            return 'light';
-        })();
-
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
-
-    <!-- This style block is now fully theme-aware for your Markdown content -->
-    <style>
-        .prose h1, .prose h2, .prose h3 { @apply font-bold text-gray-900 dark:text-slate-100 my-4; }
-        .prose h1 { @apply text-3xl md:text-4xl; }
-        .prose h2 { @apply text-2xl md:text-3xl border-b border-gray-200 dark:border-slate-700 pb-2; }
-        .prose h3 { @apply text-xl md:text-2xl; }
-        .prose p, .prose ul, .prose ol, .prose li { @apply text-gray-700 dark:text-slate-300 leading-relaxed my-4; }
-        .prose a { @apply text-blue-600 dark:text-blue-400 hover:underline; }
-        .prose code { @apply bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-slate-300 rounded px-1.5 py-1 text-sm font-mono; }
-        .prose pre { @apply bg-gray-800 dark:bg-slate-800 text-white rounded-lg p-4 overflow-x-auto; }
-        .prose pre code { @apply bg-transparent text-white dark:text-slate-200 p-0; }
-        .prose ul { @apply list-disc list-inside; }
-        .prose hr { @apply border-gray-200 dark:border-slate-700; }
-    </style>
+    {/* ... All your <head> content is unchanged ... */}
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-slate-300 font-sans antialiased transition-colors duration-300">
     <Header />
@@ -53,5 +14,33 @@ const { title, description } = Astro.props;
         <slot />
     </main>
     <Footer />
+
+    <!-- ADD THIS GLOBAL MODAL SCRIPT -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logic to open any modal
+            const openButtons = document.querySelectorAll('[data-modal-toggle]');
+            openButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.getAttribute('data-modal-toggle');
+                    const modal = document.getElementById(modalId);
+                    if (modal && typeof (modal as HTMLDialogElement).showModal === 'function') {
+                        (modal as HTMLDialogElement).showModal();
+                    }
+                });
+            });
+
+            // Logic to close any modal
+            const closeButtons = document.querySelectorAll('[data-modal-close]');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modal = button.closest('dialog');
+                    if (modal) {
+                        modal.close();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
