@@ -1,3 +1,7 @@
+// FILE: src/data/navigation.ts
+// This file is the single source of truth for navigation and card data.
+// The 'details' property is added to provide expanded text on hover.
+
 export const mainNavLinks = [
     { href: "/data-tools/", label: "Data Tools" },
     { href: "/f5-vpn/", label: "F5 VPN" },
