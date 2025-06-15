@@ -7,7 +7,6 @@ import { homepageCards } from '@/data/navigation.ts';
     title="Home | Google Gemini Codes" 
     description="A curated collection of projects and analyses showcasing modern solutions for common data and web challenges."
 >
-    <!-- Hero Section -->
     <section class="text-center py-16 md:py-24">
         <h1 class="text-5xl md:text-6xl font-extrabold text-gray-800 dark:text-slate-100 animate-rainbow-text-shimmer">
             Google Gemini Codes
@@ -17,15 +16,14 @@ import { homepageCards } from '@/data/navigation.ts';
         </p>
     </section>
 
-    <!-- Cards Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- This loop correctly passes all necessary props to the Card component -->
         {homepageCards.map(card => (
             <Card 
                 href={card.href}
                 icon={card.icon}
                 title={card.title}
                 blurb={card.blurb}
+                details={card.details}
                 isExternal={card.isExternal}
             />
         ))}
