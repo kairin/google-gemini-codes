@@ -1,80 +1,60 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GirihCanvas from '../../components/GirihCanvas.astro';
+import Modal from '../../components/Modal.astro'; // <-- Import the new component
 ---
 <BaseLayout title="Ancient Sophistication" description="The mathematics of quasicrystals in Islamic architecture.">
 
+    <!-- Header and Sub-Nav are unchanged -->
     <header class="text-center my-12 md:my-16">
         <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-slate-100 tracking-tight">
             From Ancient Art to Modern Science
         </h1>
-        <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">
-            Discover how the quasicrystalline designs in Islamic architecture reveal a profound mathematical understanding that predates and parallels modern scientific discovery.
-        </p>
     </header>
+    <div class="sticky top-[72px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg z-40 border-y dark:border-slate-700 -mx-4 px-4 mb-12">
+        <nav class="container mx-auto flex justify-center py-2 space-x-8">
+            <a href="#introduction" class="font-semibold text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">Introduction</a>
+            <a href="#patterns" class="font-semibold text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">The Patterns</a>
+        </nav>
+    </div>
 
-    <section class="max-w-3xl mx-auto mb-16">
-        <div class="prose prose-lg dark:prose-invert max-w-none">
+    <!-- Main Content -->
+    <div class="prose prose-lg dark:prose-invert max-w-3xl mx-auto space-y-12">
+        <section id="introduction">
             <h2>An Integration of Knowledge</h2>
-            <p>
-                This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts—specifically, non-repeating patterns that exhibit long-range order, known as quasicrystals.
-            </p>
-            <p>
-                Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs. This demonstrates a deep, intuitive understanding of non-periodic mathematics and fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.
-            </p>
-        </div>
-    </section>
-
-    <section class="mb-16">
-        <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-slate-100 mb-4">Exploring the Quasicrystal</h2>
-        <p class="text-lg text-gray-600 dark:text-slate-300 text-center max-w-3xl mx-auto mb-8">
-            "Girih" tiles are a set of five tile shapes used to create these patterns. Click on the canvas below to place a random tile. Notice how the pattern can extend infinitely without repeating, yet always maintains a visual harmony.
-        </p>
-        <GirihCanvas />
-    </section>
-
-    <section class="mb-16">
-        <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-slate-100 mb-8">Periodic vs. Quasicrystalline</h2>
-        <div class="grid md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
-            <div class="text-center border p-4 rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700 shadow">
-                <h3 class="text-xl font-semibold mb-2 dark:text-slate-200">Periodic (Repeating)</h3>
-                <div class="w-full h-64 bg-gray-200 dark:bg-slate-700 rounded-md flex items-center justify-center">
-                    <p class="text-gray-500 dark:text-slate-400">Repeating Pattern Example</p>
-                </div>
+            <p>This exploration demonstrates that historical "secrets" are profound insights into reality... challenging a linear view of scientific progress.</p>
+            
+            <!-- ADD THIS BUTTON -->
+            <div class="not-prose my-8 text-center">
+                <button id="research-trigger" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition">
+                    <i class="fas fa-scroll mr-2"></i> View Full Research Text
+                </button>
             </div>
-            <div class="text-center border p-4 rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700 shadow">
-                <h3 class="text-xl font-semibold mb-2 dark:text-slate-200">Quasicrystalline (Non-Repeating)</h3>
-                 <div class="w-full h-64 bg-gray-200 dark:bg-slate-700 rounded-md flex items-center justify-center">
-                    <p class="text-gray-500 dark:text-slate-400">Non-Repeating Pattern Example</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="max-w-5xl mx-auto">
-        <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-slate-100 mb-8">An Enduring Legacy of Insight</h2>
-        <div class="overflow-x-auto bg-white dark:bg-slate-800 rounded-lg shadow border dark:border-slate-700">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-gray-100 dark:bg-slate-700">
-                    <tr>
-                        <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Core Concept</th>
-                        <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Manifestation</th>
-                        <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Modern Implication</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-600 dark:text-slate-300">
-                    <tr class="border-t dark:border-slate-700">
-                        <td class="p-4 font-medium text-gray-800 dark:text-slate-200">Quasicrystalline Geometry</td>
-                        <td class="p-4">Intricate Non-Repeating Patterns</td>
-                        <td class="p-4">Precursor to Modern Quasicrystals</td>
-                    </tr>
-                    <tr class="border-t dark:border-slate-700">
-                        <td class="p-4 font-medium text-gray-800 dark:text-slate-200">Non-Periodicity</td>
-                        <td class="p-4">Girih Tiles & Self-Similar Transformations</td>
-                        <td class="p-4">Connection to Quantum Systems</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="patterns">
+            <h2>Exploring the Quasicrystal</h2>
+            <div class="not-prose my-8">
+                <GirihCanvas />
+            </div>
+        </section>
+    </div>
+
+    <!-- ADD THE MODAL COMPONENT AT THE END -->
+    <Modal triggerId="research-trigger" title="Unveiling Ancient Sophistication: Full Text">
+        <div class="prose dark:prose-invert max-w-none">
+            <h3>Ancient Mathematical Wisdom</h3>
+            <p>Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.</p>
+            
+            <h3>Artisans as Pioneers</h3>
+            <p>Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.</p>
+
+            <h3>A Different Way of Seeing</h3>
+            <p>Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.</p>
+
+            <!-- You can add as much text as you want here -->
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.</p>
         </div>
-    </section>
+    </Modal>
+
 </BaseLayout>

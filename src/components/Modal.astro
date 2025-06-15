@@ -1,0 +1,32 @@
+---
+interface Props {
+  triggerId: string; // The ID of the button that opens this modal
+  title: string;
+}
+const { triggerId, title } = Astro.props;
+---
+<dialog id={`modal-${triggerId}`} class="backdrop:bg-black/50 p-0 rounded-lg shadow-xl w-11/12 max-w-4xl bg-white dark:bg-slate-800 border dark:border-slate-700">
+    <header class="sticky top-0 bg-white dark:bg-slate-800 p-4 border-b dark:border-slate-700 flex justify-between items-center">
+        <h2 class="text-xl font-bold dark:text-slate-100">{title}</h2>
+        <button id={`close-${triggerId}`} class="p-2 leading-none rounded-full hover:bg-gray-200 dark:hover:bg-slate-700" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+        </button>
+    </header>
+    <div class="p-6 max-h-[70vh] overflow-y-auto">
+        <slot />
+    </div>
+</dialog>
+
+<script define:vars={{ triggerId }}>
+    const modal = document.getElementById(`modal-${triggerId}`);
+    const openButton = document.getElementById(triggerId);
+    const closeButton = document.getElementById(`close-${triggerId}`);
+
+    openButton?.addEventListener('click', () => {
+        (modal as HTMLDialogElement)?.showModal();
+    });
+
+    closeButton?.addEventListener('click', () => {
+        (modal as HTMLDialogElement)?.close();
+    });
+</script>
