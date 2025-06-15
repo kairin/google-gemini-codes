@@ -1,35 +1,10 @@
+// FILE: src/pages/f5-vpn/index.astro
+// This page is updated to use the Card component with the new features.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentHeader from '@/components/ContentHeader.astro';
 import Card from '@/components/Card.astro';
 import BaseLink from '@/components/BaseLink.astro';
-
-// Data for the Waffle Chart
-const componentData = [
-    { label: 'Base OS (Ubuntu)', value: 20, color: 'bg-blue-500' },
-    { label: 'F5 Client', value: 25, color: 'bg-emerald-500' },
-    { label: 'VNC/noVNC', value: 20, color: 'bg-yellow-500' },
-    { label: 'Web Browser', value: 20, color: 'bg-violet-500' },
-    { label: 'Automation Scripts', value: 15, color: 'bg-red-500' },
-];
-
-// Pre-calculate the grid of 100 squares for the chart
-const gridSquares = [];
-let currentCount = 0;
-let categoryIndex = 0;
-for (let i = 0; i < 100; i++) {
-    if (currentCount >= componentData[categoryIndex].value) {
-        currentCount = 0;
-        categoryIndex++;
-    }
-    const category = componentData[categoryIndex];
-    gridSquares.push({
-        color: category.color,
-        label: category.label,
-        value: `${category.value}%`
-    });
-    currentCount++;
-}
 ---
 <BaseLayout 
     title="Dockerized F5 VPN Solution"
@@ -43,8 +18,7 @@ for (let i = 0; i < 100; i++) {
     <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-[72px] z-40 border-b dark:border-slate-700 -mx-4 px-4 mb-12">
         <div class="container mx-auto flex justify-center items-center py-3">
             <nav class="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-6 text-sm sm:text-base">
-                <a href="#overview" class="nav-link active">Overview</a>
-                <a href="#challenge" class="nav-link">The Challenge</a>
+                <a href="#challenge" class="nav-link active">The Challenge</a>
                 <a href="#architecture" class="nav-link">Architecture</a>
                 <a href="#implementation" class="nav-link">Implementation</a>
                 <a href="#troubleshooting" class="nav-link">Troubleshooting</a>
@@ -53,25 +27,6 @@ for (let i = 0; i < 100; i++) {
     </header>
 
     <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-12">
-        <section id="overview">
-            <h2 class="!text-3xl !mb-6">Solution at a Glance</h2>
-            <p>This guide details a robust, automated method for containerizing the F5 VPN client. The solution encapsulates all dependencies into a portable environment accessible from any web browser.</p>
-            
-            <div id="waffle-chart-section" class="not-prose my-12 relative">
-                <div id="waffle-chart-container" class="grid grid-cols-20 gap-1.5 w-full">
-                    {gridSquares.map((square, index) => (
-                        <div
-                            class:list={["waffle-square", square.color, "aspect-square rounded-md transition-all duration-200 ease-in-out cursor-pointer"]}
-                            data-label={square.label}
-                            data-value={square.value}
-                            style={`animation-delay: ${index * 10}ms;`}
-                        />
-                    ))}
-                </div>
-                <div id="waffle-tooltip" class="absolute p-2 bg-slate-800 text-white text-sm rounded-md shadow-lg pointer-events-none opacity-0 transition-opacity duration-200 z-50"></div>
-            </div>
-        </section>
-
         <section id="challenge">
             <h2 class="!text-3xl !mb-6">The Challenge: Why F5 is Different</h2>
             <p>Containerizing the F5 client requires understanding its unique characteristics. Unlike modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
@@ -85,10 +40,10 @@ for (let i = 0; i < 100; i++) {
         <section id="implementation">
             <h2 class="!text-3xl !mb-6">Implementation Highlights</h2>
             <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
-                <Card icon="fa-brands fa-docker" title="Dockerfile & Dependencies" blurb="Starts with Ubuntu 24.04, installs the F5 client, and creates a symbolic link for the missing libxml2.so.2 library." href="#!" />
-                <Card icon="fa-solid fa-desktop" title="GUI & Browser Setup" blurb="Installs a virtual display (Xvfb), VNC server, and browsers like Firefox using official non-snap installation methods." href="#!" />
-                <Card icon="fa-solid fa-robot" title="VPN Automation" blurb="An entrypoint script uses the `f5fpc` command-line tool to establish the VPN connection, passing credentials securely via environment variables." href="#!" />
-                <Card icon="fa-solid fa-network-wired" title="Docker Networking" blurb="The container is run with --cap-add=NET_ADMIN. To avoid IP conflicts, using --net=host is the simplest solution for routing." href="#!" />
+                <Card href="#!" icon="fa-brands fa-docker" title="Dockerfile & Dependencies" blurb="Starts with Ubuntu, installs the client, and handles legacy libraries." details="The Dockerfile starts with Ubuntu 24.04, installs the F5 client `.deb` package, and crucially, creates a symbolic link for the missing `libxml2.so.2` library." />
+                <Card href="#!" icon="fa-solid fa-desktop" title="GUI & Browser Setup" blurb="Installs a virtual display, VNC server, and non-snap browsers." details="A virtual display (Xvfb) and VNC server are installed, with browsers like Firefox added from official PPAs to avoid snap-related issues in a containerized environment." />
+                <Card href="#!" icon="fa-solid fa-robot" title="VPN Automation" blurb="Uses the `f5fpc` CLI for reliable connection automation." details="An entrypoint script utilizes the `f5fpc` command-line tool to establish the VPN connection, passing credentials securely via environment variables at runtime." />
+                <Card href="#!" icon="fa-solid fa-network-wired" title="Docker Networking" blurb="Requires `NET_ADMIN` capability and often the `--net=host` flag." details="The container is run with `--cap-add=NET_ADMIN` to manage network routes. To avoid IP conflicts, using `--net=host` is the simplest and most reliable solution." />
             </div>
         </section>
 
@@ -106,34 +61,6 @@ for (let i = 0; i < 100; i++) {
 <style is:global>
   .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
   .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
-
-  @keyframes pop-in {
-    from { opacity: 0; transform: scale(0.3); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .waffle-square {
-    opacity: 0;
-    transform: scale(0.3);
-    animation: pop-in 0.3s ease-out forwards;
-  }
-  #waffle-chart-container.highlight .waffle-square {
-    @apply opacity-30 scale-90;
-  }
-  #waffle-chart-container.highlight .waffle-square.is-active-group {
-    @apply opacity-100 scale-100;
-    border: 2px solid transparent;
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-    background-image: linear-gradient(#f8fafc, #f8fafc), var(--rainbow-gradient);
-    animation: rainbow-scroll-animation 3s linear infinite;
-    background-size: 200% 100%;
-  }
-  .dark #waffle-chart-container.highlight .waffle-square.is-active-group {
-     background-image: linear-gradient(#0f172a, #0f172a), var(--rainbow-gradient);
-  }
-  .grid-cols-20 {
-    grid-template-columns: repeat(20, minmax(0, 1fr));
-  }
 </style>
 
 <script>
@@ -165,48 +92,6 @@ for (let i = 0; i < 100; i++) {
                     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
                 }
             });
-        });
-
-        const chartSection = document.getElementById('waffle-chart-section');
-        const chartContainer = document.getElementById('waffle-chart-container');
-        const waffleSquares = document.querySelectorAll('.waffle-square');
-        const tooltip = document.getElementById('waffle-tooltip');
-        if (!chartContainer || !tooltip) return;
-
-        function handleHighlight(label) {
-            chartContainer.classList.add('highlight');
-            waffleSquares.forEach(sq => {
-                sq.classList.toggle('is-active-group', sq.dataset.label === label);
-            });
-        }
-
-        function clearHighlight() {
-            chartContainer.classList.remove('highlight');
-            waffleSquares.forEach(sq => sq.classList.remove('is-active-group'));
-        }
-
-        waffleSquares.forEach(square => {
-            square.addEventListener('mouseenter', (e) => {
-                const target = e.currentTarget;
-                const label = target.dataset.label;
-                const value = target.dataset.value;
-                tooltip.innerHTML = `${label} (${value})`;
-                tooltip.style.opacity = '1';
-                handleHighlight(label);
-            });
-        });
-
-        chartContainer.addEventListener('mouseleave', () => {
-            tooltip.style.opacity = '0';
-            clearHighlight();
-        });
-
-        chartSection.addEventListener('mousemove', (e) => {
-            const rect = chartSection.getBoundingClientRect();
-            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            tooltip.style.left = `${e.clientX - rect.left + scrollLeft + 15}px`;
-            tooltip.style.top = `${e.clientY - rect.top + scrollTop + 15}px`;
         });
     });
 </script>
