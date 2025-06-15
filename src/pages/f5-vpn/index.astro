@@ -26,6 +26,7 @@ for (let i = 0; i < 100; i++) {
     gridSquares.push({
         color: category.color,
         label: category.label,
+        value: `${category.value}%`
     });
     currentCount++;
 }
@@ -56,29 +57,18 @@ for (let i = 0; i < 100; i++) {
             <h2 class="!text-3xl !mb-6">Solution at a Glance</h2>
             <p>This guide details a robust, automated method for containerizing the F5 VPN client. The solution encapsulates all dependencies into a portable environment accessible from any web browser.</p>
             
-            <div class="not-prose grid md:grid-cols-2 gap-8 my-8 items-center">
-                <!-- Interactive Legend -->
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Key Architectural Components</h3>
-                    <ul id="waffle-legend" class="space-y-1">
-                        {componentData.map(item => (
-                            <li class="flex items-center p-2 rounded-md transition-colors duration-200 cursor-pointer" data-label={item.label}>
-                                <span class="legend-label text-gray-700 dark:text-slate-300">{item.label} ({item.value}%)</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                
-                <!-- NEW Waffle Chart -->
-                <div id="waffle-chart-container" class="grid grid-cols-20 gap-1.5 w-full">
+            <div id="waffle-chart-section" class="not-prose my-12 relative">
+                <div id="waffle-chart-container" class="grid grid-cols-20 gap-2 w-full">
                     {gridSquares.map((square, index) => (
                         <div
-                            class:list={["waffle-square", square.color, "aspect-square rounded-md transition-all duration-200 ease-in-out"]}
+                            class:list={["waffle-square", square.color, "aspect-square rounded-full transition-all duration-200 ease-in-out cursor-pointer"]}
                             data-label={square.label}
+                            data-value={square.value}
                             style={`animation-delay: ${index * 10}ms;`}
                         />
                     ))}
                 </div>
+                <div id="waffle-tooltip" class="absolute p-2 bg-slate-800 text-white text-sm rounded-md shadow-lg pointer-events-none opacity-0 transition-opacity duration-200 z-50"></div>
             </div>
         </section>
 
@@ -118,24 +108,30 @@ for (let i = 0; i < 100; i++) {
   .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
   .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
 
-  /* Waffle Chart Styles */
   @keyframes pop-in {
     from { opacity: 0; transform: scale(0.3); }
     to { opacity: 1; transform: scale(1); }
   }
   .waffle-square {
-    opacity: 0; /* Start hidden for animation */
+    opacity: 0;
     transform: scale(0.3);
     animation: pop-in 0.3s ease-out forwards;
   }
   #waffle-chart-container.highlight .waffle-square {
-    @apply opacity-20 scale-90;
+    @apply opacity-30 scale-90;
   }
-  #waffle-chart-container.highlight .waffle-square.highlight {
+  #waffle-chart-container.highlight .waffle-square.is-active-group {
     @apply opacity-100 scale-100;
+    /* This reuses the global rainbow animation for the outline effect */
+    border: 2px solid transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    background-image: linear-gradient(var(--bg-color-light), var(--bg-color-light)), var(--rainbow-gradient);
+    animation: rainbow-scroll-animation 3s linear infinite;
+    background-size: 200% 100%;
   }
-  #waffle-legend li.highlight {
-    @apply bg-gray-200 dark:bg-slate-700;
+  .dark #waffle-chart-container.highlight .waffle-square.is-active-group {
+     background-image: linear-gradient(var(--bg-color-dark), var(--bg-color-dark)), var(--rainbow-gradient);
   }
   .grid-cols-20 {
     grid-template-columns: repeat(20, minmax(0, 1fr));
@@ -143,8 +139,8 @@ for (let i = 0; i < 100; i++) {
 </style>
 
 <script>
-    // Scrollspy Navigation Script
     document.addEventListener('DOMContentLoaded', () => {
+        // Scrollspy Navigation Script
         const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
         const sections = document.querySelectorAll('section[id]');
         const header = document.querySelector('header.sticky');
@@ -175,29 +171,44 @@ for (let i = 0; i < 100; i++) {
         });
 
         // Waffle Chart Interactivity Script
-        const legendItems = document.querySelectorAll('#waffle-legend li');
-        const waffleSquares = document.querySelectorAll('.waffle-square');
+        const chartSection = document.getElementById('waffle-chart-section');
         const chartContainer = document.getElementById('waffle-chart-container');
+        const waffleSquares = document.querySelectorAll('.waffle-square');
+        const tooltip = document.getElementById('waffle-tooltip');
+
+        if (!chartContainer || !tooltip) return;
 
         function handleHighlight(label) {
             chartContainer.classList.add('highlight');
             waffleSquares.forEach(sq => {
-                sq.classList.toggle('highlight', sq.dataset.label === label);
-            });
-            legendItems.forEach(item => {
-                item.classList.toggle('highlight', item.dataset.label === label);
+                sq.classList.toggle('is-active-group', sq.dataset.label === label);
             });
         }
 
         function clearHighlight() {
             chartContainer.classList.remove('highlight');
-            waffleSquares.forEach(sq => sq.classList.remove('highlight'));
-            legendItems.forEach(item => item.classList.remove('highlight'));
+            waffleSquares.forEach(sq => sq.classList.remove('is-active-group'));
         }
 
-        legendItems.forEach(item => {
-            item.addEventListener('mouseenter', () => handleHighlight(item.dataset.label));
-            item.addEventListener('mouseleave', clearHighlight);
+        waffleSquares.forEach(square => {
+            square.addEventListener('mouseenter', (e) => {
+                const label = e.target.dataset.label;
+                const value = e.target.dataset.value;
+                tooltip.innerHTML = `${label} (${value})`;
+                tooltip.style.opacity = '1';
+                handleHighlight(label);
+            });
+        });
+
+        chartContainer.addEventListener('mouseleave', () => {
+            tooltip.style.opacity = '0';
+            clearHighlight();
+        });
+
+        chartSection.addEventListener('mousemove', (e) => {
+            const rect = chartSection.getBoundingClientRect();
+            tooltip.style.left = `${e.clientX - rect.left + 15}px`;
+            tooltip.style.top = `${e.clientY - rect.top + 15}px`;
         });
     });
 </script>
