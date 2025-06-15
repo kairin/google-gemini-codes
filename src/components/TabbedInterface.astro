@@ -1,0 +1,63 @@
+---
+interface Tab {
+  id: string;
+  label: string;
+  icon: string;
+}
+interface Props {
+  tabs: Tab[];
+}
+const { tabs } = Astro.props;
+---
+<div class="card bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="sticky top-0 bg-white/80 backdrop-blur-lg z-10 border-b border-gray-200">
+        <nav class="flex flex-wrap justify-center -mb-px">
+            {tabs.map((tab, index) => (
+                <button data-tab-id={tab.id} class:list={["tab-btn text-sm sm:text-base py-4 px-3 sm:px-6", { 'active': index === 0 }]}>
+                    <i class:list={["fas", tab.icon, "mr-2"]}></i>{tab.label}
+                </button>
+            ))}
+        </nav>
+    </div>
+    <div class="tab-content-container p-6 md:p-8">
+        <slot />
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.card');
+        if (!container) return;
+
+        const tabButtons = container.querySelectorAll('.tab-btn');
+        const tabContents = Array.from(container.querySelectorAll('.tab-content-container > :global(*)'));
+
+        function showTab(indexToShow) {
+            tabButtons.forEach((btn, index) => {
+                btn.classList.toggle('active', index === indexToShow);
+            });
+            tabContents.forEach((content, index) => {
+                (content as HTMLElement).style.display = index === indexToShow ? 'block' : 'none';
+            });
+        }
+
+        showTab(0); // Show the first tab initially
+
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => showTab(index));
+        });
+    });
+</script>
+
+<style>
+    .tab-btn {
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+    }
+    .tab-btn.active {
+        border-bottom-color: #4A90E2;
+        color: #4A90E2;
+        font-weight: 600;
+    }
+</style>

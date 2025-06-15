@@ -1,0 +1,52 @@
+---
+interface Props {
+    chartId: string;
+    labels: string[];
+    data: number[];
+}
+const { chartId, labels, data } = Astro.props;
+---
+<div class="chart-container relative mx-auto h-[350px] w-full max-w-sm">
+    <canvas id={chartId}></canvas>
+</div>
+
+<script define:vars={{ chartId, labels, data }}>
+    function loadChartJs() {
+        if (window.Chart) {
+            initializeChart();
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = initializeChart;
+        document.head.appendChild(script);
+    }
+
+    function initializeChart() {
+        const ctx = document.getElementById(chartId)?.getContext('2d');
+        if (!ctx || !window.Chart) return;
+
+        new window.Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Solution Components',
+                    data: data,
+                    backgroundColor: [
+                        'rgb(147, 197, 253)', 'rgb(110, 231, 183)', 'rgb(253, 224, 71)',
+                        'rgb(196, 181, 253)', 'rgb(252, 165, 165)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadChartJs);
+    } else {
+        loadChartJs();
+    }
+</script>
