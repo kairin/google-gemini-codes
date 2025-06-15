@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-// We will add interactive components later if needed.
+import Card from '../../components/Card.astro'; // We now use our upgraded Card component
 ---
 <BaseLayout title="Ancient Sophistication" description="Islamic Architecture & Modern Science">
 
@@ -19,88 +19,73 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <!-- Main Content Sections -->
     <div class="container mx-auto">
-        <!-- Introduction Section -->
+        <!-- Section 1: Introduction, now with the correct non-linking cards -->
         <section id="introduction" class="text-center py-16">
             <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">An Integration of Knowledge</h1>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">
                 This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. The mathematical genius in Islamic patterns represents a sophisticated, intuitive grasp of complex phenomena, achieved without modern computers and challenging a linear view of scientific progress.
             </p>
 
+            <!-- Correctly using the Card component as a non-link -->
             <div class="grid md:grid-cols-3 gap-8 my-12 max-w-6xl mx-auto text-left">
-                <div class="card p-6 rounded-lg">
-                    <h3 class="font-bold text-xl mb-3 text-gray-900 dark:text-slate-100">Ancient Mathematical Wisdom</h3>
-                    <p class="text-gray-700 dark:text-slate-300">Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.</p>
-                </div>
-                <div class="card p-6 rounded-lg">
-                    <h3 class="font-bold text-xl mb-3 text-gray-900 dark:text-slate-100">Artisans as Pioneers</h3>
-                    <p class="text-gray-700 dark:text-slate-300">Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.</p>
-                </div>
-                <div class="card p-6 rounded-lg">
-                    <h3 class="font-bold text-xl mb-3 text-gray-900 dark:text-slate-100">A Different Way of Seeing</h3>
-                    <p class="text-gray-700 dark:text-slate-300">Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.</p>
-                </div>
+                <Card icon="fa-solid fa-infinity" title="Ancient Mathematical Wisdom">
+                    Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.
+                </Card>
+                <Card icon="fa-solid fa-compass-drafting" title="Artisans as Pioneers">
+                    Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.
+                </Card>
+                <Card icon="fa-solid fa-eye" title="A Different Way of Seeing">
+                     Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.
+                </Card>
             </div>
         </section>
 
-        <!-- The Patterns Section -->
+        <!-- Section 2: The Patterns, with preset buttons -->
         <section id="patterns" class="py-16">
             <div class="text-center">
                 <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">Exploring the Quasicrystal</h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">The core of this ancient innovation lies in creating patterns that are perfectly ordered but never repeat. This section allows you to interactively explore the principles behind these remarkable designs.</p>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">The core of this ancient innovation lies in creating patterns that are perfectly ordered but never repeat. Choose a preset below or generate a random pattern.</p>
             </div>
-            <div class="my-12">
-                <h3 class="text-2xl font-semibold text-center mb-2 dark:text-slate-200">Interactive Girih Tiles</h3>
-                <p class="text-center text-gray-600 dark:text-slate-400 mb-4">Click on the canvas to place a random tile.</p>
-                <canvas id="girih-canvas" class="interactive-canvas w-full rounded-lg bg-white dark:bg-slate-800" width="800" height="400"></canvas>
-                <div class="text-center mt-4">
-                    <button id="reset-canvas" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-700 transition">Reset Canvas</button>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="text-center">
-                    <h4 class="font-semibold text-xl mb-2 dark:text-slate-200">Periodic (Repeating)</h4>
-                    <div class="w-full h-64 bg-gray-200 dark:bg-slate-700 rounded-lg flex items-center justify-center text-gray-500">Example of a simple, repeating tile pattern.</div>
-                </div>
-                 <div class="text-center">
-                    <h4 class="font-semibold text-xl mb-2 dark:text-slate-200">Quasicrystalline (Non-Repeating)</h4>
-                    <div class="w-full h-64 bg-gray-200 dark:bg-slate-700 rounded-lg flex items-center justify-center text-gray-500">Example of a complex, non-repeating pattern.</div>
+            <div class="my-12 text-center">
+                <canvas id="girihDemoCanvas" width="800" height="600" class="interactive-canvas rounded-lg border dark:border-slate-700 mx-auto w-full max-w-4xl bg-white dark:bg-slate-800 shadow-inner"></canvas>
+                <div class="text-center mt-6 flex flex-wrap justify-center items-center gap-4">
+                    <button data-preset="sunflower" class="preset-btn bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-5 py-2 rounded-lg transition">Sunflower</button>
+                    <button data-preset="crystal" class="preset-btn bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition">Crystal</button>
+                    <button data-preset="carpet" class="preset-btn bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition">Carpet</button>
+                    <button id="regenerate-random" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-2 rounded-lg transition">
+                        <i class="fas fa-random mr-2"></i>Random
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- The Science Section -->
-        <section id="science" class="py-16">
-             <div class="text-center">
-                <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">Bridging Centuries of Discovery</h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">The mathematical principles intuitively understood by ancient artisans were formally "discovered" by modern scientists centuries later, highlighting the incredible foresight embedded in Islamic art.</p>
-                 <!-- A placeholder for the timeline chart -->
-                <div class="chart-container my-12 h-64 bg-gray-200 dark:bg-slate-800 rounded-lg flex items-center justify-center text-gray-500">Timeline Chart Area</div>
-            </div>
+        <!-- Section 3 & 4: Science and Legacy -->
+        <section id="science" class="py-16 text-center">
+             <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">Bridging Centuries of Discovery</h1>
+             <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">The mathematical principles intuitively understood by ancient artisans were formally "discovered" by modern scientists centuries later, highlighting the incredible foresight embedded in Islamic art.</p>
         </section>
-
-        <!-- Legacy Section -->
         <section id="legacy" class="py-16">
             <div class="text-center">
                 <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">An Enduring Legacy of Insight</h1>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">The study of Islamic architectural patterns provides a unique lens through which to view the timeless nature of fundamental principles, revealing a continuous dialogue between past intuition and present discovery.</p>
             </div>
-            <div class="overflow-x-auto my-12">
-                <table class="w-full min-w-max text-left bg-white dark:bg-slate-800 rounded-lg shadow-md">
+             <div class="overflow-x-auto my-12 max-w-5xl mx-auto">
+                <table class="w-full text-left bg-white dark:bg-slate-800 rounded-lg shadow-md border dark:border-slate-700">
                     <thead class="bg-gray-100 dark:bg-slate-700">
                         <tr>
                             <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Core Concept</th>
-                            <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Manifestation in Islamic Architecture</th>
+                            <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Manifestation</th>
                             <th class="p-4 font-semibold text-gray-700 dark:text-slate-200">Modern Implication</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 dark:text-slate-300">
                         <tr class="border-t dark:border-slate-700">
-                            <td class="p-4">Quasicrystalline Geometry</td>
+                            <td class="p-4 font-medium text-gray-800 dark:text-slate-200">Quasicrystalline Geometry</td>
                             <td class="p-4">Intricate Non-Repeating Patterns</td>
                             <td class="p-4">Precursor to Modern Quasicrystals</td>
                         </tr>
-                        <tr class="border-t dark:border-slate-700">
-                            <td class="p-4">Non-Periodicity</td>
+                        <tr class="border-t dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50">
+                            <td class="p-4 font-medium text-gray-800 dark:text-slate-200">Non-Periodicity</td>
                             <td class="p-4">Girih Tiles & Self-Similar Transformations</td>
                             <td class="p-4">Connection to Quantum Systems</td>
                         </tr>
@@ -109,115 +94,62 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             </div>
         </section>
     </div>
-
 </BaseLayout>
 
 <!-- Page-specific styles -->
 <style>
-  .nav-link {
-    transition: color 0.3s, border-bottom-color 0.3s;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 0.5rem;
-  }
-  .nav-link:hover,
-  .nav-link.active {
-    color: #3b82f6; /* text-blue-500 */
-    border-bottom-color: #3b82f6;
-  }
-  .dark .nav-link:hover,
-  .dark .nav-link.active {
-    color: #60a5fa; /* text-blue-400 */
-    border-bottom-color: #60a5fa;
-  }
-  .card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .dark .card {
-    background-color: #1f2937; /* bg-slate-800 */
-    border-color: #374151; /* border-slate-700 */
-  }
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  }
-  .interactive-canvas {
-    cursor: pointer;
-    border: 1px solid #d1d5db;
-  }
-  .dark .interactive-canvas {
-    border-color: #4b5567;
-  }
+  .nav-link { transition: all 0.3s; border-bottom: 2px solid transparent; padding-bottom: 0.5rem; }
+  .nav-link:hover, .nav-link.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+  .dark .nav-link:hover, .dark .nav-link.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+  .interactive-canvas { cursor: crosshair; }
 </style>
 
+<!-- Final, correct script -->
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    import { drawRandomPattern, drawPresetPattern } from '../../scripts/girih-tiles.js';
 
-        // --- Feature 1: Interactive Sub-Navigation (Scrollspy) ---
+    function initializeCanvas(presetName = null) {
+        const canvas = document.getElementById('girihDemoCanvas');
+        if (!canvas) return;
+
+        if (presetName) {
+            drawPresetPattern(canvas, presetName);
+        } else {
+            drawRandomPattern(canvas);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Scrollspy Navigation Logic ---
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('section[id]');
-
-        const observerOptions = {
-            root: null, // observes intersections relative to the viewport
-            rootMargin: '0px',
-            threshold: 0.5 // trigger when 50% of the section is visible
-        };
-
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
                     navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${id}`) {
-                            link.classList.add('active');
-                        }
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
                     });
                 }
             });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-
-
-        // --- Feature 2: Interactive Girih Tile Canvas ---
-        const canvas = document.getElementById('girih-canvas') as HTMLCanvasElement;
-        const resetButton = document.getElementById('reset-canvas') as HTMLButtonElement;
+        }, { threshold: 0.5 });
+        sections.forEach(section => observer.observe(section));
         
-        if (!canvas || !resetButton) return;
+        // --- Girih Canvas Logic ---
+        // Draw a default pattern on initial page load
+        initializeCanvas('sunflower'); 
 
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+        // Add listener for the "Random" button
+        const randomBtn = document.getElementById('regenerate-random');
+        randomBtn?.addEventListener('click', () => initializeCanvas(null));
 
-        const tiles = [
-            { color: '#3B82F6', draw: (x, y) => { ctx.fillRect(x - 15, y - 15, 30, 30); } }, // Blue Square
-            { color: '#8B5CF6', draw: (x, y) => { ctx.beginPath(); ctx.moveTo(x, y - 17); ctx.lineTo(x + 17, y + 17); ctx.lineTo(x - 17, y + 17); ctx.closePath(); ctx.fill(); } }, // Purple Triangle
-            { color: '#10B981', draw: (x, y) => { ctx.beginPath(); ctx.arc(x, y, 17, 0, Math.PI * 2); ctx.fill(); } }, // Green Circle
-            { color: '#F59E0B', draw: (x, y) => { ctx.save(); ctx.translate(x, y); ctx.rotate(Math.PI / 4); ctx.fillRect(-12, -12, 24, 24); ctx.restore(); } }, // Amber Diamond
-            { color: '#EF4444', draw: (x, y) => { ctx.beginPath(); for (let i = 0; i < 5; i++) { ctx.lineTo(x + 20 * Math.cos(2 * Math.PI * i / 5 - Math.PI / 2), y + 20 * Math.sin(2 * Math.PI * i / 5 - Math.PI / 2)); } ctx.closePath(); ctx.fill(); } } // Red Pentagon
-        ];
-
-        function placeRandomTile(event: MouseEvent) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const x = (event.clientX - rect.left) * scaleX;
-            const y = (event.clientY - rect.top) * scaleY;
-            
-            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
-            ctx.fillStyle = randomTile.color;
-            randomTile.draw(x, y);
-        }
-
-        function resetCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        canvas.addEventListener('click', placeRandomTile);
-        resetButton.addEventListener('click', resetCanvas);
-
+        // Add listeners for all preset buttons
+        const presetBtns = document.querySelectorAll('.preset-btn');
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const preset = btn.getAttribute('data-preset');
+                if (preset) initializeCanvas(preset);
+            });
+        });
     });
 </script>

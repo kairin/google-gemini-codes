@@ -1,61 +1,121 @@
----
-// This component has no props, it's self-contained.
----
-<div class="bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-3xl mx-auto text-center">
-    <canvas id="girih-canvas" width="600" height="400" class="w-full h-auto bg-gray-50 rounded-md cursor-pointer"></canvas>
-    <button id="reset-btn" class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-        Reset Canvas
-    </button>
-</div>
+// An advanced, grid-based, non-overlapping Girih tile drawing library.
 
-<script>
-    // Wait for the document to be fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('girih-canvas') as HTMLCanvasElement;
-        const resetButton = document.getElementById('reset-btn') as HTMLButtonElement;
-        
-        if (!canvas || !resetButton) return;
+// --- Color Palettes (theme-aware) ---
+const palettes = {
+    sunflower: {
+        light: ['#fde68a', '#facc15', '#eab308', '#ca8a04'],
+        dark: ['#9333ea', '#7e22ce', '#6b21a8', '#581c87'],
+        stroke: { light: '#b91c1c', dark: '#fca5a5' }
+    },
+    crystal: {
+        light: ['#a7f3d0', '#6ee7b7', '#34d399', '#10b981'],
+        dark: ['#a78bfa', '#8b5cf6', '#7c3aed', '#6d28d9'],
+        stroke: { light: '#4338ca', dark: '#a5b4fc' }
+    },
+    carpet: {
+        light: ['#fecaca', '#fca5a5', '#f87171', '#ef4444'],
+        dark: ['#bae6fd', '#7dd3fc', '#38bdf8', '#0ea5e9'],
+        stroke: { light: '#b45309', dark: '#fcd34d' }
+    }
+};
 
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+// --- Main Drawing Function (Internal) ---
+function drawTile(ctx, type, x, y, s, rotation = 0, color, strokeColor) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.beginPath();
+    // These shapes are designed to tessellate when placed on a grid
+    switch (type) {
+        case 'hexagon':
+            for (let i = 0; i < 6; i++) ctx.lineTo(s * Math.cos(i * 2 * Math.PI / 6), s * Math.sin(i * 2 * Math.PI / 6));
+            break;
+        case 'rhombus':
+            const angle = Math.PI / 5;
+            ctx.moveTo(-s, 0); ctx.lineTo(0, s * Math.tan(angle)); ctx.lineTo(s, 0); ctx.lineTo(0, -s * Math.tan(angle));
+            break;
+        case 'square':
+             ctx.rect(-s / 2, -s / 2, s, s);
+             break;
+        case 'triangle':
+            ctx.moveTo(0, -s * Math.sqrt(3) / 3); ctx.lineTo(-s / 2, s * Math.sqrt(3) / 6); ctx.lineTo(s / 2, s * Math.sqrt(3) / 6);
+            break;
+    }
+    ctx.closePath();
+    ctx.fillStyle = color + 'e6'; // 'e6' adds transparency
+    ctx.fill();
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.restore();
+}
 
-        // Simplified representation of Girih tiles
-        const tiles = [
-            { color: '#007bff', draw: (x, y) => { ctx.fillRect(x - 15, y - 15, 30, 30); } }, // Square
-            { color: '#6a4c93', draw: (x, y) => { ctx.beginPath(); ctx.moveTo(x, y - 15); ctx.lineTo(x + 15, y + 15); ctx.lineTo(x - 15, y + 15); ctx.closePath(); ctx.fill(); } }, // Triangle
-            { color: '#4c956c', draw: (x, y) => { ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fill(); } }, // Circle
-            { color: '#ffc107', draw: (x, y) => { ctx.save(); ctx.translate(x, y); ctx.rotate(Math.PI / 4); ctx.fillRect(-10, -10, 20, 20); ctx.restore(); } }, // Diamond
-            { color: '#d9534f', draw: (x, y) => { ctx.fillRect(x - 20, y - 10, 40, 20); } }  // Rectangle
-        ];
+// --- Shared Setup Function ---
+function setupCanvas(canvas) {
+    if (!canvas) return null;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
 
-        function placeRandomTile(event: MouseEvent) {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+    const width = canvas.width;
+    const height = canvas.height;
+    const isDark = document.documentElement.classList.contains('dark');
+    const bgColor = isDark ? '#1f2937' : '#f9fafb';
+
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, width, height);
+    return { ctx, width, height, isDark };
+}
+
+// --- EXPORTED FUNCTION 1: For the "Random" button ---
+export function drawRandomPattern(canvas) {
+    const setup = setupCanvas(canvas);
+    if (!setup) return;
+    const { ctx, width, height, isDark } = setup;
+
+    const size = 50;
+    const step = size * 1.8;
+    const tileTypes = ['hexagon', 'rhombus', 'square', 'triangle'];
+    const randomPalette = palettes[Object.keys(palettes)[Math.floor(Math.random() * 3)]];
+    const colors = isDark ? randomPalette.dark : randomPalette.light;
+    const stroke = isDark ? randomPalette.stroke.dark : randomPalette.stroke.light;
+
+    // Iterate over a grid to place tiles side-by-side
+    for (let y = step / 2; y < height; y += step) {
+        for (let x = step / 2; x < width; x += step) {
+            if (Math.random() > 0.25) { // 75% chance to place a tile
+                const rotation = Math.floor(Math.random() * 4) * (Math.PI / 2); // Snap to 90 degrees
+                const tile = tileTypes[Math.floor(Math.random() * tileTypes.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                drawTile(ctx, tile, x, y, size, rotation, color, stroke);
+            }
+        }
+    }
+}
+
+// --- EXPORTED FUNCTION 2: For the new preset buttons ---
+export function drawPresetPattern(canvas, presetName = 'sunflower') {
+    const setup = setupCanvas(canvas);
+    if (!setup) return;
+    const { ctx, width, height, isDark } = setup;
+
+    const size = 40;
+    const step = size * 1.75;
+    const palette = palettes[presetName];
+    const colors = isDark ? palette.dark : palette.light;
+    const stroke = isDark ? palette.stroke.dark : palette.stroke.light;
+    const tileTypes = ['hexagon', 'rhombus', 'triangle'];
+
+    // Use a deterministic algorithm on a grid to create a structured pattern
+    for (let y = 0; y < height / step + 1; y++) {
+        for (let x = 0; x < width / step + 1; x++) {
+            const posX = x * step + (y % 2) * (step / 2); // Offset every other row
+            const posY = y * step;
             
-            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
-            ctx.fillStyle = randomTile.color;
-            randomTile.draw(x, y);
+            const tileIndex = (x + y) % tileTypes.length;
+            const colorIndex = (x * 2 + y) % colors.length;
+            const rotation = ((x + y) % 6) * (Math.PI / 3);
+            
+            drawTile(ctx, tileTypes[tileIndex], posX, posY, size, rotation, colors[colorIndex], stroke);
         }
-
-        function resetCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawInitialText();
-        }
-
-        function drawInitialText() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.font = '24px Inter, sans-serif';
-            ctx.fillStyle = '#6c757d';
-            ctx.textAlign = 'center';
-            ctx.fillText('Click anywhere to place a tile', canvas.width / 2, canvas.height / 2);
-        }
-
-        // Add event listeners
-        canvas.addEventListener('click', placeRandomTile);
-        resetButton.addEventListener('click', resetCanvas);
-
-        // Initial state
-        drawInitialText();
-    });
-</script>
+    }
+}
