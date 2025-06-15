@@ -1,122 +1,63 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Card from '../../components/Card.astro';
-import ReactGirihDesigner from '../../components/ReactGirihDesigner.astro';
-import ReactQuasicrystals from '../../components/ReactQuasicrystals.astro'; // <-- IMPORT THE NEW BRIDGE
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentHeader from '@/components/ContentHeader.astro';
+import Card from '@/components/Card.astro';
+import BaseLink from '@/components/BaseLink.astro';
+import { ancientMathPage } from '@/data/page-content.ts';
 ---
-<BaseLayout title="Ancient Sophistication" description="The mathematics of Girih tiles and tessellation in Islamic architecture.">
+<BaseLayout 
+    title={ancientMathPage.header.title}
+    description={ancientMathPage.header.description}
+>
+    <ContentHeader 
+        title={ancientMathPage.header.title} 
+        description={ancientMathPage.header.description} 
+    />
 
-    <!-- Header & Sub-Navigation - UPDATED with new "Deep Dive" link -->
-    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-[72px] z-40 border-b dark:border-slate-700 -mx-4 px-4 mb-12">
-        <div class="container mx-auto flex justify-between items-center py-3">
-            <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Ancient Sophistication</h2>
-            <nav class="hidden md:flex flex-wrap justify-center items-center gap-x-6">
-                <a href="#introduction" class="nav-link active">Introduction</a>
-                <a href="#the-tiles" class="nav-link">The Tiles</a>
-                <a href="#designer" class="nav-link">Designer</a>
-                <a href="#deep-dive" class="nav-link">Deep Dive</a>
-            </nav>
-        </div>
-    </header>
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <!-- Dynamically generate the cards from the central data file -->
+        {ancientMathPage.cards.map(card => (
+            <Card 
+                href={card.href}
+                icon={card.icon}
+                title={card.title}
+                blurb={card.blurb}
+            />
+        ))}
+    </div>
 
-    <!-- Main Content Sections -->
-    <div class="container mx-auto">
-        <!-- Section 1 & 2 (Introduction, The Tiles) are unchanged -->
-        <section id="introduction" class="text-center py-16">
-            <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">An Integration of Knowledge</h1>
-            <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">
-                The geometric ornamentation in Islamic art reveals a profound mathematical understanding. This exploration focuses on Girih patterns, which are based on a set of five fundamental tiles that interlock to form complex and intricate tessellations.
-            </p>
-            <div class="grid md:grid-cols-3 gap-8 my-12 max-w-6xl mx-auto text-left">
-                <Card icon="fa-solid fa-infinity" title="Mathematical Wisdom">
-                    <p>The beauty of Girih patterns stems from the fact that they can create aperiodic arrangements, meaning the patterns do not repeat themselves in a regularly translating manner, a concept that predates modern quasicrystal discovery.</p>
-                </Card>
-                <Card icon="fa-solid fa-compass-drafting" title="Artisans as Pioneers">
-                    <p>Medieval Islamic artisans likely used tools like compasses and straightedges, relying on their deep knowledge of geometry and symmetry to create these elaborate patterns without modern computational aids.</p>
-                </Card>
-                <Card icon="fa-solid fa-eye" title="A Different Way of Seeing">
-                     <p>The visual pattern is created by the lines or "strapwork" drawn on the tiles, not the tile boundaries themselves. These lines create a continuous network across the entire tiling, forming the intricate final designs.</p>
-                </Card>
-            </div>
+    <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-12">
+        <img src="/images/girih-modern.png" alt="Modern rendering of Girih tile patterns" class="rounded-lg shadow-xl w-full" />
+        
+        <section id="discovery">
+            <h2>The Discovery</h2>
+            <p>In the 1970s, the concept of quasicrystals was unknown to modern science. It wasn't until 1982 that they were officially "discovered" by Dan Shechtman, a finding that was so controversial it earned him a Nobel Prize. Yet, centuries earlier, artisans in the Islamic world had not only conceptualized but mastered the art of creating these complex, non-repeating patterns.</p>
         </section>
 
-        <section id="the-tiles" class="py-16">
-            <div class="text-center">
-                 <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">The Five Fundamental Girih Tiles</h1>
-                 <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">All Girih tiles have sides of the same length, and all their angles are multiples of 36°, allowing them to fit together seamlessly.</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 my-12 max-w-7xl mx-auto text-center">
-                 <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="50,5 89,23 89,77 50,95 11,77 11,23" class="fill-blue-100 dark:fill-blue-900/50 stroke-blue-500 dark:stroke-blue-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Decagon</h3></div>
-                 <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="50,5 95,41 79,95 21,95 5,41" class="fill-green-100 dark:fill-green-900/50 stroke-green-500 dark:stroke-green-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Pentagon</h3></div>
-                 <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="5,5 95,5 50,50 95,95 5,95 50,50" class="fill-purple-100 dark:fill-purple-900/50 stroke-purple-500 dark:stroke-purple-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Bow Tie</h3></div>
-                 <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="21,5 79,5 95,50 79,95 21,95 5,50" class="fill-red-100 dark:fill-red-900/50 stroke-red-500 dark:stroke-red-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Elongated Hexagon</h3></div>
-                 <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border dark:border-slate-700"><svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto mb-2"><polygon points="50,5 95,50 50,95 5,50" class="fill-yellow-100 dark:fill-yellow-900/50 stroke-yellow-500 dark:stroke-yellow-400" stroke-width="2"/></svg><h3 class="font-semibold dark:text-slate-200">Rhombus</h3></div>
-            </div>
+        <section id="mathematics">
+            <h2>The Mathematics of Aperiodicity</h2>
+            <p>What makes these patterns so special is their <strong>aperiodicity</strong>. Unlike standard crystals that have repeating unit cells with 2, 3, 4, or 6-fold rotational symmetry, quasicrystals exhibit symmetries that were once thought to be impossible, such as 5-fold or 10-fold symmetry. The Girih patterns are a perfect physical manifestation of these mathematical principles.</p>
         </section>
 
-        <!-- Section 3: The Girih Tile Designer -->
-        <section id="designer" class="py-16">
-            <div class="text-center">
-                <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">Interactive Girih Tile Designer</h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">Below is a fully interactive Girih tile editor, built with React and rendered within this Astro page. Use the controls to add, undo, and change tile shapes and colors.</p>
+        <section id="girih-tiles">
+            <h2>The Five Girih Tiles</h2>
+            <p>The complexity of these designs originates from a simple set of five fundamental polygons, known as "girih tiles." These are:</p>
+            <ul>
+                <li>A regular decagon (10 sides)</li>
+                <li>A pentagon (5 sides)</li>
+                <li>A rhombus (diamond shape)</li>
+                <li>A hexagon (6 sides)</li>
+                <li>A bow-tie shape</li>
+            </ul>
+            <p>Below is an interactive canvas demonstrating how these tiles can be combined. Click to redraw a new random pattern.</p>
+            <div class="not-prose bg-slate-900 rounded-lg p-2 aspect-video">
+                <canvas id="girih-canvas" class="w-full h-full rounded"></canvas>
             </div>
-            <div class="my-12 text-center">
-                <ReactGirihDesigner />
-            </div>
-        </section>
-
-        <!-- Section 4: Quasicrystals Deep Dive - THIS IS THE NEW SECTION -->
-        <section id="deep-dive" class="py-16">
-            <div class="text-center">
-                <h1 class="section-title text-4xl md:text-5xl font-bold mb-4 dark:text-slate-100">Quasicrystals Deep Dive</h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-slate-300">For more information, this second interactive application provides a deeper exploration into the structure and properties of quasicrystalline patterns.</p>
-            </div>
-            <div class="my-12 text-center">
-                <!-- We place our new bridge component here -->
-                <ReactQuasicrystals />
-            </div>
+            <script src="/scripts/girih-tiles.js"></script>
         </section>
     </div>
+
+    <div class="text-center mt-16">
+        <BaseLink href="/" text="Back to Home" style="secondary" icon="fa-solid fa-arrow-left" />
+    </div>
 </BaseLayout>
-
-<!-- Page-specific styles are unchanged -->
-<style>
-  .nav-link { /* ... */ }
-</style>
-
-<!-- The script is now only for the scrollspy navigation -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
-        const sections = document.querySelectorAll('section[id]');
-
-        // Smooth scroll for anchor links
-        navLinks.forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                targetElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        // Highlight the correct link on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    navLinks.forEach(link => {
-                        const isActive = link.getAttribute('href') === `#${id}`;
-                        link.classList.toggle('active', isActive);
-                    });
-                }
-            });
-        }, { 
-            rootMargin: '-80px 0px -80% 0px' 
-        });
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    });
-</script>
