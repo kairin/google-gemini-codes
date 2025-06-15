@@ -1,36 +1,124 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import Accordion from '../../components/Accordion.astro';
+import BaseLink from '../../components/BaseLink.astro';
 ---
-<BaseLayout title="Modern Static Sites with Astro" description="A guide to modern static site generators and automated deployment.">
-    <header class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100">Modern Static Sites & Deployment</h1>
-        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">Exploring modern tools and reusable patterns for publishing content on the web.</p>
+<BaseLayout 
+    title="Building This Site: A Learning Journey"
+    description="The technical evolution of this project, from its initial setup to iterative refinements in performance, accessibility, and maintainability."
+>
+    <header class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-slate-100">A Living Project</h1>
+        <p class="mt-4 text-lg text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">
+            This website isn't just a portfolio; it's a practical case study in modern web development. This page documents its technical evolution, showcasing key architectural decisions and the process of iterative refinement.
+        </p>
     </header>
 
-    <div class="max-w-4xl mx-auto space-y-6">
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-rocket text-orange-500 mr-2"></i>Astro with GitHub Pages</h2>
-            <div class="prose dark:prose-invert max-w-none">
-                <p>Astro is a modern static site generator built for performance and flexibility. This entire site is built with it.</p>
-                <ul>
-                    <li>Install Astro: <code>npm create astro@latest</code></li>
-                    <li>Develop locally: <code>npm run dev</code></li>
-                    <li>Build your static site: <code>npm run build</code></li>
-                    <li>Deploy with the official Astro GitHub Actions workflow.</li>
-                </ul>
+    <div class="space-y-16">
+        <!-- Section 1: Single Source of Truth -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-6 dark:text-slate-200">1. The Power of a Single Source of Truth</h2>
+            <p class="text-center text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+                The most significant architectural decision was to centralize all navigation and repetitive content into a single, easily editable file. This avoids inconsistency and makes updates trivial.
+            </p>
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700">
+                <h3 class="font-semibold text-lg mb-2 dark:text-slate-200">The Solution: `src/data/navigation.ts`</h3>
+                <p class="mb-4 text-gray-600 dark:text-slate-400">
+                    This TypeScript file exports all data needed for the header, footer, and homepage cards. Adding a new page is as simple as adding one line here; all components update automatically.
+                </p>
+                <div class="bg-slate-900 rounded-md p-4 text-sm text-gray-200 font-mono">
+                    <pre><code><span class="text-purple-400">export const</span> <span class="text-yellow-400">mainNavLinks</span> = [
+    { <span class="text-green-400">href</span>: <span class="text-orange-400">"/data-tools"</span>, <span class="text-green-400">label</span>: <span class="text-orange-400">"Data Tools"</span> },
+    <span class="text-gray-500">// ... more links</span>
+];
+
+<span class="text-purple-400">export const</span> <span class="text-yellow-400">homepageCards</span> = [
+    { <span class="text-green-400">href</span>: <span class="text-orange-400">"/data-tools"</span>, <span class="text-green-400">title</span>: <span class="text-orange-400">"Data Tool Analyzer"</span>, ... },
+    <span class="text-gray-500">// ... more cards</span>
+];</code></pre>
+                </div>
             </div>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-gem text-red-500 mr-2"></i>Jekyll with GitHub Pages</h2>
-            <p class="dark:text-slate-400">Jekyll is the original static site generator with native support on GitHub Pages.</p>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-bolt text-green-500 mr-2"></i>Hugo</h2>
-            <p class="dark:text-slate-400">Hugo is known for its incredible speed, as it's built with the Go programming language.</p>
-        </div>
-        <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-lg border border-blue-200 dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 text-blue-800 dark:text-blue-300"><i class="fa-solid fa-recycle mr-2"></i>The Reusable Pattern</h2>
-            <p class="text-blue-900 dark:text-blue-400">Every setup shares this core pattern: write content in simple formats (like Markdown), use templates to control structure, and automate builds with CI/CD tools like GitHub Actions to host for free on GitHub Pages.</p>
+        </section>
+
+        <!-- Section 2: Iterative Refinement -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-6 dark:text-slate-200">2. From Good to Great: Iterative Refinements</h2>
+            <p class="text-center text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+                A solid foundation is just the start. The following improvements were made to enhance performance, accessibility (A11y), and maintainability based on a recent code review.
+            </p>
+            
+            <Accordion title="Refinement 1: Improving Chart Reliability">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-red-600 dark:text-red-400">Problem: External Dependency</h4>
+                        <p>The Doughnut Chart was loading Chart.js from a CDN. This can be unreliable and slower than a locally managed package.</p>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code><script src="https://cdn..."></script></code></pre>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-green-600 dark:text-green-400">Solution: Local NPM Package</h4>
+                        <p>By installing Chart.js as a dependency (`npm install chart.js`), we let Astro bundle it with our code, improving load times and removing the external network request.</p>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>import('chart.js/auto').then(...)</code></pre>
+                    </div>
+                </div>
+            </Accordion>
+
+            <Accordion title="Refinement 2: Enhancing Accordion Accessibility">
+                 <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-red-600 dark:text-red-400">Problem: Not Screen-Reader Friendly</h4>
+                        <p>The original accordion worked for sighted users but provided no context for screen readers about its state (open/closed).</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-green-600 dark:text-green-400">Solution: ARIA Attributes</h4>
+                        <p>Adding `aria-expanded`, `aria-controls`, and wrapping the header in a `<button>` tag makes the component fully accessible and understandable to assistive technologies.</p>
+                    </div>
+                </div>
+            </Accordion>
+
+             <Accordion title="Refinement 3: Boosting CSS Maintainability">
+                 <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-red-600 dark:text-red-400">Problem: Hardcoded Values</h4>
+                        <p>The dark mode background for the animated border was a hardcoded hex value, making theme changes difficult.</p>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>background-image: linear-gradient(#1e293b, #1e293b), ...</code></pre>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-green-600 dark:text-green-400">Solution: CSS Custom Properties</h4>
+                        <p>By defining a `--bg-color-dark` variable, we can manage the theme from one central place in `global.css`, making the code cleaner and easier to update.</p>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>background-image: linear-gradient(var(--bg-color-dark), ...</code></pre>
+                    </div>
+                </div>
+            </Accordion>
+        </section>
+
+        <!-- Section 3: Tech Stack -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-8 dark:text-slate-200">3. The Technology Stack</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-blue-500 dark:text-blue-400">Astro</h3>
+                    <p class="mt-2 text-gray-600 dark:text-slate-400">The core of the site. Its component-based structure and "zero JavaScript by default" approach ensures a lightning-fast user experience.</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-sky-500 dark:text-sky-400">Tailwind CSS</h3>
+                    <p class="mt-2 text-gray-600 dark:text-slate-400">A utility-first CSS framework that allows for rapid, consistent styling directly within the HTML, as seen in the custom components.</p>
+                </div>
+                 <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-violet-500 dark:text-violet-400">GitHub Actions & Pages</h3>
+                    <p class="mt-2 text-gray-600 dark:text-slate-400">The entire deployment process is automated. A push to the `main` branch triggers a GitHub Action that builds the site and deploys it to GitHub Pages.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center mt-12">
+             <BaseLink 
+                href="https://github.com/kairin/google-gemini-codes" 
+                text="View Full Source on GitHub" 
+                style="primary"
+                isExternal={true}
+                icon="fa-brands fa-github"
+            />
         </div>
     </div>
 </BaseLayout>

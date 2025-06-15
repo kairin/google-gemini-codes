@@ -28,15 +28,17 @@ import BaseLink from '../../components/BaseLink.astro';
                     This TypeScript file exports all data needed for the header, footer, and homepage cards. Adding a new page is as simple as adding one line here; all components update automatically.
                 </p>
                 <div class="bg-slate-900 rounded-md p-4 text-sm text-gray-200 font-mono">
-                    <pre><code><span class="text-purple-400">export const</span> <span class="text-yellow-400">mainNavLinks</span> = [
-    { <span class="text-green-400">href</span>: <span class="text-orange-400">"/data-tools"</span>, <span class="text-green-400">label</span>: <span class="text-orange-400">"Data Tools"</span> },
-    <span class="text-gray-500">// ... more links</span>
+                    <pre><code>{
+`export const mainNavLinks = [
+    { href: "/data-tools", label: "Data Tools" },
+    // ... more links
 ];
 
-<span class="text-purple-400">export const</span> <span class="text-yellow-400">homepageCards</span> = [
-    { <span class="text-green-400">href</span>: <span class="text-orange-400">"/data-tools"</span>, <span class="text-green-400">title</span>: <span class="text-orange-400">"Data Tool Analyzer"</span>, ... },
-    <span class="text-gray-500">// ... more cards</span>
-];</code></pre>
+export const homepageCards = [
+    { href: "/data-tools", title: "Data Tool Analyzer", ... },
+    // ... more cards
+];`
+                    }</code></pre>
                 </div>
             </div>
         </section>
@@ -53,12 +55,12 @@ import BaseLink from '../../components/BaseLink.astro';
                     <div>
                         <h4 class="font-semibold text-red-600 dark:text-red-400">Problem: External Dependency</h4>
                         <p>The Doughnut Chart was loading Chart.js from a CDN. This can be unreliable and slower than a locally managed package.</p>
-                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code><script src="https://cdn..."></script></code></pre>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>{`<script src="https://cdn..."/script>`}</code></pre>
                     </div>
                     <div>
                         <h4 class="font-semibold text-green-600 dark:text-green-400">Solution: Local NPM Package</h4>
-                        <p>By installing Chart.js as a dependency (`npm install chart.js`), we let Astro bundle it with our code, improving load times and removing the external network request.</p>
-                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>import('chart.js/auto').then(...)</code></pre>
+                        <p>By installing Chart.js as a dependency, we let Astro bundle it with our code, improving load times and removing the external network request.</p>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>{`import('chart.js/auto').then(...)`}</code></pre>
                     </div>
                 </div>
             </Accordion>
@@ -71,7 +73,7 @@ import BaseLink from '../../components/BaseLink.astro';
                     </div>
                     <div>
                         <h4 class="font-semibold text-green-600 dark:text-green-400">Solution: ARIA Attributes</h4>
-                        <p>Adding `aria-expanded`, `aria-controls`, and wrapping the header in a `<button>` tag makes the component fully accessible and understandable to assistive technologies.</p>
+                        <p>Adding `aria-expanded`, `aria-controls`, and wrapping the header in a `<button>` makes the component fully accessible.</p>
                     </div>
                 </div>
             </Accordion>
@@ -81,12 +83,12 @@ import BaseLink from '../../components/BaseLink.astro';
                     <div>
                         <h4 class="font-semibold text-red-600 dark:text-red-400">Problem: Hardcoded Values</h4>
                         <p>The dark mode background for the animated border was a hardcoded hex value, making theme changes difficult.</p>
-                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>background-image: linear-gradient(#1e293b, #1e293b), ...</code></pre>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>{`background-image: linear-gradient(#1e293b, ...)`}</code></pre>
                     </div>
                     <div>
                         <h4 class="font-semibold text-green-600 dark:text-green-400">Solution: CSS Custom Properties</h4>
-                        <p>By defining a `--bg-color-dark` variable, we can manage the theme from one central place in `global.css`, making the code cleaner and easier to update.</p>
-                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>background-image: linear-gradient(var(--bg-color-dark), ...</code></pre>
+                        <p>By defining a `--bg-color-dark` variable, we can manage the theme from one central place in `global.css`.</p>
+                        <pre class="bg-slate-900 text-gray-200 p-2 rounded-md mt-2 text-xs"><code>{`background-image: linear-gradient(var(--bg-color-dark), ...)`}</code></pre>
                     </div>
                 </div>
             </Accordion>
