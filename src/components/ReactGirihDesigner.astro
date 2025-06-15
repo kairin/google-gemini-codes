@@ -1,0 +1,14 @@
+---
+// This component acts as the bridge between your static Astro site and your interactive React app.
+
+// 1. Import the main component from your React application.
+//    Astro understands how to process this import thanks to the @astrojs/react integration.
+import GirihApp from '../scripts/react-girih-tile-designer/App.tsx';
+---
+<!--
+2. Render the React component here.
+   The "client:load" directive is the most important part. It tells Astro:
+   - "client:": This component needs JavaScript to run in the user's browser.
+   - ":load": Load this component's JavaScript as soon as the page loads.
+-->
+<GirihApp client:load />
