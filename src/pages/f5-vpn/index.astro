@@ -8,13 +8,13 @@ import BaseLink from '@/components/BaseLink.astro';
     title="Dockerized F5 VPN Solution"
     description="A technical deep-dive into containerizing the F5 BIG-IP APM client for streamlined and secure intranet access."
 >
-    <!-- Page Header (reusing the component from the math page) -->
+    <!-- Use the existing ContentHeader for the main title -->
     <ContentHeader
         title="Dockerized F5 VPN Solution"
         description="A technical deep-dive into containerizing the F5 BIG-IP APM client for streamlined and secure intranet access."
     />
 
-    <!-- Scrollspy Navigation Header (unique to this page) -->
+    <!-- Create a Scrollspy Navigation Header, like on the math page -->
     <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-[72px] z-40 border-b dark:border-slate-700 -mx-4 px-4 mb-12">
         <div class="container mx-auto flex justify-center items-center py-3">
             <nav class="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-6 text-sm sm:text-base">
@@ -29,47 +29,42 @@ import BaseLink from '@/components/BaseLink.astro';
     <!-- Main Content Sections -->
     <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-12">
 
-        <!-- Section 1: The Challenge -->
         <section id="challenge">
             <h2 class="!text-3xl !mb-6">The Challenge: Why F5 is Different</h2>
-            <p>Successfully containerizing the F5 BIG-IP APM client requires a deep understanding of its unique characteristics. Unlike many modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
+            <p>Containerizing the F5 BIG-IP APM client requires understanding its unique characteristics. Unlike modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
             <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-4 my-8 text-center">
                 <div class="p-4 bg-red-100 dark:bg-red-900/50 rounded-lg shadow"><strong class="text-red-800 dark:text-red-200">GUI-Dependent</strong><p class="text-sm text-red-700 dark:text-red-300">Requires a graphical environment.</p></div>
                 <div class="p-4 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg shadow"><strong class="text-yellow-800 dark:text-yellow-200">Legacy Libraries</strong><p class="text-sm text-yellow-700 dark:text-yellow-300">Depends on `libxml2.so.2`.</p></div>
                 <div class="p-4 bg-blue-100 dark:bg-blue-900/50 rounded-lg shadow"><strong class="text-blue-800 dark:text-blue-200">Bundled Runtimes</strong><p class="text-sm text-blue-700 dark:text-blue-300">Requires careful dependency handling.</p></div>
             </div>
-            <p>This project's goal was to create a self-contained, portable environment that abstracts away these complexities, providing secure intranet access from any machine with Docker.</p>
         </section>
 
-        <!-- Section 2: Architecture -->
         <section id="architecture">
             <h2 class="!text-3xl !mb-6">Architectural Decision: VNC vs. X11</h2>
-            <p>The core architectural choice is how to provide a graphical user interface from within a headless Docker container. While X11 forwarding is possible, it is often brittle and platform-dependent. We strongly recommend the VNC approach for its robustness and portability.</p>
+            <p>The core architectural choice is how to provide a GUI from a headless container. We strongly recommend the VNC approach for its robustness and portability over the brittle, platform-dependent X11 forwarding method.</p>
             <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
                 <div class="border border-red-300 dark:border-red-700 rounded-lg p-6 bg-red-50 dark:bg-red-900/30">
                     <h3 class="text-xl font-bold text-red-800 dark:text-red-200">X11 Forwarding</h3>
-                    <p class="text-red-700 dark:text-red-300 mt-2">Directly forwards the container's display to the host's X server. Incurs high setup complexity and security risks.</p>
+                    <p class="text-red-700 dark:text-red-300 mt-2">Directly forwards the container's display to the host. Incurs high setup complexity and security risks.</p>
                 </div>
                 <div class="border border-green-300 dark:border-green-700 rounded-lg p-6 bg-green-50 dark:bg-green-900/30">
                     <h3 class="text-xl font-bold text-green-800 dark:text-green-200">VNC / noVNC (Recommended)</h3>
-                    <p class="text-green-700 dark:text-green-300 mt-2">Runs a virtual display and VNC server *inside* the container, making it accessible from any modern web browser.</p>
+                    <p class="text-green-700 dark:text-green-300 mt-2">Runs a virtual display inside the container, making it accessible from any modern web browser.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Implementation -->
         <section id="implementation">
             <h2 class="!text-3xl !mb-6">Implementation Highlights</h2>
             <p>The solution is built in four key stages within the Dockerfile and entrypoint scripts. Each stage addresses a specific technical requirement.</p>
             <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
-                <Card icon="fa-brands fa-docker" title="Dockerfile & Dependencies" blurb="The Dockerfile starts with Ubuntu 24.04, installs the F5 client, and crucially, creates a symbolic link for the missing libxml2.so.2 library." href="#!" />
-                <Card icon="fa-solid fa-desktop" title="GUI & Browser Setup" blurb="Installs a virtual display (Xvfb), VNC server, and browsers like Firefox and Chrome using their official non-snap installation methods." href="#!" />
-                <Card icon="fa-solid fa-robot" title="VPN Automation" blurb="An entrypoint script uses the `f5fpc` command-line tool to establish the VPN connection, passing credentials securely via environment variables." href="#!" />
-                <Card icon="fa-solid fa-network-wired" title="Docker Networking" blurb="The container is run with --cap-add=NET_ADMIN. To avoid IP conflicts, using --net=host is the simplest solution for routing." href="#!" />
+                <Card icon="fa-brands fa-docker" title="Dockerfile & Dependencies" blurb="Starts with Ubuntu 24.04, installs the F5 client, and creates a symbolic link for the missing libxml2.so.2 library." href="#!" />
+                <Card icon="fa-solid fa-desktop" title="GUI & Browser Setup" blurb="Installs a virtual display (Xvfb), VNC server, and browsers like Firefox using official non-snap installation methods." href="#!" />
+                <Card icon="fa-solid fa-robot" title="VPN Automation" blurb="An entrypoint script uses the `f5fpc` command-line tool to establish the VPN connection, passing credentials via environment variables." href="#!" />
+                <Card icon="fa-solid fa-network-wired" title="Docker Networking" blurb="The container is run with `--cap-add=NET_ADMIN`. To avoid IP conflicts, using `--net=host` is the simplest solution for routing." href="#!" />
             </div>
         </section>
 
-        <!-- Section 4: Troubleshooting -->
         <section id="troubleshooting">
             <h2 class="!text-3xl !mb-6">Key Troubleshooting Steps</h2>
             <p>Two issues account for nearly all common failures with this setup:</p>
@@ -105,7 +100,7 @@ import BaseLink from '@/components/BaseLink.astro';
     document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
         const sections = document.querySelectorAll('section[id]');
-        const header = document.querySelector('header.sticky'); // Target the sticky header
+        const header = document.querySelector('header.sticky');
         const headerHeight = header ? header.offsetHeight : 72;
 
         if (navLinks.length === 0 || sections.length === 0) return;
@@ -122,14 +117,10 @@ import BaseLink from '@/components/BaseLink.astro';
                     });
                 }
             });
-        }, { 
-            // Adjust rootMargin to account for the sticky header's height
-            rootMargin: `-${headerHeight}px 0px -70% 0px` 
-        });
+        }, { rootMargin: `-${headerHeight}px 0px -70% 0px` });
 
         sections.forEach(section => observer.observe(section));
 
-        // Add smooth scroll behavior
          navLinks.forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -139,10 +130,7 @@ import BaseLink from '@/components/BaseLink.astro';
                     const elementPosition = targetElement.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.scrollY - headerHeight;
                 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
+                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
                 }
             });
         });
