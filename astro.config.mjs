@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 
+import react from '@astrojs/react';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
+  integrations: [tailwind(), react()],
 
   // This section defines the configuration for your project.
   // The GitHub Actions workflow will OVERRIDE these during the deployment build,

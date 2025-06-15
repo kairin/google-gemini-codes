@@ -1,0 +1,5 @@
+{
+  "name": "React Girih Tile Designer",
+  "description": "A simple React application for creating patterns with predefined Girih tiles, inspired by the Girih Designer tool. Users can select from five standard Girih tile shapes (decagon, elongated hexagon, bow-tie, rhombus, pentagon), rotate them, and place them onto a canvas to form geometric patterns. Styled with Tailwind CSS for a clean and modern interface.",
+  "requestFramePermissions": []
+}
