@@ -1,36 +1,14 @@
 ---
 import BaseLink from './BaseLink.astro';
-const year = new Date().getFullYear();
+import { footerSitemap } from '../data/navigation';
 
-const sitemap = [
-    {
-        title: "Analyses & Guides",
-        links: [
-            { href: "/data-tools", text: "Data Tools Hub" },
-            { href: "/data-tools/comparison", text: "Interactive Comparison" },
-            { href: "/ancient-math", text: "Ancient Sophistication" },
-        ]
-    },
-    {
-        title: "Projects",
-        links: [
-            { href: "/f5-vpn", text: "Dockerized F5 VPN" },
-        ]
-    },
-    {
-        title: "Meta",
-        links: [
-            { href: "/learning/github-pages-ssg", text: "About This Site" },
-            { href: "https://github.com/kairin/google-gemini-codes", text: "Source on GitHub", isExternal: true },
-        ]
-    }
-];
+const year = new Date().getFullYear();
 ---
 <footer class="bg-slate-100 dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400">
     <div class="container mx-auto px-4 py-12">
-        <!-- Sitemap Grid -->
+        <!-- Sitemap Grid is now generated automatically -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            {sitemap.map(column => (
+            {footerSitemap.map(column => (
                 <div>
                     <h3 class="font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider mb-4">{column.title}</h3>
                     <ul class="space-y-2">

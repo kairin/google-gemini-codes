@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+---
+<BaseLayout title="Homepage" description="A collection of projects and analyses on data and web technologies.">
+    <header class="text-center my-12 md:my-20">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-slate-100 tracking-tight">
+            Google Gemini Codes
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">
+            A curated collection of projects exploring modern solutions for data analysis, web deployment, secure networking, and computational history.
+        </p>
+    </header>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- We now pass the blurb text as a child of the Card component -->
+        <Card href="/data-tools" icon="fa-solid fa-magnifying-glass-chart" title="Data Tool Analyzer">
+            <p>An interactive guide to choosing the right tool for your data needs, comparing Power Query, DuckDB, and GraphRAG.</p>
+        </Card>
+        <Card href="/f5-vpn" icon="fa-solid fa-shield-halved" title="Dockerized F5 VPN">
+            <p>A technical deep-dive into containerizing the F5 BIG-IP client for secure, portable intranet access.</p>
+        </Card>
+        <Card href="/ancient-math" icon="fa-solid fa-atom" title="Ancient Sophistication">
+            <p>Explore the advanced mathematics of quasicrystals hidden within the beauty of Islamic architecture.</p>
+        </Card>
+        <Card href="/learning/github-pages-ssg" icon="fa-solid fa-book-open" title="Learning">
+            <p>Explore modern static site generators like Astro and learn the reusable patterns for automated deployment.</p>
+        </Card>
+    </div>
+</BaseLayout>
