@@ -1,71 +1,39 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import TabbedInterface from '../../components/TabbedInterface.astro';
-
-const dataToolTabs = [
-    { id: 'use-case', label: 'Primary Use Case', icon: 'fa-bullseye' },
-    { id: 'performance', label: 'Performance', icon: 'fa-bolt' },
-    { id: 'ease-of-use', label: 'Ease of Use', icon: 'fa-face-smile' },
-    { id: 'scalability', label: 'Scalability', icon: 'fa-network-wired' }
-];
 ---
-<BaseLayout title="Interactive Tool Comparison" description="Comparing Power Query, DuckDB, and GraphRAG.">
+<BaseLayout title="Tool Comparison" description="Comparing Power Query, DuckDB, and GraphRAG.">
     <header class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100">Interactive Feature Showdown</h1>
-        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">Select a feature to see how each tool stacks up for different users and their goals.</p>
+        <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100">Feature Showdown</h1>
+        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">A detailed analysis of how each tool stacks up for different users and their goals.</p>
     </header>
 
-    <TabbedInterface tabs={dataToolTabs}>
-        <!-- Use Case Tab Content -->
-        <div data-tab-content="use-case" class="grid md:grid-cols-3 gap-6">
-            <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-blue-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">Power Query</h4><p class="dark:text-slate-400">Self-service ETL and data prep for business intelligence dashboards.</p>
-            </div>
-            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-green-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">DuckDB</h4><p class="dark:text-slate-400">Fast, in-process analytical SQL queries on local or remote data files.</p>
-            </div>
-            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-purple-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">GraphRAG</h4><p class="dark:text-slate-400">Context-aware Q&A over private, interconnected data using LLMs.</p>
-            </div>
-        </div>
+    <article class="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
+        <h2>Primary Use Case</h2>
+        <ul>
+            <li><strong>Power Query:</strong> Self-service ETL and data prep for business intelligence dashboards.</li>
+            <li><strong>DuckDB:</strong> Fast, in-process analytical SQL queries on local or remote data files.</li>
+            <li><strong>GraphRAG:</strong> Context-aware Q&A over private, interconnected data using LLMs.</li>
+        </ul>
 
-        <!-- Performance Tab Content -->
-        <div data-tab-content="performance" class="hidden grid md:grid-cols-3 gap-6">
-            <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-blue-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">Power Query</h4><p class="dark:text-slate-400">Optimized for BI-scale data (millions of rows). Performance tied to data sources.</p>
-            </div>
-            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-green-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">DuckDB</h4><p class="dark:text-slate-400">Exceptional speed for complex SQL on raw files, often outperforming server DBs.</p>
-            </div>
-            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-purple-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">GraphRAG</h4><p class="dark:text-slate-400">Variable. Dependent on graph DB query speed and LLM token latency.</p>
-            </div>
-        </div>
+        <h2>Performance</h2>
+        <ul>
+            <li><strong>Power Query:</strong> Optimized for BI-scale data (millions of rows). Performance is tied to the speed of the data sources.</li>
+            <li><strong>DuckDB:</strong> Exceptional speed for complex SQL on raw files, often outperforming server-based databases for analytical queries.</li>
+            <li><strong>GraphRAG:</strong> Performance is variable, as it depends on the query speed of the underlying graph database and the token latency of the LLM.</li>
+        </ul>
 
-        <!-- Ease of Use Tab Content -->
-        <div data-tab-content="ease-of-use" class="hidden grid md:grid-cols-3 gap-6">
-             <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-blue-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">Power Query</h4><p class="dark:text-slate-400">Very high ease of use due to its graphical interface. Minimal code required.</p>
-            </div>
-            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-green-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">DuckDB</h4><p class="dark:text-slate-400">High for developers who know SQL. Zero-dependency `pip install` setup.</p>
-            </div>
-            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-purple-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">GraphRAG</h4><p class="dark:text-slate-400">Low to medium. A complex framework requiring significant expertise to implement.</p>
-            </div>
-        </div>
-
-        <!-- Scalability Tab Content -->
-        <div data-tab-content="scalability" class="hidden grid md:grid-cols-3 gap-6">
-             <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-blue-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">Power Query</h4><p class="dark:text-slate-400">Scales from desktop to cloud via Power BI dataflows for departmental workloads.</p>
-            </div>
-            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-green-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">DuckDB</h4><p class="dark:text-slate-400">Excels at vertical scalability (larger-than-RAM datasets on a single machine).</p>
-            </div>
-            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white dark:bg-slate-800/50 dark:border-purple-400">
-                <h4 class="font-bold text-lg dark:text-slate-200">GraphRAG</h4><p class="dark:text-slate-400">Component-based. Depends on the scalability of the underlying graph DB and LLM provider.</p>
-            </div>
-        </div>
-    </TabbedInterface>
+        <h2>Ease of Use</h2>
+        <ul>
+            <li><strong>Power Query:</strong> Very high. Its graphical interface allows for complex transformations with minimal code required.</li>
+            <li><strong>DuckDB:</strong> High for developers who know SQL. The zero-dependency `pip install` setup is trivial.</li>
+            <li><strong>GraphRAG:</strong> Low to medium. It is a complex framework requiring significant expertise to implement, not a plug-and-play tool.</li>
+        </ul>
+        
+        <h2>Scalability</h2>
+        <ul>
+            <li><strong>Power Query:</strong> Scales from the desktop to the cloud via Power BI dataflows for departmental workloads.</li>
+            <li><strong>DuckDB:</strong> Excels at vertical scalability, capable of processing larger-than-RAM datasets on a single powerful machine.</li>
+            <li><strong>GraphRAG:</strong> Scalability is component-based. It depends entirely on the scalability of the chosen graph database and the LLM provider.</li>
+        </ul>
+    </article>
 </BaseLayout>

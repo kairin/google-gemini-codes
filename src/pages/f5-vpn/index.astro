@@ -1,70 +1,49 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import TabbedInterface from '../../components/TabbedInterface.astro';
-import Accordion from '../../components/Accordion.astro';
-import DoughnutChart from '../../components/DoughnutChart.astro';
-
-const f5Tabs = [
-    { id: 'overview', label: 'Overview', icon: 'fa-rocket' },
-    { id: 'challenge', label: 'The Challenge', icon: 'fa-puzzle-piece' },
-    { id: 'architecture', label: 'Architecture', icon: 'fa-building' },
-    { id: 'implementation', label: 'Implementation', icon: 'fa-wrench' },
-    { id: 'troubleshooting', label: 'Troubleshooting', icon: 'fa-lightbulb' }
-];
-
-const chartLabels = ['Base OS (Ubuntu)', 'F5 Client', 'VNC/noVNC', 'Web Browser', 'Automation Scripts'];
-const chartData = [20, 25, 20, 20, 15];
 ---
-<BaseLayout title="Dockerized F5 VPN Solution" description="An interactive guide to containerizing the F5 BIG-IP APM client.">
-    <header class="text-center mb-10">
+<BaseLayout title="Dockerized F5 VPN Solution" description="A technical guide to containerizing the F5 BIG-IP APM client.">
+
+    <header class="text-center my-12">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-slate-100">Dockerized F5 VPN Solution</h1>
         <p class="mt-4 text-lg text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">An interactive guide to containerizing the F5 BIG-IP APM client for streamlined and secure intranet access.</p>
     </header>
 
-    <TabbedInterface tabs={f5Tabs}>
-        <!-- Overview Tab Content -->
-        <div data-tab-content="overview">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-slate-100">Solution at a Glance</h2>
-            <p class="text-gray-600 dark:text-slate-300 mb-6">This guide details a robust, automated method for establishing secure access...</p>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h3 class="text-xl font-semibold mb-3 dark:text-slate-200">Key Architectural Components</h3>
-                </div>
-                <DoughnutChart chartId="f5-components-chart" labels={chartLabels} data={chartData} />
-            </div>
-        </div>
+    <article class="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
+        
+        <h2>The Challenge: F5 Client Deep Dive</h2>
+        <p>
+            Successfully containerizing the F5 BIG-IP APM client requires a deep understanding of its specific characteristics and dependencies. The client is not a simple command-line tool, presenting several technical hurdles on modern Linux systems like Ubuntu 24.04 LTS.
+        </p>
+        
+        <h3>Primary Hurdles</h3>
+        <ul>
+            <li><strong>GUI-Dependent:</strong> Requires a graphical environment, as it's typically launched from a browser.</li>
+            <li><strong>Legacy Libraries:</strong> Critically depends on <code>libxml2.so.2</code> and OpenSSL 1.x, which are absent in modern Ubuntu.</li>
+            <li><strong>Bundled QT:</strong> F5 bundles its own QT libraries, which is helpful but requires careful handling of other system dependencies.</li>
+        </ul>
 
-        <!-- The Challenge Tab Content -->
-        <div data-tab-content="challenge" class="hidden prose prose-lg dark:prose-invert max-w-none">
-            <h2>F5 Client Deep Dive</h2>
-            <p>Successfully containerizing the F5 BIG-IP APM client requires a deep understanding...</p>
-        </div>
+        <h2>Solution Architecture</h2>
+        <p>The core architectural choice is how to provide a graphical user interface for the browser from within a headless Docker container. We strongly recommend the VNC/noVNC approach over X11 Forwarding due to its superior portability and security.</p>
 
-        <!-- Architecture Tab Content -->
-        <div data-tab-content="architecture" class="hidden prose prose-lg dark:prose-invert max-w-none">
-            <h2>Solution Architecture</h2>
-            <p>The core architectural choice is how to provide a graphical user interface...</p>
-        </div>
+        <h2>Step-by-Step Implementation</h2>
+        
+        <h3>Part 1: Dockerfile & Dependencies</h3>
+        <p>The Dockerfile serves as the blueprint for your container. It begins with a robust base image, typically <code>ubuntu:24.04</code> LTS for its stability and modern package support. The crucial steps involve installing the F5 VPN client and addressing its unique legacy dependencies.</p>
+        
+        <h3>Part 2: GUI & Browser Setup</h3>
+        <p>To provide a graphical interface, a virtual display and VNC server are installed, along with your chosen web browsers. It's recommended to install Firefox from the Mozilla Team PPA to avoid snap-related issues in Docker.</p>
 
-        <!-- Implementation Tab Content -->
-        <div data-tab-content="implementation" class="hidden">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-slate-100">Step-by-Step Implementation</h2>
-            <p class="text-gray-600 dark:text-slate-300 mb-6">This section breaks down the implementation into four key areas...</p>
-            <Accordion title="Part 1: Dockerfile & Dependencies" isOpen={true}>
-                <p class="dark:text-slate-300">The Dockerfile serves as the blueprint for your container...</p>
-            </Accordion>
-            <Accordion title="Part 2: GUI & Browser Setup (Firefox & Official Chrome)">
-                <p class="dark:text-slate-300">To provide a graphical interface, a virtual display and VNC server are installed...</p>
-            </Accordion>
-        </div>
+        <h3>Part 3: VPN Automation with <code>f5fpc</code> CLI</h3>
+        <p>Automating the VPN connection reliably is best achieved using the F5 command-line client, <code>f5fpc</code>, rather than relying on browser GUI automation. Use environment variables or Docker secrets to handle credentials securely.</p>
+        
+        <h3>Part 4: Docker Networking</h3>
+        <p>Correct network configuration is vital. The container must be run with <code>--cap-add=NET_ADMIN</code> to modify routing tables. A common issue is IP address conflicts between Docker's default network and your corporate VPN's IP range. Using <code>--net=host</code> is a simple fix, but modifying Docker's default bridge network (`bip`) is more secure.</p>
 
-        <!-- Troubleshooting Tab Content -->
-        <div data-tab-content="troubleshooting" class="hidden">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-slate-100">Best Practices & Troubleshooting</h2>
-            <p class="text-gray-600 dark:text-slate-300 mb-6">Follow these best practices for a stable and secure setup...</p>
-            <Accordion title="Issue: `libxml2.so.2` not found">
-                <p class="dark:text-slate-300">This is expected on Ubuntu 22.04/24.04...</p>
-            </Accordion>
-        </div>
-    </TabbedInterface>
+        <h2>Troubleshooting</h2>
+        <ul>
+            <li><strong>Issue: <code>libxml2.so.2</code> not found.</strong><br>Resolution: This is expected on Ubuntu 22.04/24.04. You must manually install a compatible version or create a symlink in your Dockerfile.</li>
+            <li><strong>Issue: VPN connection reset errors / No intranet access.</strong><br>Resolution: This is almost always an IP address conflict. Use <code>--net=host</code> or change Docker's default IP range.</li>
+        </ul>
+        
+    </article>
 </BaseLayout>
