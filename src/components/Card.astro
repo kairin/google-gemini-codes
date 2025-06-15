@@ -8,37 +8,30 @@ interface Props {
   isExternal?: boolean;
 }
 
-const { href, icon, title, blurb, details, isExternal = false } = Astro.props;
+const { href, icon, title, blurb, isExternal = false } = Astro.props;
 ---
-<div class="group relative rounded-lg">
+<div class="group relative rounded-lg transition-transform duration-300 ease-in-out hover:scale-105">
+  <!-- Clickable overlay link -->
   <a 
     href={href} 
     target={isExternal ? '_blank' : '_self'} 
     rel={isExternal ? 'noopener noreferrer' : ''}
-    class="absolute inset-0 z-10"
+    class="absolute inset-0 z-20"
   >
     <span class="sr-only">View {title}</span>
   </a>
 
-  <div class="relative p-8 h-full bg-white dark:bg-slate-800 rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300 ease-in-out group-hover:scale-105">
-    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900/50 mb-5 transition-transform duration-300 group-hover:scale-110">
+  <!-- Animated Border Container -->
+  <div class="absolute inset-0 rounded-lg overflow-hidden z-10">
+    <div class="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 animate-rainbow-border"></div>
+  </div>
+  
+  <!-- Content Container -->
+  <div class="relative p-8 h-full bg-white dark:bg-slate-800 rounded-lg shadow-md transition-opacity duration-300 group-hover:opacity-0">
+    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900/50 mb-5">
         <i class:list={[icon, "text-3xl text-blue-600 dark:text-blue-300"]}></i>
     </div>
     <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-slate-100">{title}</h3>
-    
-    <div class="relative min-h-[6rem]">
-      <p class="text-gray-600 dark:text-slate-400 absolute inset-0 transition-opacity duration-200 group-hover:opacity-0">
-        {blurb}
-      </p>
-      {details && (
-        <p class="text-gray-600 dark:text-slate-300 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-          {details}
-        </p>
-      )}
-    </div>
-  </div>
-  
-  <div class="absolute inset-0 rounded-lg overflow-hidden pointer-events-none">
-    <div class="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 animate-rainbow-border"></div>
+    <p class="text-gray-600 dark:text-slate-400">{blurb}</p>
   </div>
 </div>

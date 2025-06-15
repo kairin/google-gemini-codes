@@ -4,6 +4,8 @@
 
 /* 1. Define the CSS Variables for our gradients at the root level */
 :root {
+    --bg-color-light: white;
+    --bg-color-dark: #0f172a; /* slate-900 */
     --rainbow-gradient: linear-gradient(
         to right,
         #ef4444, /* red-500 */
@@ -29,20 +31,17 @@
     100% { background-position: 0% 50%; }
 }
 
-/* 3. Define the Utility Classes that your React components apply */
+/* 3. Define the Utility Classes that your components apply */
 
 /* For the animated border */
 .animate-rainbow-border {
     border: 2px solid transparent;
-    background-image: linear-gradient(white, white), var(--rainbow-gradient);
+    /* The background for the border is the gradient itself */
+    background-image: var(--rainbow-gradient);
     background-origin: border-box;
-    background-clip: padding-box, border-box;
+    background-clip: border-box; /* This is the key change */
     animation: rainbow-scroll-animation 3s linear infinite;
     background-size: 200% 100%;
-}
-
-.dark .animate-rainbow-border {
-    background-image: linear-gradient(#1e293b, #1e293b), var(--rainbow-gradient); /* slate-900 */
 }
 
 /* For the faint background shimmer */
@@ -64,7 +63,7 @@
     opacity: 0.5;
 }
 
-/* For the text shimmer (not currently used but good to have) */
+/* For the text shimmer */
 .animate-rainbow-text-shimmer {
     background-image: var(--rainbow-gradient);
     background-size: 200% 100%;
