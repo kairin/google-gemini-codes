@@ -1,8 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Card from '../../components/Card.astro';
-import Accordion from '../../components/Accordion.astro';
-import BaseLink from '../../components/BaseLink.astro';
+// Use Astro's path aliases for robust, non-relative imports
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/Card.astro';
+import Accordion from '@/components/Accordion.astro';
+import BaseLink from '@/components/BaseLink.astro';
 ---
 <BaseLayout 
     title="Building This Site: A Learning Journey"
