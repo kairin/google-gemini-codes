@@ -9,42 +9,56 @@ interface Props {
 }
 const { tabs } = Astro.props;
 ---
-<div class="card bg-white shadow-md rounded-lg overflow-hidden">
-    <div class="sticky top-0 bg-white/80 backdrop-blur-lg z-10 border-b border-gray-200">
+<div class="tab-interface-container bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="border-b border-gray-200">
         <nav class="flex flex-wrap justify-center -mb-px">
             {tabs.map((tab, index) => (
-                <button data-tab-id={tab.id} class:list={["tab-btn text-sm sm:text-base py-4 px-3 sm:px-6", { 'active': index === 0 }]}>
+                <button
+                    data-tab-button={tab.id}
+                    class:list={["tab-btn text-sm sm:text-base py-4 px-3 sm:px-6", { 'active': index === 0 }]}
+                    role="tab"
+                    aria-selected={index === 0}
+                    aria-controls={`tab-content-${tab.id}`}
+                >
                     <i class:list={["fas", tab.icon, "mr-2"]}></i>{tab.label}
                 </button>
             ))}
         </nav>
     </div>
-    <div class="tab-content-container p-6 md:p-8">
+    <div class="p-6 md:p-8">
         <slot />
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.card');
+        const container = document.querySelector('.tab-interface-container');
         if (!container) return;
 
-        const tabButtons = container.querySelectorAll('.tab-btn');
-        const tabContents = Array.from(container.querySelectorAll('.tab-content-container > :global(*)'));
+        const tabButtons = container.querySelectorAll('[data-tab-button]');
+        const tabContents = container.querySelectorAll('[data-tab-content]');
 
-        function showTab(indexToShow) {
-            tabButtons.forEach((btn, index) => {
-                btn.classList.toggle('active', index === indexToShow);
+        function showTab(tabId) {
+            // Update button states
+            tabButtons.forEach(btn => {
+                const isActive = btn.getAttribute('data-tab-button') === tabId;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', String(isActive));
             });
-            tabContents.forEach((content, index) => {
-                (content as HTMLElement).style.display = index === indexToShow ? 'block' : 'none';
+
+            // Update content visibility
+            tabContents.forEach(content => {
+                const isVisible = content.getAttribute('data-tab-content') === tabId;
+                (content as HTMLElement).classList.toggle('hidden', !isVisible);
             });
         }
 
-        showTab(0); // Show the first tab initially
-
-        tabButtons.forEach((button, index) => {
-            button.addEventListener('click', () => showTab(index));
+        // Add click listeners to buttons
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab-button');
+                if (tabId) showTab(tabId);
+            });
         });
     });
 </script>
@@ -54,10 +68,11 @@ const { tabs } = Astro.props;
         transition: all 0.3s ease;
         border-bottom: 3px solid transparent;
         cursor: pointer;
+        color: #4B5563; /* Gray-600 */
     }
     .tab-btn.active {
-        border-bottom-color: #4A90E2;
-        color: #4A90E2;
+        border-bottom-color: #3B82F6; /* Blue-500 */
+        color: #3B82F6;
         font-weight: 600;
     }
 </style>

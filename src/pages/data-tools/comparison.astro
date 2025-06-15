@@ -16,8 +16,8 @@ const dataToolTabs = [
     </header>
 
     <TabbedInterface tabs={dataToolTabs}>
-        <!-- Use Case Tab -->
-        <div class="grid md:grid-cols-3 gap-6">
+        <!-- Use Case Tab Content -->
+        <div data-tab-content="use-case" class="grid md:grid-cols-3 gap-6">
             <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
                 <h4 class="font-bold text-lg">Power Query</h4><p>Self-service ETL and data prep for business intelligence dashboards.</p>
             </div>
@@ -29,8 +29,8 @@ const dataToolTabs = [
             </div>
         </div>
 
-        <!-- Performance Tab -->
-        <div class="grid md:grid-cols-3 gap-6">
+        <!-- Performance Tab Content -->
+        <div data-tab-content="performance" class="hidden grid md:grid-cols-3 gap-6">
             <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
                 <h4 class="font-bold text-lg">Power Query</h4><p>Optimized for BI-scale data (millions of rows). Performance tied to data sources.</p>
             </div>
@@ -42,8 +42,8 @@ const dataToolTabs = [
             </div>
         </div>
 
-        <!-- Ease of Use Tab -->
-        <div class="grid md:grid-cols-3 gap-6">
+        <!-- Ease of Use Tab Content -->
+        <div data-tab-content="ease-of-use" class="hidden grid md:grid-cols-3 gap-6">
              <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
                 <h4 class="font-bold text-lg">Power Query</h4><p>Very high ease of use due to its graphical interface. Minimal code required.</p>
             </div>
@@ -55,8 +55,8 @@ const dataToolTabs = [
             </div>
         </div>
 
-        <!-- Scalability Tab -->
-        <div class="grid md:grid-cols-3 gap-6">
+        <!-- Scalability Tab Content -->
+        <div data-tab-content="scalability" class="hidden grid md:grid-cols-3 gap-6">
              <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
                 <h4 class="font-bold text-lg">Power Query</h4><p>Scales from desktop to cloud via Power BI dataflows for departmental workloads.</p>
             </div>
