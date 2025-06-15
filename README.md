@@ -1,47 +1,67 @@
-# Astro Starter Kit: Minimal
+# :rocket: Google Gemini Codes
 
-```sh
-npm create astro@latest -- --template minimal
-```
+![GitHub last commit](https://img.shields.io/github/last-commit/kairin/google-gemini-codes?style=for-the-badge&color=00B8D4)
+![Languages](https://img.shields.io/github/languages/top/kairin/google-gemini-codes?style=for-the-badge&color=FFC107)
+![Repo stars](https://img.shields.io/github/stars/kairin/google-gemini-codes?style=for-the-badge&color=brightgreen)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+Welcome to `google-gemini-codes`, a curated collection of projects and analyses showcasing modern solutions for common data and web challenges. This repository contains the source code for the interactive website built with **Astro** and automatically deployed to **GitHub Pages**.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+[![Launch Site ↗](https://img.shields.io/badge/Launch-Live%20Website-blue.svg?style=for-the-badge)](https://kairin.github.io/google-gemini-codes/)
 
-## 🚀 Project Structure
+## :bulb: The Vision Behind This Project
 
-Inside of your Astro project, you'll see the following folders and files:
+The core idea of this repository is to tackle real-world problems with the best open-source tools available. The projects documented here are born from genuine curiosity and a desire to find the most efficient and elegant solutions. The "thinking" behind this project is to:
 
-```text
+1.  **Solve Practical Problems:** Each project starts with a real-world challenge.
+2.  **Learn by Doing:** The code here is a direct result of hands-on experimentation.
+3.  **Share the Knowledge:** The ultimate goal is to create well-documented, easy-to-understand resources that others can learn from and build upon.
+
+---
+
+## :file_folder: Project Structure
+
+This project is built with Astro and follows its standard conventions. All source code resides in the `src/` directory.
+
 /
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+├── public/ # Static assets (images, fonts, etc.)
+└── src/
+├── components/ # Reusable Astro components (.astro)
+│ ├── Accordion.astro
+│ ├── Card.astro
+│ └── TabbedInterface.astro
+├── content/ # Markdown content collections
+│ └── data-tools/
+│ ├── duckdb-guide.md
+│ └── power-query-guide.md
+├── layouts/ # Master page layouts
+│ └── BaseLayout.astro
+├── pages/ # Site pages and routes
+│ ├── data-tools/
+│ │ ├── comparison.astro
+│ │ └── guides/[slug].astro
+│ ├── ancient-math/
+│ ├── f5-vpn/
+│ └── index.astro # Homepage
+└── styles/ # Global CSS (rarely used with Tailwind)
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## :dart: Core Projects on the Site
 
-Any static assets, like images, can be placed in the `public/` directory.
+The repository is organized into four main projects, each explorable on the live website.
 
-## 🧞 Commands
+### Data Tool Analyzer
+A deep dive into the world of data analysis tools, comparing Power Query, DuckDB, and GraphRAG.
+> **[Explore on site →](/data-tools)**
 
-All commands are run from the root of the project, from a terminal:
+### Dockerized F5 VPN
+A technical guide to creating a secure and isolated F5 VPN environment using Docker.
+> **[Explore on site →](/f5-vpn)**
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Ancient Sophistication
+An exploration of the advanced mathematics of quasicrystals hidden within the beauty of Islamic architecture.
+> **[Explore on site →](/ancient-math)**
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Learning
+A section dedicated to the tools and techniques used to build this site, such as Astro and GitHub Pages deployment.
+> **[Explore on site →](/learning/github-pages-ssg)**
