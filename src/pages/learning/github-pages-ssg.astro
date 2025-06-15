@@ -1,3 +1,5 @@
+// FILE: src/pages/learning/github-pages-ssg.astro
+// This page is updated to use the Card component with the new features.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Card from '@/components/Card.astro';
@@ -16,29 +18,18 @@ import BaseLink from '@/components/BaseLink.astro';
 
     <div class="space-y-16">
         <section>
-            <h2 class="text-3xl font-bold text-center mb-6 dark:text-slate-200">1. Component Evolution: From Tabs to Scrollspy</h2>
+            <h2 class="text-3xl font-bold text-center mb-6 dark:text-slate-200">1. Component-Driven Design</h2>
             <p class="text-center text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-                A key refinement was standardizing the site's layout. We replaced a fragmented, tab-based layout with a more cohesive single-page scroll experience, using the design from the "Ancient Math" page as the template for all content pages.
+                The core principle is building reusable, self-contained components. The interactive homepage cards, for example, are a single `Card.astro` component that handles all its own hover effects and linking logic, making it easy to reuse on any page.
             </p>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="border border-red-300 dark:border-red-700 rounded-lg p-6 bg-red-50 dark:bg-red-900/30">
-                    <h3 class="text-xl font-bold text-red-800 dark:text-red-200">Old Method: Tabs & Accordions</h3>
-                    <p class="text-red-700 dark:text-red-300 mt-2">The `f5-vpn` page originally used tab and accordion components. This hid content, requiring extra clicks and creating a disjointed user experience.</p>
-                </div>
-                <div class="border border-green-300 dark:border-green-700 rounded-lg p-6 bg-green-50 dark:bg-green-900/30">
-                    <h3 class="text-xl font-bold text-green-800 dark:text-green-200">New Method: Scrollspy & Cards</h3>
-                    <p class="text-green-700 dark:text-green-300 mt-2">All content pages now use a single, flowing layout. A sticky "scrollspy" header navigates the user, while key information is presented in styled cards. This improves discoverability and creates a modern, consistent UX.</p>
-                </div>
-            </div>
         </section>
 
         <section>
             <h2 class="text-3xl font-bold text-center mb-8 dark:text-slate-200">2. The Technology Stack</h2>
             <div class="grid md:grid-cols-3 gap-8 text-center">
-                <Card icon="fa-solid fa-satellite-dish" title="Astro" blurb="The core of the site. Its 'Islands' architecture ensures fast performance by default, only loading JavaScript where needed." href="https://astro.build" isExternal={true} />
-                <Card icon="fa-brands fa-react" title="React" blurb="For complex, stateful applications like the 'Ancient Math' designers, Astro seamlessly integrates React components as interactive islands." href="https://react.dev" isExternal={true} />
-                <Card icon="fa-brands fa-github" title="GitHub Actions & Pages" blurb="The entire deployment process is automated. A push to the `main` branch triggers a build and deploys the static site to GitHub Pages." href="https://github.com/features/actions" isExternal={true} />
+                <Card href="https://astro.build" isExternal={true} icon="fa-solid fa-satellite-dish" title="Astro" blurb="The core static site generator." details="Astro's 'Islands Architecture' ensures fast performance by default, only loading JavaScript for interactive components where needed." />
+                <Card href="https://react.dev" isExternal={true} icon="fa-brands fa-react" title="React" blurb="Used for complex, stateful applications." details="For highly interactive applications like the 'Ancient Math' designers, Astro seamlessly integrates React components as isolated islands of interactivity." />
+                <Card href="https://github.com/features/actions" isExternal={true} icon="fa-brands fa-github" title="GitHub Actions & Pages" blurb="Provides automated CI/CD and hosting." details="The entire deployment process is automated. A push to the `main` branch triggers a GitHub Action that builds the site and deploys it for free to GitHub Pages." />
             </div>
         </section>
 
