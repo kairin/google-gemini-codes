@@ -1,9 +1,57 @@
 ---
+import BaseLink from './BaseLink.astro';
 const year = new Date().getFullYear();
+
+// We define the sitemap structure here
+const sitemap = [
+    {
+        title: "Analyses & Guides",
+        links: [
+            { href: "/data-tools", text: "Data Tools Hub" },
+            { href: "/data-tools/comparison", text: "Interactive Comparison" },
+            { href: "/ancient-math", text: "Ancient Sophistication" },
+        ]
+    },
+    {
+        title: "Projects",
+        links: [
+            { href: "/f5-vpn", text: "Dockerized F5 VPN" },
+        ]
+    },
+    {
+        title: "Meta",
+        links: [
+            { href: "/learning/github-pages-ssg", text: "About This Site" },
+            { href: "https://github.com/kairin/google-gemini-codes", text: "Source on GitHub", isExternal: true },
+        ]
+    }
+];
 ---
-<footer class="bg-gray-100 border-t border-gray-200 mt-16">
-    <div class="container mx-auto text-center text-gray-600 p-8">
-        <p>© {year} kairin. All rights reserved.</p>
-        <p class="mt-2">This site is part of the <strong class="font-semibold text-gray-700">google-gemini-codes</strong> repository.</p>
+<footer class="bg-gray-100 border-t border-gray-200 mt-16 text-gray-600">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Sitemap Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            {sitemap.map(column => (
+                <div>
+                    <h3 class="font-bold text-gray-900 uppercase tracking-wider mb-4">{column.title}</h3>
+                    <ul class="space-y-2">
+                        {column.links.map(link => (
+                            <li>
+                                {link.isExternal ? (
+                                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 hover:underline">{link.text}</a>
+                                ) : (
+                                    <BaseLink href={link.href} class="hover:text-blue-600 hover:underline">{link.text}</BaseLink>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+
+        <!-- Copyright section -->
+        <div class="mt-12 pt-8 border-t border-gray-200 text-center text-sm">
+            <p>© {year} kairin. All rights reserved. This site is part of the <a href="https://github.com/kairin/google-gemini-codes" target="_blank" class="font-semibold text-gray-700 hover:underline">google-gemini-codes</a> repository.</p>
+        </div>
     </div>
 </footer>

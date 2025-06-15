@@ -1,27 +1,54 @@
 ---
-import BaseLink from './BaseLink.astro'; // <-- STEP 1: Import the component
+import BaseLink from './BaseLink.astro';
 
-const links = [
+// We've added the new "Ancient Sophistication" page to our navigation data
+const navLinks = [
     { href: "/data-tools", label: "Data Tools" },
     { href: "/f5-vpn", label: "F5 VPN" },
+    { href: "/ancient-math", label: "Ancient Sophistication" },
     { href: "/learning/github-pages-ssg", label: "Learning" },
 ];
 ---
 <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
     <nav class="container mx-auto flex justify-between items-center p-4">
-        {/* STEP 2: Replace <a> with <BaseLink> */}
         <BaseLink href="/" class="text-xl font-bold text-blue-600 hover:text-blue-800 transition-colors">
             🚀 Google Gemini Codes
         </BaseLink>
+
+        <!-- Desktop Menu: Hidden on small screens -->
         <div class="hidden md:flex space-x-6">
-            {links.map(link => (
-                // Also replace it here inside the loop
+            {navLinks.map(link => (
                 <BaseLink href={link.href} class="text-gray-600 hover:text-blue-600 font-medium transition-colors">{link.label}</BaseLink>
             ))}
         </div>
-        {/* External links (to other websites) can remain as normal <a> tags */}
-        <a href="https://github.com/kairin/google-gemini-codes" target="_blank" class="hidden sm:inline-block ...">
-            View on GitHub <i class="fa-brands fa-github ml-1"></i>
-        </a>
+
+        <!-- Mobile Menu Button: "Hamburger" - only visible on small screens -->
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none" aria-label="Open Menu">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
     </nav>
+
+    <!-- Mobile Menu: Dropdown - Hidden by default, toggled with JS -->
+    <div id="mobile-menu" class="hidden md:hidden">
+        <div class="flex flex-col space-y-1 px-2 pt-2 pb-3">
+            {navLinks.map(link => (
+                <BaseLink href={link.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">{link.label}</BaseLink>
+            ))}
+        </div>
+    </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
