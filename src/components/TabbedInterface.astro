@@ -9,16 +9,18 @@ interface Props {
 }
 const { tabs } = Astro.props;
 ---
-<div class="tab-interface-container bg-white shadow-md rounded-lg overflow-hidden">
-    <div class="border-b border-gray-200">
-        <nav class="flex flex-wrap justify-center -mb-px">
+<div class="tab-interface-container bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-hidden border dark:border-slate-700">
+    <div class="border-b border-slate-200 dark:border-slate-700">
+        <nav class="flex flex-wrap justify-center -mb-px" role="tablist">
             {tabs.map((tab, index) => (
                 <button
+                    type="button"
                     data-tab-button={tab.id}
                     class:list={["tab-btn text-sm sm:text-base py-4 px-3 sm:px-6", { 'active': index === 0 }]}
                     role="tab"
-                    aria-selected={index === 0}
+                    aria-selected={index === 0 ? "true" : "false"}
                     aria-controls={`tab-content-${tab.id}`}
+                    id={`tab-${tab.id}`}
                 >
                     <i class:list={["fas", tab.icon, "mr-2"]}></i>{tab.label}
                 </button>
@@ -32,32 +34,32 @@ const { tabs } = Astro.props;
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.tab-interface-container');
-        if (!container) return;
+        const allTabContainers = document.querySelectorAll('.tab-interface-container');
 
-        const tabButtons = container.querySelectorAll('[data-tab-button]');
-        const tabContents = container.querySelectorAll('[data-tab-content]');
+        allTabContainers.forEach(container => {
+            const tabButtons = container.querySelectorAll('[data-tab-button]');
+            const tabContents = Array.from(container.querySelectorAll('[data-tab-content]'));
 
-        function showTab(tabId) {
-            // Update button states
-            tabButtons.forEach(btn => {
-                const isActive = btn.getAttribute('data-tab-button') === tabId;
-                btn.classList.toggle('active', isActive);
-                btn.setAttribute('aria-selected', String(isActive));
-            });
+            function showTab(tabId) {
+                tabButtons.forEach(btn => {
+                    const isActive = btn.getAttribute('data-tab-button') === tabId;
+                    btn.classList.toggle('active', isActive);
+                    btn.setAttribute('aria-selected', String(isActive));
+                });
+                tabContents.forEach(content => {
+                    const isVisible = content.getAttribute('data-tab-content') === tabId;
+                    content.classList.toggle('hidden', !isVisible);
+                });
+            }
 
-            // Update content visibility
-            tabContents.forEach(content => {
-                const isVisible = content.getAttribute('data-tab-content') === tabId;
-                (content as HTMLElement).classList.toggle('hidden', !isVisible);
-            });
-        }
+            const defaultTabId = tabButtons[0]?.getAttribute('data-tab-button');
+            if (defaultTabId) showTab(defaultTabId);
 
-        // Add click listeners to buttons
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.getAttribute('data-tab-button');
-                if (tabId) showTab(tabId);
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab-button');
+                    if (tabId) showTab(tabId);
+                });
             });
         });
     });
@@ -70,9 +72,16 @@ const { tabs } = Astro.props;
         cursor: pointer;
         color: #4B5563; /* Gray-600 */
     }
+    .dark .tab-btn {
+        color: #D1D5DB; /* Gray-300 */
+    }
     .tab-btn.active {
         border-bottom-color: #3B82F6; /* Blue-500 */
         color: #3B82F6;
         font-weight: 600;
+    }
+    .dark .tab-btn.active {
+        border-bottom-color: #60A5FA; /* Blue-400 */
+        color: #60A5FA;
     }
 </style>

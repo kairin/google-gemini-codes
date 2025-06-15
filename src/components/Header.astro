@@ -1,7 +1,6 @@
 ---
 import BaseLink from './BaseLink.astro';
 
-// We've added the new "Ancient Sophistication" page to our navigation data
 const navLinks = [
     { href: "/data-tools", label: "Data Tools" },
     { href: "/f5-vpn", label: "F5 VPN" },
@@ -9,46 +8,73 @@ const navLinks = [
     { href: "/learning/github-pages-ssg", label: "Learning" },
 ];
 ---
-<header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700">
     <nav class="container mx-auto flex justify-between items-center p-4">
-        <BaseLink href="/" class="text-xl font-bold text-blue-600 hover:text-blue-800 transition-colors">
+        <BaseLink href="/" class="text-xl font-bold text-blue-600 dark:text-blue-500 hover:text-blue-800 transition-colors">
             🚀 Google Gemini Codes
         </BaseLink>
 
-        <!-- Desktop Menu: Hidden on small screens -->
-        <div class="hidden md:flex space-x-6">
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-6">
             {navLinks.map(link => (
-                <BaseLink href={link.href} class="text-gray-600 hover:text-blue-600 font-medium transition-colors">{link.label}</BaseLink>
+                <BaseLink href={link.href} class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">{link.label}</BaseLink>
             ))}
         </div>
 
-        <!-- Mobile Menu Button: "Hamburger" - only visible on small screens -->
-        <div class="md:hidden">
-            <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none" aria-label="Open Menu">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        <!-- Right side actions -->
+        <div class="flex items-center gap-4">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none" aria-label="Toggle theme">
+                <i id="theme-toggle-dark-icon" class="fas fa-moon hidden"></i>
+                <i id="theme-toggle-light-icon" class="fas fa-sun hidden"></i>
             </button>
+            
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="p-2 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Open Menu">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Mobile Menu: Dropdown - Hidden by default, toggled with JS -->
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden">
         <div class="flex flex-col space-y-1 px-2 pt-2 pb-3">
             {navLinks.map(link => (
-                <BaseLink href={link.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">{link.label}</BaseLink>
+                <BaseLink href={link.href} class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">{link.label}</BaseLink>
             ))}
         </div>
     </div>
 </header>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+    // This script remains unchanged
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-        if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+    function updateIcons() {
+        if (document.documentElement.classList.contains('dark')) {
+            darkIcon?.classList.remove('hidden');
+            lightIcon?.classList.add('hidden');
+        } else {
+            darkIcon?.classList.add('hidden');
+            lightIcon?.classList.remove('hidden');
         }
+    }
+
+    updateIcons();
+
+    themeToggleButton?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        updateIcons();
+    });
+
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuButton?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
     });
 </script>
