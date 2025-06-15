@@ -2,7 +2,7 @@
 import BaseLink from './BaseLink.astro';
 
 // We make `href` optional by adding a `?`.
-// We also allow passing child content directly via the <slot />.
+// This allows the component to be used as a non-link.
 interface Props {
   title: string;
   description?: string;
@@ -11,11 +11,11 @@ interface Props {
 }
 const { title, description, href, icon } = Astro.props;
 
-// This is the key: If an `href` is passed, the card is a link (`BaseLink`).
-// If not, it's a standard `div`.
+// This is the key: If an `href` is passed, the card is a clickable link (`BaseLink`).
+// If no `href` is provided, it's a standard, non-clickable `div`.
 const Tag = href ? BaseLink : 'div';
 ---
-<Tag href={href} class="group block bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md hover:shadow-xl dark:hover:shadow-blue-900/20 transition-all duration-300 border border-slate-200 dark:border-slate-700 h-full">
+<Tag href={href} class:list={["group block bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md hover:shadow-xl dark:hover:shadow-blue-900/20 transition-all duration-300 border border-slate-200 dark:border-slate-700 h-full", { 'cursor-default': !href }]}>
     <div class="flex items-center text-blue-600 dark:text-blue-400 mb-4">
         <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg bg-blue-100 dark:bg-slate-700 text-blue-600 dark:text-blue-400 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:group-hover:bg-blue-500">
             <i class:list={[icon, "fa-lg"]}></i>
@@ -23,15 +23,12 @@ const Tag = href ? BaseLink : 'div';
         <h3 class="ml-4 text-xl font-bold text-slate-900 dark:text-slate-100">{title}</h3>
     </div>
     
-    <!-- Use the description prop if it exists -->
-    {description && <p class="text-slate-600 dark:text-slate-400">{description}</p>}
-
-    <!-- Or, render any child content passed to the component -->
+    <!-- This allows us to pass rich content (like paragraphs) into the card -->
     <div class="text-slate-600 dark:text-slate-400">
         <slot />
     </div>
 
-    <!-- Only show the "Explore" link if the card has an href -->
+    <!-- The "Explore ->" text will ONLY appear if an href is provided -->
     {href && (
         <div class="mt-4 font-semibold text-blue-600 dark:text-blue-400 group-hover:underline">
             Explore <i class="fa-solid fa-arrow-right ml-1"></i>

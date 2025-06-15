@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Card from '../../components/Card.astro'; // We now use our upgraded Card component
+import Card from '../../components/Card.astro';
 ---
 <BaseLayout title="Ancient Sophistication" description="Islamic Architecture & Modern Science">
 
@@ -26,16 +26,16 @@ import Card from '../../components/Card.astro'; // We now use our upgraded Card 
                 This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. The mathematical genius in Islamic patterns represents a sophisticated, intuitive grasp of complex phenomena, achieved without modern computers and challenging a linear view of scientific progress.
             </p>
 
-            <!-- Correctly using the Card component as a non-link -->
+            <!-- Correctly using the Card component as non-links by omitting the 'href' prop -->
             <div class="grid md:grid-cols-3 gap-8 my-12 max-w-6xl mx-auto text-left">
                 <Card icon="fa-solid fa-infinity" title="Ancient Mathematical Wisdom">
-                    Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.
+                    <p>Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.</p>
                 </Card>
                 <Card icon="fa-solid fa-compass-drafting" title="Artisans as Pioneers">
-                    Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.
+                    <p>Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.</p>
                 </Card>
                 <Card icon="fa-solid fa-eye" title="A Different Way of Seeing">
-                     Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.
+                     <p>Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.</p>
                 </Card>
             </div>
         </section>
@@ -136,7 +136,7 @@ import Card from '../../components/Card.astro'; // We now use our upgraded Card 
         sections.forEach(section => observer.observe(section));
         
         // --- Girih Canvas Logic ---
-        // Draw a default pattern on initial page load
+        // Draw the default pattern on initial page load
         initializeCanvas('sunflower'); 
 
         // Add listener for the "Random" button
