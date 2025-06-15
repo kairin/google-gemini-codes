@@ -1,12 +1,75 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import TabbedInterface from '../../components/TabbedInterface.astro';
+import Accordion from '../../components/Accordion.astro';
+import DoughnutChart from '../../components/DoughnutChart.astro';
+
+const f5Tabs = [
+    { id: 'overview', label: 'Overview', icon: 'fa-rocket' },
+    { id: 'challenge', label: 'The Challenge', icon: 'fa-puzzle-piece' },
+    { id: 'architecture', label: 'Architecture', icon: 'fa-building' },
+    { id: 'implementation', label: 'Implementation', icon: 'fa-wrench' },
+    { id: 'troubleshooting', label: 'Troubleshooting', icon: 'fa-lightbulb' }
+];
+
+const chartLabels = ['Base OS (Ubuntu)', 'F5 Client', 'VNC/noVNC', 'Web Browser', 'Automation Scripts'];
+const chartData = [20, 25, 20, 20, 15];
 ---
-<BaseLayout title="Dockerized F5 VPN" description="A guide to containerizing the F5 VPN client.">
-    <div class="prose lg:prose-xl mx-auto">
-        <h1>Dockerized F5 VPN Solution</h1>
-        <p>
-            This section details a robust, automated method for establishing secure access to an office intranet via an F5 BIG-IP APM VPN client within a Docker container.
-        </p>
-        <p><em>(Full interactive guide coming soon...)</em></p>
-    </div>
+<BaseLayout title="Dockerized F5 VPN Solution" description="An interactive guide to containerizing the F5 BIG-IP APM client.">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Dockerized F5 VPN Solution</h1>
+        <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">An interactive guide to containerizing the F5 BIG-IP APM client for streamlined and secure intranet access.</p>
+    </header>
+
+    <TabbedInterface tabs={f5Tabs}>
+        <!-- Overview Tab Content -->
+        <div>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Solution at a Glance</h2>
+            <p class="text-gray-600 mb-6">This guide details a robust, automated method for establishing secure access to an office intranet...</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">Key Architectural Components</h3>
+                    <!-- ... list of components ... -->
+                </div>
+                <DoughnutChart chartId="f5-components-chart" labels={chartLabels} data={chartData} />
+            </div>
+        </div>
+
+        <!-- The Challenge Tab Content -->
+        <div>
+            <h2 class="text-2xl font-bold mb-4">F5 Client Deep Dive</h2>
+            <p class="text-gray-600 mb-6">Successfully containerizing the F5 BIG-IP APM client requires a deep understanding...</p>
+            <!-- ... tables and other content from your original file ... -->
+        </div>
+
+        <!-- Architecture Tab Content -->
+        <div>
+            <h2 class="text-2xl font-bold mb-4">Solution Architecture</h2>
+            <p class="text-gray-600 mb-6">The core architectural choice is how to provide a graphical user interface...</p>
+            <!-- ... side-by-side comparison cards ... -->
+        </div>
+
+        <!-- Implementation Tab Content -->
+        <div>
+            <h2 class="text-2xl font-bold mb-4">Step-by-Step Implementation</h2>
+            <p class="text-gray-600 mb-6">This section breaks down the implementation into four key areas...</p>
+            <Accordion title="Part 1: Dockerfile & Dependencies">
+                <p>The Dockerfile serves as the blueprint for your container. It begins with a robust base image...</p>
+            </Accordion>
+            <Accordion title="Part 2: GUI & Browser Setup (Firefox & Official Chrome)">
+                <p>To provide a graphical interface, a virtual display and VNC server are installed...</p>
+            </Accordion>
+            <!-- ... more accordions ... -->
+        </div>
+
+        <!-- Troubleshooting Tab Content -->
+        <div>
+            <h2 class="text-2xl font-bold mb-4">Best Practices & Troubleshooting</h2>
+            <p class="text-gray-600 mb-6">Follow these best practices for a stable and secure setup...</p>
+            <Accordion title="Issue: `libxml2.so.2` not found" isOpen={true}>
+                <p>This is expected on Ubuntu 22.04/24.04. You must manually install a compatible version...</p>
+            </Accordion>
+            <!-- ... more accordions ... -->
+        </div>
+    </TabbedInterface>
 </BaseLayout>

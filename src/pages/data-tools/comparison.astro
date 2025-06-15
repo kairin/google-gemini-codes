@@ -1,43 +1,71 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
----
-<BaseLayout title="Tool Comparison" description="Comparing Power Query, DuckDB, and GraphRAG.">
-    <div class="prose lg:prose-xl mx-auto">
-        <h1>Data Tool Comparison</h1>
-        <p>This guide provides a detailed comparison to help you choose the best tool for your specific needs.</p>
+import TabbedInterface from '../../components/TabbedInterface.astro';
 
-        <h2>Feature Showdown</h2>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="p-4 border">Factor</th>
-                        <th class="p-4 border">Power Query</th>
-                        <th class="p-4 border">DuckDB</th>
-                        <th class="p-4 border">GraphRAG</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border">
-                        <td class="p-4 font-semibold">Primary Use Case</td>
-                        <td class="p-4">Self-service ETL and BI data prep</td>
-                        <td class="p-4">Fast, in-process analytical SQL</td>
-                        <td class="p-4">Context-aware Q&A on private data</td>
-                    </tr>
-                    <tr class="border bg-gray-50">
-                        <td class="p-4 font-semibold">Ideal User</td>
-                        <td class="p-4">Business Analyst</td>
-                        <td class="p-4">Data Scientist / Developer</td>
-                        <td class="p-4">AI/ML Engineer</td>
-                    </tr>
-                    <tr class="border">
-                        <td class="p-4 font-semibold">Core Technology</td>
-                        <td class="p-4">M-Language / Mashup Engine</td>
-                        <td class="p-4">Columnar OLAP Engine</td>
-                        <td class="p-4">LLM + Knowledge Graph</td>
-                    </tr>
-                </tbody>
-            </table>
+const dataToolTabs = [
+    { id: 'use-case', label: 'Primary Use Case', icon: 'fa-bullseye' },
+    { id: 'performance', label: 'Performance', icon: 'fa-bolt' },
+    { id: 'ease-of-use', label: 'Ease of Use', icon: 'fa-face-smile' },
+    { id: 'scalability', label: 'Scalability', icon: 'fa-network-wired' }
+];
+---
+<BaseLayout title="Interactive Tool Comparison" description="Comparing Power Query, DuckDB, and GraphRAG.">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-gray-800">Interactive Feature Showdown</h1>
+        <p class="mt-2 text-lg text-gray-600">Select a feature to see how each tool stacks up for different users and their goals.</p>
+    </header>
+
+    <TabbedInterface tabs={dataToolTabs}>
+        <!-- Use Case Tab -->
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">Power Query</h4><p>Self-service ETL and data prep for business intelligence dashboards.</p>
+            </div>
+            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">DuckDB</h4><p>Fast, in-process analytical SQL queries on local or remote data files.</p>
+            </div>
+            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">GraphRAG</h4><p>Context-aware Q&A over private, interconnected data using LLMs.</p>
+            </div>
         </div>
-    </div>
+
+        <!-- Performance Tab -->
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">Power Query</h4><p>Optimized for BI-scale data (millions of rows). Performance tied to data sources.</p>
+            </div>
+            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">DuckDB</h4><p>Exceptional speed for complex SQL on raw files, often outperforming server DBs.</p>
+            </div>
+            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">GraphRAG</h4><p>Variable. Dependent on graph DB query speed and LLM token latency.</p>
+            </div>
+        </div>
+
+        <!-- Ease of Use Tab -->
+        <div class="grid md:grid-cols-3 gap-6">
+             <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">Power Query</h4><p>Very high ease of use due to its graphical interface. Minimal code required.</p>
+            </div>
+            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">DuckDB</h4><p>High for developers who know SQL. Zero-dependency `pip install` setup.</p>
+            </div>
+            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">GraphRAG</h4><p>Low to medium. A complex framework requiring significant expertise to implement.</p>
+            </div>
+        </div>
+
+        <!-- Scalability Tab -->
+        <div class="grid md:grid-cols-3 gap-6">
+             <div class="border-t-4 border-blue-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">Power Query</h4><p>Scales from desktop to cloud via Power BI dataflows for departmental workloads.</p>
+            </div>
+            <div class="border-t-4 border-green-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">DuckDB</h4><p>Excels at vertical scalability (larger-than-RAM datasets on a single machine).</p>
+            </div>
+            <div class="border-t-4 border-purple-500 p-4 rounded shadow bg-white">
+                <h4 class="font-bold text-lg">GraphRAG</h4><p>Component-based. Depends on the scalability of the underlying graph DB and LLM provider.</p>
+            </div>
+        </div>
+    </TabbedInterface>
 </BaseLayout>

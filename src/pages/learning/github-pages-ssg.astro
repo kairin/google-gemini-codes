@@ -1,112 +1,34 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
+<BaseLayout title="Modern Static Sites with Astro" description="A guide to modern static site generators and automated deployment.">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-gray-800">Modern Static Sites & Deployment</h1>
+        <p class="mt-2 text-lg text-gray-600">Exploring modern tools and reusable patterns for publishing content on the web.</p>
+    </header>
 
-<BaseLayout title="Modern Static Sites" description="A guide to modern static site generators.">
-  <section class="prose lg:prose-xl mx-auto py-10 text-center animate-fade-in">
-    <h1 class="text-4xl font-bold">Modern Static Sites with Astro</h1>
-    <p class="text-lg mt-4">Learn how to build fast, flexible, and automated websites using Astro and GitHub Actions.</p>
-  </section>
-
-  <section class="grid gap-8 md:grid-cols-2 px-4 md:px-20 py-10">
-    <div class="bg-white p-6 rounded-2xl shadow-xl transition-transform hover:scale-105 animate-fade-in">
-      <h2 class="text-2xl font-semibold mb-2">🚀 Why Astro?</h2>
-      <p>Astro ships less JavaScript by default and lets you bring your own framework. This makes pages load faster and development smoother.</p>
-      <ul class="list-disc ml-6 mt-2">
-        <li>Partial hydration</li>
-        <li>Bring React/Vue/Svelte if needed</li>
-        <li>Static-first, but SSR optional</li>
-        <li>Great for content-heavy sites</li>
-      </ul>
+    <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-white p-6 rounded-lg shadow-sm border">
+            <h2 class="text-2xl font-bold mb-3"><i class="fa-solid fa-rocket text-orange-500 mr-2"></i>Astro with GitHub Pages</h2>
+            <p>Astro is a modern static site generator built for performance and flexibility. This entire site is built with it.</p>
+            <ul class="list-disc list-inside pl-4 mt-2">
+                <li>Install Astro: <code>npm create astro@latest</code></li>
+                <li>Develop locally: <code>npm run dev</code></li>
+                <li>Build your static site: <code>npm run build</code></li>
+                <li>Deploy with the official Astro GitHub Actions workflow.</li>
+            </ul>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border">
+            <h2 class="text-2xl font-bold mb-3"><i class="fa-solid fa-gem text-red-500 mr-2"></i>Jekyll with GitHub Pages</h2>
+            <p>Jekyll is the original static site generator with native support on GitHub Pages.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border">
+            <h2 class="text-2xl font-bold mb-3"><i class="fa-solid fa-bolt text-green-500 mr-2"></i>Hugo</h2>
+            <p>Hugo is known for its incredible speed, as it's built with the Go programming language.</p>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+            <h2 class="text-2xl font-bold mb-3 text-blue-800"><i class="fa-solid fa-recycle mr-2"></i>The Reusable Pattern</h2>
+            <p>Every setup shares this core pattern: write content in simple formats (like Markdown), use templates to control structure, and automate builds with CI/CD tools like GitHub Actions to host for free on GitHub Pages.</p>
+        </div>
     </div>
-
-    <div class="bg-white p-6 rounded-2xl shadow-xl transition-transform hover:scale-105 animate-fade-in animate-delay-100">
-      <h2 class="text-2xl font-semibold mb-2">⚙️ CI/CD with GitHub Pages</h2>
-      <p>Set up Astro with GitHub Actions to automatically deploy your site every time you push changes.</p>
-      <ol class="list-decimal ml-6 mt-2">
-        <li>Use the free GitHub Pages hosting</li>
-        <li>Create a deploy workflow</li>
-        <li>Push to trigger build + deploy</li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="px-4 md:px-20 py-10">
-    <h2 class="text-2xl font-semibold mb-6">📊 Comparing Static Site Generators</h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full table-auto border border-gray-200 text-sm">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="px-4 py-2 border">Tool</th>
-            <th class="px-4 py-2 border">Strengths</th>
-            <th class="px-4 py-2 border">Weaknesses</th>
-            <th class="px-4 py-2 border">Best For</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border px-4 py-2 font-semibold">Astro</td>
-            <td class="border px-4 py-2">Zero JS by default, partial hydration, highly customizable, MDX support</td>
-            <td class="border px-4 py-2">Still new, some ecosystem tooling evolving</td>
-            <td class="border px-4 py-2">Blogs, docs, hybrid UI/static sites</td>
-          </tr>
-          <tr>
-            <td class="border px-4 py-2 font-semibold">Jekyll</td>
-            <td class="border px-4 py-2">GitHub native, simple setup, great for blogs</td>
-            <td class="border px-4 py-2">Slow builds, outdated plugin system</td>
-            <td class="border px-4 py-2">Personal blogs, minimal documentation</td>
-          </tr>
-          <tr>
-            <td class="border px-4 py-2 font-semibold">Eleventy</td>
-            <td class="border px-4 py-2">Flexible, lightweight, markdown-friendly</td>
-            <td class="border px-4 py-2">More configuration needed, no framework integration</td>
-            <td class="border px-4 py-2">Content sites, blogs</td>
-          </tr>
-          <tr>
-            <td class="border px-4 py-2 font-semibold">Hugo</td>
-            <td class="border px-4 py-2">Blazing fast builds, Go templates, great for huge content sites</td>
-            <td class="border px-4 py-2">Harder to customize, Go language learning curve</td>
-            <td class="border px-4 py-2">Enterprise docs, fast content rendering</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="px-4 md:px-20 py-10">
-    <h2 class="text-2xl font-semibold mb-4">📽 Interactive Workflow Animation</h2>
-    <div class="aspect-video w-full rounded-xl overflow-hidden shadow-lg border border-gray-200">
-      <iframe class="w-full h-full" src="https://www.youtube.com/embed/1--yyzZR0Y4?autoplay=0&mute=1" title="Astro + GitHub Pages CI/CD Demo" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <section class="px-4 md:px-20 py-10">
-    <h2 class="text-2xl font-semibold mb-4">🌟 Case Study: A Journey into Astro</h2>
-    <details class="bg-white rounded-xl p-6 shadow-md">
-      <summary class="cursor-pointer font-semibold text-lg">Modernizing and Visualizing a GitHub Pages Content Automation Workflow →</summary>
-      <div class="mt-4 prose">
-        <p>Static websites are pre-built HTML/CSS/JS pages. They load fast, are easy to host (like on GitHub Pages), and are ideal for documentation, blogs, and reports.</p>
-        <p>This case study follows an exploration of GitHub Actions, Jekyll, and Astro for building and automating a CI/CD workflow. Ultimately, Astro’s modern component architecture, MDX support, and GitHub Actions integration offered the most agile and reusable setup.</p>
-        <ul>
-          <li><strong>Astro:</strong> Component-based, fast builds, works with multiple frameworks</li>
-          <li><strong>Jekyll:</strong> Native GitHub support, limited plugin system</li>
-          <li><strong>Hugo:</strong> Super fast, steep Go learning curve</li>
-        </ul>
-        <p>This was all deployed using GitHub’s Actions + GitHub Pages, meaning every content change was live within seconds. Great for showing off progress and learning by building.</p>
-        <p><a class="text-blue-600 underline" href="https://chatgpt.com/s/dr_68482fb1a44c8191b82fe92c21e2a3eb">Read the full conversation log</a></p>
-      </div>
-    </details>
-  </section>
-
-  <section class="px-4 md:px-20 py-10">
-    <h2 class="text-2xl font-semibold mb-4">🌱 What You Learned</h2>
-    <ul class="list-disc ml-6">
-      <li>How to use Astro to build modular and fast sites</li>
-      <li>Deploying effortlessly with GitHub Actions</li>
-      <li>Comparing SSG tools and choosing the right one</li>
-    </ul>
-    <p class="mt-4">Next up: <a href="/google-gemini-codes/data-tool-analyzer/" class="text-blue-600 hover:underline">Explore the Data Tool Analyzer →</a></p>
-  </section>
 </BaseLayout>
-
-

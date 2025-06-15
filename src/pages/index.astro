@@ -2,13 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/Card.astro';
 ---
-<BaseLayout title="Homepage" description="A collection of projects and analyses.">
+<BaseLayout title="Homepage" description="A collection of projects and analyses on data and web technologies.">
     <header class="text-center my-12 md:my-20">
         <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight">
             Google Gemini Codes
         </h1>
         <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            A curated collection of projects exploring modern solutions for data analysis, web deployment, and secure networking.
+            A curated collection of projects exploring modern solutions for data analysis, web deployment, secure networking, and computational history.
         </p>
     </header>
 
@@ -26,16 +26,16 @@ import Card from '../components/Card.astro';
             icon="fa-solid fa-shield-halved"
         />
         <Card
-            title="Learning GitHub Pages"
-            description="Explore modern static site generators like Astro and learn the reusable patterns for automated deployment."
-            href="/learning/github-pages-ssg"
-            icon="fa-solid fa-book-open"
-        />
-        <Card
             title="Ancient Sophistication"
             description="Explore the advanced mathematics of quasicrystals hidden within the beauty of Islamic architecture."
             href="/ancient-math"
             icon="fa-solid fa-atom"
+        />
+        <Card
+            title="Learning GitHub Pages"
+            description="Explore modern static site generators like Astro and learn the reusable patterns for automated deployment."
+            href="/learning/github-pages-ssg"
+            icon="fa-solid fa-book-open"
         />
     </div>
 </BaseLayout>
