@@ -8,9 +8,16 @@ interface Props {
 }
 
 const { href, icon, title, blurb, isExternal = false } = Astro.props;
+
+// This is the fix: We manually construct the final URL.
+// import.meta.env.BASE_URL is '/google-gemini-codes/' during the build.
+// We remove the trailing slash from BASE_URL and join it with the href.
+const finalHref = isExternal 
+  ? href 
+  : import.meta.env.BASE_URL.slice(0, -1) + href;
 ---
 <a
-  href={href}
+  href={finalHref}
   class="group block p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md hover:shadow-xl focus:shadow-xl transition-shadow duration-300 animate-rainbow-border"
   target={isExternal ? '_blank' : '_self'}
   rel={isExternal ? 'noopener noreferrer' : ''}
