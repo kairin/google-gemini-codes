@@ -58,10 +58,10 @@ for (let i = 0; i < 100; i++) {
             <p>This guide details a robust, automated method for containerizing the F5 VPN client. The solution encapsulates all dependencies into a portable environment accessible from any web browser.</p>
             
             <div id="waffle-chart-section" class="not-prose my-12 relative">
-                <div id="waffle-chart-container" class="grid grid-cols-20 gap-2 w-full">
+                <div id="waffle-chart-container" class="grid grid-cols-20 gap-1.5 w-full">
                     {gridSquares.map((square, index) => (
                         <div
-                            class:list={["waffle-square", square.color, "aspect-square rounded-full transition-all duration-200 ease-in-out cursor-pointer"]}
+                            class:list={["waffle-square", square.color, "aspect-square rounded-md transition-all duration-200 ease-in-out cursor-pointer"]}
                             data-label={square.label}
                             data-value={square.value}
                             style={`animation-delay: ${index * 10}ms;`}
@@ -72,7 +72,6 @@ for (let i = 0; i < 100; i++) {
             </div>
         </section>
 
-        <!-- Other sections -->
         <section id="challenge">
             <h2 class="!text-3xl !mb-6">The Challenge: Why F5 is Different</h2>
             <p>Containerizing the F5 client requires understanding its unique characteristics. Unlike modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
@@ -122,16 +121,15 @@ for (let i = 0; i < 100; i++) {
   }
   #waffle-chart-container.highlight .waffle-square.is-active-group {
     @apply opacity-100 scale-100;
-    /* This reuses the global rainbow animation for the outline effect */
     border: 2px solid transparent;
     background-origin: border-box;
     background-clip: content-box, border-box;
-    background-image: linear-gradient(var(--bg-color-light), var(--bg-color-light)), var(--rainbow-gradient);
+    background-image: linear-gradient(#f8fafc, #f8fafc), var(--rainbow-gradient);
     animation: rainbow-scroll-animation 3s linear infinite;
     background-size: 200% 100%;
   }
   .dark #waffle-chart-container.highlight .waffle-square.is-active-group {
-     background-image: linear-gradient(var(--bg-color-dark), var(--bg-color-dark)), var(--rainbow-gradient);
+     background-image: linear-gradient(#0f172a, #0f172a), var(--rainbow-gradient);
   }
   .grid-cols-20 {
     grid-template-columns: repeat(20, minmax(0, 1fr));
@@ -140,7 +138,6 @@ for (let i = 0; i < 100; i++) {
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Scrollspy Navigation Script
         const navLinks = document.querySelectorAll('a.nav-link[href^="#"]');
         const sections = document.querySelectorAll('section[id]');
         const header = document.querySelector('header.sticky');
@@ -170,12 +167,10 @@ for (let i = 0; i < 100; i++) {
             });
         });
 
-        // Waffle Chart Interactivity Script
         const chartSection = document.getElementById('waffle-chart-section');
         const chartContainer = document.getElementById('waffle-chart-container');
         const waffleSquares = document.querySelectorAll('.waffle-square');
         const tooltip = document.getElementById('waffle-tooltip');
-
         if (!chartContainer || !tooltip) return;
 
         function handleHighlight(label) {
@@ -192,8 +187,9 @@ for (let i = 0; i < 100; i++) {
 
         waffleSquares.forEach(square => {
             square.addEventListener('mouseenter', (e) => {
-                const label = e.target.dataset.label;
-                const value = e.target.dataset.value;
+                const target = e.currentTarget;
+                const label = target.dataset.label;
+                const value = target.dataset.value;
                 tooltip.innerHTML = `${label} (${value})`;
                 tooltip.style.opacity = '1';
                 handleHighlight(label);
@@ -207,8 +203,10 @@ for (let i = 0; i < 100; i++) {
 
         chartSection.addEventListener('mousemove', (e) => {
             const rect = chartSection.getBoundingClientRect();
-            tooltip.style.left = `${e.clientX - rect.left + 15}px`;
-            tooltip.style.top = `${e.clientY - rect.top + 15}px`;
+            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            tooltip.style.left = `${e.clientX - rect.left + scrollLeft + 15}px`;
+            tooltip.style.top = `${e.clientY - rect.top + scrollTop + 15}px`;
         });
     });
 </script>
