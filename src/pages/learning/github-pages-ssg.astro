@@ -1,36 +1,107 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import GirihCanvas from '../../components/GirihCanvas.astro';
+import Modal from '../../components/Modal.astro';
 ---
-<BaseLayout title="Modern Static Sites with Astro" description="A guide to modern static site generators and automated deployment.">
-    <header class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100">Modern Static Sites & Deployment</h1>
-        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">Exploring modern tools and reusable patterns for publishing content on the web.</p>
+<BaseLayout title="Ancient Sophistication" description="The mathematics of quasicrystals in Islamic architecture.">
+
+    <!-- Header Section -->
+    <header class="text-center my-12 md:my-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-slate-100 tracking-tight">
+            From Ancient Art to Modern Science
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">
+            Discover how quasicrystalline designs in Islamic architecture reveal a mathematical understanding that predates modern science.
+        </p>
     </header>
 
-    <div class="max-w-4xl mx-auto space-y-6">
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-rocket text-orange-500 mr-2"></i>Astro with GitHub Pages</h2>
-            <div class="prose dark:prose-invert max-w-none">
-                <p>Astro is a modern static site generator built for performance and flexibility. This entire site is built with it.</p>
-                <ul>
-                    <li>Install Astro: <code>npm create astro@latest</code></li>
-                    <li>Develop locally: <code>npm run dev</code></li>
-                    <li>Build your static site: <code>npm run build</code></li>
-                    <li>Deploy with the official Astro GitHub Actions workflow.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-gem text-red-500 mr-2"></i>Jekyll with GitHub Pages</h2>
-            <p class="dark:text-slate-400">Jekyll is the original static site generator with native support on GitHub Pages.</p>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 dark:text-slate-200"><i class="fa-solid fa-bolt text-green-500 mr-2"></i>Hugo</h2>
-            <p class="dark:text-slate-400">Hugo is known for its incredible speed, as it's built with the Go programming language.</p>
-        </div>
-        <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-lg border border-blue-200 dark:border-slate-700">
-            <h2 class="text-2xl font-bold mb-3 text-blue-800 dark:text-blue-300"><i class="fa-solid fa-recycle mr-2"></i>The Reusable Pattern</h2>
-            <p class="text-blue-900 dark:text-blue-400">Every setup shares this core pattern: write content in simple formats (like Markdown), use templates to control structure, and automate builds with CI/CD tools like GitHub Actions to host for free on GitHub Pages.</p>
+    <!-- Sub-Navigation for Scrolling - NOW WITH ALL 4 LINKS -->
+    <div class="sticky top-[72px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg z-40 border-y dark:border-slate-700 -mx-4 px-4 mb-12">
+        <div class="container mx-auto flex justify-center items-center py-2 space-x-4 md:space-x-8">
+            <a href="#introduction" class="font-semibold text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">Introduction</a>
+            <a href="#patterns" class="font-semibold text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">The Patterns</a>
+            <a href="#science" class="font-semibold text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">The Science</a>
+            <a href="#legacy" class="font-semibold text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">Legacy</a>
         </div>
     </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="prose prose-lg dark:prose-invert max-w-3xl mx-auto space-y-12">
+        <!-- Section 1: Introduction -->
+        <section id="introduction">
+            <h2>An Integration of Knowledge</h2>
+            <p>This exploration demonstrates that historical "secrets" are profound insights into reality, articulated through the tools of the time. The mathematical genius in Islamic patterns represents a sophisticated, intuitive grasp of complex phenomena, achieved without modern computers and challenging a linear view of scientific progress.</p>
+            <div class="not-prose my-8 text-center">
+                <button id="research-trigger" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition">
+                    <i class="fas fa-scroll mr-2"></i> View Full Research Text
+                </button>
+            </div>
+        </section>
+
+        <!-- Section 2: The Patterns -->
+        <section id="patterns">
+            <h2>Exploring the Quasicrystal</h2>
+            <p>The core of this ancient innovation lies in creating patterns that are perfectly ordered but never repeat. This section allows you to interactively explore the principles behind these remarkable designs.</p>
+            <div class="not-prose my-8">
+                <GirihCanvas />
+            </div>
+            <h3>Periodic vs. Quasicrystalline</h3>
+            <p>A standard pattern (periodic) is made of a single tile that repeats perfectly. A quasicrystalline pattern uses multiple shapes to create a more complex, non-repeating structure.</p>
+        </section>
+
+        <!-- Section 3: The Science -->
+        <section id="science">
+            <h2>Bridging Centuries of Discovery</h2>
+            <p>The mathematical principles intuitively understood by ancient artisans were formally "discovered" by modern scientists centuries later. This timeline highlights the incredible foresight embedded in Islamic art and its connection to contemporary physics.</p>
+        </section>
+
+        <!-- Section 4: Legacy -->
+        <section id="legacy">
+            <h2>An Enduring Legacy of Insight</h2>
+            <p>The study of Islamic architectural patterns provides a unique lens through which to view the timeless nature of fundamental principles. It reveals a continuous dialogue between past intuition and present discovery, underscoring the power of integrated knowledge.</p>
+            <div class="not-prose overflow-x-auto my-8">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-100 dark:bg-slate-700">
+                        <tr>
+                            <th class="p-3 font-semibold text-gray-700 dark:text-slate-200">Core Concept</th>
+                            <th class="p-3 font-semibold text-gray-700 dark:text-slate-200">Manifestation</th>
+                            <th class="p-3 font-semibold text-gray-700 dark:text-slate-200">Modern Implication</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 dark:text-slate-300">
+                        <tr class="border-t dark:border-slate-700">
+                            <td class="p-3 font-medium text-gray-800 dark:text-slate-200">Quasicrystalline Geometry</td>
+                            <td class="p-3">Intricate Non-Repeating Patterns</td>
+                            <td class="p-3">Precursor to Modern Quasicrystals</td>
+                        </tr>
+                        <tr class="border-t dark:border-slate-700 bg-gray-50 dark:bg-slate-800">
+                            <td class="p-3 font-medium text-gray-800 dark:text-slate-200">Non-Periodicity</td>
+                            <td class="p-3">Girih Tiles & Self-Similar Transformations</td>
+                            <td class="p-3">Connection to Quantum Systems</td>
+                        </tr>
+                        <tr class="border-t dark:border-slate-700">
+                            <td class="p-3 font-medium text-gray-800 dark:text-slate-200">Human Cognitive Capacity</td>
+                            <td class="p-3">Ability to create complex patterns</td>
+                            <td class="p-3">Interdisciplinary Knowledge</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for the Full Research Text -->
+    <Modal triggerId="research-trigger" title="Full Research: Unveiling Ancient Sophistication">
+        <div class="prose dark:prose-invert max-w-none">
+            <!-- You can paste the entire, unformatted text from your research document here -->
+            <h3>Ancient Mathematical Wisdom</h3>
+            <p>Islamic architecture is not just aesthetically beautiful; it's a library of advanced mathematical concepts, specifically non-repeating patterns that exhibit long-range order, known as quasicrystals.</p>
+            <h3>Artisans as Pioneers</h3>
+            <p>Without computational aids, artisans used tools like "Girih tiles" and geometric rules to create stunningly complex designs, demonstrating a deep, intuitive understanding of non-periodic mathematics.</p>
+            <h3>A Different Way of Seeing</h3>
+            <p>Engaging with these intricate patterns fostered a cognitive framework open to seeing hidden structures—a way of thinking that resonates with the challenges of understanding quantum-level phenomena today.</p>
+            <!-- Add more sections as needed -->
+        </div>
+    </Modal>
+
 </BaseLayout>
