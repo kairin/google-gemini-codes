@@ -1,5 +1,5 @@
 ---
-// FILE: src/pages/Interactive-needle-haystack/LLM.astro
+// FILE: src/pages/Interactive-needle-haystack/index.astro
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentHeader from '@/components/ContentHeader.astro';
 import BaseLink from '@/components/BaseLink.astro';
@@ -9,7 +9,6 @@ import BaseLink from '@/components/BaseLink.astro';
   description="An interactive analysis of why large language models forget information in long contexts, and what can be done about it."
 >
   <style slot="head-styles">
-    /* Place your custom global styles here. Example: */
     body { font-family: 'Inter', sans-serif; background-color: #F8F5F2; color: #434242; }
     .nav-link { position: relative; transition: color 0.3s ease; }
     .nav-link.active, .nav-link:hover { color: #7A9D54; }
@@ -70,8 +69,245 @@ import BaseLink from '@/components/BaseLink.astro';
         <a href="#problem" class="mt-8 inline-block btn btn-primary font-semibold py-3 px-8 rounded-lg text-lg">Explore the Analysis</a>
       </div>
     </section>
-    <!-- ... (Rest of your original sections: The Problem Explained, Why It Fails, Model Showdown, Affective Prompting, Solutions) ... -->
-    <!-- Paste all your remaining sections here, unchanged except for removing <html>, <body>, <head> etc. -->
+
+    <!-- The Problem Explained -->
+    <section id="problem" class="py-16 md:py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The "U-Shaped" Performance Curve</h3>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            The core of the issue is a phenomenon known as "lost in the middle." LLMs recall information best when it's at the very beginning or end of a long context, but struggle with details placed in the middle.
+          </p>
+        </div>
+        <div class="mt-12 md:mt-16 bg-white p-6 md:p-8 rounded-xl shadow-lg">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h4 class="font-bold text-xl text-gray-800">Interactive Recall Simulation</h4>
+              <p class="mt-2 text-gray-600">
+                Slide to move the "needle" (a key piece of information) through the "haystack" (the context). Watch how the model's predicted recall ability changes.
+              </p>
+              <div class="mt-6">
+                <label for="depth-slider" class="block text-sm font-medium text-gray-700">"Needle" Position in Context: <span id="slider-value" class="font-bold text-gray-900">50%</span></label>
+                <input id="depth-slider" type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mt-2">
+                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>Start (0%)</span>
+                  <span>Middle (50%)</span>
+                  <span>End (100%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-container relative w-full max-w-xl mx-auto h-64 md:h-80">
+              <canvas id="recallChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why It Fails -->
+    <section id="architecture" class="py-16 md:py-24 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Architectural Underpinnings</h3>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            This isn't a simple bug; it's a consequence of the Transformer architecture's core design. These visualizations simplify the reasons.
+          </p>
+        </div>
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Attention Mechanism -->
+          <div class="card p-6 rounded-xl">
+            <h4 class="font-bold text-xl text-gray-800">1. The Attention Bottleneck</h4>
+            <p class="mt-2 text-gray-600">
+              Self-attention allows a model to weigh the importance of all words relative to each other. But its cost grows quadratically ($O(n^2)$), making it hard to scale.
+            </p>
+            <div class="diagram-box mt-4 p-4 rounded-lg">
+              <div class="flex justify-between items-center">
+                <span class="font-semibold">Computational Cost: <span id="attention-cost" class="text-red-600 font-mono">$O(n^2)$</span></span>
+                <div class="flex items-center space-x-2">
+                  <span class="text-sm">Full</span>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="attention-toggle" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                  </label>
+                  <span class="text-sm">Sparse</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Positional Encoding -->
+          <div class="card p-6 rounded-xl">
+            <h4 class="font-bold text-xl text-gray-800">2. Positional Signal Decay</h4>
+            <p class="mt-2 text-gray-600">
+              Transformers have no inherent sense of order. Positional Encodings (PEs) provide this, but their signal weakens over long distances. The model loses track of "where" information is.
+            </p>
+            <div id="rope-decay-viz" class="diagram-box mt-4 p-4 rounded-lg text-center font-mono text-lg flex justify-center items-center flex-wrap gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Model Showdown -->
+    <section id="models" class="py-16 md:py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Model Showdown</h3>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            How do the leading models stack up? While all face this challenge, their architectures lead to different strengths and failure modes.
+          </p>
+        </div>
+        <div class="mt-8 text-center">
+          <div id="benchmark-buttons" class="inline-flex rounded-md shadow-sm" role="group">
+            <!-- JS will populate buttons -->
+          </div>
+        </div>
+        <div id="model-cards" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- JS will populate model cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Affective Prompting -->
+    <section id="prompting" class="py-16 md:py-24 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The Power of Tone</h3>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            Using emotional or assertive language can temporarily improve model performance by tapping into patterns from its training data.
+          </p>
+        </div>
+        <div class="mt-12 max-w-4xl mx-auto card rounded-xl p-6 md:p-8">
+          <h4 class="font-bold text-xl text-gray-800 mb-4">Prompt Lab</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <label for="prompt-tone" class="block text-sm font-medium text-gray-700">1. Select a Tone</label>
+              <div id="prompt-tone-selector" class="mt-2 grid grid-cols-2 gap-2"></div>
+              <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-700">2. Observe Effect</label>
+                <div class="mt-2 p-4 bg-gray-50 rounded-lg">
+                  <div class="flex justify-between items-center">
+                    <span class="font-semibold">Response Quality:</span>
+                    <div class="w-1/2 bg-gray-200 rounded-full h-4">
+                      <div id="quality-bar" class="bg-green-500 h-4 rounded-full" style="width: 50%; transition: width 0.5s ease-in-out;"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center mt-2">
+                    <span class="font-semibold">Sycophancy Risk:</span>
+                    <div class="w-1/2 bg-gray-200 rounded-full h-4">
+                      <div id="risk-bar" class="bg-red-500 h-4 rounded-full" style="width: 10%; transition: width 0.5s ease-in-out;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg h-64 overflow-y-auto">
+              <p class="text-sm text-gray-500">Your prompt to the model:</p>
+              <p id="prompt-output" class="mt-2 text-gray-800">Please summarize the key findings from the quarterly report.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions -->
+    <section id="solutions" class="py-16 md:py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Your Mitigation Playbook</h3>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            Understanding the problem is half the battle. This playbook offers a hierarchy of practical strategies—from simple prompt tricks to robust organizational approaches.
+          </p>
+        </div>
+        <div class="max-w-4xl mx-auto mt-12">
+          <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+              <button data-tab="user" class="tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm w-1/3 text-center active">For Users</button>
+              <button data-tab="developer" class="tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm w-1/3 text-center">For Developers</button>
+              <button data-tab="org" class="tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm w-1/3 text-center">For Organizations</button>
+            </nav>
+          </div>
+          <div class="mt-8">
+            <!-- User Tab -->
+            <div id="tab-user" class="tab-content active">
+              <h4 class="font-bold text-2xl text-gray-800">Level 1: Advanced Prompt Engineering</h4>
+              <p class="mt-2 text-gray-600">As a user, your primary tool is the prompt itself. These techniques help you structure input to work with the model's biases, not against them.</p>
+              <ul class="mt-6 space-y-4">
+                <li class="flex items-start">
+                  <div class="flex-shrink-0"><span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold">1</span></div>
+                  <div class="ml-4">
+                    <h5 class="font-semibold text-lg">Strategic Information Placement</h5>
+                    <p class="text-gray-600">Place your most critical instructions or data at the very <strong class="text-green-700">beginning</strong> or very <strong class="text-green-700">end</strong> of the prompt.</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <div class="flex-shrink-0"><span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold">2</span></div>
+                  <div class="ml-4">
+                    <h5 class="font-semibold text-lg">Structured Formatting</h5>
+                    <p class="text-gray-600">Use clear markers like <code>###Instruction###</code> and <code>###Context###</code> to help the model segment and understand the input.</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <div class="flex-shrink-0"><span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold">3</span></div>
+                  <div class="ml-4">
+                    <h5 class="font-semibold text-lg">Judicious Affective Prompting</h5>
+                    <p class="text-gray-600">Use assertive but non-aggressive cues like "Your task is to..." to increase instruction adherence. Use with caution to avoid risks.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- Developer Tab -->
+            <div id="tab-developer" class="tab-content">
+              <h4 class="font-bold text-2xl text-gray-800">Level 2: System Design</h4>
+              <p class="mt-2 text-gray-600">For developers building applications, the choice of information architecture is key. The optimal solution is often a hybrid of different approaches.</p>
+              <div class="mt-6 card p-6 rounded-xl">
+                <h5 class="font-semibold text-lg text-center">RAG vs. Long Context (LC): The Hybrid Future</h5>
+                <p class="text-sm text-center text-gray-500">Retrieval-Augmented Generation (RAG) pre-filters relevant info, while Long Context (LC) allows for broader reasoning. The best systems use both.</p>
+                <div class="mt-4 diagram-box p-4 rounded-lg flex flex-col md:flex-row justify-around items-center space-y-4 md:space-y-0 md:space-x-4">
+                  <div class="text-center">
+                    <div class="font-bold">RAG</div>
+                    <div class="text-sm text-gray-600">Vector Search</div>
+                    <div class="text-2xl mt-1">🔎</div>
+                    <div class="text-sm text-gray-600">Precise Chunks</div>
+                  </div>
+                  <div class="text-3xl font-light text-gray-400">+</div>
+                  <div class="text-center">
+                    <div class="font-bold">Long Context</div>
+                    <div class="text-sm text-gray-600">Large Window</div>
+                    <div class="text-2xl mt-1">📖</div>
+                    <div class="text-sm text-gray-600">Broad Synthesis</div>
+                  </div>
+                  <div class="text-3xl font-light text-gray-400">=</div>
+                  <div class="text-center text-green-700">
+                    <div class="font-bold">Hybrid System</div>
+                    <div class="text-sm">Best of Both</div>
+                    <div class="text-2xl mt-1">🏆</div>
+                    <div class="text-sm">High Performance</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Organization Tab -->
+            <div id="tab-org" class="tab-content">
+              <h4 class="font-bold text-2xl text-gray-800">Level 3: Organizational Strategy</h4>
+              <p class="mt-2 text-gray-600">For organizations, long-term success requires strategic model selection, targeted customization, and rigorous, ongoing evaluation.</p>
+              <ul class="mt-6 space-y-4">
+                <li class="card p-4 rounded-lg">
+                  <h5 class="font-semibold">Task-Specific Model Selection</h5>
+                  <p class="text-gray-600 text-sm">Choose models based on benchmarks relevant to your specific tasks, not just advertised context length.</p>
+                </li>
+                <li class="card p-4 rounded-lg">
+                  <h5 class="font-semibold">Fine-Tuning for Specialization</h5>
+                  <p class="text-gray-600 text-sm">For high-value, recurring tasks, fine-tune a model on your domain-specific data to create a specialized, high-performance expert.</p>
+                </li>
+                <li class="card p-4 rounded-lg">
+                  <h5 class="font-semibold">Implement Robust Evaluation</h5>
+                  <p class="text-gray-600 text-sm">Create internal benchmarks to continuously test model performance, track regressions, and measure the ROI of different strategies.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <div class="text-center mt-16">
@@ -79,12 +315,238 @@ import BaseLink from '@/components/BaseLink.astro';
   </div>
 
   <script>
-    // Place all your interactive JavaScript here.
-    // Just copy the code from inside your original DOMContentLoaded handler, but REMOVE the outer event listener.
-    // For example:
-    // --- BEGIN JS ---
-    // const modelData = { ... };
-    // ... rest of code ...
-    // --- END JS ---
+    // All interactive JS, adapted from your original, placed here directly.
+    // No DOMContentLoaded wrapper needed in Astro!
+    // Chart.js and TailwindCDN assumed loaded globally via layout or <head>.
+
+    // --- Data from Report ---
+    const modelData = {
+      benchmarks: {
+        niah: "NIAH Recall (>99%)",
+        complexity: "Complex Task Correctness",
+        failure: "Dominant Failure Mode"
+      },
+      models: [
+        { name: "Google Gemini 1.5 Pro", icon: "🧠", color: "#4285F4", niah: 99, complexity: 75, failure: "Refusal to answer" },
+        { name: "Anthropic Claude 3.5", icon: "📜", color: "#D9653B", niah: 99, complexity: 85, failure: "Borderline refusals" },
+        { name: "OpenAI GPT-4.1", icon: "⚙️", color: "#19C37D", niah: 100, complexity: 70, failure: "Forgetting info" }
+      ]
+    };
+
+    const promptTones = [
+      { name: 'Neutral', quality: 50, risk: 10, prefix: '', suffix: '' },
+      { name: 'Urgent', quality: 80, risk: 40, prefix: 'This is very important to my career. ', suffix: '' },
+      { name: 'Assertive', quality: 75, risk: 30, prefix: 'Your task is to ', suffix: ' You MUST be accurate.' },
+      { name: 'Encouraging', quality: 65, risk: 70, prefix: 'Believe in your abilities. ', suffix: ' Your hard work will yield remarkable results.' },
+    ];
+
+    // --- Section 1: Recall Simulation ---
+    const slider = document.getElementById('depth-slider');
+    const sliderValue = document.getElementById('slider-value');
+    let recallChart;
+
+    function renderRecallChart() {
+      const ctx = document.getElementById('recallChart').getContext('2d');
+      const labels = Array.from({ length: 101 }, (_, i) => i);
+      const data = labels.map(x => {
+        const normalizedX = x / 50 - 1;
+        return 0.6 + 0.4 * Math.pow(normalizedX, 4);
+      });
+
+      recallChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Predicted Recall Ability',
+            data: data,
+            borderColor: '#7A9D54',
+            backgroundColor: 'rgba(122, 157, 84, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 0
+          }, {
+            label: 'Current Position',
+            data: [],
+            backgroundColor: '#D9653B',
+            pointRadius: 8,
+            pointHoverRadius: 10,
+            type: 'bubble'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1.1,
+              ticks: { callback: (value) => (value * 100) + '%' }
+            },
+            x: { display: false }
+          }
+        }
+      });
+    }
+
+    function updateChartIndicator(value) {
+      sliderValue.textContent = `${value}%`;
+      const pointData = { x: parseInt(value), y: recallChart.data.datasets[0].data[value] };
+      recallChart.data.datasets[1].data = [pointData];
+      recallChart.update();
+    }
+
+    slider.addEventListener('input', (e) => updateChartIndicator(e.target.value));
+
+    // --- Section 2: Architecture Viz ---
+    const attentionToggle = document.getElementById('attention-toggle');
+    const attentionCost = document.getElementById('attention-cost');
+    attentionToggle.addEventListener('change', () => {
+      attentionCost.textContent = attentionToggle.checked ? 'O(n)' : 'O(n^2)';
+      attentionCost.classList.toggle('text-red-600', !attentionToggle.checked);
+      attentionCost.classList.toggle('text-green-600', attentionToggle.checked);
+    });
+
+    const ropeDecayViz = document.getElementById('rope-decay-viz');
+    const ropeText = "Positional signals decay over long distances.".split(' ');
+    ropeText.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.textContent = word;
+      const opacity = 1 - Math.abs(i - ropeText.length / 2) / (ropeText.length / 2) * 0.8;
+      span.style.opacity = opacity;
+      ropeDecayViz.appendChild(span);
+    });
+
+    // --- Section 3: Model Showdown ---
+    const benchmarkButtonsContainer = document.getElementById('benchmark-buttons');
+    const modelCardsContainer = document.getElementById('model-cards');
+    let modelCharts = [];
+
+    function renderModelCards(activeBenchmarkKey = 'niah') {
+      modelCardsContainer.innerHTML = '';
+      modelCharts.forEach(chart => chart.destroy && chart.destroy());
+      modelCharts = [];
+
+      modelData.models.forEach((model, index) => {
+        const card = document.createElement('div');
+        card.className = 'card p-6 rounded-xl flex flex-col';
+        const value = model[activeBenchmarkKey];
+        const isNumeric = typeof value === 'number';
+
+        card.innerHTML = `
+          <div class="flex items-center">
+            <span class="text-3xl mr-3">${model.icon}</span>
+            <h4 class="font-bold text-lg text-gray-800">${model.name}</h4>
+          </div>
+          <div class="mt-4 flex-grow">
+            <p class="text-sm font-semibold text-gray-500">${modelData.benchmarks[activeBenchmarkKey]}</p>
+            ${isNumeric ? `
+            <div class="chart-container relative w-full h-24 mt-2">
+              <canvas id="model-chart-${index}"></canvas>
+            </div>
+            ` : `
+            <div class="mt-2 text-lg font-semibold" style="color: ${model.color}">${value}</div>
+            `}
+          </div>
+        `;
+        modelCardsContainer.appendChild(card);
+
+        if(isNumeric) {
+          const ctx = document.getElementById(`model-chart-${index}`).getContext('2d');
+          const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: [''],
+              datasets: [{
+                label: model.name,
+                data: [value],
+                backgroundColor: model.color,
+                barThickness: 30
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { max: 100, beginAtZero: true },
+                y: { display: false }
+              }
+            }
+          });
+          modelCharts.push(chart);
+        }
+      });
+    }
+
+    Object.keys(modelData.benchmarks).forEach((key, i) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `btn btn-secondary px-4 py-2 text-sm font-medium ${i === 0 ? 'rounded-l-md' : ''} ${i === Object.keys(modelData.benchmarks).length - 1 ? 'rounded-r-md' : ''}`;
+      button.textContent = modelData.benchmarks[key].split('(')[0].trim();
+      if (i === 0) button.classList.add('active');
+      button.addEventListener('click', () => {
+        document.querySelectorAll('#benchmark-buttons button').forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        renderModelCards(key);
+      });
+      benchmarkButtonsContainer.appendChild(button);
+    });
+
+    // --- Section 4: Prompting ---
+    const toneSelector = document.getElementById('prompt-tone-selector');
+    const qualityBar = document.getElementById('quality-bar');
+    const riskBar = document.getElementById('risk-bar');
+    const promptOutput = document.getElementById('prompt-output');
+    const basePrompt = "Please summarize the key findings from the quarterly report.";
+
+    promptTones.forEach((tone, i) => {
+      const button = document.createElement('button');
+      button.className = `btn btn-secondary p-2 rounded-md text-sm ${i === 0 ? 'active' : ''}`;
+      button.textContent = tone.name;
+      button.addEventListener('click', () => {
+        document.querySelectorAll('#prompt-tone-selector button').forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        qualityBar.style.width = `${tone.quality}%`;
+        riskBar.style.width = `${tone.risk}%`;
+        promptOutput.textContent = `${tone.prefix}${basePrompt}${tone.suffix}`;
+      });
+      toneSelector.appendChild(button);
+    });
+
+    // --- Section 5: Solutions Tabs ---
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    // --- Nav scrollspy ---
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    sections.forEach(sec => observer.observe(sec));
+
+    // --- Initial Renders ---
+    renderRecallChart();
+    updateChartIndicator(50);
+    renderModelCards();
   </script>
 </BaseLayout>
