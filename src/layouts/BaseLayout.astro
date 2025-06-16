@@ -21,6 +21,7 @@ const { title, description = 'Welcome to my Astro site' } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<slot name="head-styles" /> {/* Add this line for page-specific styles */}
 	</head>
 	<body class="bg-white dark:bg-slate-900 min-h-screen flex flex-col">
 		<Header />
@@ -48,7 +49,6 @@ const { title, description = 'Welcome to my Astro site' } = Astro.props;
 		</style>
 	</body>
 </html>
-		padding: 1em;
 	}
 	footer {
 		text-align: center;
