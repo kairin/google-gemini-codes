@@ -1,3 +1,5 @@
+// FILE: src/pages/ancient-math/index.astro
+// ANNOTATION: This file is corrected by moving the <style> tag into the `head-styles` slot and ensuring the <script> tag is inside the <BaseLayout>.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Card from '@/components/Card.astro';
@@ -6,7 +8,7 @@ import ReactQuasicrystals from '@/components/ReactQuasicrystals.astro';
 import BaseLink from '@/components/BaseLink.astro';
 ---
 <BaseLayout title="Ancient Sophistication" description="The mathematics of Girih tiles and tessellation in Islamic architecture.">
-    
+
     <style slot="head-styles">
       .nav-link { @apply text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 border-b-2 border-transparent; }
       .nav-link.active { @apply text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 font-semibold; }
