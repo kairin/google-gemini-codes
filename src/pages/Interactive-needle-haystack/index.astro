@@ -1,0 +1,90 @@
+---
+// FILE: src/pages/Interactive-needle-haystack/LLM.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentHeader from '@/components/ContentHeader.astro';
+import BaseLink from '@/components/BaseLink.astro';
+---
+<BaseLayout
+  title="The LLM Memory Maze: Needle in a Haystack"
+  description="An interactive analysis of why large language models forget information in long contexts, and what can be done about it."
+>
+  <style slot="head-styles">
+    /* Place your custom global styles here. Example: */
+    body { font-family: 'Inter', sans-serif; background-color: #F8F5F2; color: #434242; }
+    .nav-link { position: relative; transition: color 0.3s ease; }
+    .nav-link.active, .nav-link:hover { color: #7A9D54; }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #7A9D54;
+      bottom: -4px; left: 0;
+      transition: width 0.3s ease;
+    }
+    .card { background-color: #FFF; border: 1px solid #EFECEC; transition: transform 0.3s, box-shadow 0.3s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);}
+    .btn { transition: background-color 0.3s, transform 0.2s; }
+    .btn-primary { background-color: #7A9D54; color: white; }
+    .btn-primary:hover { background-color: #617c41; transform: translateY(-2px);}
+    .btn-secondary { background-color: #EFECEC; color: #434242; }
+    .btn-secondary.active, .btn-secondary:hover { background-color: #d8d6d6; }
+    .tab.active { border-color: #7A9D54; background-color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .diagram-box { border: 2px dashed #d8d6d6; background-color: #fcfbf9; }
+  </style>
+
+  <ContentHeader
+    title="The LLM Memory Maze: Needle in a Haystack"
+    description="Why do even the most powerful Large Language Models forget information hidden in long conversations? Explore the interactive analysis and discover practical mitigation strategies."
+  />
+
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex-shrink-0">
+          <h1 class="text-xl font-bold text-gray-800">The LLM Memory Maze</h1>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="#problem" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">The Problem</a>
+            <a href="#architecture" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Why it Fails</a>
+            <a href="#models" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Model Showdown</a>
+            <a href="#prompting" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Prompting Power</a>
+            <a href="#solutions" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Playbook</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="py-20 md:py-28 text-center bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900">Lost in the Middle.</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-600">
+          Why do even the most powerful Large Language Models forget information hidden in long conversations? This interactive analysis reveals the architectural and practical roots of the "lost in the middle" phenomenon—and what you can do about it.
+        </p>
+        <a href="#problem" class="mt-8 inline-block btn btn-primary font-semibold py-3 px-8 rounded-lg text-lg">Explore the Analysis</a>
+      </div>
+    </section>
+    <!-- ... (Rest of your original sections: The Problem Explained, Why It Fails, Model Showdown, Affective Prompting, Solutions) ... -->
+    <!-- Paste all your remaining sections here, unchanged except for removing <html>, <body>, <head> etc. -->
+  </main>
+
+  <div class="text-center mt-16">
+    <BaseLink href="/" text="Back to Home" style="secondary" icon="fa-solid fa-arrow-left" />
+  </div>
+
+  <script>
+    // Place all your interactive JavaScript here.
+    // Just copy the code from inside your original DOMContentLoaded handler, but REMOVE the outer event listener.
+    // For example:
+    // --- BEGIN JS ---
+    // const modelData = { ... };
+    // ... rest of code ...
+    // --- END JS ---
+  </script>
+</BaseLayout>
