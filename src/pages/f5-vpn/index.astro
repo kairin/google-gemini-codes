@@ -1,5 +1,5 @@
 // FILE: src/pages/f5-vpn/index.astro
-// ANNOTATION: CORRECTED FILE. The page-specific <style> and <script> tags are now correctly placed inside the BaseLayout component.
+// ANNOTATION: CORRECTED FILE. This file had the same structural error. The <style> and <script> tags are now correctly placed inside the BaseLayout component.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentHeader from '@/components/ContentHeader.astro';
@@ -36,12 +36,10 @@ import BaseLink from '@/components/BaseLink.astro';
             <h2 class="!text-3xl !mb-6">The Challenge: Why F5 is Different</h2>
             <p>Containerizing the F5 client requires understanding its unique characteristics. Unlike modern tools, it is not a simple command-line utility and presents several technical hurdles on systems like Ubuntu 24.04 LTS.</p>
         </section>
-
         <section id="architecture">
             <h2 class="!text-3xl !mb-6">Architectural Decision: VNC vs. X11</h2>
             <p>The core architectural choice is how to provide a GUI from a headless container. We strongly recommend the VNC approach for its robustness and portability over the brittle, platform-dependent X11 forwarding method.</p>
         </section>
-
         <section id="implementation">
             <h2 class="!text-3xl !mb-6">Implementation Highlights</h2>
             <div class="not-prose grid md:grid-cols-2 gap-6 my-8">
@@ -51,7 +49,6 @@ import BaseLink from '@/components/BaseLink.astro';
                 <Card href="#!" icon="fa-solid fa-network-wired" title="Docker Networking" blurb="Requires `NET_ADMIN` capability and often the `--net=host` flag." details="The container is run with `--cap-add=NET_ADMIN` to manage network routes. To avoid IP conflicts, using `--net=host` is the simplest and most reliable solution." />
             </div>
         </section>
-
         <section id="troubleshooting">
             <h2 class="!text-3xl !mb-6">Key Troubleshooting Steps</h2>
             <p>Two issues account for nearly all common failures with this setup: `libxml2.so.2` not being found and IP address conflicts between Docker and the corporate VPN. Both are solvable with specific configuration steps in the Dockerfile and at runtime.</p>
