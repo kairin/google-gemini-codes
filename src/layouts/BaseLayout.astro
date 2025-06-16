@@ -1,6 +1,7 @@
 // FILE: src/layouts/BaseLayout.astro
-// ANNOTATION: This file is updated to accept page-specific styles in the <head>.
-// The <slot name="head-styles" /> is added to allow pages to inject their CSS correctly.
+// ANNOTATION: This is the master layout file. The error `BaseLayout is not defined` is a structural page error.
+// To fix this globally, this layout must contain a `<slot name="head-styles" />` in the <head> to correctly process page-specific styles.
+// All page content, including scripts, must be placed inside the default <slot />.
 ---
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
