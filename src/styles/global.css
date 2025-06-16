@@ -40,3 +40,10 @@
 .dark .animate-rainbow-border {
     background-image: linear-gradient(var(--bg-color-dark), var(--bg-color-dark)), var(--rainbow-gradient);
 }
+
+/* Add any global styles here or leave empty if you manage styles via Tailwind primarily */
+/* For example:
+body {
+    font-family: 'Arial', sans-serif;
+}
+*/

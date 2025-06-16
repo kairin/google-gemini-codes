@@ -4,19 +4,29 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentHeader from '@/components/ContentHeader.astro';
 import BaseLink from '@/components/BaseLink.astro';
+const pageTitle = "AI Warfare";
 ---
 <BaseLayout 
-    title="AI in Modern Warfare"
-    description="A comprehensive analysis of AI as a force multiplier, from sentient missiles to decision dominance."
+    title={pageTitle}
+    description="Exploring the implications of AI in modern warfare."
 >
     <ContentHeader
-        title="AI in Modern Warfare"
-        description="A comprehensive analysis of AI as a force multiplier, from sentient missiles to decision dominance."
+        title={pageTitle}
+        description="Exploring the implications of AI in modern warfare."
     />
 
     <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-8">
         <section>
-            <p>The integration of Artificial Intelligence into military technology represents a fundamental shift in the nature of warfare. This analysis explores the current state and future trajectory of AI as a force multiplier across various domains of conflict.</p>
+            <p>Artificial intelligence is rapidly changing the landscape of warfare. This page discusses various aspects, from autonomous weapons to AI-driven intelligence and strategy.</p>
+        </section>
+        <section>
+            <h3>Key Topics</h3>
+            <ul>
+                <li>Autonomous Weapon Systems (AWS)</li>
+                <li>AI in Intelligence, Surveillance, and Reconnaissance (ISR)</li>
+                <li>Ethical Considerations</li>
+                <li>The Future of AI in Military Strategy</li>
+            </ul>
         </section>
         <section>
             <h3>Autonomous Systems</h3>
