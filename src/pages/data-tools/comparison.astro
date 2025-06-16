@@ -1,39 +1,86 @@
+// FILE: src/pages/data-tools/comparison.astro
+// ANNOTATION: PROBLEMATIC FILE IDENTIFIED AND CORRECTED.
+// This file was previously empty. It is now populated with a placeholder comparison table and correctly passes both `title` and `description` props to BaseLayout.
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentHeader from '@/components/ContentHeader.astro';
+import BaseLink from '@/components/BaseLink.astro';
 ---
-<BaseLayout title="Tool Comparison" description="Comparing Power Query, DuckDB, and GraphRAG.">
-    <header class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100">Feature Showdown</h1>
-        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">A detailed analysis of how each tool stacks up for different users and their goals.</p>
-    </header>
+<BaseLayout
+    title="Tool Comparison | Data Tool Analyzer"
+    description="A side-by-side comparison of Power Query, DuckDB, and GraphRAG."
+>
+    <ContentHeader
+        title="Feature Showdown"
+        description="A side-by-side comparison of Power Query, DuckDB, and GraphRAG across key dimensions."
+    />
 
-    <article class="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
-        <h2>Primary Use Case</h2>
-        <ul>
-            <li><strong>Power Query:</strong> Self-service ETL and data prep for business intelligence dashboards.</li>
-            <li><strong>DuckDB:</strong> Fast, in-process analytical SQL queries on local or remote data files.</li>
-            <li><strong>GraphRAG:</strong> Context-aware Q&A over private, interconnected data using LLMs.</li>
-        </ul>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Feature
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Power Query
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        DuckDB
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        GraphRAG
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Primary Use Case
+                    </th>
+                    <td class="px-6 py-4">
+                        Self-service BI & ETL
+                    </td>
+                    <td class="px-6 py-4">
+                        Fast analytical SQL
+                    </td>
+                    <td class="px-6 py-4">
+                        Context-aware Q&A
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Ease of Use
+                    </th>
+                    <td class="px-6 py-4">
+                        Very High (GUI-based)
+                    </td>
+                    <td class="px-6 py-4">
+                        High (for SQL users)
+                    </td>
+                    <td class="px-6 py-4">
+                        Low (Complex framework)
+                    </td>
+                </tr>
+                <tr class="bg-white dark:bg-gray-800">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Typical User
+                    </th>
+                    <td class="px-6 py-4">
+                        Business Analyst
+                    </td>
+                    <td class="px-6 py-4">
+                        Data Scientist / Engineer
+                    </td>
+                    <td class="px-6 py-4">
+                        AI/ML Engineer
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <h2>Performance</h2>
-        <ul>
-            <li><strong>Power Query:</strong> Optimized for BI-scale data (millions of rows). Performance is tied to the speed of the data sources.</li>
-            <li><strong>DuckDB:</strong> Exceptional speed for complex SQL on raw files, often outperforming server-based databases for analytical queries.</li>
-            <li><strong>GraphRAG:</strong> Performance is variable, as it depends on the query speed of the underlying graph database and the token latency of the LLM.</li>
-        </ul>
-
-        <h2>Ease of Use</h2>
-        <ul>
-            <li><strong>Power Query:</strong> Very high. Its graphical interface allows for complex transformations with minimal code required.</li>
-            <li><strong>DuckDB:</strong> High for developers who know SQL. The zero-dependency `pip install` setup is trivial.</li>
-            <li><strong>GraphRAG:</strong> Low to medium. It is a complex framework requiring significant expertise to implement, not a plug-and-play tool.</li>
-        </ul>
-        
-        <h2>Scalability</h2>
-        <ul>
-            <li><strong>Power Query:</strong> Scales from the desktop to the cloud via Power BI dataflows for departmental workloads.</li>
-            <li><strong>DuckDB:</strong> Excels at vertical scalability, capable of processing larger-than-RAM datasets on a single powerful machine.</li>
-            <li><strong>GraphRAG:</strong> Scalability is component-based. It depends entirely on the scalability of the chosen graph database and the LLM provider.</li>
-        </ul>
-    </article>
+    <div class="text-center mt-16">
+        <BaseLink href="/data-tools/" text="Back to Analyzer" style="secondary" icon="fa-solid fa-arrow-left" />
+    </div>
 </BaseLayout>

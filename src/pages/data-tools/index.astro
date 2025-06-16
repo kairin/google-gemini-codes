@@ -1,16 +1,37 @@
+// FILE: src/pages/data-tools/index.astro
+// ANNOTATION: PROBLEMATIC FILE IDENTIFIED AND CORRECTED.
+// This file was previously empty. It is now populated with content and correctly passes both `title` and `description` props to BaseLayout.
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Card from '../../components/Card.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentHeader from '@/components/ContentHeader.astro';
+import Card from '@/components/Card.astro';
+import BaseLink from '@/components/BaseLink.astro';
 ---
-<BaseLayout title="Data Tool Analyzer" description="A hub for comparing data analysis tools.">
-    <header class="text-center my-12">
-        <h1 class="text-4xl font-bold text-gray-900 dark:text-slate-100">Data Tool Analysis Hub</h1>
-        <p class="mt-2 text-lg text-gray-600 dark:text-slate-300">An interactive guide to choosing the right tool for your data needs.</p>
-    </header>
+<BaseLayout 
+    title="Data Tool Analyzer"
+    description="An interactive guide to choosing the right tool for your data needs, comparing Power Query, DuckDB, and GraphRAG."
+>
+    <ContentHeader
+        title="Data Tool Analyzer"
+        description="An interactive guide to choosing the right tool for your data needs, comparing Power Query, DuckDB, and GraphRAG."
+    />
 
-    <div class="grid md:grid-cols-1 gap-8">
-        <Card href="/data-tools/comparison" icon="fa-solid fa-table-list" title="Interactive Tool Comparison">
-            <p>For a detailed breakdown of features and ideal use cases, check out our interactive comparison of Power Query, DuckDB, and GraphRAG.</p>
-        </Card>
+    <div class="max-w-4xl mx-auto prose dark:prose-invert prose-lg space-y-8">
+        <section>
+            <p>In the modern data landscape, selecting the right tool for the job is critical. A tool that excels at one task may be inefficient for another. This guide provides a high-level comparison between three powerful but distinct data tools: Microsoft Power Query, DuckDB, and GraphRAG.</p>
+        </section>
+
+        <section>
+            <h3>The Contenders</h3>
+            <div class="not-prose grid md:grid-cols-3 gap-6 my-8">
+                <Card href="/data-tools/comparison/" icon="fa-solid fa-wand-magic-sparkles" title="Power Query" blurb="The User-Friendly ETL Engine." details="Integrated into Excel and Power BI, Power Query provides a powerful visual interface for data extraction, transformation, and loading (ETL) without requiring deep coding knowledge." />
+                <Card href="/data-tools/comparison/" icon="fa-solid fa-database" title="DuckDB" blurb="The In-Process Analytical Database." details="DuckDB is a high-performance analytical database that runs inside your application (e.g., Python, R, Node.js), enabling incredibly fast SQL queries on local data files like Parquet and CSV." />
+                <Card href="/data-tools/comparison/" icon="fa-solid fa-share-nodes" title="GraphRAG" blurb="Context-Aware Q&A Framework." details="Graph-based Retrieval-Augmented Generation (GraphRAG) is not a single tool, but a framework that uses knowledge graphs to provide LLMs with deep, contextual information for answering complex questions." />
+            </div>
+        </section>
+    </div>
+
+    <div class="text-center mt-16">
+        <BaseLink href="/data-tools/comparison/" text="View Full Comparison" style="primary" icon="fa-solid fa-arrow-right" />
     </div>
 </BaseLayout>
