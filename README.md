@@ -2,13 +2,17 @@
 
 **Live Site:** [https://kairin.github.io/google-gemini-codes/](https://kairin.github.io/google-gemini-codes/)
 
-> **Note:**
-> This site is deployed to a subdirectory on GitHub Pages (`/google-gemini-codes/`).
-> All internal links and static asset paths use `Astro.base` to ensure correct navigation and resource loading both locally and on GitHub Pages.
-> 
-> - The `astro.config.mjs` file sets `base: '/google-gemini-codes'`.
-> - In all `.astro` files, use `{Astro.base}/path` for links and assets (e.g., `<a href={`${Astro.base}/projects/`}>Projects</a>`).
-> - This ensures that navigation, images, and static files work whether running locally or deployed to GitHub Pages.
+---
+## 🚦 Source of Truth: Asset & Link Paths
+
+- All internal links and static asset paths **must** use `Astro.base` in `.astro` files.
+- Never use root-relative paths like `/projects/` or `/favicon.svg` directly.
+- Always use `${Astro.base}/path` for links and assets.
+- If `Astro.base` is ever undefined, fallback to `''` (root-relative) to avoid `/undefined/` URLs.
+- The deployment base is set in `astro.config.mjs` as `base: '/google-gemini-codes'`.
+- See `src/SITE_DEPLOYMENT_INFO.ts` for the canonical deployment and routing settings.
+
+---
 
 ## 🚀 Project Structure & Automation Progress (as of 2025-06-22)
 

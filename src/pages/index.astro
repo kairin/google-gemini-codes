@@ -3,9 +3,14 @@
 import Layout from '@/layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// This is the automation magic!
-// It fetches all entries from your 'projects' collection.
+// SOURCE OF TRUTH: Always use Astro.base for all internal links and asset paths.
+// - This ensures correct navigation and resource loading in both local and subdirectory deployments (e.g., GitHub Pages).
+// - Never use root-relative paths like /projects/ or /favicon.svg directly.
+// - If Astro.base is ever undefined, fallback to '' (root-relative) to avoid /undefined/ URLs.
+// - See src/SITE_DEPLOYMENT_INFO.ts for more details.
+
 const allProjects = await getCollection('projects');
+const base = typeof Astro.base === 'string' ? Astro.base : '';
 ---
 <Layout title="Kairin's Projects">
     <div class="container mx-auto px-4 py-10 sm:py-16">
@@ -15,13 +20,12 @@ const allProjects = await getCollection('projects');
         </header>
         <main>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
                 {/*
                   Use Astro.base to ensure project links work in both local and GitHub Pages subdirectory deployments.
-                  This avoids broken links when deployed to a subdirectory.
+                  Defensive: If Astro.base is undefined, fallback to '' (root-relative).
                 */}
                 {allProjects.map(project => (
-                    <a href={`${Astro.base}/projects/${project.slug}/`.replace(/\/+/g, '/')}" class="card rounded-lg p-6 block transition-all duration-200">
+                    <a href={`${base}/projects/${project.slug}/1`} class="card rounded-lg p-6 block transition-all duration-200">
                         <p class="text-sm font-semibold accent-text">
                             {project.data.pubDate.toDateString()}
                         </p>
@@ -29,7 +33,6 @@ const allProjects = await getCollection('projects');
                         <p class="subheader-text mt-2">{project.data.description}</p>
                     </a>
                 ))}
-
             </div>
         </main>
         <footer class="text-center py-8 mt-12 footer">
