@@ -29,7 +29,7 @@ const rawContent = project.body;
 const sections = rawContent.split(/\n---pagebreak---\n/);
 
 if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
-  // No Astro.base needed, deploys to root
+  // No base path needed, site deploys to root
   return Astro.redirect(`/projects/${project.slug}/1`);
 }
 
