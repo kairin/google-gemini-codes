@@ -1,6 +1,5 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import SitemapList from '@/components/lists/SitemapList.astro';
+import CommonImports from '@/components/CommonImports.astro';
 // Import all project and blog JSON assets
 import projectAstroRebuildGuide from '@/data/content-index/project-astro-rebuild-guide.json';
 // TODO: Import all other project and blog JSON files as needed
@@ -31,17 +30,19 @@ const otherItems = [
   { title: 'Linking Guide', url: '/LINKING_GUIDE.md' },
 ];
 ---
-<Layout title="Sitemap">
-  <div class="container mx-auto px-4 py-10 sm:py-16">
-    <h1 class="text-3xl font-bold mb-8">Sitemap</h1>
-    <section class="mb-10">
-      <SitemapList items={projectItems} title="Projects" />
-    </section>
-    <section class="mb-10">
-      <SitemapList items={blogItems} title="Blog" />
-    </section>
-    <section>
-      <SitemapList items={otherItems} title="Other" />
-    </section>
-  </div>
-</Layout>
+<CommonImports>
+  <Layout title="Sitemap">
+    <div class="container mx-auto px-4 py-10 sm:py-16">
+      <h1 class="text-3xl font-bold mb-8">Sitemap</h1>
+      <section class="mb-10">
+        <SitemapList items={projectItems} title="Projects" />
+      </section>
+      <section class="mb-10">
+        <SitemapList items={blogItems} title="Blog" />
+      </section>
+      <section>
+        <SitemapList items={otherItems} title="Other" />
+      </section>
+    </div>
+  </Layout>
+</CommonImports>

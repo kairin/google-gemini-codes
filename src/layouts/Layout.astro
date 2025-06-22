@@ -30,7 +30,9 @@ const { title } = Astro.props;
 		-->
 		<slot />
 		<footer class="site-footer text-center py-8 mt-12 border-t border-gray-200">
-			<p class="text-sm subheader-text">&copy; {new Date().getFullYear()} Kairin's Astro Site &mdash; <BaseLink href="/sitemap">Sitemap</BaseLink></p>
+			<CommonFooterImports>
+				<p class="text-sm subheader-text">&copy; {new Date().getFullYear()} Kairin's Astro Site &mdash; <BaseLink href="/sitemap">Sitemap</BaseLink></p>
+			</CommonFooterImports>
 		</footer>
 	</body>
 </html>
