@@ -18,10 +18,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Install, build, and upload site
         uses: withastro/action@v1
-        # with:
-          # node-version: 20 # Specify a specific Node.js version if needed
+        # This action handles the build and artifact upload in one step,
+        # using the correct, non-deprecated versions internally.
 
   deploy:
     needs: build
@@ -32,4 +33,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
