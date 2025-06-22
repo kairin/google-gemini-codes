@@ -28,20 +28,16 @@ const { project, sectionIndex = 0, redirect = false } = Astro.props;
 const rawContent = project.body;
 const sections = rawContent.split(/\n---pagebreak---\n/);
 
-// Only use Astro.base if it is defined and not already in the path
-const base = Astro.base || '';
-
 if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
-  // Avoid double base or undefined in redirect
-  const redirectUrl = `${base}/projects/${project.slug}/1`.replace(/\/+/g, '/');
-  return Astro.redirect(redirectUrl);
+  // No Astro.base needed, deploys to root
+  return Astro.redirect(`/projects/${project.slug}/1`);
 }
 
 const menu = sections.map((section, idx) => {
   const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
   return {
     title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
-    url: `${base}/projects/${project.slug}/${idx + 1}`.replace(/\/+/g, '/'),
+    url: `/projects/${project.slug}/${idx + 1}`,
     isActive: idx === sectionIndex,
   };
 });

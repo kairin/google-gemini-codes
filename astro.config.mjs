@@ -8,8 +8,7 @@ export default defineConfig({
   // Set the canonical site URL for GitHub Pages deployment
   site: 'https://kairin.github.io',
 
-  // Set the base path to match the GitHub repo name for correct routing
-  base: '/google-gemini-codes',
+  // Removed 'base' so site will deploy to the root of the domain
   output: 'static',
 
   vite: {
