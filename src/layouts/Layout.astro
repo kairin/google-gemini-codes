@@ -1,5 +1,4 @@
 ---
-// FIX 1: Correctly import the global stylesheet.
 import '../styles/global.css';
 
 interface Props {
@@ -14,14 +13,8 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-        
-        <!-- 
-            FIX 2: Correct the function call for the favicon link.
-            The correct function is Astro.resolve(), not Astro2.resolve().
-        -->
 		<link rel="icon" type="image/svg+xml" href={Astro.resolve('/favicon.svg')} />
-		
-        <meta name="generator" content={Astro.generator} />
+		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
 	<body>
