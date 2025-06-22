@@ -142,6 +142,35 @@ This ensures all content is indexed, sectioned, and has robust, DRY metadata for
 
 ---
 
+## Interactive File Tree Map & Site Structure Visualization
+
+- The build process now generates a `site-tree.json` file in `src/data/` after every build, representing the directory structure of `src`, `scripts`, `public`, `data`, and `dist`.
+- This is done by the script `src/scripts/generate-trees.js`, which uses the `tree` command to output a JSON representation of the file structure.
+- The file tree is visualized on the `/tree` page using a React component (`TreeMap.jsx`), which is loaded in Astro using the React integration.
+- **Features:**
+  - Expand/collapse folders interactively.
+  - Ready for future features: highlight file types, show file details, visualize imports/links, search/filter, etc.
+  - Easily reusable: import and use `<TreeMap client:load tree={siteTree} />` in any Astro page.
+- **How to extend:**
+  - To visualize file relationships (e.g., imports, links), enhance the `generate-trees.js` script to analyze file contents and output relationship data.
+  - Update `TreeMap.jsx` to render relationship lines/arrows, tooltips, or context menus as needed.
+- **Integration:**
+  - Astro is configured with `@astrojs/react` for seamless React component usage.
+  - All dependencies (`react`, `react-dom`, `prop-types`, `@astrojs/react`) are managed in `package.json`.
+
+## Example Usage
+
+To add the interactive tree map to any page:
+```astro
+import TreeMap from '@/components/TreeMap.jsx';
+import siteTree from '@/data/site-tree.json';
+<TreeMap client:load tree={siteTree} />
+```
+
+The `/tree` page is already set up as a demo.
+
+---
+
 ## Contributing
 
 - **Always use DRY components** for navigation, cards, lists, and content rendering.
