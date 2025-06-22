@@ -8,11 +8,13 @@ interface Props {
 }
 const { project } = Astro.props;
 const firstSectionUrl = `/projects/${project.slug}/1`;
-const pubDate = project.data?.pubDate ? new Date(project.data.pubDate) : null;
+const pubDateLocal = project.data?.pubDateLocal || project.pubDateLocal || null;
+const pubDateUTC = project.data?.pubDate || project.pubDate || null;
+const tooltip = pubDateLocal && pubDateUTC ? `Local: ${pubDateLocal}\nUTC: ${pubDateUTC}` : '';
 ---
 <BaseLink href={firstSectionUrl} class="card rounded-lg p-6 block transition-all duration-200">
-  <p class="text-sm font-semibold accent-text">
-    {pubDate ? pubDate.toDateString() : 'No date'}
+  <p class="text-sm font-semibold accent-text" title={tooltip}>
+    {pubDateLocal ? pubDateLocal : 'No date'}
   </p>
   <h3 class="text-xl font-bold header-text mt-1">{project.data.title}</h3>
   <p class="subheader-text mt-2">{project.data.description}</p>

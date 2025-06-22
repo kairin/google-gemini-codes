@@ -1,9 +1,9 @@
 ---
 // SitemapList.astro
-// Props: items (array of { title: string, url: string })
+// Props: items (array of { title: string, url: string, pubDateLocal?: string, pubDate?: string })
 // Items can be sourced from per-content JSON assets in src/assets/content-index/
 interface Props {
-  items: Array<{ title: string; url: string }>;
+  items: Array<{ title: string; url: string; pubDateLocal?: string; pubDate?: string }>;
   title?: string;
 }
 const { items, title } = Astro.props;
@@ -11,7 +11,12 @@ import BaseLink from '@/components/BaseLink.astro';
 ---
 {title && <h2 class="text-xl font-semibold mb-2">{title}</h2>}
 <ul class="list-disc ml-6">
-  {items.map(item => (
-    <li><BaseLink href={item.url.replace(/\/\\w+$/, '/1')}>{item.title}</BaseLink></li>
-  ))}
+  {items.map(item => {
+    const tooltip = item.pubDateLocal && item.pubDate ? `Local: ${item.pubDateLocal}\nUTC: ${item.pubDate}` : '';
+    return (
+      <li>
+        <BaseLink href={item.url.replace(/\/\w+$/, '/1')} title={tooltip}>{item.title}</BaseLink>
+      </li>
+    );
+  })}
 </ul>

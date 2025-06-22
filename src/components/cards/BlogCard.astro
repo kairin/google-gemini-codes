@@ -8,10 +8,13 @@ interface Props {
 }
 const { post } = Astro.props;
 const firstSectionUrl = `/blog/${post.slug}/1`;
+const pubDateLocal = post.data?.pubDateLocal || post.pubDateLocal || null;
+const pubDateUTC = post.data?.pubDate || post.pubDate || null;
+const tooltip = pubDateLocal && pubDateUTC ? `Local: ${pubDateLocal}\nUTC: ${pubDateUTC}` : '';
 ---
 <BaseLink href={firstSectionUrl} class="card rounded-lg p-6 block transition-all duration-200">
-  <p class="text-sm font-semibold accent-text">
-    {post.data.pubDate.toDateString()}
+  <p class="text-sm font-semibold accent-text" title={tooltip}>
+    {pubDateLocal ? pubDateLocal : 'No date'}
   </p>
   <h3 class="text-xl font-bold header-text mt-1">{post.data.title}</h3>
   <p class="subheader-text mt-2">{post.data.description}</p>

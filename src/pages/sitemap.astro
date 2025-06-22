@@ -11,10 +11,14 @@ const blogPosts = []; // Add imported blog JSON files here
 const projectItems = projects.map(project => ({
   title: project.title,
   url: `/projects/${project.slug}/1`,
+  pubDateLocal: project.pubDateLocal,
+  pubDate: project.pubDate,
 }));
 const blogItems = blogPosts.map(post => ({
   title: post.title,
   url: `/blog/${post.slug}/1`,
+  pubDateLocal: post.pubDateLocal,
+  pubDate: post.pubDate,
 }));
 const otherItems = [
   { title: 'Home', url: '/' },
