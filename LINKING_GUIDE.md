@@ -22,34 +22,38 @@ This document is the source of truth for how every component, page, and asset sh
     ```
 
 ## 3. Internal Page Links (Navigation, Menus, etc.)
-- **Always use a hardcoded subdirectory prefix for all internal links:**
+- **Always use a centrally managed component for all internal links:**
+  - Use a `<BaseLink>` component that automatically prefixes with `/google-gemini-codes`.
   - Example:
     ```astro
-    <a href="/google-gemini-codes/projects/astro-rebuild-guide/1">Astro Rebuild Guide</a>
+    <BaseLink href="/projects/astro-rebuild-guide/1">Astro Rebuild Guide</BaseLink>
     ```
-  - Do NOT use `Astro.base` for links due to repeated issues with undefined values.
-  - Do NOT use root-relative paths like `/projects/...`.
+  - Do NOT use `Astro.base` or hardcode root-relative paths in individual components/pages.
 
 ## 4. Dynamic Links in Components
 - **When generating links dynamically (e.g., in a map):**
-  - Always prefix with `/google-gemini-codes/`.
+  - Always use the `<BaseLink>` component for each link.
   - Example:
     ```astro
-    <a href={`/google-gemini-codes/projects/${project.slug}/1`}>{project.data.title}</a>
+    {allProjects.map(project => (
+      <BaseLink href={`/projects/${project.slug}/1`}>{project.data.title}</BaseLink>
+    ))}
     ```
 
 ## 5. Header and Footer Components
 - **Header:**
   - Place favicon, meta tags, and navigation links here.
-  - All links must use the hardcoded subdirectory prefix.
+  - All links must use the `<BaseLink>` component.
 - **Footer:**
   - Place copyright, deployment info, and any global links.
-  - All links must use the hardcoded subdirectory prefix.
+  - All links must use the `<BaseLink>` component.
 
 ## 6. Source of Truth
 - The deployment subdirectory is `/google-gemini-codes`.
 - If the deployment location changes, update this file and all relevant code.
 - See `src/SITE_DEPLOYMENT_INFO.ts` for deployment settings.
+- All navigation, header, and footer logic should be centralized in their respective components in `src/components/`.
+- Never repeat base path logic—always use a component or utility.
 
 ---
 
@@ -59,8 +63,35 @@ This document is the source of truth for how every component, page, and asset sh
 |-----------------------|-------------------------|-----------------------------------------------------|
 | Layout.astro (favicon)| public asset            | `/google-gemini-codes/favicon.svg`                  |
 | Any .astro (image)    | src/assets/ import      | `import img from '@/assets/...'`, then `{img.src}`  |
-| Any .astro (nav link) | internal page           | `/google-gemini-codes/path/to/page`                 |
-| Any .astro (dynamic)  | dynamic internal link   | `/google-gemini-codes/${slug}`                      |
+| Any .astro (nav link) | internal page           | `<BaseLink href="/projects/...">...</BaseLink>`    |
+| Any .astro (dynamic)  | dynamic internal link   | `<BaseLink href={`/projects/${slug}`}>...</BaseLink>`|
+
+---
+
+## Why Use a Component for Links?
+
+- **Encapsulation:** All base path logic is handled in one place.
+- **Consistency:** No more broken links due to missed prefixes or config changes.
+- **Maintainability:** If the deployment base changes, update only the component.
+- **Clarity:** Contributors always know how to create links—use `<BaseLink>`.
+
+---
+
+## Example: `src/components/BaseLink.astro`
+
+```astro
+---
+const { href, ...props } = Astro.props;
+const BASE = '/google-gemini-codes';
+const fullHref = href.startsWith('/') ? `${BASE}${href}` : href;
+---
+<a href={fullHref} {...props}><slot /></a>
+```
+
+**Usage:**
+```astro
+<BaseLink href="/projects/astro-rebuild-guide/1">Astro Rebuild Guide</BaseLink>
+```
 
 ---
 

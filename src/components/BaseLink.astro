@@ -1,0 +1,9 @@
+---
+// src/components/BaseLink.astro
+// Centralized link component: always prefixes with the deployment subdirectory.
+// Usage: <BaseLink href="/projects/astro-rebuild-guide/1">Astro Rebuild Guide</BaseLink>
+const { href, ...props } = Astro.props;
+const BASE = '/google-gemini-codes';
+const fullHref = href.startsWith('/') ? `${BASE}${href}` : href;
+---
+<a href={fullHref} {...props}><slot /></a>

@@ -3,6 +3,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { marked } from 'marked';
+import BaseLink from '@/components/BaseLink.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -29,19 +30,14 @@ const rawContent = project.body;
 const sections = rawContent.split(/\n---pagebreak---\n/);
 
 if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
-  // Use Astro.base to ensure redirect works in subdirectory deployments.
-  // Defensive: If Astro.base is undefined, fallback to '' (root-relative, which is still better than 'undefined')
-  const base = typeof Astro.base === 'string' ? Astro.base : '';
-  return Astro.redirect(`${base}/projects/${project.slug}/1`);
+  return Astro.redirect(`/projects/${project.slug}/1`);
 }
 
 const menu = sections.map((section, idx) => {
   const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
-  // Defensive: If Astro.base is undefined, fallback to ''
-  const base = typeof Astro.base === 'string' ? Astro.base : '';
   return {
     title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
-    url: `${base}/projects/${project.slug}/${idx + 1}`,
+    url: `/projects/${project.slug}/${idx + 1}`,
     isActive: idx === sectionIndex,
   };
 });
@@ -51,11 +47,10 @@ const sectionHtml = marked.parse(sections[sectionIndex] || '');
 <Layout title={project.data.title}>
   <nav class="mb-8 flex flex-wrap gap-2">
     {/*
-      Use Astro.base for all navigation links to avoid broken links in subdirectory deployments.
-      Defensive: If Astro.base is undefined, fallback to '' (root-relative).
+      Use BaseLink for all navigation links to avoid broken links in subdirectory deployments.
     */}
     {menu.map(item => (
-      <a href={item.url} class={item.isActive ? 'font-bold underline text-blue-700' : 'text-blue-600 hover:underline'}>{item.title}</a>
+      <BaseLink href={item.url} class={item.isActive ? 'font-bold underline text-blue-700' : 'text-blue-600 hover:underline'}>{item.title}</BaseLink>
     ))}
   </nav>
   <main class="prose mx-auto px-4 py-10">

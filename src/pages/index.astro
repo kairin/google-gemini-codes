@@ -2,6 +2,7 @@
 // src/pages/index.astro
 import Layout from '@/layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import BaseLink from '@/components/BaseLink.astro';
 
 // SOURCE OF TRUTH: Always use Astro.base for all internal links and asset paths.
 // - This ensures correct navigation and resource loading in both local and subdirectory deployments (e.g., GitHub Pages).
@@ -25,13 +26,13 @@ const base = typeof Astro.base === 'string' ? Astro.base : '';
                   Defensive: If Astro.base is undefined, fallback to '' (root-relative).
                 */}
                 {allProjects.map(project => (
-                    <a href={`${base}/projects/${project.slug}/1`} class="card rounded-lg p-6 block transition-all duration-200">
+                    <BaseLink href={`/projects/${project.slug}/1`} class="card rounded-lg p-6 block transition-all duration-200">
                         <p class="text-sm font-semibold accent-text">
                             {project.data.pubDate.toDateString()}
                         </p>
                         <h3 class="text-xl font-bold header-text mt-1">{project.data.title}</h3>
                         <p class="subheader-text mt-2">{project.data.description}</p>
-                    </a>
+                    </BaseLink>
                 ))}
             </div>
         </main>
