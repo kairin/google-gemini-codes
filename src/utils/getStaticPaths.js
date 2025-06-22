@@ -39,7 +39,7 @@ export function getBlogStaticPaths() {
     const sectionCount = post.sections?.length || 1;
     for (let i = 0; i < sectionCount; i++) {
       paths.push({
-        params: { blogslug: [post.slug, `${i + 1}`] },
+        params: { slug: [post.slug, `${i + 1}`] },
         props: { post, sectionIndex: i },
       });
     }
