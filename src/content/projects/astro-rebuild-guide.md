@@ -4,7 +4,6 @@ description: "A living document charting the progress of rebuilding my Astro sit
 pubDate: 2025-06-22
 ---
 
-This is the content of my first project. I can write anything I want here in Markdown.
+This is my first project, managed automatically by Astro's Content Collections. 
 
-- A list item
-- Another list item
+This page was generated from a Markdown file, not a separate `.astro` file. This is a much better way to manage a portfolio or blog.
