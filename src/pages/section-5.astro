@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 5: Advanced Topics | Astro Rebuild Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #000000; }
+        .dark body { background-color: #000000; color: #FFFFFF; }
+        .prose { color: inherit; max-width: 75ch; }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose strong { color: inherit; }
+        .prose p, .prose li { color: inherit; opacity: 0.9; @apply text-lg leading-relaxed; }
+        .prose a { color: #2563EB; } .dark .prose a { color: #60A5FA; }
+        .prose code { @apply rounded-md px-1.5 py-1 text-base; background-color: #F3F4F6; color: #111827; } .dark .prose code { background-color: #1F2937; color: #F9FAFB; }
+        .highlight-box { border-left: 4px solid #FBBF24; padding: 1rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .highlight-box h4 { color: #D97706; } .dark .highlight-box h4 { color: #FCD34D; }
+        .header-text { color: #000000; } .dark .header-text { color: #FFFFFF; }
+        .subheader-text { color: #4A5568; } .dark .subheader-text { color: #A0AEC0; }
+        .accent-text { color: #2563EB; } .dark .accent-text { color: #60A5FA; }
+        .footer { border-top: 1px solid #E2E8F0; } .dark .footer { border-top: 1px solid #374151; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-10 sm:py-16">
+        <header class="mb-12">
+            <a href="#" class="inline-flex items-center accent-text hover:underline mb-6 font-semibold">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Main Index
+            </a>
+            <p class="text-sm font-semibold accent-text tracking-wider uppercase">Section 5</p>
+            <h1 class="text-4xl sm:text-5xl font-bold header-text leading-tight mt-1">Advanced Considerations</h1>
+            <h2 class="text-xl subheader-text mt-3">Future-Proofing Your Project</h2>
+        </header>
+        <main class="prose mx-auto">
+            <article>
+                <h3>5.1 Becoming a Debugging Expert</h3>
+                <p>Knowing how to debug effectively is crucial. Use the Astro Dev Toolbar, strategic <code>console.log()</code> statements (checking both the terminal and browser console), and master the browser's Network and Elements tabs.</p>
+                <h3>5.2 The Security Elephant: Content Security Policy (CSP)</h3>
+                <p>A Content Security Policy (CSP) is a security layer that helps mitigate attacks like XSS. Astro's default behavior of inlining scripts requires <code>'unsafe-inline'</code> in your CSP, which is not ideal for security. This is a known challenge, and it's important to be aware of this limitation for security-sensitive projects.</p>
+                <h3>5.3 Performance Is a Feature</h3>
+                <p>Maintaining performance requires ongoing discipline. Be aggressive with <code>client:visible</code> for any component below the fold. Use tools like <code>astro-bundle-analyzer</code> to inspect your JavaScript bundles and identify large dependencies. Use Astro's built-in <code>&lt;Image /&gt;</code> component for automatic asset optimization.</p>
+            </article>
+        </main>
+        <footer class="text-center py-8 mt-12 footer">
+            <p class="text-sm subheader-text">Astro Rebuild Guide | Section 5</p>
+        </footer>
+    </div>
+</body>
+</html>

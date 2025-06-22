@@ -1,11 +1,78 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
-
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro Rebuild Plan: Main Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #000000; }
+        .dark body { background-color: #000000; color: #FFFFFF; }
+        .header-text { color: #000000; } .dark .header-text { color: #FFFFFF; }
+        .subheader-text { color: #4A5568; } .dark .subheader-text { color: #A0AEC0; }
+        .accent-text { color: #2563EB; } .dark .accent-text { color: #60A5FA; }
+        .card { background-color: #FFFFFF; border: 1px solid #E2E8F0; }
+        .dark .card { background-color: #111111; border: 1px solid #4A5568; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .dark .card:hover { border-color: #60A5FA; }
+        .footer { border-top: 1px solid #E2E8F0; } .dark .footer { border-top: 1px solid #4A5568; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-10 sm:py-16">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-bold header-text leading-tight">A Strategic Blueprint for Rebuilding Your Astro Website</h1>
+            <p class="mt-4 text-lg subheader-text max-w-3xl mx-auto">From Broken Animations to a Robust, Foolproof Deployment. Select a section below to begin.</p>
+        </header>
+        <main>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <a href="#" class="card rounded-lg p-6 block transition-all duration-200">
+                    <p class="text-sm font-semibold accent-text">Section 1</p>
+                    <h3 class="text-xl font-bold header-text mt-1">Project Restart</h3>
+                    <p class="subheader-text mt-2">Re-establishing our foundation and confirming our technology choices.</p>
+                </a>
+                <!-- Card 2 -->
+                <a href="#" class="card rounded-lg p-6 block transition-all duration-200">
+                    <p class="text-sm font-semibold accent-text">Section 2</p>
+                    <h3 class="text-xl font-bold header-text mt-1">The Astro Philosophy</h3>
+                    <p class="subheader-text mt-2">A deep dive into first principles, including the Islands Architecture.</p>
+                </a>
+                <!-- Card 3 -->
+                <a href="#" class="card rounded-lg p-6 block transition-all duration-200">
+                    <p class="text-sm font-semibold accent-text">Section 3</p>
+                    <h3 class="text-xl font-bold header-text mt-1">Diagnosing the Failure</h3>
+                    <p class="subheader-text mt-2">A post-mortem on the broken animations and likely failure scenarios.</p>
+                </a>
+                <!-- Card 4 -->
+                <a href="#" class="card rounded-lg p-6 block transition-all duration-200" style="border-width: 2px; border-color: #2563EB;">
+                    <p class="text-sm font-semibold accent-text">Section 4</p>
+                    <h3 class="text-xl font-bold header-text mt-1">The Foolproof Plan</h3>
+                    <p class="subheader-text mt-2">The step-by-step guide to rebuilding the site, from setup to deployment.</p>
+                </a>
+                <!-- Card 5 -->
+                <a href="#" class="card rounded-lg p-6 block transition-all duration-200">
+                    <p class="text-sm font-semibold accent-text">Section 5</p>
+                    <h3 class="text-xl font-bold header-text mt-1">Advanced Topics</h3>
+                    <p class="subheader-text mt-2">Future-proofing with debugging, security (CSP), and performance insights.</p>
+                </a>
+                <!-- Card 6 -->
+                <a href="#" class="card rounded-lg p-6 block transition-all duration-200">
+                    <p class="text-sm font-semibold accent-text">Section 6</p>
+                    <h3 class="text-xl font-bold header-text mt-1">Checklist & Summary</h3>
+                    <p class="subheader-text mt-2">Final recommendations and the definitive project rebuild checklist.</p>
+                </a>
+            </div>
+            <div class="mt-12 text-center">
+                 <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg">View Consolidated Sources</a>
+            </div>
+        </main>
+        <footer class="text-center py-8 mt-12 footer">
+            <p class="text-sm subheader-text">Astro Rebuild Guide | Index</p>
+        </footer>
+    </div>
+</body>
+</html>

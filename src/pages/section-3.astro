@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 3: Diagnosing the Failure | Astro Rebuild Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #000000; }
+        .dark body { background-color: #000000; color: #FFFFFF; }
+        .prose { color: inherit; max-width: 75ch; }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose strong { color: inherit; }
+        .prose p, .prose li { color: inherit; opacity: 0.9; @apply text-lg leading-relaxed; }
+        .prose a { color: #2563EB; } .dark .prose a { color: #60A5FA; }
+        .prose code { @apply rounded-md px-1.5 py-1 text-base; background-color: #F3F4F6; color: #111827; } .dark .prose code { background-color: #1F2937; color: #F9FAFB; }
+        .alert-box { border-left: 4px solid #EF4444; padding: 1rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .alert-box h4 { color: #DC2626; } .dark .alert-box h4 { color: #F87171; }
+        .header-text { color: #000000; } .dark .header-text { color: #FFFFFF; }
+        .subheader-text { color: #4A5568; } .dark .subheader-text { color: #A0AEC0; }
+        .accent-text { color: #2563EB; } .dark .accent-text { color: #60A5FA; }
+        .footer { border-top: 1px solid #E2E8F0; } .dark .footer { border-top: 1px solid #374151; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-10 sm:py-16">
+        <header class="mb-12">
+            <a href="#" class="inline-flex items-center accent-text hover:underline mb-6 font-semibold">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Main Index
+            </a>
+            <p class="text-sm font-semibold accent-text tracking-wider uppercase">Section 3</p>
+            <h1 class="text-4xl sm:text-5xl font-bold header-text leading-tight mt-1">Diagnosing the Failure</h1>
+            <h2 class="text-xl subheader-text mt-3">A Post-Mortem on the Broken Animations</h2>
+        </header>
+        <main class="prose mx-auto">
+            <article>
+                <h3>3.1 The "It Works in Dev, Breaks in Build" Phenomenon</h3>
+                <p>A feature working in development (<code>astro dev</code>) but failing in production (<code>astro build</code>) is common. The dev server is lenient and optimized for speed, while the production build is strict, performing optimizations like tree-shaking and minification that can expose hidden issues.</p>
+                <h3>3.2 A Taxonomy of Animation Integration & Likely Failure Scenarios</h3>
+                <p>The site "breaking" at the animation step points directly to a mishandling of client-side JavaScript.</p>
+                <div class="alert-box">
+                    <h4>Primary Suspect</h4>
+                    <p>The most probable cause was the improper use of an animation library, most likely by forgetting or misusing a <code>client:*</code> hydration directive on an interactive component.</p>
+                </div>
+                <h4>Scenario A: Incorrect Vanilla JS Implementation</h4>
+                <p>Common mistakes include trying to access a DOM element before it has rendered or attempting to use a server-side (frontmatter) variable in a client-side script.</p>
+                <h4>Scenario B: Improper Use of an Animation Library</h4>
+                <p>The most likely culprit. This includes forgetting the <code>client:*</code> directive entirely (so the component's JS never ships to the browser) or getting a library scope error (e.g., "<code>gsap</code> is not defined") because the library wasn't properly imported within the island's script.</p>
+                <h4>Scenario C: Hydration Mismatches</h4>
+                <p>A more subtle issue where the HTML rendered on the server doesn't perfectly match what the client-side JavaScript expects to find, often because a library alters the DOM immediately on load. This causes Astro's hydration process to fail.</p>
+            </article>
+        </main>
+        <footer class="text-center py-8 mt-12 footer">
+            <p class="text-sm subheader-text">Astro Rebuild Guide | Section 3</p>
+        </footer>
+    </div>
+</body>
+</html>
