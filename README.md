@@ -1,5 +1,7 @@
 # Astro Starter Kit: Basics
 
+**Live Site:** [https://kairin.github.io/](https://kairin.github.io/)
+
 ## 🚀 Project Structure & Automation Progress (as of 2025-06-22)
 
 This project is now a highly automated, scalable Astro site with:
