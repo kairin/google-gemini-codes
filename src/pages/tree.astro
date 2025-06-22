@@ -1,10 +1,9 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import TreeMap from '@/components/TreeMap.jsx';
-import siteTree from '@/data/site-tree.json';
 ---
 <Layout title="Site File Tree & Relationships">
   <div class="container mx-auto px-4 py-10 sm:py-16">
-    <TreeMap client:load tree={siteTree} />
+    <TreeMap client:load />
   </div>
 </Layout>

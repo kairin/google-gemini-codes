@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function TreeNode({ node, depth = 0 }) {
@@ -30,7 +30,32 @@ TreeNode.propTypes = {
   depth: PropTypes.number,
 };
 
-export default function TreeMap({ tree }) {
+export default function TreeMap() {
+  const [tree, setTree] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Use the correct public path for site-tree.json
+    const base = import.meta.env.BASE_URL || '/';
+    const treePath = `${base}src/data/site-tree.json`;
+    fetch(treePath)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch site-tree.json');
+        return res.json();
+      })
+      .then(data => {
+        setTree(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading site tree…</div>;
+  if (error) return <div className="text-red-600">Error: {error}</div>;
   if (!tree) return <div>No tree data.</div>;
   const dirs = Object.keys(tree);
   return (
