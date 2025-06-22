@@ -1,0 +1,54 @@
+---
+// TreeMap.astro
+// Visualizes the site tree and file relationships interactively
+import { useState } from 'react';
+import siteTree from '@/data/site-tree.json';
+
+function renderNode(node, depth = 0) {
+  if (!node) return null;
+  if (Array.isArray(node)) return node.map(n => renderNode(n, depth));
+  if (node.type === 'directory' || node.name) {
+    const children = node.contents || node.children || [];
+    return (
+      <li style={{ marginLeft: `${depth * 1.2}em` }}>
+        <span style={{ fontWeight: node.type === 'directory' ? 'bold' : 'normal' }}>
+          {node.name || node.type}
+        </span>
+        {children.length > 0 && (
+          <ul>{children.map(child => renderNode(child, depth + 1))}</ul>
+        )}
+      </li>
+    );
+  }
+  return null;
+}
+
+const dirs = Object.keys(siteTree);
+---
+<div class="tree-map-container p-4 bg-gray-50 rounded shadow">
+  <h2 class="text-xl font-bold mb-4">Site File Tree & Relationships</h2>
+  {dirs.map(dir => (
+    <div class="mb-6" key={dir}>
+      <h3 class="text-lg font-semibold mb-2">{dir}/</h3>
+      <ul class="tree-list">
+        {renderNode(siteTree[dir])}
+      </ul>
+    </div>
+  ))}
+  <p class="text-xs text-gray-500 mt-4">(Hover or expand nodes for details. Relationships and imports can be visualized here in the future.)</p>
+</div>
+
+<style>
+.tree-list {
+  list-style: none;
+  padding-left: 0;
+}
+.tree-list li {
+  margin: 0.2em 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tree-list li:hover {
+  background: #e0e7ef;
+}
+</style>
