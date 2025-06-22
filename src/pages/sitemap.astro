@@ -1,34 +1,35 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import SitemapList from '@/components/lists/SitemapList.astro';
+
 const projects = await getCollection('projects');
 const blogPosts = await getCollection('blog');
+
+const projectItems = projects.map(project => ({
+  title: project.data.title,
+  url: `/projects/${project.slug}/1`,
+}));
+const blogItems = blogPosts.map(post => ({
+  title: post.data.title,
+  url: `/blog/${post.slug}`,
+}));
+const otherItems = [
+  { title: 'Home', url: '/' },
+  { title: 'Sitemap', url: '/sitemap' },
+];
 ---
 <Layout title="Sitemap">
   <div class="container mx-auto px-4 py-10 sm:py-16">
     <h1 class="text-3xl font-bold mb-8">Sitemap</h1>
     <section class="mb-10">
-      <h2 class="text-xl font-semibold mb-2">Projects</h2>
-      <ul class="list-disc ml-6">
-        {projects.map(project => (
-          <li><a href={`/projects/${project.slug}/1`}>{project.data.title}</a></li>
-        ))}
-      </ul>
+      <SitemapList items={projectItems} title="Projects" />
     </section>
     <section class="mb-10">
-      <h2 class="text-xl font-semibold mb-2">Blog</h2>
-      <ul class="list-disc ml-6">
-        {blogPosts.map(post => (
-          <li><a href={`/blog/${post.slug}`}>{post.data.title}</a></li>
-        ))}
-      </ul>
+      <SitemapList items={blogItems} title="Blog" />
     </section>
     <section>
-      <h2 class="text-xl font-semibold mb-2">Other</h2>
-      <ul class="list-disc ml-6">
-        <li><a href="/">Home</a></li>
-        <li><a href="/sitemap">Sitemap</a></li>
-      </ul>
+      <SitemapList items={otherItems} title="Other" />
     </section>
   </div>
 </Layout>

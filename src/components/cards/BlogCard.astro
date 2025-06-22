@@ -1,0 +1,16 @@
+---
+// BlogCard.astro
+// Props: post (object with data, slug)
+import BaseLink from '@/components/BaseLink.astro';
+interface Props {
+  post: any;
+}
+const { post } = Astro.props;
+---
+<BaseLink href={`/blog/${post.slug}`} class="card rounded-lg p-6 block transition-all duration-200">
+  <p class="text-sm font-semibold accent-text">
+    {post.data.pubDate.toDateString()}
+  </p>
+  <h3 class="text-xl font-bold header-text mt-1">{post.data.title}</h3>
+  <p class="subheader-text mt-2">{post.data.description}</p>
+</BaseLink>

@@ -2,15 +2,14 @@
 // src/pages/projects/[...slug].astro
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-import { marked } from 'marked';
-import BaseLink from '@/components/BaseLink.astro';
+import SectionedMarkdown from '@/components/SectionedMarkdown.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   const paths = [];
   for (const project of projects) {
     const rawContent = project.body;
-    const sections = rawContent.split(/\n---pagebreak---\n/);
+    const sections = rawContent.split(/<!-- PAGEBREAK -->/);
     for (let i = 0; i < sections.length; i++) {
       paths.push({
         params: { slug: `${project.slug}/${i + 1}` },
@@ -27,36 +26,12 @@ export async function getStaticPaths() {
 
 const { project, sectionIndex = 0, redirect = false } = Astro.props;
 const rawContent = project.body;
-const sections = rawContent.split(/\n---pagebreak---\n/);
+const baseUrl = `/projects/${project.slug}`;
 
 if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
   return Astro.redirect(`/projects/${project.slug}/1`);
 }
-
-const menu = sections.map((section, idx) => {
-  const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
-  return {
-    title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
-    url: `/projects/${project.slug}/${idx + 1}`,
-    isActive: idx === sectionIndex,
-  };
-});
-
-const sectionHtml = marked.parse(sections[sectionIndex] || '');
 ---
 <Layout title={project.data.title}>
-  <nav class="mb-8 flex flex-wrap gap-2">
-    {/*
-      Use BaseLink for all navigation links to avoid broken links in subdirectory deployments.
-    */}
-    {menu.map(item => (
-      <BaseLink href={item.url} class={item.isActive ? 'font-bold underline text-blue-700' : 'text-blue-600 hover:underline'}>{item.title}</BaseLink>
-    ))}
-  </nav>
-  <main class="prose mx-auto px-4 py-10">
-    <h1>{project.data.title}</h1>
-    <p>{project.data.description}</p>
-    <hr />
-    <div innerHTML={sectionHtml} />
-  </main>
+  <SectionedMarkdown rawContent={rawContent} sectionIndex={sectionIndex} baseUrl={baseUrl} />
 </Layout>

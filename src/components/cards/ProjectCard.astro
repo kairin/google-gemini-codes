@@ -1,0 +1,16 @@
+---
+// ProjectCard.astro
+// Props: project (object with data, slug)
+import BaseLink from '@/components/BaseLink.astro';
+interface Props {
+  project: any;
+}
+const { project } = Astro.props;
+---
+<BaseLink href={`/projects/${project.slug}/1`} class="card rounded-lg p-6 block transition-all duration-200">
+  <p class="text-sm font-semibold accent-text">
+    {project.data.pubDate.toDateString()}
+  </p>
+  <h3 class="text-xl font-bold header-text mt-1">{project.data.title}</h3>
+  <p class="subheader-text mt-2">{project.data.description}</p>
+</BaseLink>

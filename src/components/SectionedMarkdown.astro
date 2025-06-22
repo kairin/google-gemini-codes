@@ -1,0 +1,31 @@
+---
+// SectionedMarkdown.astro
+// Props: rawContent (string), sectionIndex (number), baseUrl (string)
+import { marked } from 'marked';
+import BaseLink from '@/components/BaseLink.astro';
+
+interface Props {
+  rawContent: string;
+  sectionIndex: number;
+  baseUrl: string;
+}
+const { rawContent, sectionIndex = 0, baseUrl } = Astro.props;
+const sections = rawContent.split(/<!-- PAGEBREAK -->/);
+const menu = sections.map((section, idx) => {
+  const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
+  return {
+    title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
+    url: `${baseUrl}/${idx + 1}`,
+    isActive: idx === sectionIndex,
+  };
+});
+const sectionHtml = marked.parse(sections[sectionIndex] || '');
+---
+<nav class="mb-8 flex flex-wrap gap-2">
+  {menu.map(item => (
+    <BaseLink href={item.url} class={item.isActive ? 'font-bold underline text-blue-700' : 'text-blue-600 hover:underline'}>{item.title}</BaseLink>
+  ))}
+</nav>
+<div class="prose mx-auto px-4 py-10">
+  <div innerHTML={sectionHtml} />
+</div>
