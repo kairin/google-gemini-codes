@@ -37,5 +37,27 @@ import Layout from '@/layouts/Layout.astro';
       <li>See <code>DOCUMENTATION.md</code> for architecture and automation details.</li>
       <li>See <code>LINKING_GUIDE.md</code> for canonical linking and asset rules.</li>
     </ul>
+    <h2>Contributor Quickstart</h2>
+    <ul>
+      <li>Clone the repo, install dependencies, and run <code>npm run dev</code> to start local development.</li>
+      <li>Use VS Code tasks or <code>npm run build</code> to trigger all automation and validation scripts.</li>
+      <li>Add markdown files to <code>src/content/projects/</code> or <code>src/content/blog/</code>—all indexing and navigation is automated.</li>
+      <li>Follow <a href="/LINKING_GUIDE.md">LINKING_GUIDE.md</a> for all internal links and asset references.</li>
+      <li>See the Troubleshooting section below for common issues.</li>
+    </ul>
+    <h2>Troubleshooting & Common Errors</h2>
+    <ul>
+      <li><b>Site tree or relationships not loading:</b> Run the generator scripts or a full build to refresh <code>site-tree.json</code> and <code>file-relationships.json</code>. Check for JSON syntax errors if you edited files manually.</li>
+      <li><b>Dynamic route errors:</b> Ensure all content index JSON files are present and valid. Check markdown frontmatter for required fields.</li>
+      <li><b>Git/large file issues:</b> See <code>.gitignore</code> and <code>PROTECTED_FILES.txt</code> for file protection rules. Use documented git cleanup steps if needed.</li>
+      <li><b>Other errors:</b> See this page, <code>README.md</code>, or open an issue for help.</li>
+    </ul>
+    <h2>How to Get Help</h2>
+    <ul>
+      <li>Read this page and <a href="/README.md">README.md</a> for setup and usage.</li>
+      <li>For architecture, see <a href="/DOCUMENTATION.md">DOCUMENTATION.md</a>.</li>
+      <li>For linking/asset rules, see <a href="/LINKING_GUIDE.md">LINKING_GUIDE.md</a>.</li>
+      <li>Document new errors in Troubleshooting and/or open an issue.</li>
+    </ul>
   </div>
 </Layout>

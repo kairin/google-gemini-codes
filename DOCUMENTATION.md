@@ -63,3 +63,30 @@ To avoid incurring costs from GitHub-hosted runners, this project uses a self-ho
   runs-on: [self-hosted, Linux-Ubuntu]
   ```
 - Register and start your runner before running workflows.
+
+## Contributor Quickstart
+- Clone the repo, install dependencies, and run `npm run dev` to start local development.
+- Use VS Code tasks or `npm run build` to trigger all automation and validation scripts.
+- Add markdown files to `src/content/projects/` or `src/content/blog/`—all indexing and navigation is automated.
+- Follow [LINKING_GUIDE.md](./LINKING_GUIDE.md) for all internal links and asset references.
+- See the Troubleshooting section below for common issues.
+
+## Troubleshooting & Common Errors
+- **Site tree or relationships not loading:**
+  - Run the generator scripts or a full build to refresh `site-tree.json` and `file-relationships.json`.
+  - Check for JSON syntax errors if you edited files manually.
+- **Dynamic route errors:**
+  - Ensure all content index JSON files are present and valid.
+  - Check markdown frontmatter for required fields.
+- **Git/large file issues:**
+  - See `.gitignore` and `PROTECTED_FILES.txt` for file protection rules.
+  - Use documented git cleanup steps if needed.
+- **Other errors:**
+  - See `/docs`, `README.md`, or open an issue for help.
+
+## How to Get Help
+- Read `/docs` and this file for setup and usage.
+- See [README.md](./README.md) for quickstart.
+- For architecture, see this file and `/docs`.
+- For linking/asset rules, see [LINKING_GUIDE.md](./LINKING_GUIDE.md).
+- Document new errors in Troubleshooting and/or open an issue.

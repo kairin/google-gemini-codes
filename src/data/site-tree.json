@@ -42,11 +42,19 @@
             },
             {
               "type": "file",
+              "name": "CommonImports.astro"
+            },
+            {
+              "type": "file",
               "name": "DeploymentInfo.astro"
             },
             {
               "type": "file",
               "name": "FileRelationships.jsx"
+            },
+            {
+              "type": "file",
+              "name": "ImportRelationships.jsx"
             },
             {
               "type": "directory",
@@ -222,6 +230,10 @@
             },
             {
               "type": "file",
+              "name": "import-relationships.astro"
+            },
+            {
+              "type": "file",
               "name": "index.astro"
             },
             {
@@ -319,7 +331,7 @@
     {
       "type": "report",
       "directories": 18,
-      "files": 52
+      "files": 55
     }
   ],
   "scripts": [
@@ -329,6 +341,10 @@
       "contents": [
         {
           "type": "file",
+          "name": "check-protected-files.js"
+        },
+        {
+          "type": "file",
           "name": "generate-content-index.js"
         }
       ]
@@ -336,7 +352,7 @@
     {
       "type": "report",
       "directories": 1,
-      "files": 1
+      "files": 2
     }
   ],
   "public": [
@@ -402,7 +418,7 @@
           "contents": [
             {
               "type": "file",
-              "name": "_blogslug_.Bpp9Wkt0.css"
+              "name": "_blogslug_.DXpDK_rW.css"
             },
             {
               "type": "file",
@@ -414,7 +430,15 @@
             },
             {
               "type": "file",
+              "name": "ImportRelationships.BnRw106F.js"
+            },
+            {
+              "type": "file",
               "name": "index.6otl1p8d.js"
+            },
+            {
+              "type": "file",
+              "name": "index.BFu1cO_z.js"
             },
             {
               "type": "file",
@@ -422,7 +446,7 @@
             },
             {
               "type": "file",
-              "name": "TreeMap.DypgZXi-.js"
+              "name": "TreeMap.COfI-uR9.js"
             }
           ]
         },
@@ -521,6 +545,16 @@
         {
           "type": "directory",
           "name": "how-to-add-project",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "import-relationships",
           "contents": [
             {
               "type": "file",
@@ -678,8 +712,8 @@
     },
     {
       "type": "report",
-      "directories": 28,
-      "files": 29
+      "directories": 29,
+      "files": 32
     }
   ]
 }

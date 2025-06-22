@@ -1,0 +1,20 @@
+---
+import CommonImports from '@/components/CommonImports.astro';
+import Layout from '@/layouts/Layout.astro';
+import ImportRelationships from '@/components/ImportRelationships.jsx';
+---
+<CommonImports>
+  <Layout title="Site Page → Component Relationships">
+    <main class="prose mx-auto px-4 py-10">
+      <h1>Site Page → Component Import Relationships</h1>
+      <ImportRelationships client:load pageFiles={[
+        'pages/index.astro',
+        'pages/sitemap.astro',
+        'pages/tree.astro',
+        'pages/relationships.astro',
+        'pages/docs.astro',
+        // Add more pages as needed
+      ]} />
+    </main>
+  </Layout>
+</CommonImports>

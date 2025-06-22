@@ -192,4 +192,56 @@ To avoid GitHub-hosted runner costs, this project is configured to use a self-ho
 
 ---
 
-For technical details, linking rules, and configuration, see [LINKING_GUIDE.md](./LINKING_GUIDE.md).
+## Contributor Quickstart
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/kairin/google-gemini-codes.git
+   cd google-gemini-codes
+   ```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Run the site locally:**
+   ```sh
+   npm run dev
+   ```
+4. **Build and test automation:**
+   ```sh
+   npm run build
+   # or use VS Code tasks for build+commit automation
+   ```
+5. **Add content:**
+   - Place markdown files in `src/content/projects/` or `src/content/blog/`.
+   - The build/index scripts will update all navigation and indices automatically.
+6. **Contribute code:**
+   - Follow the [LINKING_GUIDE.md](./LINKING_GUIDE.md) for all internal links and asset references.
+   - Use DRY components and update documentation as needed.
+
+---
+
+## Troubleshooting & Common Errors
+
+- **Error: Failed to fetch site-tree.json or file-relationships.json**
+  - Ensure you have run the content and tree generator scripts (`npm run build` or the prebuild scripts).
+  - Check that `src/data/site-tree.json` and `src/data/file-relationships.json` exist and are valid JSON.
+  - If you edited files manually, check for JSON syntax errors.
+- **Dynamic route errors (e.g., [slug].astro):**
+  - Ensure your content index JSON files are up to date and valid.
+  - Check for missing or malformed frontmatter in markdown files.
+- **Large file or git errors:**
+  - See `.gitignore` and `PROTECTED_FILES.txt` for file protection rules.
+  - If you accidentally committed a large file, follow the documented git cleanup steps.
+- **Other issues:**
+  - See [DOCUMENTATION.md](./DOCUMENTATION.md) and the `/docs` page for more details.
+  - If stuck, open an issue or ask in the project discussions.
+
+---
+
+## How to Get Help
+
+- Read the `/docs` page and this README for setup and usage.
+- See [DOCUMENTATION.md](./DOCUMENTATION.md) for architecture and automation details.
+- For canonical linking/asset rules, see [LINKING_GUIDE.md](./LINKING_GUIDE.md).
+- If you encounter a new error, please document it in the Troubleshooting section and/or open an issue.

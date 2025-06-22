@@ -1,0 +1,13 @@
+# List of files that are protected from direct edits.
+# Only maintainers may update these files. All changes must be reviewed.
+# One file per line, relative to the project root.
+
+src/components/BaseLink.astro
+src/components/SectionedMarkdown.astro
+src/components/TreeMap.jsx
+src/scripts/generate-content-index.js
+src/scripts/check-content-index.js
+src/scripts/generate-trees.js
+src/scripts/generate-file-relationships.js
+package.json
+.vscode/tasks.json

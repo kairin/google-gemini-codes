@@ -18,6 +18,29 @@ const allProjects = Object.values(projectModules);
                     <ProjectCard project={{ data: project, slug: project.slug }} />
                 ))}
             </div>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6 shadow">
+                    <h2 class="text-xl font-bold mb-2">Documentation & Reference</h2>
+                    <ul class="list-disc ml-6 text-base">
+                        <li><a href="/docs" class="text-blue-700 hover:underline">Documentation & Build Process</a></li>
+                        <li><a href="/sitemap" class="text-blue-700 hover:underline">Sitemap</a></li>
+                        <li><a href="/tree" class="text-blue-700 hover:underline">File Tree Map</a></li>
+                        <li><a href="/relationships" class="text-blue-700 hover:underline">File Relationships</a></li>
+                        <li><a href="/DOCUMENTATION.md" class="text-blue-700 hover:underline">Full Project Documentation (Markdown)</a></li>
+                        <li><a href="/README.md" class="text-blue-700 hover:underline">Quickstart & Reference (Markdown)</a></li>
+                        <li><a href="/LINKING_GUIDE.md" class="text-blue-700 hover:underline">Linking Guide</a></li>
+                    </ul>
+                </div>
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-6 shadow">
+                    <h2 class="text-xl font-bold mb-2">Contributor & Troubleshooting</h2>
+                    <ul class="list-disc ml-6 text-base">
+                        <li><a href="/docs#contributor-quickstart" class="text-yellow-700 hover:underline">Contributor Quickstart</a></li>
+                        <li><a href="/docs#troubleshooting--common-errors" class="text-yellow-700 hover:underline">Troubleshooting & Common Errors</a></li>
+                        <li><a href="/docs#how-to-get-help" class="text-yellow-700 hover:underline">How to Get Help</a></li>
+                        <li><a href="/PROTECTED_FILES.txt" class="text-yellow-700 hover:underline">Protected Files List</a></li>
+                    </ul>
+                </div>
+            </div>
         </main>
         <footer class="text-center py-8 mt-12 footer">
             <p class="text-sm subheader-text">Generated on {new Date().toLocaleDateString()}</p>
