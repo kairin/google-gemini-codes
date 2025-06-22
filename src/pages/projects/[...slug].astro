@@ -1,30 +1,17 @@
 ---
-// src/pages/projects/[...slug].astro
+// PROTECTED: Do not access or edit this file unless explicitly instructed.
 import Layout from '@/layouts/Layout.astro';
 import SectionedMarkdown from '@/components/SectionedMarkdown.astro';
-// Import project JSON assets
-import projectAstroRebuildGuide from '@/data/content-index/project-astro-rebuild-guide.json';
+import { getProjectStaticPaths } from '@/utils/getStaticPaths.js';
 
 export async function getStaticPaths() {
-  const projects = [projectAstroRebuildGuide];
-  // For each project, generate a path for each section
-  const paths = [];
-  for (const project of projects) {
-    const sectionCount = (project as any).sections?.length || 1;
-    for (let i = 0; i < sectionCount; i++) {
-      paths.push({
-        params: { slug: project.slug, section: `${i + 1}` },
-        props: { project, sectionIndex: i },
-      });
-    }
-  }
-  return paths;
+  return getProjectStaticPaths();
 }
 
 const { project, sectionIndex = 0 } = Astro.props;
 const rawContent = project.body || '';
 const baseUrl = `/projects/${project.slug}`;
-const sections = (project as any).sections || [];
+const sections = project.sections || [];
 ---
 <Layout title={project.title}>
   <SectionedMarkdown rawContent={rawContent} sectionIndex={sectionIndex} baseUrl={baseUrl} sections={sections} />
