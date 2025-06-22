@@ -1,6 +1,14 @@
 # Astro Starter Kit: Basics
 
-**Live Site:** [https://kairin.github.io/](https://kairin.github.io/)
+**Live Site:** [https://kairin.github.io/google-gemini-codes/](https://kairin.github.io/google-gemini-codes/)
+
+> **Note:**
+> This site is deployed to a subdirectory on GitHub Pages (`/google-gemini-codes/`).
+> All internal links and static asset paths use `Astro.base` to ensure correct navigation and resource loading both locally and on GitHub Pages.
+> 
+> - The `astro.config.mjs` file sets `base: '/google-gemini-codes'`.
+> - In all `.astro` files, use `{Astro.base}/path` for links and assets (e.g., `<a href={`${Astro.base}/projects/`}>Projects</a>`).
+> - This ensures that navigation, images, and static files work whether running locally or deployed to GitHub Pages.
 
 ## 🚀 Project Structure & Automation Progress (as of 2025-06-22)
 
@@ -10,13 +18,13 @@ This project is now a highly automated, scalable Astro site with:
 - **Single Markdown, Multi-Page Projects:**
   - Each project (e.g., the Astro Rebuild Guide) is a single Markdown file, split into multiple pages using the `---pagebreak---` delimiter.
   - The dynamic route `src/pages/projects/[...slug].astro` automatically generates a page for each section.
-  - Navigation menu is auto-generated from section headings and now uses root-relative links for correct navigation in all environments.
-- **Root-Relative Links:**
-  - All internal links and redirects are now root-relative, ensuring correct behavior for both local development and GitHub Pages root deployment.
+  - Navigation menu is auto-generated from section headings and now uses `{Astro.base}` for correct navigation in all environments.
+- **Base-Aware Links:**
+  - All internal links and static assets use `{Astro.base}` to ensure correct behavior for both local development and GitHub Pages subdirectory deployment.
 - **Blog Support:**
   - Blog posts live in `src/content/blog/` and are managed by the content collection schema.
 - **CI/CD:**
-  - GitHub Actions workflow (`.github/workflows/deploy.yml`) installs all dependencies (including `marked`), builds, and deploys the site to GitHub Pages at the root.
+  - GitHub Actions workflow (`.github/workflows/deploy.yml`) installs all dependencies (including `marked`), builds, and deploys the site to the correct subdirectory on GitHub Pages.
 - **Tailwind CSS:**
   - Integrated via Vite for modern styling.
 
@@ -27,7 +35,7 @@ All commands are run from the root of the project, from a terminal:
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
 | `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321/`     |
+| `npm run dev`             | Starts local dev server at `localhost:4321/google-gemini-codes/` |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
@@ -35,7 +43,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## 🛠️ Key Changes for Automation & Smooth Operation
 
-- **All navigation and internal links are now root-relative** for correct routing under root deployment.
+- **All navigation and internal links use `{Astro.base}`** for correct routing under subdirectory deployment.
 - **No more manual folder management for multi-page projects**—just use `---pagebreak---` in your Markdown.
 - **All dependencies (including `marked`) are installed automatically in CI/CD.**
 - **Warnings about npm config (`globalignorefile`) resolved by removing from global npmrc.**
