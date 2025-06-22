@@ -116,6 +116,32 @@ This site is built for maximum DRYness and maintainability. All navigation, asse
 
 ---
 
+## Content Index Generation & Automation
+
+- The script `src/scripts/generate-content-index.js` runs automatically before every build.
+- **File Discovery:** All markdown files in `src/content/projects/` and `src/content/blog/` are discovered.
+- **Content Processing:**
+  - Each file's frontmatter and markdown body are read.
+  - File stats (created/modified times) are retrieved.
+  - The type (project/blog) and slug are determined from the file path.
+- **Section Extraction:**
+  - The markdown body is split by `<!-- PAGEBREAK -->`.
+  - Each section's title (from the first heading), index, anchor, and start offset are extracted for robust navigation.
+- **Publication Date Automation:**
+  - If `pubDate` is missing in frontmatter, it is set to the file's creation date (or now).
+  - Both UTC (`pubDate`, ISO string) and local (`pubDateLocal`, local string) versions are stored in the JSON.
+- **History Tracking:**
+  - A `.history.json` file is kept for each item in `src/data/content-index/history/`, tracking all previous `pubDate` values and when they were set/updated (both UTC and local).
+  - The history is updated only if the pubDate changes.
+- **JSON Output:**
+  - A JSON file is written for each content item in `src/data/content-index/`, containing all metadata, section info, pubDate, local time, and history.
+- **Usage in UI:**
+  - All cards and navigation lists show the local time by default, and users can hover to see both local and UTC (ISO) time in a tooltip—across project cards, blog cards, and the sitemap.
+
+This ensures all content is indexed, sectioned, and has robust, DRY metadata for use in your Astro site. All logic is automated and requires no manual intervention for new or updated content.
+
+---
+
 ## Contributing
 
 - **Always use DRY components** for navigation, cards, lists, and content rendering.

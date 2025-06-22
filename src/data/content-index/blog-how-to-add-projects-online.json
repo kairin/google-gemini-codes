@@ -18,10 +18,17 @@
     "Guides",
     "Automation"
   ],
+  "pubDateLocal": "6/22/2025, 8:00:00 AM",
   "pubDateHistory": [
     {
       "pubDate": "2025-06-22T00:00:00.000Z",
       "updated": "2025-06-22T15:38:41.823Z"
+    },
+    {
+      "pubDate": "2025-06-22T00:00:00.000Z",
+      "pubDateLocal": "6/22/2025, 8:00:00 AM",
+      "updated": "2025-06-22T15:44:55.637Z",
+      "updatedLocal": "6/22/2025, 11:44:55 PM"
     }
   ],
   "fileCreated": "2025-06-22T14:14:54.146Z",
