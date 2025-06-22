@@ -2,25 +2,20 @@
 // src/pages/projects/[...slug].astro
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-import { marked } from 'marked'; // Use marked for markdown parsing
+import { marked } from 'marked';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  // For each project, determine the number of sections (by splitting on ---pagebreak---)
   const paths = [];
   for (const project of projects) {
-    // Render the raw markdown content
-    const rawContent = project.body; // Astro v4+ exposes .body for raw markdown
+    const rawContent = project.body;
     const sections = rawContent.split(/\n---pagebreak---\n/);
-    // Add a path for each section (1-based index)
     for (let i = 0; i < sections.length; i++) {
-      // Use a string for slug, e.g. "astro-rebuild-guide/1"
       paths.push({
         params: { slug: `${project.slug}/${i + 1}` },
         props: { project, sectionIndex: i },
       });
     }
-    // Also add a default path (no section) that redirects to section 1
     paths.push({
       params: { slug: project.slug },
       props: { project, sectionIndex: 0, redirect: true },
@@ -33,22 +28,24 @@ const { project, sectionIndex = 0, redirect = false } = Astro.props;
 const rawContent = project.body;
 const sections = rawContent.split(/\n---pagebreak---\n/);
 
-// If this is a default path (no section), redirect to section 1
+// Only use Astro.base if it is defined and not already in the path
+const base = Astro.base || '';
+
 if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
-  return Astro.redirect(`${Astro.base}/projects/${project.slug}/1`);
+  // Avoid double base or undefined in redirect
+  const redirectUrl = `${base}/projects/${project.slug}/1`.replace(/\/+/g, '/');
+  return Astro.redirect(redirectUrl);
 }
 
-// Use Astro.base for all internal links to respect the configured base path
 const menu = sections.map((section, idx) => {
   const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
   return {
     title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
-    url: `${Astro.base}/projects/${project.slug}/${idx + 1}`,
+    url: `${base}/projects/${project.slug}/${idx + 1}`.replace(/\/+/g, '/'),
     isActive: idx === sectionIndex,
   };
 });
 
-// Render the current section as HTML
 const sectionHtml = marked.parse(sections[sectionIndex] || '');
 ---
 <Layout title={project.data.title}>
