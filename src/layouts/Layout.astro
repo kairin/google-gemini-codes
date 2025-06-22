@@ -23,14 +23,8 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href={favicon.src} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<!--
-		  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
-		  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
-		  - base: {SITE_DEPLOYMENT_INFO.base}
-		  - All navigation and asset links must use Astro.base
-		  - Never use root-relative paths for internal links or assets
-		  - If you change deployment location, update this file and all configs
-		-->
+		<!-- Deployment and routing info for maintainers -->
+		{await Astro.resolve('../components/DeploymentInfo.astro')}
 	</head>
 	<body>
 		<!--

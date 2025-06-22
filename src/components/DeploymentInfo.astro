@@ -1,0 +1,19 @@
+---
+// src/components/DeploymentInfo.astro
+import SITE_DEPLOYMENT_INFO from '@/SITE_DEPLOYMENT_INFO.ts';
+---
+<!--
+  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
+  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
+  - base: {SITE_DEPLOYMENT_INFO.base}
+  - All navigation and asset links must use Astro.base
+  - All assets in src/assets/ must be imported using @ alias
+  - Never use root-relative paths for internal links or assets
+  - If you change deployment location, update this file and all configs
+-->
+<div style="display:none">
+  <!-- Deployment Info (for maintainers):
+    {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+    See src/SITE_DEPLOYMENT_INFO.ts for details.
+  -->
+</div>
