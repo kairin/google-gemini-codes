@@ -1,24 +1,65 @@
 ---
-// src/pages/[...slug].astro
+// src/pages/projects/[...slug].astro
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import { marked } from 'marked'; // Use marked for markdown parsing
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  return projects.map(project => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  // For each project, determine the number of sections (by splitting on ---pagebreak---)
+  const paths = [];
+  for (const project of projects) {
+    // Render the raw markdown content
+    const rawContent = project.body; // Astro v4+ exposes .body for raw markdown
+    const sections = rawContent.split(/\n---pagebreak---\n/);
+    // Add a path for each section (1-based index)
+    for (let i = 0; i < sections.length; i++) {
+      paths.push({
+        params: { slug: [project.slug, (i + 1).toString()] },
+        props: { project, sectionIndex: i },
+      });
+    }
+    // Also add a default path (no section) that redirects to section 1
+    paths.push({
+      params: { slug: [project.slug] },
+      props: { project, sectionIndex: 0, redirect: true },
+    });
+  }
+  return paths;
 }
 
-const { project } = Astro.props;
-const { Content } = await project.render();
+const { project, sectionIndex = 0, redirect = false } = Astro.props;
+const rawContent = project.body;
+const sections = rawContent.split(/\n---pagebreak---\n/);
+
+// If this is a default path (no section), redirect to section 1
+if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
+  return Astro.redirect(`/projects/${project.slug}/1`);
+}
+
+// Parse section titles for menu (look for first H1 or H2 in each section)
+const menu = sections.map((section, idx) => {
+  const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
+  return {
+    title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
+    url: `/projects/${project.slug}/${idx + 1}`,
+    isActive: idx === sectionIndex,
+  };
+});
+
+// Render the current section as HTML
+const sectionHtml = marked.parse(sections[sectionIndex] || '');
 ---
 <Layout title={project.data.title}>
+  <nav class="mb-8 flex flex-wrap gap-2">
+    {menu.map(item => (
+      <a href={item.url} class={item.isActive ? 'font-bold underline text-blue-700' : 'text-blue-600 hover:underline'}>{item.title}</a>
+    ))}
+  </nav>
   <main class="prose mx-auto px-4 py-10">
     <h1>{project.data.title}</h1>
     <p>{project.data.description}</p>
     <hr />
-    <Content />
+    <div innerHTML={sectionHtml} />
   </main>
 </Layout>
