@@ -4,9 +4,16 @@ description: "A step-by-step guide to enabling user-generated content for Astro 
 pubDate: 2025-06-22
 updatedDate: 2025-06-22
 heroImage: "/google-gemini-codes/assets/automation.svg"
-tags: ["astro", "github", "automation", "static-site", "ci/cd"]
+tags:
+  - astro
+  - github
+  - automation
+  - static-site
+  - ci/cd
 author: "Kairin"
-categories: ["Guides", "Automation"]
+categories:
+  - Guides
+  - Automation
 ---
 
 # How to Add New Projects Online: GitHub Actions & Static Sites <span style="font-size:2em;vertical-align:middle;">🛠️✨</span>
