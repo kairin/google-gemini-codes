@@ -42,6 +42,10 @@
             },
             {
               "type": "file",
+              "name": "CommonFooterImports.astro"
+            },
+            {
+              "type": "file",
               "name": "CommonImports.astro"
             },
             {
@@ -222,6 +226,10 @@
             },
             {
               "type": "file",
+              "name": "component-usage-overview.astro"
+            },
+            {
+              "type": "file",
               "name": "docs.astro"
             },
             {
@@ -331,7 +339,7 @@
     {
       "type": "report",
       "directories": 18,
-      "files": 55
+      "files": 57
     }
   ],
   "scripts": [
@@ -530,6 +538,16 @@
         },
         {
           "type": "directory",
+          "name": "component-usage-overview",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "directory",
           "name": "docs",
           "contents": [
             {
@@ -712,8 +730,8 @@
     },
     {
       "type": "report",
-      "directories": 29,
-      "files": 32
+      "directories": 30,
+      "files": 33
     }
   ]
 }
