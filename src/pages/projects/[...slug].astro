@@ -14,14 +14,15 @@ export async function getStaticPaths() {
     const sections = rawContent.split(/\n---pagebreak---\n/);
     // Add a path for each section (1-based index)
     for (let i = 0; i < sections.length; i++) {
+      // Use a string for slug, e.g. "astro-rebuild-guide/1"
       paths.push({
-        params: { slug: [project.slug, (i + 1).toString()] },
+        params: { slug: `${project.slug}/${i + 1}` },
         props: { project, sectionIndex: i },
       });
     }
     // Also add a default path (no section) that redirects to section 1
     paths.push({
-      params: { slug: [project.slug] },
+      params: { slug: project.slug },
       props: { project, sectionIndex: 0, redirect: true },
     });
   }
