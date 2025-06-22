@@ -153,6 +153,10 @@
                   "name": "project-astro-rebuild-guide.json"
                 }
               ]
+            },
+            {
+              "type": "file",
+              "name": "site-tree.json"
             }
           ]
         },
@@ -183,6 +187,10 @@
                   "name": "index.astro"
                 }
               ]
+            },
+            {
+              "type": "file",
+              "name": "docs.astro"
             },
             {
               "type": "file",
@@ -263,7 +271,7 @@
     {
       "type": "report",
       "directories": 18,
-      "files": 38
+      "files": 40
     }
   ],
   "scripts": [
@@ -393,6 +401,16 @@
           ]
         },
         {
+          "type": "directory",
+          "name": "docs",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
           "type": "file",
           "name": "favicon.svg"
         },
@@ -450,8 +468,8 @@
     },
     {
       "type": "report",
-      "directories": 10,
-      "files": 13
+      "directories": 11,
+      "files": 14
     }
   ]
 }

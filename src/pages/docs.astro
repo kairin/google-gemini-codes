@@ -1,0 +1,41 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+<Layout title="Documentation & Build Process">
+  <div class="prose mx-auto px-4 py-10">
+    <h1>Documentation & Build Process</h1>
+    <h2>Automated Build & Content Indexing</h2>
+    <ul>
+      <li><b>Prebuild:</b> Runs <code>generate-content-index.js</code> and <code>check-content-index.js</code> to create and validate per-content JSON files for all markdown in <code>src/content/projects/</code> and <code>src/content/blog/</code>.</li>
+      <li><b>Build:</b> Runs <code>astro build</code> to generate the static site, including all dynamic routes and navigation from the JSON data.</li>
+      <li><b>Postbuild:</b> Runs <code>generate-trees.js</code> to output <code>site-tree.json</code> (a full directory tree of <code>src</code>, <code>scripts</code>, <code>public</code>, <code>data</code>, <code>dist</code>), which is used for visualization.</li>
+    </ul>
+    <h2>Interactive File Tree Map</h2>
+    <ul>
+      <li>The <b>site-tree.json</b> file is always up to date after every build, reflecting the current file structure.</li>
+      <li>The <b>/tree</b> page uses a React component (<code>TreeMap.jsx</code>) to fetch and display the tree interactively (expand/collapse folders, ready for more features).</li>
+      <li>This ensures you always see the latest project structure, and the visualization is never stale or hardcoded.</li>
+    </ul>
+    <h2>How to Use & Extend</h2>
+    <ul>
+      <li>To add content, simply add markdown files to <code>src/content/projects/</code> or <code>src/content/blog/</code>. The build will handle everything else.</li>
+      <li>To extend the tree map (e.g., show file relationships, highlight file types), update <code>generate-trees.js</code> to output more data, and enhance <code>TreeMap.jsx</code> to visualize it.</li>
+      <li>All navigation, cards, and section logic is DRY and automated from the JSON data.</li>
+    </ul>
+    <h2>Links</h2>
+    <ul>
+      <li><a href="/tree">Interactive File Tree Map</a></li>
+      <li><a href="/sitemap">Sitemap</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="https://github.com/kairin/google-gemini-codes">GitHub Repository</a></li>
+      <li><a href="/DOCUMENTATION.md">Full Project Documentation (Markdown)</a></li>
+      <li><a href="/README.md">Quickstart & Reference (Markdown)</a></li>
+    </ul>
+    <h2>For Contributors</h2>
+    <ul>
+      <li>See <code>README.md</code> for quickstart and usage.</li>
+      <li>See <code>DOCUMENTATION.md</code> for architecture and automation details.</li>
+      <li>See <code>LINKING_GUIDE.md</code> for canonical linking and asset rules.</li>
+    </ul>
+  </div>
+</Layout>

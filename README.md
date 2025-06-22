@@ -1,10 +1,12 @@
 # google-gemini-codes
 
-| **Live Site**                                              | **Linking Guide**                       |
-|:----------------------------------------------------------:|:----------------------------------------:|
-| [https://kairin.github.io/google-gemini-codes/](https://kairin.github.io/google-gemini-codes/) | [LINKING_GUIDE.md](./LINKING_GUIDE.md) |
+| **Live Site**                                              | **Documentation**                | **Linking Guide**                       |
+|:----------------------------------------------------------:|:--------------------------------:|:----------------------------------------:|
+| [https://kairin.github.io/google-gemini-codes/](https://kairin.github.io/google-gemini-codes/) | [/docs](./src/pages/docs.astro) | [LINKING_GUIDE.md](./LINKING_GUIDE.md) |
 
 ---
+
+> **See the new [Documentation Page](/docs) for a detailed, always-up-to-date overview of the build process, automation, file tree visualization, and contributor resources.**
 
 ## Purpose & Objectives
 
