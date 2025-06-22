@@ -29,12 +29,11 @@ const blogCollection = defineCollection({
     title: z.string(), // Blog post title (required)
     description: z.string(), // Blog post description (required)
     pubDate: z.date(), // Date the blog post was published (required)
-    updatedDate: z.date().optional(), // Optional date if the post was updated
-    heroImage: z.string().optional(), // Optional hero image for the blog post
-    tags: z.array(z.string()).optional(), // Optional list of tags for the blog post
-    slug: z.string().optional(), // Optional custom slug for the blog post URL
-    author: z.string().optional(), // Optional author field
-    categories: z.array(z.string()).optional(), // Optional categories for the blog post
+    updatedDate: z.date(), // Date if the post was updated (required)
+    heroImage: z.string(), // Hero image for the blog post (required)
+    tags: z.array(z.string()), // List of tags for the blog post (required)
+    author: z.string(), // Author field (required)
+    categories: z.array(z.string()), // Categories for the blog post (required)
   }),
 });
 
