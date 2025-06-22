@@ -1,57 +1,29 @@
 ---
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Astro Rebuild Plan: Main Index">
     <div class="container mx-auto px-4 py-10 sm:py-16">
+        <!-- Page Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-bold header-text leading-tight">A Strategic Blueprint for Rebuilding Your Astro Website</h1>
-            <p class="mt-4 text-lg subheader-text max-w-3xl mx-auto">From Broken Animations to a Robust, Foolproof Deployment. Select a section below to begin.</p>
+            <h1 class="text-4xl sm:text-5xl font-bold">A Strategic Blueprint for Rebuilding Your Astro Website</h1>
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">From Broken Animations to a Robust, Foolproof Deployment. Select a section below to begin.</p>
         </header>
+        
+        <!-- Page Main Content -->
         <main>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Card 1 -->
-                <a href="/google-gemini-codes/section-1/" class="card rounded-lg p-6 block transition-all duration-200">
-                    <p class="text-sm font-semibold accent-text">Section 1</p>
-                    <h3 class="text-xl font-bold header-text mt-1">Project Restart</h3>
-                    <p class="subheader-text mt-2">Re-establishing our foundation and confirming our technology choices.</p>
-                </a>
-                <!-- Card 2 -->
-                <a href="/google-gemini-codes/section-2/" class="card rounded-lg p-6 block transition-all duration-200">
-                    <p class="text-sm font-semibold accent-text">Section 2</p>
-                    <h3 class="text-xl font-bold header-text mt-1">The Astro Philosophy</h3>
-                    <p class="subheader-text mt-2">A deep dive into first principles, including the Islands Architecture.</p>
-                </a>
-                <!-- Card 3 -->
-                <a href="/google-gemini-codes/section-3/" class="card rounded-lg p-6 block transition-all duration-200">
-                    <p class="text-sm font-semibold accent-text">Section 3</p>
-                    <h3 class="text-xl font-bold header-text mt-1">Diagnosing the Failure</h3>
-                    <p class="subheader-text mt-2">A post-mortem on the broken animations and likely failure scenarios.</p>
-                </a>
-                <!-- Card 4 -->
-                <a href="/google-gemini-codes/section-4/" class="card rounded-lg p-6 block transition-all duration-200" style="border-width: 2px; border-color: #2563EB;">
-                    <p class="text-sm font-semibold accent-text">Section 4</p>
-                    <h3 class="text-xl font-bold header-text mt-1">The Foolproof Plan</h3>
-                    <p class="subheader-text mt-2">The step-by-step guide to rebuilding the site, from setup to deployment.</p>
-                </a>
-                <!-- Card 5 -->
-                <a href="/google-gemini-codes/section-5/" class="card rounded-lg p-6 block transition-all duration-200">
-                    <p class="text-sm font-semibold accent-text">Section 5</p>
-                    <h3 class="text-xl font-bold header-text mt-1">Advanced Topics</h3>
-                    <p class="subheader-text mt-2">Future-proofing with debugging, security (CSP), and performance insights.</p>
-                </a>
-                <!-- Card 6 -->
-                <a href="/google-gemini-codes/section-6/" class="card rounded-lg p-6 block transition-all duration-200">
-                    <p class="text-sm font-semibold accent-text">Section 6</p>
-                    <h3 class="text-xl font-bold header-text mt-1">Checklist & Summary</h3>
-                    <p class="subheader-text mt-2">Final recommendations and the definitive project rebuild checklist.</p>
-                </a>
-            </div>
-            <div class="mt-12 text-center">
-                 <a href="/google-gemini-codes/sources/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg">View Consolidated Sources</a>
+                <!-- Card links will be fixed in the next step -->
+                <a href="#" class="p-6 border rounded-lg">Section 1: Project Restart</a>
+                <a href="#" class="p-6 border rounded-lg">Section 2: The Astro Philosophy</a>
+                <a href="#" class="p-6 border rounded-lg">Section 3: Diagnosing the Failure</a>
+                <!-- ... more cards ... -->
             </div>
         </main>
-        <footer class="text-center py-8 mt-12 footer">
-            <p class="text-sm subheader-text">Astro Rebuild Guide | Index</p>
+
+        <!-- Page Footer -->
+        <footer class="text-center py-8 mt-12 border-t">
+            <p class="text-sm text-gray-500">Astro Rebuild Guide | Index</p>
         </footer>
     </div>
 </Layout>
