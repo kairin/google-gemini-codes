@@ -1,0 +1,237 @@
+{
+  "SITE_DEPLOYMENT_INFO.ts": {
+    "imports": [],
+    "links": []
+  },
+  "components/BaseLink.astro": {
+    "imports": [],
+    "links": []
+  },
+  "components/DeploymentInfo.astro": {
+    "imports": [
+      "@/SITE_DEPLOYMENT_INFO.ts"
+    ],
+    "links": []
+  },
+  "components/MarkdownPage.astro": {
+    "imports": [],
+    "links": []
+  },
+  "components/RouteParamInfo.astro": {
+    "imports": [
+      "@/utils/routeParamMap.js"
+    ],
+    "links": []
+  },
+  "components/SectionedMarkdown.astro": {
+    "imports": [
+      "marked",
+      "@/components/BaseLink.astro"
+    ],
+    "links": []
+  },
+  "components/SiteHead.astro": {
+    "imports": [
+      "@/components/DeploymentInfo.astro"
+    ],
+    "links": []
+  },
+  "components/TreeMap.astro": {
+    "imports": [
+      "react",
+      "@/data/site-tree.json"
+    ],
+    "links": []
+  },
+  "components/TreeMap.jsx": {
+    "imports": [
+      "react",
+      "prop-types"
+    ],
+    "links": []
+  },
+  "components/Welcome.astro": {
+    "imports": [
+      "../assets/astro.svg",
+      "../assets/background.svg"
+    ],
+    "links": []
+  },
+  "components/cards/BlogCard.astro": {
+    "imports": [
+      "@/components/BaseLink.astro"
+    ],
+    "links": []
+  },
+  "components/cards/ProjectCard.astro": {
+    "imports": [
+      "@/components/BaseLink.astro"
+    ],
+    "links": []
+  },
+  "components/lists/SitemapList.astro": {
+    "imports": [
+      "@/components/BaseLink.astro"
+    ],
+    "links": []
+  },
+  "content/blog/first-post.md": {
+    "imports": [],
+    "links": []
+  },
+  "content/blog/how-to-add-projects-online.md": {
+    "imports": [],
+    "links": []
+  },
+  "content/config.ts": {
+    "imports": [
+      "astro:content"
+    ],
+    "links": []
+  },
+  "content/projects/astro-rebuild-guide.md": {
+    "imports": [
+      "@/components/MyComponent.astro",
+      "astro:content",
+      "../../layouts/Layout.astro"
+    ],
+    "links": []
+  },
+  "layouts/Layout.astro": {
+    "imports": [
+      "@/SITE_DEPLOYMENT_INFO.ts",
+      "@/components/DeploymentInfo.astro",
+      "@/components/BaseLink.astro",
+      "@/components/SiteHead.astro",
+      "en"
+    ],
+    "links": []
+  },
+  "pages/blog/[...blogslug].astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/SectionedMarkdown.astro",
+      "@/components/BaseLink.astro",
+      "@/utils/getStaticPaths.js"
+    ],
+    "links": []
+  },
+  "pages/blog/index.astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/cards/BlogCard.astro"
+    ],
+    "links": []
+  },
+  "pages/docs.astro": {
+    "imports": [
+      "@/layouts/Layout.astro"
+    ],
+    "links": []
+  },
+  "pages/how-to-add-project.md": {
+    "imports": [],
+    "links": []
+  },
+  "pages/index.astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/cards/ProjectCard.astro"
+    ],
+    "links": []
+  },
+  "pages/projects/[...slug].astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/SectionedMarkdown.astro",
+      "@/utils/getStaticPaths.js"
+    ],
+    "links": []
+  },
+  "pages/route-param-mapping.astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/RouteParamInfo.astro"
+    ],
+    "links": []
+  },
+  "pages/sitemap.astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/lists/SitemapList.astro",
+      "@/data/content-index/project-astro-rebuild-guide.json"
+    ],
+    "links": []
+  },
+  "pages/tree.astro": {
+    "imports": [
+      "@/layouts/Layout.astro",
+      "@/components/TreeMap.jsx"
+    ],
+    "links": []
+  },
+  "scripts/README.md": {
+    "imports": [
+      "src/utils/"
+    ],
+    "links": []
+  },
+  "scripts/check-content-index.js": {
+    "imports": [
+      "fs/promises",
+      "path"
+    ],
+    "links": []
+  },
+  "scripts/generate-content-index.js": {
+    "imports": [
+      "../utils/content-utils.js",
+      "path",
+      "fs/promises",
+      "fs"
+    ],
+    "links": []
+  },
+  "scripts/generate-file-relationships.js": {
+    "imports": [
+      "fs",
+      "path"
+    ],
+    "links": [
+      "./path",
+      "/path"
+    ]
+  },
+  "scripts/generate-trees.js": {
+    "imports": [
+      "child_process",
+      "fs",
+      "path"
+    ],
+    "links": []
+  },
+  "utils/content-utils.js": {
+    "imports": [
+      "fs/promises",
+      "path",
+      "gray-matter",
+      "glob",
+      "url"
+    ],
+    "links": []
+  },
+  "utils/getStaticPaths.js": {
+    "imports": [
+      "fs",
+      "path",
+      "./routeParamMap.js"
+    ],
+    "links": []
+  },
+  "utils/routeParamMap.js": {
+    "imports": [
+      "@/utils/routeParamMap.js"
+    ],
+    "links": []
+  }
+}
