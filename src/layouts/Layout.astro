@@ -2,7 +2,8 @@
 // src/layouts/Layout.astro
 import '../styles/global.css';
 import SITE_DEPLOYMENT_INFO from '@/SITE_DEPLOYMENT_INFO.ts'; // Source of truth for deployment settings
-import favicon from '@/assets/favicon.svg'; // Always import assets from src/assets using @ alias
+import DeploymentInfo from '@/components/DeploymentInfo.astro'; // Deployment info component
+// Favicon is in public/, so do NOT import it. Use Astro.base for the path.
 
 interface Props {
 	title: string;
@@ -17,14 +18,14 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<!--
-		  Always import assets from src/assets using @ alias (see import above).
-		  This ensures correct asset handling in all environments and avoids path issues.
+		  Favicon is in public/, so reference it using Astro.base for correct subdirectory deployment.
+		  Do NOT import favicon from src/assets/.
+		  Always use {Astro.base} directly in the template for public assets.
 		-->
-		<link rel="icon" type="image/svg+xml" href={favicon.src} />
+		<link rel="icon" type="image/svg+xml" href={`${Astro.base}/favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<!-- Deployment and routing info for maintainers -->
-		{await Astro.resolve('../components/DeploymentInfo.astro')}
+		<DeploymentInfo />
 	</head>
 	<body>
 		<!--
