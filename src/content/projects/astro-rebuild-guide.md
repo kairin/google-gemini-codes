@@ -16,7 +16,7 @@ The process of rebuilding a project after a technical roadblock is a valuable op
 
 Success with Astro comes from embracing its philosophy, not fighting it. The previous issues arose from a clash between traditional client-side assumptions and Astro's static-first reality. This plan illuminates the "Astro Way": a methodology centered on performance and intentional interactivity.
 
----pagebreak---
+<!-- PAGEBREAK -->
 # Section 2: The Astro Philosophy
 
 To build successfully with Astro, one must first internalize its core architectural concepts.
@@ -52,10 +52,8 @@ To ensure a clean, maintainable, and scalable project, we will use **Path Aliase
 import MyComponent from '@/components/MyComponent.astro';
 ```
 
----pagebreak---
+<!-- PAGEBREAK -->
 # Section 3: Diagnosing the Failure
-
-The site "breaking" at the animation step points directly to a mishandling of client-side JavaScript. The most probable cause was the improper use of an animation library, most likely by forgetting or misusing a client:* hydration directive on an interactive component.
 
 ## 3.1 The "It Works in Dev, Breaks in Build" Phenomenon
 
@@ -65,18 +63,19 @@ A feature working in development (`astro dev`) but failing in production (`astro
 
 The site "breaking" at the animation step points directly to a mishandling of client-side JavaScript.
 
+> **Primary Suspect:** The most probable cause was the improper use of an animation library, most likely by forgetting or misusing a `client:*` hydration directive on an interactive component.
+
 ### Scenario A: Incorrect Vanilla JS Implementation
 Common mistakes include trying to access a DOM element before it has rendered or attempting to use a server-side (frontmatter) variable in a client-side script.
 
 ### Scenario B: Improper Use of an Animation Library
-The most likely culprit. This includes forgetting the `client:*` directive entirely (so the component's JS never ships to the browser) or getting a library scope error (e.g., "gsap is not defined") because the library wasn't properly imported within the island's script.
+The most likely culprit. This includes forgetting the `client:*` directive entirely (so the component's JS never ships to the browser) or getting a library scope error (e.g., `gsap` is not defined) because the library wasn't properly imported within the island's script.
 
 ### Scenario C: Hydration Mismatches
+A more subtle issue where the HTML rendered on the server doesn't perfectly match what the client-side JavaScript expects to find, often because a library alters the DOM immediately on load. This causes Astro's hydration process to fail.
 
----pagebreak---
+<!-- PAGEBREAK -->
 # Section 4: The Foolproof Rebuild Plan
-
-This section outlines the step-by-step plan we followed to get the project set up correctly.
 
 ## Phase 1: Foundational Project Setup (Completed)
 You have successfully initialized the project, configured it for deployment, created the GitHub repository, and pushed your local code.
@@ -91,6 +90,9 @@ You have successfully implemented Astro's Content Collections, which is the corr
 
 ## Phase 3: Integrating Animations Safely (Next Step)
 A single template file, src/pages/projects/[...slug].astro, is used to generate a unique webpage for every Markdown file in the projects collection. This is the power of automation.
+
+> **Animation/Interactivity Placeholder:**
+> _This is where an animated or interactive component would be integrated. For now, this is a placeholder. Do **not** load or run animation scripts directly in Markdown or static content. Use a dedicated Astro/JSX component with proper hydration when ready._
 
 ## Phase 4: Deployment via GitHub Actions
 When you are ready to publish your site, you will use this phase. In your GitHub repository settings, go to `Settings > Pages` and set the "Source" to "GitHub Actions." Then, create the `.github/workflows/deploy.yml` file with the standard Astro workflow.
@@ -109,17 +111,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # ...build steps here...
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+      - name: Install dependencies
+        run: npm ci
+      - name: Build with Astro
+        run: npm run build
+      - name: Upload artifact
   deploy:
     environment:
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
-      # ...deploy steps here...
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
 ```
 
----pagebreak---
+<!-- PAGEBREAK -->
 # Section 5: Advanced Considerations
 
 ## 5.1 Becoming a Debugging Expert
@@ -131,25 +142,25 @@ A Content Security Policy (CSP) is a security layer that helps mitigate attacks 
 ## 5.3 Performance Is a Feature
 Maintaining performance requires ongoing discipline. Be aggressive with `client:visible` for any component below the fold. Use tools like `astro-bundle-analyzer` to inspect your JavaScript bundles and identify large dependencies. Use Astro's built-in `<Image />` component for automatic asset optimization.
 
----pagebreak---
+<!-- PAGEBREAK -->
 # Section 6: Final Recommendations & Checklist
 
 ## 6.1 Summary of Our Strategic Approach
+
 1. **Embrace the Astro Way:** Work with Astro's static-first, island-based architecture, not against it.
 2. **Build Static First:** Develop the complete HTML and CSS structure of the site before introducing any client-side interactivity.
 3. **Add Interactivity in Isolated Islands:** Use the appropriate animation strategies and `client:*` directives to enhance specific components.
 4. **Automate Deployment:** Leverage GitHub Actions for a reliable and repeatable CI/CD pipeline.
 
 ## 6.2 The Definitive Rebuild Checklist
-- [ ] Project initialized and pushed to GitHub
-- [ ] Content collections schema defined
-- [ ] Markdown content created for each project
-- [ ] Dynamic route for projects implemented
-- [ ] Animations integrated using islands
-- [ ] GitHub Actions workflow for deployment set up
-- [ ] Performance and security reviewed
 
----pagebreak---
+| Phase     | Key Actions                                                                                 |
+|-----------|--------------------------------------------------------------------------------------------|
+| Setup     | - Initialize new Astro project ("Empty" template).<br>- Initialize Git and connect to a new GitHub repo.<br>- Configure `astro.config.mjs` with `site`, `base`, and `output: 'static'`. |
+| Build     | - Develop all pages and layouts with only HTML & CSS first.<br>- Choose an appropriate animation strategy for each requirement.<br>- Implement animations as isolated islands using `client:*` directives. |
+| Deploy    | - Set GitHub Pages source to "GitHub Actions" in repo settings.<br>- Create the `.github/workflows/deploy.yml` file.<br>- Commit and push the workflow file to trigger deployment. |
+
+<!-- PAGEBREAK -->
 # Section 7: Managing Content with Collections
 
 A single template file, src/pages/projects/[...slug].astro, is used to generate a unique webpage for every Markdown file in the projects collection. This is the power of automation.
@@ -182,6 +193,7 @@ import Layout from '../../layouts/Layout.astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map(project => ({
+    params: { slug: project.slug },
     props: { project },
   }));
 }
@@ -191,6 +203,9 @@ const { Content } = await project.render();
 ---
 <Layout title={project.data.title}>
   <div class="prose mx-auto px-4 py-10">
+    <h1>{project.data.title}</h1>
+    <p>{project.data.description}</p>
+    <hr />
     <Content /> <!-- This renders your Markdown content -->
   </div>
 </Layout>
@@ -198,7 +213,7 @@ const { Content } = await project.render();
 
 Now, if you go to `/projects/astro-rebuild-guide` in your dev server, you will see a fully rendered page for your project!
 
----pagebreak---
+<!-- PAGEBREAK -->
 # Sources
 
 1. [Astro Docs: Why Astro?](https://docs.astro.build/en/concepts/why-astro/)
@@ -206,3 +221,4 @@ Now, if you go to `/projects/astro-rebuild-guide` in your dev server, you will s
 3. [Astro Docs: Deploy to GitHub Pages](https://docs.astro.build/en/guides/deploy/github-pages/)
 4. [Astro Docs: Hydration Directives Reference](https://docs.astro.build/en/reference/directives-reference/#client-directives)
 5. [Astro Docs: Scripts and Event Handling](https://docs.astro.build/en/guides/client-side-scripts/)
+6. [Astro Docs: View Transitions](https://docs.astro.build/en/guides/view-transitions/)
