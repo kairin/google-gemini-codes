@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// This function runs at build time to generate all the project pages
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+<Layout title={project.data.title}>
+  <div class="prose mx-auto px-4 py-10">
+    <h1>{project.data.title}</h1>
+    <p>{project.data.description}</p>
+    <hr />
+    <Content /> <!-- This renders your Markdown content -->
+  </div>
+</Layout>
