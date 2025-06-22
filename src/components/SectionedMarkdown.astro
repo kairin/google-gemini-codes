@@ -1,7 +1,7 @@
 ---
 // SectionedMarkdown.astro
-// Props: rawContent (string), sectionIndex (number), baseUrl (string)
-// rawContent can be sourced from per-content JSON assets in src/assets/content-index/
+// Props: rawContent (string), sectionIndex (number), baseUrl (string), sections (array)
+// rawContent and sections can be sourced from per-content JSON assets in src/data/content-index/
 import { marked } from 'marked';
 import BaseLink from '@/components/BaseLink.astro';
 
@@ -9,18 +9,38 @@ interface Props {
   rawContent: string;
   sectionIndex: number;
   baseUrl: string;
+  sections?: Array<{ title: string; index: number; anchor: string; start: number }>;
 }
-const { rawContent, sectionIndex = 0, baseUrl } = Astro.props;
-const sections = rawContent.split(/<!-- PAGEBREAK -->/);
-const menu = sections.map((section, idx) => {
-  const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
-  return {
-    title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
+const { rawContent, sectionIndex = 0, baseUrl, sections = null } = Astro.props;
+
+// Use sections array from JSON if available, else fallback to split
+let menu = [];
+let sectionHtml = '';
+if (sections && Array.isArray(sections) && sections.length > 0) {
+  // Build menu from sections array
+  menu = sections.map((section, idx) => ({
+    title: section.title,
     url: `${baseUrl}/${idx + 1}`,
     isActive: idx === sectionIndex,
-  };
-});
-const sectionHtml = marked.parse(sections[sectionIndex] || '');
+  }));
+  // Slice the markdown for the current section using start offsets
+  const start = sections[sectionIndex]?.start ?? 0;
+  const end = sections[sectionIndex + 1]?.start ?? rawContent.length;
+  const sectionContent = rawContent.slice(start, end).trim();
+  sectionHtml = marked.parse(sectionContent);
+} else {
+  // Fallback: old logic
+  const fallbackSections = rawContent.split(/<!-- PAGEBREAK -->/);
+  menu = fallbackSections.map((section, idx) => {
+    const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
+    return {
+      title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
+      url: `${baseUrl}/${idx + 1}`,
+      isActive: idx === sectionIndex,
+    };
+  });
+  sectionHtml = marked.parse(fallbackSections[sectionIndex] || '');
+}
 ---
 <nav class="mb-8 flex flex-wrap gap-2">
   {menu.map(item => (

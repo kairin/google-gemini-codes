@@ -31,6 +31,13 @@ This repository is dedicated to building, automating, and maintaining a modern, 
 - To add a new section, insert `<!-- PAGEBREAK -->` in your markdown. The next heading will be used as the section title.
 - Components like `SectionedMarkdown.astro` and navigation menus are fully DRY and data-driven.
 
+## Section Navigation (DRY & Automated)
+
+- All project and blog links now use `/slug/1` to point to the first section, ensuring robust, DRY navigation.
+- Section navigation menus and all navigation components/pages are generated from the `sections` array in each JSON file.
+- To link to a specific section, use `/projects/[slug]/[sectionNumber]` or `/blog/[slug]/[sectionNumber]`.
+- All navigation, cards, sitemap, and menus are now fully automated and DRY.
+
 ## Updating/Adding Content
 
 - Add markdown files to `src/content/projects/` or `src/content/blog/`.

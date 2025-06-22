@@ -1,29 +1,38 @@
 ---
 // src/pages/blog/[...blogslug].astro
 import Layout from '@/layouts/Layout.astro';
-import { marked } from 'marked';
-import BaseLink from '@/components/BaseLink.astro';
+import SectionedMarkdown from '@/components/SectionedMarkdown.astro';
 // Import blog JSON assets
 import blogFirstPost from '@/data/content-index/blog-first-post.json';
 import blogHowToAddProjectsOnline from '@/data/content-index/blog-how-to-add-projects-online.json';
 
 export async function getStaticPaths() {
   const blogs = [blogFirstPost, blogHowToAddProjectsOnline];
-  return blogs.map(post => ({
-    params: { blogslug: post.slug },
-    props: { post },
-  }));
+  // For each blog, generate a path for each section
+  const paths = [];
+  for (const post of blogs) {
+    const sectionCount = (post as any).sections?.length || 1;
+    for (let i = 0; i < sectionCount; i++) {
+      paths.push({
+        params: { blogslug: post.slug, section: `${i + 1}` },
+        props: { post, sectionIndex: i },
+      });
+    }
+  }
+  return paths;
 }
 
-const { post } = Astro.props;
-const html = post ? marked.parse(post.body || '') : '';
+const { post, sectionIndex = 0 } = Astro.props;
+const rawContent = post.body || '';
+const baseUrl = `/blog/${post.slug}`;
+const sections = (post as any).sections || [];
 ---
 <Layout title={post ? post.title : ''}>
   <main class="prose mx-auto px-4 py-10">
     <h1>{post ? post.title : ''}</h1>
     <p>{post ? post.description : ''}</p>
     <hr />
-    <div innerHTML={html} />
+    <SectionedMarkdown rawContent={rawContent} sectionIndex={sectionIndex} baseUrl={baseUrl} sections={sections} />
     <nav class="mt-8">
       <BaseLink href="/">← Back to Home</BaseLink>
       <BaseLink href="/sitemap" class="ml-4">Sitemap</BaseLink>

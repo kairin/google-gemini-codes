@@ -7,8 +7,9 @@ interface Props {
   project: any;
 }
 const { project } = Astro.props;
+const firstSectionUrl = `/projects/${project.slug}/1`;
 ---
-<BaseLink href={`/projects/${project.slug}/1`} class="card rounded-lg p-6 block transition-all duration-200">
+<BaseLink href={firstSectionUrl} class="card rounded-lg p-6 block transition-all duration-200">
   <p class="text-sm font-semibold accent-text">
     {project.data.pubDate.toDateString()}
   </p>

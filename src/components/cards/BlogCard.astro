@@ -7,8 +7,9 @@ interface Props {
   post: any;
 }
 const { post } = Astro.props;
+const firstSectionUrl = `/blog/${post.slug}/1`;
 ---
-<BaseLink href={`/blog/${post.slug}`} class="card rounded-lg p-6 block transition-all duration-200">
+<BaseLink href={firstSectionUrl} class="card rounded-lg p-6 block transition-all duration-200">
   <p class="text-sm font-semibold accent-text">
     {post.data.pubDate.toDateString()}
   </p>
