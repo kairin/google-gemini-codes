@@ -35,10 +35,17 @@ for (const file of allFiles) {
     };
   });
 
+  // --- Automated pubDate logic ---
+  let pubDate = data.pubDate;
+  if (!pubDate) {
+    pubDate = stats.fileCreated ? new Date(stats.fileCreated).toISOString() : new Date().toISOString();
+  }
+
   const json = {
     type,
     slug,
     ...data,
+    pubDate, // always present, ISO string
     ...stats,
     filePath: file,
     body: content, // include full markdown body

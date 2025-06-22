@@ -2,6 +2,7 @@
 // src/pages/blog/[...blogslug].astro
 import Layout from '@/layouts/Layout.astro';
 import SectionedMarkdown from '@/components/SectionedMarkdown.astro';
+import BaseLink from '@/components/BaseLink.astro'; // <-- Fix: import BaseLink
 // Import blog JSON assets
 import blogFirstPost from '@/data/content-index/blog-first-post.json';
 import blogHowToAddProjectsOnline from '@/data/content-index/blog-how-to-add-projects-online.json';
