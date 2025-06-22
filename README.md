@@ -150,7 +150,7 @@ This ensures all content is indexed, sectioned, and has robust, DRY metadata for
 - **Features:**
   - Expand/collapse folders interactively.
   - Ready for future features: highlight file types, show file details, visualize imports/links, search/filter, etc.
-  - Easily reusable: import and use `<TreeMap client:load tree={siteTree} />` in any Astro page.
+  - Easily reusable: use `<TreeMap client:load />` in any Astro page, and the component will fetch the tree JSON at runtime.
 - **How to extend:**
   - To visualize file relationships (e.g., imports, links), enhance the `generate-trees.js` script to analyze file contents and output relationship data.
   - Update `TreeMap.jsx` to render relationship lines/arrows, tooltips, or context menus as needed.
@@ -163,11 +163,10 @@ This ensures all content is indexed, sectioned, and has robust, DRY metadata for
 To add the interactive tree map to any page:
 ```astro
 import TreeMap from '@/components/TreeMap.jsx';
-import siteTree from '@/data/site-tree.json';
-<TreeMap client:load tree={siteTree} />
+<TreeMap client:load />
 ```
 
-The `/tree` page is already set up as a demo.
+The React component will fetch the JSON at runtime (using fetch or dynamic import) and render the tree. The `/tree` page is already set up as a demo.
 
 ---
 
