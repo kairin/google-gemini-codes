@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  isOpen?: boolean;
+}
+const { title, isOpen = false } = Astro.props;
+---
+<div class="accordion-item border rounded-lg mb-2 bg-white">
+    <div class="accordion-header p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+        <h3 class="font-semibold text-gray-800">{title}</h3>
+        <span class:list={["transform transition-transform duration-300 text-gray-500", { 'rotate-180': isOpen }]}>
+            <i class="fas fa-chevron-down"></i>
+        </span>
+    </div>
+    <div class:list={["accordion-content p-4 bg-gray-50 border-t border-gray-200", { 'hidden': !isOpen }]}>
+        <slot />
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const iconContainer = header.querySelector('span');
+            content?.classList.toggle('hidden');
+            iconContainer?.classList.toggle('rotate-180');
+        });
+    });
+</script>

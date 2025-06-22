@@ -1,0 +1,138 @@
+@import "ScreenshotControl/buttons";
+
+body {
+
+	#ssTempHolder {
+		position:fixed;
+		z-index:1000000000000;
+		width:100%;
+		height:100%;
+		top:0;
+		pointer-events: none;
+
+		video {
+			width:auto !important;
+			height:auto !important;
+			max-width:100% !important;
+			max-height: 100% !important;
+			top: 0 !important;
+			left: 0 !important;
+			transform: none !important;
+		}
+	}
+
+	&.ssTakeScreenshot {
+		
+		.ssElement {
+			z-index: 100000000000 !important;
+		}
+		
+		&.ssNetflix {
+	
+			[data-uia=video-canvas] {
+				z-index: 10000000;
+			}
+			
+			video {
+				background-color: #000000;
+				//height: auto !important;
+			}
+
+			.player-timedtext {
+
+				display:none !important;
+			}			
+
+			&.showSubs {
+				
+				.player-timedtext {
+
+					display: block !important;
+					//bottom: 10% !important;
+				}
+			}
+		}
+
+		&.ssAmazon {
+
+			.scalingVideoContainer {
+				z-index: 99999999 !important;
+			}
+		}
+
+		&.ssDisney {
+
+			.btm-media-overlays-container {
+				display:none;
+			}
+
+			.dss-hls-subtitle-overlay {
+				display: none;
+			}
+
+			&.showSubs {
+				
+				.dss-hls-subtitle-overlay {
+					display: block;
+				}
+			}
+		}
+
+		&.ssHulu {
+			.ContentPlayer__contentArea {
+				z-index: 10000000000;
+    			position: relative;
+			}
+
+			.ClosedCaption {
+				display:none;
+			}
+
+			&.showSubs {
+				.ClosedCaption {
+					display:block;
+
+					.ClosedCaption__outband {
+						bottom: 30px !important;
+					}
+				}
+			}
+		}
+
+		&.ssHBO {
+
+			video {
+				z-index: 99999999;
+			}
+
+			*:has(video) {
+				z-index: 99999999;
+			}
+
+		}
+
+		&.ssYoutube {
+
+			.html5-video-container, .ytp-caption-window-container {
+				z-index: 999999999 !important;
+			}
+		}
+
+		&.ssApple {
+			#apple-music-video-player {
+				z-index: 999999999 !important;
+			}
+
+			.scrim {
+				display:none;
+			}
+		}
+	}
+
+	.ssWrapper {
+		overflow: hidden;
+	}
+
+	@import "ScreenshotControl/notifications";
+	@import "ScreenshotControl/modal";
+}

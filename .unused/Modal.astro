@@ -1,0 +1,19 @@
+---
+interface Props {
+  modalId: string; // We use a clearer prop name
+  title: string;
+}
+const { modalId, title } = Astro.props;
+---
+<dialog id={modalId} class="backdrop:bg-black/50 p-0 rounded-lg shadow-xl w-11/12 max-w-4xl bg-white dark:bg-slate-800 border dark:border-slate-700">
+    <header class="sticky top-0 bg-white dark:bg-slate-800 p-4 border-b dark:border-slate-700 flex justify-between items-center">
+        <h2 class="text-xl font-bold dark:text-slate-100">{title}</h2>
+        <!-- This button now uses the data-modal-close attribute -->
+        <button type="button" data-modal-close class="p-2 leading-none rounded-full hover:bg-gray-200 dark:hover:bg-slate-700" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+        </button>
+    </header>
+    <div class="p-6 max-h-[70vh] overflow-y-auto">
+        <slot />
+    </div>
+</dialog>

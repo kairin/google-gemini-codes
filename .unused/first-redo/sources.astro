@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sources | Astro Rebuild Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #000000; }
+        .dark body { background-color: #000000; color: #FFFFFF; }
+        .header-text { color: #000000; } .dark .header-text { color: #FFFFFF; }
+        .subheader-text { color: #4A5568; } .dark .subheader-text { color: #A0AEC0; }
+        .accent-text { color: #2563EB; } .dark .accent-text { color: #60A5FA; }
+        .footer { border-top: 1px solid #E2E8F0; } .dark .footer { border-top: 1px solid #374151; }
+        .source-item { border-bottom: 1px solid #E2E8F0; } .dark .source-item { border-bottom: 1px solid #374151; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-10 sm:py-16">
+        <header class="mb-12">
+            <a href="#" class="inline-flex items-center accent-text hover:underline mb-6 font-semibold">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Main Index
+            </a>
+            <p class="text-sm font-semibold accent-text tracking-wider uppercase">Resources</p>
+            <h1 class="text-4xl sm:text-5xl font-bold header-text leading-tight mt-1">Consolidated Sources</h1>
+            <h2 class="text-xl subheader-text mt-3">All references and community links from the research document.</h2>
+        </header>
+        <main>
+             <div>
+                <ul class="border-t border-b border-gray-200 dark:border-gray-800 divide-y divide-gray-200 dark:divide-gray-800">
+                    <li class="p-4 sm:p-5">
+                        <a href="https://docs.astro.build/en/concepts/why-astro/" target="_blank" rel="noopener noreferrer" class="accent-text hover:underline font-semibold">[1] Astro Docs: Why Astro?</a>
+                        <p class="subheader-text text-sm mt-1 break-all">https://docs.astro.build/en/concepts/why-astro/</p>
+                    </li>
+                    <li class="p-4 sm:p-5">
+                        <a href="https://docs.astro.build/en/concepts/islands/" target="_blank" rel="noopener noreferrer" class="accent-text hover:underline font-semibold">[2] Astro Docs: Island Architecture</a>
+                        <p class="subheader-text text-sm mt-1 break-all">https://docs.astro.build/en/concepts/islands/</p>
+                    </li>
+                    <li class="p-4 sm:p-5">
+                        <a href="https://docs.astro.build/en/guides/deploy/github-pages/" target="_blank" rel="noopener noreferrer" class="accent-text hover:underline font-semibold">[3] Astro Docs: Deploy to GitHub Pages</a>
+                        <p class="subheader-text text-sm mt-1 break-all">https://docs.astro.build/en/guides/deploy/github-pages/</p>
+                    </li>
+                    <li class="p-4 sm:p-5">
+                        <a href="https://docs.astro.build/en/reference/directives-reference/#client-directives" target="_blank" rel="noopener noreferrer" class="accent-text hover:underline font-semibold">[4] Astro Docs: Hydration Directives Reference</a>
+                         <p class="subheader-text text-sm mt-1 break-all">https://docs.astro.build/en/reference/directives-reference/#client-directives</p>
+                    </li>
+                    <li class="p-4 sm:p-5">
+                        <a href="https://docs.astro.build/en/guides/client-side-scripts/" target="_blank" rel="noopener noreferrer" class="accent-text hover:underline font-semibold">[5] Astro Docs: Scripts and Event Handling</a>
+                         <p class="subheader-text text-sm mt-1 break-all">https://docs.astro.build/en/guides/client-side-scripts/</p>
+                    </li>
+                    <li class="p-4 sm:p-5">
+                        <a href="https://docs.astro.build/en/guides/view-transitions/" target="_blank" rel="noopener noreferrer" class="accent-text hover:underline font-semibold">[6] Astro Docs: View Transitions</a>
+                        <p class="subheader-text text-sm mt-1 break-all">https://docs.astro.build/en/guides/view-transitions/</p>
+                    </li>
+                </ul>
+            </div>
+        </main>
+        <footer class="text-center py-8 mt-12 footer">
+            <p class="text-sm subheader-text">Astro Rebuild Guide | Sources</p>
+        </footer>
+    </div>
+</body>
+</html>

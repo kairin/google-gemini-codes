@@ -1,0 +1,214 @@
+<html>
+	<head>
+		<title>Girih Tiling Editor</title>
+
+		<meta property="og:title" content="Girih Designer" />
+		<meta property="og:description" content="A browser based Girih pattern editor" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="http://www.girihdesigner.com" />
+		<meta property="og:image" content="http://www.girihdesigner.com/images/screen11.png">
+		<link rel="stylesheet" type="text/css" href="style.css"></link>
+	</head>
+	<body>
+	<div class="mode">
+		<span class="button tilingmode" title="tile"></span>
+		<span class="button stylemode" title="style"></span>
+		<span class="button showsvg" title="svg export"></span>
+		<span class="button files" title="file"></span>
+		<span class="button toggleinfo" title="info"></span>
+		<span class="button fullscreen" title="fullscreen"></span>
+	</div>
+	<div class="tilingwindow window">
+		<span class="tool button shape1 selected" title="decadon"><em>1</em>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"> <defs> <path d="M25,-76.94208526611328L65.4508501291275,-47.552823066711426L80.90170200000637,0.000002558634037086449L65.4508528464005,47.552829159344014L25.000004199993015,76.94209384838882L-24.999996239723174,76.94209673407326L-65.45084842075129,47.55283661078049L-80.90170217195892,0.000011458965673227794L-65.45085662692233,-47.552816451664704L-25.000009320939867,-76.94208373373591Z" stroke="#ffffff" stroke-width="4" fill="#00ffff" id="shape1"> </path> </defs> <g transform="translate(0,200) scale(1,-1)"> <g id="layer_shapes"> <use xlink:href="#shape1" id="tile" transform="rotate(0 100 100) translate(100 100)"> </use> </g> </g> </svg> </span>
+		<span class="tool button shape2" title="elongated hexagon"><em>2</em>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"> <defs> <path d="M52.95085144042969,-38.47104263305664L37.500001311302185,9.08178436756134L-2.950849168395912,38.47104821895604L-52.95085059891701,38.47104934938612L-37.50000110283708,-9.08177936106042L2.9508498697267598,-38.47104496783153Z" stroke="#ffffff" stroke-width="4" fill="#40ffa0" id="shape2"> </path> </defs> <g transform="translate(0,200) scale(1,-1)"> <g id="layer_shapes"> <use xlink:href="#shape2" id="tile" transform="rotate(0 100 100) translate(100 100)"> </use> </g> </g> </svg> </span>
+		<span class="tool button shape3" title="bow-tie"><em>3</em>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"> <defs> <path d="M52.95084762573242,-9.081780433654785L37.49999749660492,38.471046566963196L-2.950854224153943,9.081782438848151L-52.95085682136643,9.081781814023817L-37.50000529541284,-38.47104746360874L2.950848159272624,-9.081781303396891Z" stroke="#ffffff" stroke-width="4" fill="#ff80ff" id="shape3"> </path> </defs> <g transform="translate(0,200) scale(1,-1)"> <g id="layer_shapes"> <use xlink:href="#shape3" id="tile" transform="rotate(0 100 100) translate(100 100)"> </use> </g> </g> </svg> </span>
+		<span class="tool button shape4" title="rhombus"><em>4</em>
+ 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"> <defs> <path d="M32.725425720214844,-23.776412963867188L17.27457559108734,23.776414036750793L-32.725426918181896,23.776414036750793L-17.274576013647533,-23.776415350324108Z" stroke="#ffffff" stroke-width="4" fill="#0080ff" id="shape4"> </path> </defs> <g transform="translate(0,200) scale(1,-1)"> <g id="layer_shapes"> <use xlink:href="#shape4" id="tile" transform="rotate(0 100 100) translate(100 100)"> </use> </g> </g> </svg> </span>
+		<span class="tool button shape5" title="pentagon"><em>5</em>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"> <defs> <path d="M25,-38.47104263305664L40.4508501291275,9.08178436756134L-0.0000015916313200428111,38.471048495676385L-40.4508543974859,9.081783726555429L-25.00000321863169,-38.47104689058853Z" stroke="#ffffff" stroke-width="4" fill="#ffff60" id="shape5"> </path> </defs> <g transform="translate(0,200) scale(1,-1)"> <g id="layer_shapes"> <use xlink:href="#shape5" id="tile" transform="rotate(0 100 100) translate(100 100)"> </use> </g> </g> </svg> 
+		</span>
+		<span class="button zoomout"><em></em></span>
+		<span class="button zoomin"><em></em></span>
+		<span class="button clearcanvas" title="clear"></span>
+		<span class="tool button erase" title="eraser"><em>E</em></span>
+		<span class="button rotateleft" title="rotate left"><em>Q</em></span>
+		<span class="button rotateright" title="rotate right"><em>W</em></span>
+	</div>
+	<div class="window info">
+	<div class="tabgroup">
+		<div class="tabs">
+			<div class="tab1">Help</div>
+			<div class="tab2">About</div>
+		</div>
+		<div class="tabframes bottommargin">
+			<div class="tab1frame">
+				<h2>Getting started</h2>
+				<h3 class="tilingicon">Tiling mode</h3>
+				Select between the five Girih tiles and start tiling. Tiling mode defaults to a plain display style to simplify tile recognition.
+				<h3 class="styleicon">Styling mode</h3>
+				Choose between different color presets or customize the display style.
+				<h3 class="svgicon">Svg export</h3>
+				Export your pattern as vector images for further processing and resolution independend printing.
+				<h3 class="fileicon">File dialog</h3>
+				Save and load your patterns to your local browser storage.
+				<br>
+				<h3>Use these keyboard shortcuts for efficient tiling:</h3>
+				Q, W, Spacebar &mdash; Rotate mouse tile<br>
+				1-5 &mdash; Select tile<br>
+				Backspace &mdash; Delete last tile<br>
+				E &mdash; Eraser tool<br>
+				-,+ &mdash; Zoom<br>
+				Arrow keys &mdash; Scroll canvas<br>
+				Tab &mdash; Toggle palette<br>
+			</div>
+			<div class="tab2frame">
+				<h2>About</h2>
+				&copy; 2014 by <a href="http://www.nikkki.net" target="_blank">Nikolaus Baumgarten</a><br>
+				Read more on <a href="http://www.girihdesigner.com">www.girihdesigner.com</a>
+				<br>
+				<br>
+				This tool is free to use. You may use the resulting images in any way you like. Please include a link to this tool as your source.
+				<br>
+				<br>
+				I am curious to see what you create! Contact me at <a href="mailto:nik@nikkki.net">nik@nikkki.net</a>
+			</div>
+		</div>
+	</div>
+		
+		<div class="textbutton close closewindow">close</div>
+	
+	</div>
+	<div class="colorwindow window">
+		<div class="tabgroup">
+			<div class="tabs">
+				<div class="presetstab">Presets</div>
+				<div class="detailedtab">Custom</div>
+			</div>
+			<div class="tabframes">
+				<div class="presetstabframe">
+					<div class="presets"></div>
+				</div>
+				<div class="detailedtabframe">
+					<h3>
+					Background
+					</h3>
+						<div class="color button background"><div class="preview"></div></div>						
+					<div class="clearfix">
+					</div>
+					<h3>Tiles</h3>
+					<div class="settingsgroup roundborder">
+						<label class="style button none"><input type="radio" name="filling">No filling</label>
+						<label class="style button plain"><input type="radio" name="filling">Plain color</label>
+						<div class="color button plain"><div class="preview"></div></div>
+						<label class="style button individual"><input type="radio" name="filling">Shape colors</label>
+						<div class="color button shape1"><div class="preview"></div></div>
+						<div class="color button shape2"><div class="preview"></div></div>
+						<div class="color button shape3"><div class="preview"></div></div>
+						<div class="color button shape4"><div class="preview"></div></div>
+						<div class="color button shape5"><div class="preview"></div></div>
+						<div class="settingsruler"></div>
+						<label class="style outlines button"><input type="checkbox" name="outlines">Outline</label>
+						<div class="color button outlinecolor"><div class="preview"></div></div>
+					</div>
+					<h3>Texture</h3>
+					<div class="settingsgroup roundborder">
+						<label class="style innerpolys button"><input type="checkbox" name="innerpolys">Inner polygons</label>
+						<div class="color button poly1"><div class="preview"></div></div>
+						<div class="color button poly2"><div class="preview"></div></div>
+						<div class="color button poly3"><div class="preview"></div></div>
+						<div class="color button poly4"><div class="preview"></div></div>
+						<div class="color button poly5"><div class="preview"></div></div>
+						<div class="settingsruler"></div>
+						<label class="style notexture button"><input type="radio" name="texture">No lines</label>
+						<label class="style texture button"><input type="radio" name="texture">Simple lines</label>
+						<div class="color button texturecolor"><div class="preview"></div></div>
+						<label class="style complextexture button"><input type="radio" name="texture">Knot pattern</label>
+						<div class="color button complextexturelinecolor"><div class="preview"></div></div>
+						<div class="color button complextexturefillcolor"><div class="preview"></div></div>
+						<div class="settingssubgroup">
+							<label class="style shadowdisplay button"><input type="checkbox" name="outlines">Shadow</label>
+							<div class="color button complextextureshadowcolor"><div class="preview"></div></div>
+							<br>
+							<br>
+							<label class="style button row shadowalpha" >Alpha <input type="number" min="0" max="1" step="0.05"></input></label>
+							<label class="style button row shadowsize" >Length <input type="number" min="0.1" max="1" step="0.1"></input></label>
+							<label class="style button row shadowangle" >Angle<input type="number" min="0" max="360" step="5"></input></label>
+						</div>
+					</div>
+					<span class="textbutton savepreset">Save color preset</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="window colorpicker">
+		<div class="previouscolor">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="currentcolor">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="hex"></div>
+		<div class="colors mt usedcolors"></div>
+		<div class="colors mt grayscale"></div>
+		<div class="colors mt basic">
+		</div>
+		<div class="colors mt palette1">
+		</div>
+		<div class="colors palette2">
+		</div>
+		<div class="colors palette3">
+		</div>
+		<div class="textbutton close closewindow">close</div>
+	</div>
+
+	<div class="loading">
+		Girih Designer is loading...
+	</div>
+	<div class="window notification clearconfirm">
+		This will erase the current canvas. Are you sure?
+		<br>
+		<span class="textbutton close">cancel</span>
+		<span class="textbutton close clear floatright">confirm</span>
+	</div>
+	<div class="window svg">
+		<span class="text"></span>
+		<div class="img"></div>
+		<a class="textbutton download">download SVG file</a>
+	</div>
+	<div class="window files">
+		<div class="options">
+			<span class="textbutton save floatleft">save</span>
+		</div>
+		<div class="items"></div>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
+	function webgl_support() { 
+	   try{
+	    var canvas = document.createElement( 'canvas' ); 
+	    return !! window.WebGLRenderingContext && ( 
+	         canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) );
+	   }catch( e ) { return false; } 
+	};
+	if (!webgl_support()) {
+		$('.loading').html("Girih Designer requires a modern WebGL enabled Browser like Chrome or Firefox");
+	}
+    </script>
+	<script src="js/jquery.mousewheel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
+	<script src="js/girih.js"></script>
+	<script type="text/javascript">
+	  var _paq = _paq || [];
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//analytics.nikkki.net/";
+	    _paq.push(['setTrackerUrl', u+'piwik.php']);
+	    _paq.push(['setSiteId', 2]);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<noscript><p><img src="//analytics.nikkki.net/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+	<!-- End Piwik Code -->
+	<div class="cursor"></div>
+	</body>
+</html>

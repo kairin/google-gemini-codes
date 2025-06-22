@@ -1,29 +1,35 @@
 ---
 // src/pages/index.astro
-import Layout from '../layouts/Layout.astro';
+import Layout from '@/layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// This is the automation magic!
+// It fetches all entries from your 'projects' collection.
+const allProjects = await getCollection('projects');
 ---
-<Layout title="Astro Rebuild Plan: Main Index">
+<Layout title="Kairin's Projects">
     <div class="container mx-auto px-4 py-10 sm:py-16">
-        <!-- Page Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-bold">A Strategic Blueprint for Rebuilding Your Astro Website</h1>
-            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">From Broken Animations to a Robust, Foolproof Deployment. Select a section below to begin.</p>
+            <h1 class="text-4xl sm:text-5xl font-bold header-text leading-tight">My Projects & Living Documents</h1>
+            <p class="mt-4 text-lg subheader-text max-w-3xl mx-auto">A collection of things I'm building and learning.</p>
         </header>
-        
-        <!-- Page Main Content -->
         <main>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Card links will be fixed in the next step -->
-                <a href="#" class="p-6 border rounded-lg">Section 1: Project Restart</a>
-                <a href="#" class="p-6 border rounded-lg">Section 2: The Astro Philosophy</a>
-                <a href="#" class="p-6 border rounded-lg">Section 3: Diagnosing the Failure</a>
-                <!-- ... more cards ... -->
+                
+                {allProjects.map(project => (
+                    <a href={`/google-gemini-codes/projects/${project.slug}/`} class="card rounded-lg p-6 block transition-all duration-200">
+                        <p class="text-sm font-semibold accent-text">
+                            {project.data.pubDate.toDateString()}
+                        </p>
+                        <h3 class="text-xl font-bold header-text mt-1">{project.data.title}</h3>
+                        <p class="subheader-text mt-2">{project.data.description}</p>
+                    </a>
+                ))}
+
             </div>
         </main>
-
-        <!-- Page Footer -->
-        <footer class="text-center py-8 mt-12 border-t">
-            <p class="text-sm text-gray-500">Astro Rebuild Guide | Index</p>
+        <footer class="text-center py-8 mt-12 footer">
+            <p class="text-sm subheader-text">Generated on {new Date().toLocaleDateString()}</p>
         </footer>
     </div>
 </Layout>

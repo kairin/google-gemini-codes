@@ -1,0 +1,129 @@
+.ssModal {
+
+    display: none;
+
+    &.visible {
+        display:block;
+    }
+
+    position: fixed;
+    z-index: 100000000;
+
+    right:20px;
+    
+    opacity: 0;
+
+    background-color:#fffefa;
+    border-radius: 3px;
+
+    padding: 25px;
+
+    color: #525252;
+    font-family: muli, sans-serif;
+    
+    * {
+        vertical-align: middle;
+        line-height: normal;
+        font-weight: normal;
+    }
+
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15);
+
+    animation-name: animateOn;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+
+    @keyframes animateOn {
+        from {
+            opacity: 0;
+            top: 0px;
+        }
+        to {
+            opacity: 1;
+            top: 20px;
+        }
+    }
+
+    .close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        opacity: .5;
+
+        background-image: url('../images/close.svg');
+
+        width:10px;
+        height:10px;
+
+    }
+
+    .ssButtons {
+
+        margin-top: 25px;
+        text-align: right;
+
+        .ssButton, a .ssButton {
+            display:inline-block;
+
+            height:20px;
+            
+            padding:3px 12px 3px;
+            margin-left: 14px;
+            
+            border-radius: 4px;
+            box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15);
+            background-color: #FFFFFF;
+            
+            font-size: 12px;
+            color: #525252;
+            line-height: 20px;
+            font-weight: normal;
+    
+            cursor: pointer;
+
+            text-decoration: none;
+
+            .emoji {
+                font-size: 15px;
+                vertical-align: bottom;
+            }
+    
+            &.blue {
+                background-color: #19acef;
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    .icon {
+        background-image: url('../images/iconBlue.svg');
+        background-repeat: no-repeat;
+
+        width:30px;
+        height:30px;
+
+        vertical-align: top;
+        margin-right: 22px;
+        margin-top:2px;
+
+        display:inline-block;
+    }
+
+    .body {
+
+        display:inline-block;
+        width:315px;
+
+        .title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+        .description {
+            font-size: 13px;
+            font-weight: lighter;
+        }
+    }
+
+}
