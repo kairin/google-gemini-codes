@@ -2,6 +2,16 @@
 title: "The Astro Website Rebuild Guide"
 description: "A living document charting the progress of rebuilding my Astro site from scratch, using the correct, scalable methods."
 pubDate: 2025-06-22
+heroImage: "/google-gemini-codes/assets/astro.svg"
+tags:
+  - astro
+  - rebuild
+  - guide
+  - automation
+author: "Kairin"
+categories:
+  - Guide
+  - Project
 ---
 # Section 1: Project Restart & Context-Setting
 
