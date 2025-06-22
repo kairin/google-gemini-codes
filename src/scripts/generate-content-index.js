@@ -41,6 +41,8 @@ for (const file of allFiles) {
   if (!pubDate) {
     pubDate = stats.fileCreated ? new Date(stats.fileCreated).toISOString() : new Date().toISOString();
   }
+  // Always store pubDate as ISO (UTC) and local
+  const pubDateLocal = new Date(pubDate).toLocaleString();
 
   // --- PubDate history logic ---
   const historyDir = resolvePath('data/content-index/history');
@@ -54,8 +56,16 @@ for (const file of allFiles) {
     } catch {}
   }
   // Only add to history if new or changed
-  if (pubDateHistory.length === 0 || pubDateHistory[pubDateHistory.length - 1].pubDate !== pubDate) {
-    pubDateHistory.push({ pubDate, updated: new Date().toISOString() });
+  if (
+    pubDateHistory.length === 0 ||
+    pubDateHistory[pubDateHistory.length - 1].pubDate !== pubDate
+  ) {
+    pubDateHistory.push({
+      pubDate, // UTC ISO
+      pubDateLocal, // Local time string
+      updated: new Date().toISOString(),
+      updatedLocal: new Date().toLocaleString(),
+    });
     await fs.writeFile(historyPath, JSON.stringify(pubDateHistory, null, 2));
   }
 
@@ -64,7 +74,8 @@ for (const file of allFiles) {
     slug,
     ...data,
     pubDate, // always present, ISO string
-    pubDateHistory, // array of { pubDate, updated }
+    pubDateLocal, // always present, local string
+    pubDateHistory, // array of { pubDate, pubDateLocal, updated, updatedLocal }
     ...stats,
     filePath: file,
     body: content, // include full markdown body
