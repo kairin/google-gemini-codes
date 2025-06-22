@@ -16,6 +16,12 @@
     "Guide",
     "Project"
   ],
+  "pubDateHistory": [
+    {
+      "pubDate": "2025-06-22T00:00:00.000Z",
+      "updated": "2025-06-22T15:38:41.821Z"
+    }
+  ],
   "fileCreated": "2025-06-22T06:33:25.678Z",
   "fileModified": "2025-06-22T14:29:47.657Z",
   "filePath": "src/content/projects/astro-rebuild-guide.md",
