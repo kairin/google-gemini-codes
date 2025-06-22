@@ -1,0 +1,53 @@
+name: New Project from Issue
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  create-project-md:
+    if: contains(github.event.issue.labels.*.name, 'new project')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Extract issue content
+        id: extract
+        run: |
+          echo "ISSUE_BODY<<EOF" >> $GITHUB_ENV
+          echo "${{ github.event.issue.body }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create markdown file
+        run: |
+          TITLE=$(echo "${{ github.event.issue.title }}" | sed 's/\[Project\] //g' | tr ' ' '-' | tr '[:upper:]' '[:lower:]')
+          FILE="src/content/projects/${TITLE}.md"
+          echo "---" > $FILE
+          echo "title: \"${{ github.event.issue.title }}\"" >> $FILE
+          echo "description: \"(fill in)\"" >> $FILE
+          echo "pubDate: \"$(date +%Y-%m-%d)\"" >> $FILE
+          echo "heroImage: \"\"" >> $FILE
+          echo "tags: []" >> $FILE
+          echo "author: \"(fill in)\"" >> $FILE
+          echo "categories: []" >> $FILE
+          echo "---" >> $FILE
+          echo "" >> $FILE
+          echo "${{ github.event.issue.body }}" >> $FILE
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Add new project from issue #${{ github.event.issue.number }}"
+          branch: main
+
+      - name: Close issue
+        uses: peter-evans/close-issue@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment: "✅ Project markdown file created and site will rebuild!"
