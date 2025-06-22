@@ -16,8 +16,12 @@ const allProjects = await getCollection('projects');
         <main>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
+                {/*
+                  Use Astro.base to ensure project links work in both local and GitHub Pages subdirectory deployments.
+                  This avoids broken links when deployed to a subdirectory.
+                */}
                 {allProjects.map(project => (
-                    <a href={`/projects/${project.slug}/`.replace(/\/+/g, '/')}" class="card rounded-lg p-6 block transition-all duration-200">
+                    <a href={`${Astro.base}/projects/${project.slug}/`.replace(/\/+/g, '/')}" class="card rounded-lg p-6 block transition-all duration-200">
                         <p class="text-sm font-semibold accent-text">
                             {project.data.pubDate.toDateString()}
                         </p>

@@ -1,6 +1,7 @@
 ---
 // src/layouts/Layout.astro
 import '../styles/global.css';
+import SITE_DEPLOYMENT_INFO from '@/SITE_DEPLOYMENT_INFO.ts'; // Source of truth for deployment settings
 
 interface Props {
 	title: string;
@@ -14,11 +15,28 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!--
+		  Use Astro.base to ensure the favicon path works in both local and GitHub Pages subdirectory deployments.
+		  Do NOT use root-relative paths like /favicon.svg directly, as this will break in subdirectory deployments.
+		-->
+		<link rel="icon" type="image/svg+xml" href={`${Astro.base}/favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<!--
+		  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
+		  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
+		  - base: {SITE_DEPLOYMENT_INFO.base}
+		  - All navigation and asset links must use Astro.base
+		  - Never use root-relative paths for internal links or assets
+		  - If you change deployment location, update this file and all configs
+		-->
 	</head>
 	<body>
+		<!--
+		  Deployment Info (visible for all contributors):
+		  {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+		  See src/SITE_DEPLOYMENT_INFO.ts for details.
+		-->
 		<slot />
 	</body>
 </html>
