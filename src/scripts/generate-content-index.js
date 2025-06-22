@@ -2,6 +2,7 @@
 import { getAllMarkdownFiles, readMarkdownFile, getFileStats, writeJSONFile, resolvePath } from '../utils/content-utils.js';
 import path from 'path';
 import fs from 'fs/promises';
+import fsSync from 'fs'; // For sync file existence check
 
 const allFiles = await getAllMarkdownFiles();
 console.log('Discovered markdown files:', allFiles);
@@ -41,11 +42,29 @@ for (const file of allFiles) {
     pubDate = stats.fileCreated ? new Date(stats.fileCreated).toISOString() : new Date().toISOString();
   }
 
+  // --- PubDate history logic ---
+  const historyDir = resolvePath('data/content-index/history');
+  await fs.mkdir(historyDir, { recursive: true });
+  const historyPath = path.join(historyDir, `${type}-${slug}.history.json`);
+  let pubDateHistory = [];
+  if (fsSync.existsSync(historyPath)) {
+    try {
+      const prev = JSON.parse(await fs.readFile(historyPath, 'utf-8'));
+      pubDateHistory = Array.isArray(prev) ? prev : [];
+    } catch {}
+  }
+  // Only add to history if new or changed
+  if (pubDateHistory.length === 0 || pubDateHistory[pubDateHistory.length - 1].pubDate !== pubDate) {
+    pubDateHistory.push({ pubDate, updated: new Date().toISOString() });
+    await fs.writeFile(historyPath, JSON.stringify(pubDateHistory, null, 2));
+  }
+
   const json = {
     type,
     slug,
     ...data,
     pubDate, // always present, ISO string
+    pubDateHistory, // array of { pubDate, updated }
     ...stats,
     filePath: file,
     body: content, // include full markdown body
