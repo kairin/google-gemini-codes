@@ -3,7 +3,8 @@
 import Layout from '@/layouts/Layout.astro';
 import ProjectCard from '@/components/cards/ProjectCard.astro';
 
-const allProjects = await Astro.glob('../data/content-index/project-*.json');
+const projectModules = import.meta.glob('../data/content-index/project-*.json', { eager: true });
+const allProjects = Object.values(projectModules);
 ---
 <Layout title="Kairin's Projects">
     <div class="container mx-auto px-4 py-10 sm:py-16">

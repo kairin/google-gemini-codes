@@ -2,7 +2,8 @@
 import Layout from '@/layouts/Layout.astro';
 import BlogCard from '@/components/cards/BlogCard.astro';
 
-const blogPosts = await Astro.glob('../data/content-index/blog-*.json');
+const blogModules = import.meta.glob('../data/content-index/blog-*.json', { eager: true });
+const blogPosts = Object.values(blogModules);
 ---
 <Layout title="Blog">
   <div class="container mx-auto px-4 py-10 sm:py-16">
