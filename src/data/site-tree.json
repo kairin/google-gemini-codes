@@ -1,0 +1,457 @@
+{
+  "src": [
+    {
+      "type": "directory",
+      "name": "src",
+      "contents": [
+        {
+          "type": "directory",
+          "name": "assets",
+          "contents": [
+            {
+              "type": "file",
+              "name": "astro.svg"
+            },
+            {
+              "type": "file",
+              "name": "background.svg"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "components",
+          "contents": [
+            {
+              "type": "file",
+              "name": "BaseLink.astro"
+            },
+            {
+              "type": "directory",
+              "name": "cards",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "BlogCard.astro"
+                },
+                {
+                  "type": "file",
+                  "name": "ProjectCard.astro"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "DeploymentInfo.astro"
+            },
+            {
+              "type": "directory",
+              "name": "lists",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "SitemapList.astro"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "MarkdownPage.astro"
+            },
+            {
+              "type": "file",
+              "name": "SectionedMarkdown.astro"
+            },
+            {
+              "type": "file",
+              "name": "SiteHead.astro"
+            },
+            {
+              "type": "file",
+              "name": "TreeMap.astro"
+            },
+            {
+              "type": "file",
+              "name": "TreeMap.jsx"
+            },
+            {
+              "type": "file",
+              "name": "Welcome.astro"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "content",
+          "contents": [
+            {
+              "type": "directory",
+              "name": "blog",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "first-post.md"
+                },
+                {
+                  "type": "file",
+                  "name": "how-to-add-projects-online.md"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "config.ts"
+            },
+            {
+              "type": "directory",
+              "name": "projects",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "astro-rebuild-guide.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "data",
+          "contents": [
+            {
+              "type": "directory",
+              "name": "content-index",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "blog-first-post.json"
+                },
+                {
+                  "type": "file",
+                  "name": "blog-how-to-add-projects-online.json"
+                },
+                {
+                  "type": "directory",
+                  "name": "history",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "blog-first-post.history.json"
+                    },
+                    {
+                      "type": "file",
+                      "name": "blog-how-to-add-projects-online.history.json"
+                    },
+                    {
+                      "type": "file",
+                      "name": "project-astro-rebuild-guide.history.json"
+                    }
+                  ]
+                },
+                {
+                  "type": "file",
+                  "name": "project-astro-rebuild-guide.json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "layouts",
+          "contents": [
+            {
+              "type": "file",
+              "name": "Layout.astro"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "pages",
+          "contents": [
+            {
+              "type": "directory",
+              "name": "blog",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "[...blogslug].astro"
+                },
+                {
+                  "type": "file",
+                  "name": "index.astro"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "how-to-add-project.md"
+            },
+            {
+              "type": "file",
+              "name": "index.astro"
+            },
+            {
+              "type": "directory",
+              "name": "projects",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "[...slug].astro"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "sitemap.astro"
+            },
+            {
+              "type": "file",
+              "name": "tree.astro"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "scripts",
+          "contents": [
+            {
+              "type": "file",
+              "name": "check-content-index.js"
+            },
+            {
+              "type": "file",
+              "name": "generate-content-index.js"
+            },
+            {
+              "type": "file",
+              "name": "generate-trees.js"
+            },
+            {
+              "type": "file",
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "name": "SITE_DEPLOYMENT_INFO.ts"
+        },
+        {
+          "type": "directory",
+          "name": "styles",
+          "contents": [
+            {
+              "type": "file",
+              "name": "global.css"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "utils",
+          "contents": [
+            {
+              "type": "file",
+              "name": "content-utils.js"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "report",
+      "directories": 18,
+      "files": 38
+    }
+  ],
+  "scripts": [
+    {
+      "type": "directory",
+      "name": "scripts",
+      "contents": [
+        {
+          "type": "file",
+          "name": "generate-content-index.js"
+        }
+      ]
+    },
+    {
+      "type": "report",
+      "directories": 1,
+      "files": 1
+    }
+  ],
+  "public": [
+    {
+      "type": "directory",
+      "name": "public",
+      "contents": [
+        {
+          "type": "file",
+          "name": "favicon.svg"
+        },
+        {
+          "type": "file",
+          "name": "index.html"
+        }
+      ]
+    },
+    {
+      "type": "report",
+      "directories": 1,
+      "files": 2
+    }
+  ],
+  "data": [
+    {
+      "type": "directory",
+      "name": "data",
+      "contents": [
+        {
+          "type": "directory",
+          "name": "content-index",
+          "contents": [
+            {
+              "type": "file",
+              "name": "blog-first-post.json"
+            },
+            {
+              "type": "file",
+              "name": "blog-how-to-add-projects-online.json"
+            },
+            {
+              "type": "file",
+              "name": "project-astro-rebuild-guide.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "report",
+      "directories": 2,
+      "files": 3
+    }
+  ],
+  "dist": [
+    {
+      "type": "directory",
+      "name": "dist",
+      "contents": [
+        {
+          "type": "directory",
+          "name": "_astro",
+          "contents": [
+            {
+              "type": "file",
+              "name": "_blogslug_.bXo_Qk-4.css"
+            },
+            {
+              "type": "file",
+              "name": "client.BPIbHqJh.js"
+            },
+            {
+              "type": "file",
+              "name": "index.BVOCwoKb.js"
+            },
+            {
+              "type": "file",
+              "name": "TreeMap.DCSFkquE.js"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "blog",
+          "contents": [
+            {
+              "type": "directory",
+              "name": "first-post",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "index.html"
+                }
+              ]
+            },
+            {
+              "type": "directory",
+              "name": "how-to-add-projects-online",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "index.html"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "name": "favicon.svg"
+        },
+        {
+          "type": "directory",
+          "name": "how-to-add-project",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "name": "index.html"
+        },
+        {
+          "type": "directory",
+          "name": "projects",
+          "contents": [
+            {
+              "type": "directory",
+              "name": "astro-rebuild-guide",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "index.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "sitemap",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "tree",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "report",
+      "directories": 10,
+      "files": 13
+    }
+  ]
+}
