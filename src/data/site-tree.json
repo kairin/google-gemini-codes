@@ -45,6 +45,10 @@
               "name": "DeploymentInfo.astro"
             },
             {
+              "type": "file",
+              "name": "FileRelationships.jsx"
+            },
+            {
               "type": "directory",
               "name": "lists",
               "contents": [
@@ -57,6 +61,10 @@
             {
               "type": "file",
               "name": "MarkdownPage.astro"
+            },
+            {
+              "type": "file",
+              "name": "RouteParamInfo.astro"
             },
             {
               "type": "file",
@@ -156,6 +164,10 @@
             },
             {
               "type": "file",
+              "name": "file-relationships.json"
+            },
+            {
+              "type": "file",
               "name": "site-tree.json"
             }
           ]
@@ -212,6 +224,18 @@
             },
             {
               "type": "file",
+              "name": "relationships.astro"
+            },
+            {
+              "type": "file",
+              "name": "route-param-mapping.astro"
+            },
+            {
+              "type": "file",
+              "name": "self-hosted-runner-guide.astro"
+            },
+            {
+              "type": "file",
               "name": "sitemap.astro"
             },
             {
@@ -231,6 +255,10 @@
             {
               "type": "file",
               "name": "generate-content-index.js"
+            },
+            {
+              "type": "file",
+              "name": "generate-file-relationships.js"
             },
             {
               "type": "file",
@@ -263,6 +291,14 @@
             {
               "type": "file",
               "name": "content-utils.js"
+            },
+            {
+              "type": "file",
+              "name": "getStaticPaths.js"
+            },
+            {
+              "type": "file",
+              "name": "routeParamMap.js"
             }
           ]
         }
@@ -271,7 +307,7 @@
     {
       "type": "report",
       "directories": 18,
-      "files": 40
+      "files": 49
     }
   ],
   "scripts": [
@@ -354,19 +390,27 @@
           "contents": [
             {
               "type": "file",
-              "name": "_blogslug_.bXo_Qk-4.css"
+              "name": "_blogslug_.Bpp9Wkt0.css"
             },
             {
               "type": "file",
-              "name": "client.BPIbHqJh.js"
+              "name": "client.KJlOPP84.js"
             },
             {
               "type": "file",
-              "name": "index.BVOCwoKb.js"
+              "name": "FileRelationships.DisWO9Lb.js"
             },
             {
               "type": "file",
-              "name": "TreeMap.DCSFkquE.js"
+              "name": "index.6otl1p8d.js"
+            },
+            {
+              "type": "file",
+              "name": "jsx-runtime.D_zvdyIk.js"
+            },
+            {
+              "type": "file",
+              "name": "TreeMap.DypgZXi-.js"
             }
           ]
         },
@@ -379,8 +423,14 @@
               "name": "first-post",
               "contents": [
                 {
-                  "type": "file",
-                  "name": "index.html"
+                  "type": "directory",
+                  "name": "1",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
                 }
               ]
             },
@@ -389,8 +439,34 @@
               "name": "how-to-add-projects-online",
               "contents": [
                 {
-                  "type": "file",
-                  "name": "index.html"
+                  "type": "directory",
+                  "name": "1",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "2",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "3",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
                 }
               ]
             },
@@ -437,10 +513,116 @@
               "name": "astro-rebuild-guide",
               "contents": [
                 {
-                  "type": "file",
-                  "name": "index.html"
+                  "type": "directory",
+                  "name": "1",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "2",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "3",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "4",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "5",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "6",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "7",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "8",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "relationships",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "route-param-mapping",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "self-hosted-runner-guide",
+          "contents": [
+            {
+              "type": "file",
+              "name": "index.html"
             }
           ]
         },
@@ -468,8 +650,8 @@
     },
     {
       "type": "report",
-      "directories": 11,
-      "files": 14
+      "directories": 26,
+      "files": 28
     }
   ]
 }
