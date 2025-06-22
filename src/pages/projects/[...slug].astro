@@ -1,37 +1,16 @@
 ---
 // src/pages/projects/[...slug].astro
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import SectionedMarkdown from '@/components/SectionedMarkdown.astro';
+// Import project JSON asset
+import projectAstroRebuildGuide from '@/data/content-index/project-astro-rebuild-guide.json';
+// TODO: Add logic to select the correct project JSON based on slug param
 
-export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  const paths = [];
-  for (const project of projects) {
-    const rawContent = project.body;
-    const sections = rawContent.split(/<!-- PAGEBREAK -->/);
-    for (let i = 0; i < sections.length; i++) {
-      paths.push({
-        params: { slug: `${project.slug}/${i + 1}` },
-        props: { project, sectionIndex: i },
-      });
-    }
-    paths.push({
-      params: { slug: project.slug },
-      props: { project, sectionIndex: 0, redirect: true },
-    });
-  }
-  return paths;
-}
-
-const { project, sectionIndex = 0, redirect = false } = Astro.props;
-const rawContent = project.body;
+const project = projectAstroRebuildGuide; // Placeholder: select based on slug param
+const sectionIndex = 0; // Placeholder: parse from params if needed
+const rawContent = '';
 const baseUrl = `/projects/${project.slug}`;
-
-if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
-  return Astro.redirect(`/projects/${project.slug}/1`);
-}
 ---
-<Layout title={project.data.title}>
+<Layout title={project.title}>
   <SectionedMarkdown rawContent={rawContent} sectionIndex={sectionIndex} baseUrl={baseUrl} />
 </Layout>

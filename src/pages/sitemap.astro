@@ -1,17 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import SitemapList from '@/components/lists/SitemapList.astro';
+// Import all project and blog JSON assets
+import projectAstroRebuildGuide from '@/data/content-index/project-astro-rebuild-guide.json';
+// TODO: Import all other project and blog JSON files as needed
 
-const projects = await getCollection('projects');
-const blogPosts = await getCollection('blog');
+const projects = [projectAstroRebuildGuide]; // Add other imported projects here
+const blogPosts = []; // Add imported blog JSON files here
 
 const projectItems = projects.map(project => ({
-  title: project.data.title,
+  title: project.title,
   url: `/projects/${project.slug}/1`,
 }));
 const blogItems = blogPosts.map(post => ({
-  title: post.data.title,
+  title: post.title,
   url: `/blog/${post.slug}`,
 }));
 const otherItems = [

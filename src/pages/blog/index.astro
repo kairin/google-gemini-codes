@@ -1,16 +1,18 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import BlogCard from '@/components/cards/BlogCard.astro';
+// Import all blog JSON assets
+// import blogFirstPost from '@/data/content-index/blog-first-post.json';
+// TODO: Import all other blog JSON files as needed
 
-const blogPosts = await getCollection('blog');
+const blogPosts = []; // Add imported blog JSON files here
 ---
 <Layout title="Blog">
   <div class="container mx-auto px-4 py-10 sm:py-16">
     <h1 class="text-3xl font-bold mb-8">Blog</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {blogPosts.map(post => (
-        <BlogCard post={post} />
+        <BlogCard post={{ data: post, slug: post.slug }} />
       ))}
     </div>
   </div>

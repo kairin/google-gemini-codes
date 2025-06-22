@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node src/scripts/generate-content-index.js && node src/scripts/check-content-index.js",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -11,6 +12,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
     "astro": "^5.10.0",
+    "glob": "^11.0.3",
+    "gray-matter": "^4.0.3",
     "marked": "^15.0.12",
     "tailwindcss": "^4.1.10"
   }

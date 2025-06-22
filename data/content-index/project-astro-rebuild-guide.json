@@ -1,0 +1,22 @@
+{
+  "type": "project",
+  "slug": "astro-rebuild-guide",
+  "title": "The Astro Website Rebuild Guide",
+  "description": "A living document charting the progress of rebuilding my Astro site from scratch, using the correct, scalable methods.",
+  "pubDate": "2025-06-22T00:00:00.000Z",
+  "heroImage": "/google-gemini-codes/assets/astro.svg",
+  "tags": [
+    "astro",
+    "rebuild",
+    "guide",
+    "automation"
+  ],
+  "author": "Kairin",
+  "categories": [
+    "Guide",
+    "Project"
+  ],
+  "fileCreated": "2025-06-22T06:33:25.678Z",
+  "fileModified": "2025-06-22T14:29:47.657Z",
+  "filePath": "src/content/projects/astro-rebuild-guide.md"
+}

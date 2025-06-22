@@ -1,10 +1,12 @@
 ---
 // src/pages/index.astro
 import Layout from '@/layouts/Layout.astro';
-import { getCollection } from 'astro:content';
 import ProjectCard from '@/components/cards/ProjectCard.astro';
+// Import all project JSON assets
+import projectAstroRebuildGuide from '@/data/content-index/project-astro-rebuild-guide.json';
+// TODO: Import all other project JSON files as needed
 
-const allProjects = await getCollection('projects');
+const allProjects = [projectAstroRebuildGuide]; // Add other imported projects here
 ---
 <Layout title="Kairin's Projects">
     <div class="container mx-auto px-4 py-10 sm:py-16">
@@ -15,7 +17,7 @@ const allProjects = await getCollection('projects');
         <main>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {allProjects.map(project => (
-                    <ProjectCard project={project} />
+                    <ProjectCard project={{ data: project, slug: project.slug }} />
                 ))}
             </div>
         </main>

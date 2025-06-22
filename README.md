@@ -19,6 +19,20 @@ This repository is dedicated to building, automating, and maintaining a modern, 
 
 ---
 
+## Content Index JSON Assets
+
+- Per-content JSON index files (for each project/blog) are generated automatically in `src/data/content-index/`.
+- These files are reusable assets and can be imported by any component or page for dynamic navigation, metadata, or automation.
+- The generator script is located at `src/scripts/generate-content-index.js`.
+- All reusable logic is in `src/utils/content-utils.js`.
+
+### To regenerate content index files:
+```sh
+node src/scripts/generate-content-index.js
+```
+
+---
+
 ## Architecture Overview
 
 This site is built for maximum DRYness and maintainability. All navigation, asset, and content logic is centralized and automated using reusable Astro components. Key architectural features:

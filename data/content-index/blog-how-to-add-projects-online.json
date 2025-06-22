@@ -1,0 +1,24 @@
+{
+  "type": "blog",
+  "slug": "how-to-add-projects-online",
+  "title": "How to Add New Projects Online: GitHub Actions & Static Sites 🛠️✨",
+  "description": "A step-by-step guide to enabling user-generated content for Astro + GitHub Pages using GitHub Issues, Actions, and DRY components.",
+  "pubDate": "2025-06-22T00:00:00.000Z",
+  "updatedDate": "2025-06-22T00:00:00.000Z",
+  "heroImage": "/google-gemini-codes/assets/automation.svg",
+  "tags": [
+    "astro",
+    "github",
+    "automation",
+    "static-site",
+    "ci/cd"
+  ],
+  "author": "Kairin",
+  "categories": [
+    "Guides",
+    "Automation"
+  ],
+  "fileCreated": "2025-06-22T14:14:54.146Z",
+  "fileModified": "2025-06-22T14:21:45.980Z",
+  "filePath": "src/content/blog/how-to-add-projects-online.md"
+}

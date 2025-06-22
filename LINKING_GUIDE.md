@@ -13,13 +13,16 @@ This document is the source of truth for how every component, page, and asset sh
     ```
   - Do NOT use `Astro.base` for favicon or public assets due to repeated issues.
 
-## 2. Assets in `src/assets/`
-- **Import using the `@` alias and use `{asset.src}`:**
+## 2. Assets in `src/data/`
+- **Import using the `@` alias and use as modules:**
   - Example:
-    ```astro
-    import logo from '@/assets/astro.svg';
-    <img src={logo.src} alt="Logo" />
+    ```js
+    import projectIndex from '@/data/content-index/project-astro-rebuild-guide.json';
     ```
+- **Per-content JSON index files:**
+  - These are generated in `src/data/content-index/` by the script at `src/scripts/generate-content-index.js`.
+  - All reusable logic is in `src/utils/content-utils.js`.
+  - Import them as modules (not as content collections).
 
 ## 3. Internal Page Links (Navigation, Menus, etc.)
 - **Always use a centrally managed component for all internal links:**

@@ -1,25 +1,19 @@
 ---
 // src/pages/blog/[...blogslug].astro
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { marked } from 'marked';
 import BaseLink from '@/components/BaseLink.astro';
+// Import blog JSON asset
+// import blogFirstPost from '@/data/content-index/blog-first-post.json';
+// TODO: Add logic to select the correct blog JSON based on slug param
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
-    params: { blogslug: post.slug }, // Use 'blogslug' param for blog routes
-    props: { post },
-  }));
-}
-
-const { post } = Astro.props;
-const html = marked.parse(post.body || '');
+const post = null; // Placeholder: select based on slug param
+const html = post ? marked.parse(post.body || '') : '';
 ---
-<Layout title={post.data.title}>
+<Layout title={post ? post.title : ''}>
   <main class="prose mx-auto px-4 py-10">
-    <h1>{post.data.title}</h1>
-    <p>{post.data.description}</p>
+    <h1>{post ? post.title : ''}</h1>
+    <p>{post ? post.description : ''}</p>
     <hr />
     <div innerHTML={html} />
     <nav class="mt-8">
