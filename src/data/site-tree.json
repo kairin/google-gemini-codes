@@ -103,6 +103,10 @@
                 {
                   "type": "file",
                   "name": "how-to-add-projects-online.md"
+                },
+                {
+                  "type": "file",
+                  "name": "testingtesting-1.md"
                 }
               ]
             },
@@ -139,6 +143,10 @@
                   "name": "blog-how-to-add-projects-online.json"
                 },
                 {
+                  "type": "file",
+                  "name": "blog-testingtesting-1.json"
+                },
+                {
                   "type": "directory",
                   "name": "history",
                   "contents": [
@@ -149,6 +157,10 @@
                     {
                       "type": "file",
                       "name": "blog-how-to-add-projects-online.history.json"
+                    },
+                    {
+                      "type": "file",
+                      "name": "blog-testingtesting-1.history.json"
                     },
                     {
                       "type": "file",
@@ -307,7 +319,7 @@
     {
       "type": "report",
       "directories": 18,
-      "files": 49
+      "files": 52
     }
   ],
   "scripts": [
@@ -473,6 +485,22 @@
             {
               "type": "file",
               "name": "index.html"
+            },
+            {
+              "type": "directory",
+              "name": "null",
+              "contents": [
+                {
+                  "type": "directory",
+                  "name": "1",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -650,8 +678,8 @@
     },
     {
       "type": "report",
-      "directories": 26,
-      "files": 28
+      "directories": 28,
+      "files": 29
     }
   ]
 }

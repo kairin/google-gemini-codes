@@ -1,7 +1,21 @@
 {
   "type": "blog",
-  "slug": "teste-mini-site",
+  "slug": null,
   "title": "Teste Mini Site",
+  "description": "A test mini site for validating Astro content pipeline.",
+  "pubDate": "2025-06-22T00:00:00.000Z",
+  "updatedDate": "2025-06-22T00:00:00.000Z",
+  "heroImage": "/images/teste-mini-site.jpg",
+  "tags": [
+    "test",
+    "astro",
+    "mini-site"
+  ],
+  "author": "Test Author",
+  "categories": [
+    "Testing",
+    "Example"
+  ],
   "sections": [
     {
       "title": "Teste Mini Site",
@@ -10,18 +24,23 @@
       "start": 1
     }
   ],
-  "pubDate": "2025-06-22T18:07:35.506Z",
-  "pubDateLocal": "6/23/2025, 2:07:35 AM",
+  "pubDateLocal": "6/22/2025, 8:00:00 AM",
   "pubDateHistory": [
     {
       "pubDate": "2025-06-22T18:07:35.506Z",
       "pubDateLocal": "6/23/2025, 2:07:35 AM",
       "updated": "2025-06-22T18:07:47.724Z",
       "updatedLocal": "6/23/2025, 2:07:47 AM"
+    },
+    {
+      "pubDate": "2025-06-22T00:00:00.000Z",
+      "pubDateLocal": "6/22/2025, 8:00:00 AM",
+      "updated": "2025-06-22T18:08:52.349Z",
+      "updatedLocal": "6/23/2025, 2:08:52 AM"
     }
   ],
   "fileCreated": "2025-06-22T18:07:35.506Z",
-  "fileModified": "2025-06-22T18:07:35.521Z",
+  "fileModified": "2025-06-22T18:08:35.583Z",
   "filePath": "src/content/blog/testingtesting-1.md",
-  "body": "\n# Teste Mini Site\n\nThis is a plain text body for the test mini site.\n\n## Section 1\n\nPlain text for section 1.\n\n## Section 2\n\nPlain text for section 2.\n\n## Section 3\n\nPlain text for section 3.---\ntitle: Teste Mini Site\nslug: teste-mini-site\nsections:\n  - title: Section 1\n  - title: Section 2\n  - title: Section 3\n---\n\n# Teste Mini Site\n\nThis is a plain text body for the test mini site.\n\n## Section 1\n\nPlain text for section 1.\n\n## Section 2\n\nPlain text for section 2.\n\n## Section 3\n\nPlain text for section 3."
+  "body": "\n# Teste Mini Site\n\nThis is a plain text body for the test mini site.\n\n## Section 1\n\nPlain text for section 1.\n\n## Section 2\n\nPlain text for section 2.\n\n## Section 3\n\nPlain text for section 3."
 }
