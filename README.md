@@ -19,19 +19,23 @@ This repository is dedicated to building, automating, and maintaining a modern, 
 
 ---
 
-## Content Index JSON Assets
+## Content Index & Section Navigation (Automated)
 
-- Per-content JSON index files (for each project/blog) are generated automatically in `src/data/content-index/`.
-- These files are reusable assets and can be imported by any component or page for dynamic navigation, metadata, or automation.
-- The generator script is located at `src/scripts/generate-content-index.js`.
-- All reusable logic is in `src/utils/content-utils.js`.
+- Each markdown file is parsed and output as a JSON file in `src/data/content-index/`.
+- The JSON includes a `sections` array, with each section containing:
+  - `title`: The first heading after a `<!-- PAGEBREAK -->` (or a fallback title)
+  - `index`: Section index (0-based)
+  - `anchor`: A unique anchor for navigation (e.g., `section-1`)
+  - `start`: Character offset in the markdown body for direct navigation/rendering
+- All navigation and section menus in components/pages are now generated from this JSON data.
+- To add a new section, insert `<!-- PAGEBREAK -->` in your markdown. The next heading will be used as the section title.
+- Components like `SectionedMarkdown.astro` and navigation menus are fully DRY and data-driven.
 
-### To regenerate content index files:
-```sh
-node src/scripts/generate-content-index.js
-```
+## Updating/Adding Content
 
----
+- Add markdown files to `src/content/projects/` or `src/content/blog/`.
+- Run the build or the content index script to regenerate JSON files.
+- All navigation, linking, and section logic will update automatically.
 
 ## Architecture Overview
 

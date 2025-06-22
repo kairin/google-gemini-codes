@@ -14,13 +14,35 @@ for (const file of allFiles) {
   const stats = await getFileStats(file);
   const type = file.includes('/projects/') ? 'project' : 'blog';
   const slug = path.basename(file, '.md');
+
+  // --- Robust Section extraction logic ---
+  // Split content by PAGEBREAK, trim, and extract first heading as section title
+  const rawSections = content.split(/<!--\s*PAGEBREAK\s*-->/ig).map(s => s.trim());
+  let offset = 0;
+  const sections = rawSections.map((section, idx) => {
+    // Find first non-empty heading (e.g., #, ##, ###)
+    const match = section.match(/^(#+)\s+(.+)$/m);
+    const title = match ? match[2].trim() : `Section ${idx + 1}`;
+    // Calculate start offset for navigation (character index in body)
+    const anchor = `section-${idx + 1}`;
+    const start = content.indexOf(section, offset);
+    offset = start + section.length;
+    return {
+      title,
+      index: idx,
+      anchor,
+      start
+    };
+  });
+
   const json = {
     type,
     slug,
     ...data,
     ...stats,
     filePath: file,
-    body: content // include full markdown body
+    body: content, // include full markdown body
+    sections // robust: array of section metadata with offsets
   };
   const outPath = path.join(outputDir, `${type}-${slug}.json`);
   console.log('Writing JSON to:', outPath);
