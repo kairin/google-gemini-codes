@@ -10,7 +10,7 @@ console.log('Output directory:', outputDir);
 await fs.mkdir(outputDir, { recursive: true });
 
 for (const file of allFiles) {
-  const { data } = await readMarkdownFile(file);
+  const { data, content } = await readMarkdownFile(file); // content is the markdown body
   const stats = await getFileStats(file);
   const type = file.includes('/projects/') ? 'project' : 'blog';
   const slug = path.basename(file, '.md');
@@ -19,7 +19,8 @@ for (const file of allFiles) {
     slug,
     ...data,
     ...stats,
-    filePath: file
+    filePath: file,
+    body: content // include full markdown body
   };
   const outPath = path.join(outputDir, `${type}-${slug}.json`);
   console.log('Writing JSON to:', outPath);
