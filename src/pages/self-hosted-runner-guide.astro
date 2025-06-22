@@ -1,0 +1,81 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+<Layout title="GitHub Actions Self-Hosted Runner Guide">
+  <main class="prose mx-auto px-4 py-10">
+    <h1>Using a GitHub Actions Self-Hosted Runner</h1>
+    <p>This guide explains how to set up and use a self-hosted runner for your project to avoid GitHub-hosted runner costs.</p>
+    <h2>1. Register Your Runner</h2>
+    <ol>
+      <li>Go to <b>Settings → Actions → Runners</b> in your GitHub repository.</li>
+      <li>Click <b>"New self-hosted runner"</b> and follow the instructions for your OS.</li>
+      <li>When prompted, you can add a custom label (e.g. <code>Linux-Ubuntu</code>).</li>
+      <li>Start the runner with <code>./run.sh</code> in the <code>actions-runner</code> directory.</li>
+    </ol>
+    <h2>2. Workflow Configuration</h2>
+    <p>Your workflow file should use your custom label:</p>
+    <pre><code>runs-on: [self-hosted, Linux-Ubuntu]</code></pre>
+    <p>Example workflow:</p>
+    <pre><code>{`name: Build Locally
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux-Ubuntu]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "\${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
+            echo "lockfile=yarn.lock" >> $GITHUB_OUTPUT
+            exit 0
+          elif [ -f "\${{ github.workspace }}/package.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+            echo "lockfile=package-lock.json" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: \${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: \${{ steps.detect-package-manager.outputs.lockfile }}
+      - name: Install dependencies
+        run: \${{ steps.detect-package-manager.outputs.manager }} \${{ steps.detect-package-manager.outputs.command }}
+      - name: Install marked
+        run: npm install marked --save
+      - name: Build with Astro
+        run: \${{ steps.detect-package-manager.outputs.runner }} astro build
+`}</code></pre>
+    <h2>3. Running the Workflow</h2>
+    <ol>
+      <li>Start your runner with <code>./run.sh</code> (leave this terminal open).</li>
+      <li>Go to the <b>Actions</b> tab in your repo and click <b>Run workflow</b> for <b>Build Locally</b>.</li>
+      <li>The workflow will run on your local/server machine, not on GitHub-hosted infrastructure.</li>
+    </ol>
+    <h2>4. Tips</h2>
+    <ul>
+      <li>You can add more custom labels to target specific runners.</li>
+      <li>Monitor your runner status in <b>Settings → Actions → Runners</b>.</li>
+      <li>Stop the runner with <code>Ctrl+C</code> when not in use.</li>
+    </ul>
+    <h2>5. Why Use a Self-Hosted Runner?</h2>
+    <ul>
+      <li><b>No GitHub-hosted runner costs</b> for private repos or heavy usage.</li>
+      <li>Full control over the build environment.</li>
+      <li>Can use your own hardware or cloud VM.</li>
+    </ul>
+  </main>
+</Layout>

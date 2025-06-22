@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+        "label": "Run Self-Hosted Runner Workflow",
+        "type": "shell",
+        "command": "gh workflow run deploy.yml",
+        "problemMatcher": [],
+        "detail": "Triggers the self-hosted runner workflow on GitHub."
+    },
+    {
+        "label": "Open Source Control for Commit",
+        "type": "shell",
+        "command": "code --goto .",
+        "problemMatcher": [],
+        "detail": "Opens VS Code to review, commit, and push changes with Copilot message."
+    },
+    {
+        "label": "Automated Build + Commit Flow",
+        "dependsOn": [
+            "Run Self-Hosted Runner Workflow",
+            "Open Source Control for Commit"
+        ],
+        "dependsOrder": "sequence",
+        "problemMatcher": [
+            "$node-sass"
+        ]
+    }
+]
+}

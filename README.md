@@ -172,6 +172,17 @@ The React component will fetch the JSON at runtime (using fetch or dynamic impor
 
 ---
 
+## GitHub Actions: Using a Self-Hosted Runner
+
+To avoid GitHub-hosted runner costs, this project is configured to use a self-hosted runner with a custom label (e.g. `Linux-Ubuntu`).
+
+- See the full guide: [`/self-hosted-runner-guide`](/self-hosted-runner-guide)
+- The workflow file is `.github/workflows/deploy.yml` and uses:
+  ```yaml
+  runs-on: [self-hosted, Linux-Ubuntu]
+  ```
+- You must register and start your runner before running workflows.
+
 ## Contributing
 
 - **Always use DRY components** for navigation, cards, lists, and content rendering.

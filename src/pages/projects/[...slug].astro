@@ -8,7 +8,9 @@ export async function getStaticPaths() {
   return getProjectStaticPaths();
 }
 
-const { project, sectionIndex = 0 } = Astro.props;
+const { project, slug = '' } = Astro.props;
+const [projectSlug, sectionIndexStr] = slug.split('/');
+const sectionIndex = Number(sectionIndexStr) - 1 || 0;
 const rawContent = project.body || '';
 const baseUrl = `/projects/${project.slug}`;
 const sections = project.sections || [];

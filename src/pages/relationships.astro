@@ -1,35 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-const relationships = await import('@/data/file-relationships.json');
-
-function getFileLinks(file) {
-  const rel = relationships.default[file] || {};
-  return [
-    ...(rel.imports || []).map(i => ({ type: 'import', value: i })),
-    ...(rel.links || []).map(l => ({ type: 'link', value: l })),
-  ];
-}
+import FileRelationships from '@/components/FileRelationships.jsx';
 ---
 <Layout title="File Relationships Visualization">
   <main class="prose mx-auto px-4 py-10">
     <h1>File Relationships</h1>
-    <p>This page visualizes imports and internal links between files in the codebase. Each file lists its direct imports and links.</p>
-    <ul>
-      {Object.keys(relationships.default).sort().map(file => (
-        <li class="mb-6">
-          <details>
-            <summary class="font-mono text-blue-700 cursor-pointer">{file}</summary>
-            <ul class="ml-4">
-              {getFileLinks(file).length === 0 && <li class="text-gray-500">No imports or links</li>}
-              {getFileLinks(file).map((rel, idx) => (
-                <li key={idx} class={rel.type === 'import' ? 'text-green-700' : 'text-purple-700'}>
-                  <span class="font-bold">{rel.type}:</span> <span class="font-mono">{rel.value}</span>
-                </li>
-              ))}
-            </ul>
-          </details>
-        </li>
-      ))}
-    </ul>
+    <p>This page visualizes imports and internal links between files in the codebase. Use the search to filter files, and click a filename to expand its relationships.</p>
+    <FileRelationships client:load />
   </main>
 </Layout>

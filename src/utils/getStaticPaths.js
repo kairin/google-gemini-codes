@@ -25,7 +25,7 @@ export function getProjectStaticPaths() {
     const sectionCount = project.sections?.length || 1;
     for (let i = 0; i < sectionCount; i++) {
       paths.push({
-        params: { [paramName]: [project.slug, `${i + 1}`] },
+        params: { [paramName]: `${project.slug}/${i + 1}` },
         props: { project, sectionIndex: i },
       });
     }
@@ -42,7 +42,7 @@ export function getBlogStaticPaths() {
     const sectionCount = post.sections?.length || 1;
     for (let i = 0; i < sectionCount; i++) {
       paths.push({
-        params: { [paramName]: [post.slug, `${i + 1}`] },
+        params: { [paramName]: `${post.slug}/${i + 1}` },
         props: { post, sectionIndex: i },
       });
     }

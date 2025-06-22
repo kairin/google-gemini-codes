@@ -52,3 +52,14 @@ This project is a modern, DRY, scalable Astro site for technical projects, guide
 ## For Contributors
 - See `README.md` for quickstart and usage.
 - See this file for architecture and automation details.
+
+## GitHub Actions: Self-Hosted Runner Setup
+
+To avoid incurring costs from GitHub-hosted runners, this project uses a self-hosted runner with a custom label (e.g. `Linux-Ubuntu`).
+
+- See the full guide: [`/self-hosted-runner-guide`](/self-hosted-runner-guide)
+- The workflow file is `.github/workflows/deploy.yml` and uses:
+  ```yaml
+  runs-on: [self-hosted, Linux-Ubuntu]
+  ```
+- Register and start your runner before running workflows.
