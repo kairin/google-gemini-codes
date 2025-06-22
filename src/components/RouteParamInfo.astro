@@ -1,0 +1,24 @@
+---
+import { routeParamMap } from '@/utils/routeParamMap.js';
+---
+<table class="table-auto border mt-6">
+  <thead>
+    <tr>
+      <th class="border px-4 py-2">Route</th>
+      <th class="border px-4 py-2">Param Name</th>
+      <th class="border px-4 py-2">Example Path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="border px-4 py-2">/blog/[...slug].astro</td>
+      <td class="border px-4 py-2">slug</td>
+      <td class="border px-4 py-2">/blog/my-post/1</td>
+    </tr>
+    <tr>
+      <td class="border px-4 py-2">/projects/[...slug].astro</td>
+      <td class="border px-4 py-2">slug</td>
+      <td class="border px-4 py-2">/projects/my-project/1</td>
+    </tr>
+  </tbody>
+</table>
