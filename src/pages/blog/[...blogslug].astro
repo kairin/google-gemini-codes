@@ -8,7 +8,7 @@ import BaseLink from '@/components/BaseLink.astro';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
-    params: { slug: post.slug },
+    params: { blogslug: post.slug }, // Use 'blogslug' param for blog routes
     props: { post },
   }));
 }
