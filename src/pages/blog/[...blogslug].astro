@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   return getBlogStaticPaths();
 }
 
-const { post, sectionIndex = 0 } = Astro.props;
+const { post, sectionIndex = 0, blogslug = [] } = Astro.props;
 const rawContent = post.body || '';
 const baseUrl = `/blog/${post.slug}`;
 const sections = post.sections || [];

@@ -2,8 +2,8 @@
 // Keeps param logic DRY and robust for static path generation and route files
 
 export const routeParamMap = {
-  blog: 'slug',      // for src/pages/blog/[...slug].astro
-  projects: 'slug',  // for src/pages/projects/[...slug].astro
+  blog: 'blogslug',      // for src/pages/blog/[...blogslug].astro
+  projects: 'slug',      // for src/pages/projects/[...slug].astro
   // Add more as needed
 };
 
