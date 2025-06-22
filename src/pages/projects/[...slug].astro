@@ -35,15 +35,15 @@ const sections = rawContent.split(/\n---pagebreak---\n/);
 
 // If this is a default path (no section), redirect to section 1
 if (redirect && Astro.request.url && !Astro.request.url.endsWith('/1')) {
-  return Astro.redirect(`/projects/${project.slug}/1`);
+  return Astro.redirect(`${Astro.base}/projects/${project.slug}/1`);
 }
 
-// Parse section titles for menu (look for first H1 or H2 in each section)
+// Use Astro.base for all internal links to respect the configured base path
 const menu = sections.map((section, idx) => {
   const match = section.match(/^#\s+(.+)$|^##\s+(.+)$/m);
   return {
     title: match ? (match[1] || match[2]) : `Section ${idx + 1}`,
-    url: `/projects/${project.slug}/${idx + 1}`,
+    url: `${Astro.base}/projects/${project.slug}/${idx + 1}`,
     isActive: idx === sectionIndex,
   };
 });
