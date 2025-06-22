@@ -11,11 +11,15 @@
     "postbuild": "node src/scripts/generate-trees.js"
   },
   "dependencies": {
+    "@astrojs/react": "^4.3.0",
     "@tailwindcss/vite": "^4.1.10",
     "astro": "^5.10.0",
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "marked": "^15.0.12",
+    "prop-types": "^15.8.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.10"
   }
 }
