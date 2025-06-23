@@ -354,13 +354,17 @@
         {
           "type": "file",
           "name": "generate-content-index.js"
+        },
+        {
+          "type": "file",
+          "name": "run-local-deploy.sh"
         }
       ]
     },
     {
       "type": "report",
       "directories": 1,
-      "files": 2
+      "files": 3
     }
   ],
   "public": [
