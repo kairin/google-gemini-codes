@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "postbuild": "node src/scripts/generate-trees.js",
-    "precommit": "node scripts/check-protected-files.js"
+    "check-layout": "node scripts/check-layout-integrity.js",
+    "precommit": "node scripts/check-protected-files.js && npm run check-layout"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",

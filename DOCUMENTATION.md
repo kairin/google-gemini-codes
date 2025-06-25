@@ -90,3 +90,36 @@ To avoid incurring costs from GitHub-hosted runners, this project uses a self-ho
 - For architecture, see this file and `/docs`.
 - For linking/asset rules, see [LINKING_GUIDE.md](./LINKING_GUIDE.md).
 - Document new errors in Troubleshooting and/or open an issue.
+
+## Integrating Interactive Components (React, etc.) and Maintaining Layout Structure
+
+This project enforces a consistent page structure: a top header (navigation), a main content area (middle body), and a bottom footer. This is primarily managed by the `src/layouts/Layout.astro` component.
+
+To ensure this structure is maintained and to provide a clear way to add complex or interactive UI elements (e.g., using React, Vue, Svelte, or other client-side frameworks):
+
+1.  **Use the Main Layout:** All pages created under `src/pages/` should use the primary `Layout.astro` component. The `scripts/check-layout-integrity.js` script (part of the pre-commit hook) will verify this.
+
+2.  **Content Goes in the Slot:** The "middle body" of any page is rendered via the `<slot />` tag within `Layout.astro`. All page-specific content, including text, images, Astro components, and framework components (like React components), must be placed *inside* the `<Layout>...</Layout>` tags on a page.
+
+3.  **Embedding Framework Components:**
+    *   Framework components (e.g., a React component like `MyInteractiveWidget.jsx`) should be imported into your Astro components or directly into your Astro page files (`.astro`).
+    *   These components are then used within the Astro component's template, which itself will be part of the content passed to the main `<slot />`.
+    *   **Example:**
+        ```astro
+        // src/pages/my-interactive-page.astro
+        ---
+        import Layout from '@/layouts/Layout.astro';
+        import MyInteractiveWidget from '@/components/MyInteractiveWidget.jsx'; // A React component
+        import RegularAstroComponent from '@/components/RegularAstroComponent.astro';
+        ---
+        <Layout title="My Interactive Page">
+          <h1>Welcome to my interactive page!</h1>
+          <RegularAstroComponent />
+          <MyInteractiveWidget client:load /> {/* client directive for interactivity */}
+          <p>Some more content here...</p>
+        </Layout>
+        ```
+
+4.  **Do Not Modify Core Layout for Content:** Avoid directly altering `src/layouts/Layout.astro` to insert page-specific interactive elements. The `Layout.astro` component is for the global site structure (navigation, main slot, footer). Page-specific content, no matter how complex, belongs in the pages themselves or in components imported by those pages, ultimately rendering within the `<slot />`.
+
+By following these guidelines, we can ensure the site maintains a consistent structural integrity while still allowing for rich, interactive user experiences. The automated checks will help prevent accidental breakage of the main layout.
