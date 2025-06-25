@@ -24,7 +24,7 @@
       "start": 1
     }
   ],
-  "pubDateLocal": "6/22/2025, 8:00:00 AM",
+  "pubDateLocal": "6/22/2025, 12:00:00 AM",
   "pubDateHistory": [
     {
       "pubDate": "2025-06-22T18:07:35.506Z",
@@ -121,10 +121,22 @@
       "pubDateLocal": "6/22/2025, 8:00:00 AM",
       "updated": "2025-06-23T13:59:37.961Z",
       "updatedLocal": "6/23/2025, 9:59:37 PM"
+    },
+    {
+      "pubDate": "2025-06-22T00:00:00.000Z",
+      "pubDateLocal": "6/22/2025, 12:00:00 AM",
+      "updated": "2025-06-25T20:01:24.658Z",
+      "updatedLocal": "6/25/2025, 8:01:24 PM"
+    },
+    {
+      "pubDate": "2025-06-22T00:00:00.000Z",
+      "pubDateLocal": "6/22/2025, 12:00:00 AM",
+      "updated": "2025-06-25T20:10:25.750Z",
+      "updatedLocal": "6/25/2025, 8:10:25 PM"
     }
   ],
-  "fileCreated": "2025-06-22T18:07:35.506Z",
-  "fileModified": "2025-06-22T18:08:35.583Z",
+  "fileCreated": "2025-06-25T17:28:54.201Z",
+  "fileModified": "2025-06-25T17:28:54.201Z",
   "filePath": "src/content/blog/testingtesting-1.md",
   "body": "\n# Teste Mini Site\n\nThis is a plain text body for the test mini site.\n\n## Section 1\n\nPlain text for section 1.\n\n## Section 2\n\nPlain text for section 2.\n\n## Section 3\n\nPlain text for section 3."
 }

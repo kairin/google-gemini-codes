@@ -4,13 +4,15 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node src/scripts/generate-content-index.js && node src/scripts/check-content-index.js",
+    "prebuild": "node src/scripts/generate-content-index.js && node src/scripts/check-content-index.js && npm run validate-integrity",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "postbuild": "node src/scripts/generate-trees.js",
     "check-layout": "node scripts/check-layout-integrity.js",
-    "precommit": "node scripts/check-protected-files.js && npm run check-layout"
+    "validate-integrity": "node scripts/validate-file-hashes.js",
+    "generate-hashes": "node scripts/generate-file-hashes.js",
+    "precommit": "node scripts/check-protected-files.js && npm run check-layout && npm run validate-integrity"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
