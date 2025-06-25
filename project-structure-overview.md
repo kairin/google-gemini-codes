@@ -69,3 +69,37 @@ If you need to make a **deliberate and approved** change to a Key File:
 - The error message from `validate-integrity` will indicate which file(s) caused the failure (either a hash mismatch or a missing file).
 - **If the change was unintentional:** Revert the changes to the specified Key File(s) to match their state in the last valid commit.
 - **If the change was intentional but you forgot to update the manifest:** Run `npm run generate-hashes`, then add the updated `file-integrity-manifest.json` to your commit and try committing again.
+
+---
+
+## 📚 Directory & File Details
+
+### ⚡ .astro
+See [Astro Internals](./astro-internals.md) for details on Astro’s internal cache, schemas, and type definitions.
+
+### 🐙 .github
+See [GitHub Config](./github-config.md) for details on issue templates and CI/CD workflows.
+
+### ⚙️ .vscode
+See [VS Code Config](./vscode-config.md) for workspace settings, tasks, and extensions.
+
+### 🗂️ data/content-index
+See [Content Index Data](./data-content-index.md) for how content metadata is generated and used.
+
+### 📦 dist
+See [Dist Structure](./dist-structure.md) for details on the static site output and deployment.
+
+### 📁 public
+Contains static assets (e.g., favicon, static HTML) copied directly to the build output.
+
+### 📝 src
+All editable source code: content, components, layouts, pages, scripts, styles, and utilities. This is where you develop your site’s features and content.
+
+### 🛠️ scripts
+Custom scripts for content indexing, deployment, and file protection. These automate repetitive or complex project tasks.
+
+### 📦 node_modules
+Installed npm packages (managed by npm). Do not edit manually.
+
+### 📄 README.md & docs
+Project documentation and guides for contributors and maintainers.
