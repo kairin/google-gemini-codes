@@ -1,7 +1,13 @@
 #!/usr/bin/env node
 // Pre-commit/protected file check script
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+// Replicate __dirname behavior in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const protectedList = fs.readFileSync(path.join(__dirname, '../PROTECTED_FILES.txt'), 'utf-8')
   .split('\n')
@@ -9,7 +15,6 @@ const protectedList = fs.readFileSync(path.join(__dirname, '../PROTECTED_FILES.t
   .filter(l => l && !l.startsWith('#'));
 
 // Get staged files
-const execSync = require('child_process').execSync;
 const staged = execSync('git diff --cached --name-only', { encoding: 'utf-8' })
   .split('\n')
   .map(f => f.trim())
@@ -22,4 +27,6 @@ if (violated.length > 0) {
   console.error('\nPlease do not edit these files directly. See PROTECTED_FILES.txt for details.');
   process.exit(1);
 }
+// If no violations, explicitly exit with 0, though it's the default.
+// console.log('\n\x1b[32m✓ No protected files violated in this commit.\x1b[0m');
 process.exit(0);
