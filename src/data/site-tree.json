@@ -5,6 +5,10 @@
       "name": "src",
       "contents": [
         {
+          "type": "file",
+          "name": "AGENTS.MD"
+        },
+        {
           "type": "directory",
           "name": "assets",
           "contents": [
@@ -22,6 +26,10 @@
           "type": "directory",
           "name": "components",
           "contents": [
+            {
+              "type": "file",
+              "name": "AGENTS.MD"
+            },
             {
               "type": "file",
               "name": "BaseLink.astro"
@@ -202,6 +210,10 @@
           "contents": [
             {
               "type": "file",
+              "name": "AGENTS.MD"
+            },
+            {
+              "type": "file",
               "name": "Layout.astro"
             }
           ]
@@ -210,6 +222,10 @@
           "type": "directory",
           "name": "pages",
           "contents": [
+            {
+              "type": "file",
+              "name": "AGENTS.MD"
+            },
             {
               "type": "directory",
               "name": "blog",
@@ -282,6 +298,10 @@
           "contents": [
             {
               "type": "file",
+              "name": "AGENTS.MD"
+            },
+            {
+              "type": "file",
               "name": "check-content-index.js"
             },
             {
@@ -339,7 +359,7 @@
     {
       "type": "report",
       "directories": 18,
-      "files": 57
+      "files": 62
     }
   ],
   "scripts": [
@@ -347,6 +367,14 @@
       "type": "directory",
       "name": "scripts",
       "contents": [
+        {
+          "type": "file",
+          "name": "AGENTS.MD"
+        },
+        {
+          "type": "file",
+          "name": "check-layout-integrity.js"
+        },
         {
           "type": "file",
           "name": "check-protected-files.js"
@@ -357,14 +385,22 @@
         },
         {
           "type": "file",
+          "name": "generate-file-hashes.js"
+        },
+        {
+          "type": "file",
           "name": "run-local-deploy.sh"
+        },
+        {
+          "type": "file",
+          "name": "validate-file-hashes.js"
         }
       ]
     },
     {
       "type": "report",
       "directories": 1,
-      "files": 3
+      "files": 7
     }
   ],
   "public": [

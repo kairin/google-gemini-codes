@@ -15,7 +15,7 @@
   "src/scripts/generate-trees.js": "baf4198acc686e0e61f80ad9382b1d1d3a8b9089ff259b32777f8a603a5c21bc",
   "src/scripts/generate-file-relationships.js": "4b90581e3591ea2ce37beb8e11000107e08f0ddffc0d211c4dda9b07fb2c69c4",
   "scripts/check-protected-files.js": "9236c6fce3757edd1bfab8a64b8f55b2bb6d6227920731bbce40800d7035b20b",
-  "scripts/check-layout-integrity.js": "19ea392fef23eb196e8fa760ddb9546c48e2f3b832fbe903b82b07aee2d8fa50",
+  "scripts/check-layout-integrity.js": "476f900191e7741eb97e1d3e406adec242601b212a51ef212d4512014330d96a",
   "src/styles/global.css": "944e6e12c0067a6767836a78ad6c4095b829f966b44f33bc95cfef1401ab3c10",
   "src/utils/getStaticPaths.js": "26dab2d7da9181a77c6b9ac545c47e6786e2dee9fe81154f08a0becd98d1417d",
   "src/utils/content-utils.js": "21cf07a384454a16bc0e785417c69d3f67a5b19f2feed79d1c58e343b2a71fed"
