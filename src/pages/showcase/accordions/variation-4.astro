@@ -1,0 +1,18 @@
+---
+// src/pages/showcase/accordions/variation-4.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 4 - Vibrant Blue Theme" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation demonstrates a vibrant blue color scheme, suitable for a more modern or branded look.
+    </p>
+
+    <ShowcaseAccordion title="Vibrant Blue - Item 1" isOpen={true} colorScheme="vibrant-blue">
+        <p>Content for the first vibrant blue accordion item. The header has a strong blue background with light text.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Vibrant Blue - Item 2" colorScheme="vibrant-blue">
+        <p>The content area also reflects the theme. This style can be useful for call-to-action sections or primary feature highlights.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

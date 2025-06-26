@@ -1,0 +1,26 @@
+---
+// src/pages/showcase/accordions/variation-1.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 1 - Default Style" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation aims to replicate the original styling and functionality of the accordion component from <code>.unused/Accordion.astro</code> using the new reusable <code>ShowcaseAccordion.astro</code> component.
+    </p>
+
+    <ShowcaseAccordion title="Default Accordion Item 1" isOpen={true}>
+        <p>This is the content for the first accordion item. It is open by default. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Default Accordion Item 2">
+        <p>This is the content for the second accordion item. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <ul class="list-disc pl-5 mt-2">
+            <li>Point one</li>
+            <li>Point two</li>
+        </ul>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Default Accordion Item 3">
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

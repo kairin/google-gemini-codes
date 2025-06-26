@@ -1,0 +1,18 @@
+---
+// src/pages/showcase/accordions/variation-6.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 6 - Icon on Left" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation demonstrates placing the toggle icon (chevron by default) on the left side of the accordion header.
+    </p>
+
+    <ShowcaseAccordion title="Icon Left - Item A" isOpen={true} iconPosition="left">
+        <p>The chevron icon now appears to the left of the title. The title text aligns next to it.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Icon Left - Item B (Plus/Minus)" iconPosition="left" iconSet="plus-minus">
+        <p>This also works with the 'plus-minus' icon set, aligning the +/- symbol to the left.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

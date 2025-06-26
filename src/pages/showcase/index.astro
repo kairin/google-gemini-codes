@@ -1,0 +1,21 @@
+---
+// src/pages/showcase/index.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import BaseLink from '@/components/BaseLink.astro';
+---
+<ShowcaseLayout title="Component Showcase Home">
+    <div class="text-center">
+        <p class="mb-4">Welcome to the component showcase area!</p>
+        <p class="mb-8">Here you can find various components and design iterations.</p>
+
+        <h2 class="text-2xl font-semibold mb-4 header-text">Available Showcases:</h2>
+        <ul class="list-none p-0 space-y-2">
+            <li>
+                <BaseLink href="/showcase/accordions" class="text-blue-600 dark:text-blue-400 hover:underline text-lg">
+                    Accordion Component Variations
+                </BaseLink>
+            </li>
+            <!-- More showcases will be listed here -->
+        </ul>
+    </div>
+</ShowcaseLayout>

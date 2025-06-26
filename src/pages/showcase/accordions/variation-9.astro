@@ -1,0 +1,18 @@
+---
+// src/pages/showcase/accordions/variation-9.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 9 - Jarring Pink/Yellow" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        Exploring a "jarring" color combination as requested, to push stylistic boundaries. This uses a pink and yellow theme.
+    </p>
+
+    <ShowcaseAccordion title="WARNING: Bright Colors Ahead!" isOpen={true} colorScheme="jarring-pink-yellow" iconSet="plus-minus">
+        <p>This accordion uses a high-contrast, potentially jarring pink and yellow color scheme. Viewer discretion advised!</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Are Your Eyes Ready?" colorScheme="jarring-pink-yellow" iconSet="plus-minus">
+        <p>Another item in this vibrant, attention-grabbing style. This could be used for specific alerts or unique branding moments.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

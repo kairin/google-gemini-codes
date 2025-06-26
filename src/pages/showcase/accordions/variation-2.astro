@@ -1,0 +1,20 @@
+---
+// src/pages/showcase/accordions/variation-2.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 2 - Dark Mode Theme" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation demonstrates the accordion with a 'dark' color scheme. The component itself handles the appropriate text and background colors for a dark theme.
+    </p>
+
+    <div class="p-4 rounded"><!-- Optional: Add a contrasting background for the page if ShowcaseLayout doesn't force one -->
+        <ShowcaseAccordion title="Dark Theme Accordion Item 1" isOpen={true} colorScheme="dark">
+            <p>Content for the first dark accordion item. It is open by default. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </ShowcaseAccordion>
+
+        <ShowcaseAccordion title="Dark Theme Accordion Item 2" colorScheme="dark">
+            <p>Content for the second dark accordion item. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </ShowcaseAccordion>
+    </div>
+</ShowcaseLayout>
