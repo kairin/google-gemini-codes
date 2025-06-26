@@ -91,6 +91,22 @@
               "name": "SectionedMarkdown.astro"
             },
             {
+              "type": "directory",
+              "name": "showcase",
+              "contents": [
+                {
+                  "type": "directory",
+                  "name": "accordions",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "ShowcaseAccordion.astro"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "type": "file",
               "name": "SiteHead.astro"
             },
@@ -215,6 +231,10 @@
             {
               "type": "file",
               "name": "Layout.astro"
+            },
+            {
+              "type": "file",
+              "name": "ShowcaseLayout.astro"
             }
           ]
         },
@@ -222,6 +242,10 @@
           "type": "directory",
           "name": "pages",
           "contents": [
+            {
+              "type": "file",
+              "name": "404.astro"
+            },
             {
               "type": "file",
               "name": "AGENTS.MD"
@@ -281,6 +305,74 @@
             {
               "type": "file",
               "name": "self-hosted-runner-guide.astro"
+            },
+            {
+              "type": "directory",
+              "name": "showcase",
+              "contents": [
+                {
+                  "type": "directory",
+                  "name": "accordions",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-10.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-11.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-12.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-1.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-2.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-3.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-4.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-5.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-6.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-7.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-8.astro"
+                    },
+                    {
+                      "type": "file",
+                      "name": "variation-9.astro"
+                    }
+                  ]
+                },
+                {
+                  "type": "file",
+                  "name": "index.astro"
+                }
+              ]
             },
             {
               "type": "file",
@@ -358,8 +450,8 @@
     },
     {
       "type": "report",
-      "directories": 18,
-      "files": 62
+      "directories": 22,
+      "files": 79
     }
   ],
   "scripts": [
@@ -461,12 +553,16 @@
       "name": "dist",
       "contents": [
         {
+          "type": "file",
+          "name": "404.html"
+        },
+        {
           "type": "directory",
           "name": "_astro",
           "contents": [
             {
               "type": "file",
-              "name": "_blogslug_.DXpDK_rW.css"
+              "name": "_blogslug_.BHJsMVgE.css"
             },
             {
               "type": "file",
@@ -748,6 +844,146 @@
         },
         {
           "type": "directory",
+          "name": "showcase",
+          "contents": [
+            {
+              "type": "directory",
+              "name": "accordions",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "index.html"
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-1",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-10",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-11",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-12",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-2",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-3",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-4",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-5",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-6",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-7",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-8",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                },
+                {
+                  "type": "directory",
+                  "name": "variation-9",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "index.html"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "index.html"
+            }
+          ]
+        },
+        {
+          "type": "directory",
           "name": "sitemap",
           "contents": [
             {
@@ -770,8 +1006,8 @@
     },
     {
       "type": "report",
-      "directories": 30,
-      "files": 33
+      "directories": 44,
+      "files": 48
     }
   ]
 }
