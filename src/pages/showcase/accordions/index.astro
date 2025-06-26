@@ -1,0 +1,44 @@
+---
+// src/pages/showcase/accordions/index.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import BaseLink from '@/components/BaseLink.astro';
+
+// This list will be populated as variations are created
+const accordionVariations = [
+  { title: "Variation 1: Default Style", url: "/showcase/accordions/variation-1", description: "Replicates the original component's look and feel." },
+  { title: "Variation 2: Dark Mode Theme", url: "/showcase/accordions/variation-2", description: "Accordion styled for dark backgrounds." },
+  { title: "Variation 3: Minimalist Style", url: "/showcase/accordions/variation-3", description: "Clean design with minimal borders and plus/minus icons." },
+  { title: "Variation 4: Vibrant Blue Theme", url: "/showcase/accordions/variation-4", description: "Uses a strong blue for headers/accents." },
+  { title: "Variation 5: Muted Green Theme", url: "/showcase/accordions/variation-5", description: "Soft green tones for a calm feel." },
+  { title: "Variation 6: Icon on Left", url: "/showcase/accordions/variation-6", description: "Toggle icon positioned to the left of the title." },
+  { title: "Variation 7: No Icons", url: "/showcase/accordions/variation-7", description: "Accordion without any open/close indicator icons." },
+  { title: "Variation 8: Fancy Shadow Border", url: "/showcase/accordions/variation-8", description: "Uses shadows instead of lines for item separation." },
+  { title: "Variation 9: Jarring Pink/Yellow", url: "/showcase/accordions/variation-9", description: "A high-contrast, vibrant, and potentially 'jarring' theme." },
+  { title: "Variation 10: Custom SVG Icons", url: "/showcase/accordions/variation-10", description: "Demonstrates using custom inline SVGs for icons." },
+  { title: "Variation 11: Image & Text Content", url: "/showcase/accordions/variation-11", description: "Shows an accordion handling mixed media (image and text)." },
+  { title: "Variation 12: Nested Accordions", url: "/showcase/accordions/variation-12", description: "Accordions placed within other accordions." },
+];
+---
+<ShowcaseLayout title="Accordion Component Showcase" showcaseItemName="Accordions">
+    <p class="mb-6 text-center">
+        This gallery showcases various implementations and styles of the Accordion component.
+        Each variation explores different visual themes, minor functional tweaks, or content presentations.
+    </p>
+
+    {accordionVariations.length > 0 ? (
+        <div class="space-y-4">
+            {accordionVariations.map(variation => (
+                <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <BaseLink href={variation.url} class="text-lg font-semibold text-blue-700 dark:text-blue-400 hover:underline">
+                        {variation.title}
+                    </BaseLink>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">{variation.description}</p>
+                </div>
+            ))}
+        </div>
+    ) : (
+        <p class="text-center text-slate-500 dark:text-slate-400">
+            Accordion variations will be listed here once created.
+        </p>
+    )}
+</ShowcaseLayout>

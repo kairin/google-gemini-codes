@@ -1,0 +1,236 @@
+---
+// src/components/showcase/accordions/ShowcaseAccordion.astro
+interface Props {
+  id?: string;
+  title: string;
+  isOpen?: boolean;
+  iconSet?: 'chevron' | 'plus-minus' | 'custom-svg' | 'none';
+  customIconSvg?: { open: string; closed: string }; // Raw SVG strings
+  iconPosition?: 'left' | 'right';
+  colorScheme?: 'default' | 'dark' | 'vibrant-blue' | 'muted-green' | 'jarring-pink-yellow' | 'functional-gray';
+  borderStyle?: 'full' | 'header-only' | 'none' | 'fancy-shadow' | 'minimal-bottom';
+  animationStyle?: 'default' | 'fast' | 'slow-fade' | 'none';
+  customHeaderClasses?: string;
+  customContentClasses?: string;
+  customIconContainerClasses?: string;
+  customIconClasses?: string;
+}
+
+const {
+  id = `accordion-${Math.random().toString(36).substr(2, 9)}`,
+  title,
+  isOpen = false,
+  iconSet = 'chevron',
+  customIconSvg,
+  iconPosition = 'right',
+  colorScheme = 'default',
+  borderStyle = 'full',
+  animationStyle = 'default',
+  customHeaderClasses = '',
+  customContentClasses = '',
+  customIconContainerClasses = '',
+  customIconClasses = '',
+} = Astro.props;
+
+// Base classes
+let itemBaseClasses = "accordion-item mb-2";
+let headerBaseClasses = "accordion-header flex items-center cursor-pointer";
+let contentBaseClasses = "accordion-content overflow-hidden"; // Added overflow-hidden for smoother transitions
+let titleBaseClasses = "font-semibold flex-grow";
+let iconContainerBaseClasses = "transform transition-transform";
+
+// Animation style
+switch (animationStyle) {
+  case 'fast':
+    iconContainerBaseClasses += " duration-150";
+    contentBaseClasses += " transition-all duration-150 ease-out";
+    break;
+  case 'slow-fade':
+    iconContainerBaseClasses += " duration-500";
+    contentBaseClasses += " transition-all duration-500 ease-in-out"; // opacity can be added if desired
+    break;
+  case 'none':
+    iconContainerBaseClasses = ""; // No transform for no animation
+    contentBaseClasses += "";
+    break;
+  default: // 'default'
+    iconContainerBaseClasses += " duration-300";
+    contentBaseClasses += " transition-all duration-300 ease-out";
+    break;
+}
+
+// Color Scheme classes
+switch (colorScheme) {
+  case 'dark':
+    itemBaseClasses += " bg-slate-700 text-white";
+    headerBaseClasses += " p-4 hover:bg-slate-600";
+    titleBaseClasses += " text-slate-100";
+    contentBaseClasses += " p-4 bg-slate-600 border-slate-500";
+    // icon color implied by text-white or can be specific
+    break;
+  case 'vibrant-blue':
+    itemBaseClasses += " bg-blue-600 text-white";
+    headerBaseClasses += " p-4 hover:bg-blue-700";
+    titleBaseClasses += " text-white";
+    contentBaseClasses += " p-4 bg-blue-500 border-blue-400";
+    break;
+  case 'muted-green':
+    itemBaseClasses += " bg-green-100 text-green-800";
+    headerBaseClasses += " p-4 hover:bg-green-200";
+    titleBaseClasses += " text-green-900";
+    contentBaseClasses += " p-4 bg-green-50 border-green-200";
+    break;
+  case 'jarring-pink-yellow':
+    itemBaseClasses += " bg-yellow-300 text-pink-700";
+    headerBaseClasses += " p-4 hover:bg-yellow-400";
+    titleBaseClasses += " text-pink-700 font-bold";
+    contentBaseClasses += " p-4 bg-pink-100 border-pink-300";
+    break;
+  case 'functional-gray':
+    itemBaseClasses += " bg-gray-200 text-gray-800";
+    headerBaseClasses += " p-4 hover:bg-gray-300";
+    titleBaseClasses += " text-gray-900";
+    contentBaseClasses += " p-4 bg-gray-100 border-gray-300";
+    break;
+  default: // 'default'
+    itemBaseClasses += " bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200";
+    headerBaseClasses += " p-4 hover:bg-gray-50 dark:hover:bg-slate-700";
+    // titleBaseClasses += " text-gray-800 dark:text-slate-100"; // already part of default
+    contentBaseClasses += " p-4 bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600";
+    break;
+}
+
+// Border style classes
+switch (borderStyle) {
+  case 'full':
+    itemBaseClasses += " border rounded-lg border-gray-300 dark:border-slate-600";
+    contentBaseClasses += " border-t"; // Already added by color scheme or default
+    break;
+  case 'header-only':
+    itemBaseClasses += " rounded-t-lg"; // Rounded top for item
+    headerBaseClasses += " border-b border-gray-300 dark:border-slate-600";
+    contentBaseClasses += ""; // No extra border for content, relies on header's bottom border
+    break;
+  case 'minimal-bottom':
+    headerBaseClasses += " border-b border-gray-200 dark:border-slate-700";
+    // no item border
+    break;
+  case 'fancy-shadow':
+    itemBaseClasses += " rounded-lg shadow-xl";
+     // contentBaseClasses += " border-t"; // Optional, depending on look
+    break;
+  case 'none':
+    // No border classes added to item or content
+    break;
+}
+
+
+const headerFlexDirection = iconPosition === 'left' ? 'flex-row-reverse' : 'flex-row';
+if (iconPosition === 'left') titleBaseClasses += " text-right";
+
+// Initial state for content visibility and icon rotation
+const initialContentClasses = isOpen ? "" : "max-h-0 opacity-0"; // Use max-h for transition
+const initialIconRotation = isOpen && iconSet !== 'none' && animationStyle !== 'none' ? "rotate-180" : "";
+
+---
+<div class={`${itemBaseClasses}`}>
+    <div
+        class:list={[headerBaseClasses, headerFlexDirection, customHeaderClasses]}
+        aria-expanded={isOpen.toString()}
+        aria-controls={id + "-content"}
+        data-accordion-header-for={id}
+    >
+        <h3 class:list={[titleBaseClasses]}>{title}</h3>
+        {iconSet !== 'none' && (
+            <span class:list={[iconContainerBaseClasses, initialIconRotation, customIconContainerClasses]}>
+                {iconSet === 'chevron' && <i class:list={["fas fa-chevron-down", customIconClasses]}></i>}
+                {iconSet === 'plus-minus' && <span class:list={["plus-minus-icon", customIconClasses]}>{isOpen ? '-' : '+'}</span>}
+                {iconSet === 'custom-svg' && customIconSvg && (
+                    <Fragment set:html={isOpen ? customIconSvg.open : customIconSvg.closed} />
+                )}
+            </span>
+        )}
+    </div>
+    <div
+        id={id + "-content"}
+        class:list={[contentBaseClasses, initialContentClasses, customContentClasses]}
+        aria-labelledby={id + "-header"}
+    >
+        <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->
+            <slot />
+        </div>
+    </div>
+</div>
+
+<script define:vars={{ iconSet }}>
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+</script>
+
+<style is:global>
+    /* Add Font Awesome if using chevron and it's not globally available */
+    /* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'); */
+
+    .accordion-content {
+        /* Default to collapsed state for transition */
+        /* max-height: 0; */
+        /* opacity: 0; */
+        /* overflow: hidden; */ /* Already added to base class */
+    }
+    .accordion-content.max-h-screen { /* Arbitrary large value for open state */
+        max-height: 100vh; /* Adjust as needed, or use JS to set to scrollHeight */
+        /* opacity: 1; */
+    }
+
+    .plus-minus-icon {
+        display: inline-block;
+        width: 1.25em; /* Adjust as needed */
+        text-align: center;
+        font-weight: bold;
+    }
+</style>

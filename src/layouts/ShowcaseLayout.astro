@@ -1,0 +1,59 @@
+---
+// src/layouts/ShowcaseLayout.astro
+import '../styles/global.css'; // Assuming you want to use existing global styles
+import BaseLink from '@/components/BaseLink.astro'; // Reusing existing BaseLink for consistency
+
+interface Props {
+	title: string;
+	showcaseItemName?: string; // e.g., "Accordions"
+}
+
+const { title, showcaseItemName } = Astro.props;
+const base = Astro.site ? new URL(Astro.url.pathname, Astro.site).pathname.split('/')[1] : '';
+const showcaseHomePath = `/${base ? base + '/' : ''}showcase`;
+const itemGalleryPath = showcaseItemName ? `${showcaseHomePath}/${showcaseItemName.toLowerCase()}` : '';
+---
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content={`Showcase: ${title}`} />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<meta name="generator" content={Astro.generator} />
+	<title>{title} | Component Showcase</title>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200">
+	<header class="bg-slate-200 dark:bg-slate-800 shadow-md">
+		<nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+			<div>
+				<a href={showcaseHomePath} class="text-xl font-bold hover:text-blue-600 dark:hover:text-blue-400">Component Showcase</a>
+			</div>
+			<div class="flex space-x-4">
+				<BaseLink href={Astro.site?.pathname === '/' ? '/' : `/${base}`}>Main Site Home</BaseLink>
+				<BaseLink href={showcaseHomePath}>Showcase Home</BaseLink>
+				{showcaseItemName && itemGalleryPath && (
+					<BaseLink href={itemGalleryPath}>{showcaseItemName} Gallery</BaseLink>
+				)}
+			</div>
+		</nav>
+	</header>
+
+	<main class="container mx-auto px-6 py-8">
+		<h1 class="text-3xl font-bold mb-6 text-center header-text">{title}</h1>
+		<div class="bg-white dark:bg-slate-800 shadow-xl rounded-lg p-6 min-h-[calc(100vh-20rem)]">
+			<slot />
+		</div>
+	</main>
+
+	<footer class="text-center py-8 mt-12 border-t border-slate-300 dark:border-slate-700">
+		<p class="text-sm text-slate-600 dark:text-slate-400">&copy; {new Date().getFullYear()} Showcase Area</p>
+	</footer>
+</body>
+</html>
+<style>
+	/* Basic styles for showcase if needed, complementing global.css */
+	body {
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	}
+</style>

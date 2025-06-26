@@ -1,0 +1,30 @@
+---
+// src/pages/showcase/accordions/variation-11.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+// Assuming a placeholder image might be in public/images or use an external one
+const placeholderImageUrl = "https://via.placeholder.com/300x200.png?text=Sample+Image";
+---
+<ShowcaseLayout title="Accordion: Variation 11 - Image & Text Content" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation shows how an accordion item can handle mixed content, like an image alongside text, within its slot.
+    </p>
+
+    <ShowcaseAccordion title="Item with Featured Image" isOpen={true} colorScheme="default" borderStyle="fancy-shadow">
+        <div class="flex flex-col md:flex-row gap-4 items-start">
+            <img src={placeholderImageUrl} alt="Placeholder Image" class="w-full md:w-1/3 rounded shadow-md"/>
+            <div class="flex-grow">
+                <h4 class="font-semibold text-lg mb-2">Image Title or Sub-heading</h4>
+                <p>This content area includes a placeholder image and accompanying text. Accordions can be versatile in displaying various types of media and information layouts.</p>
+                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Image dimensions and text flow can be controlled using standard HTML and CSS within the slot.</p>
+            </div>
+        </div>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Another Mixed Content Example" colorScheme="functional-gray">
+        <p>Simple text can be combined with more complex layouts if needed.</p>
+        <blockquote class="mt-2 p-2 border-l-4 border-gray-400 bg-gray-100 dark:bg-gray-700 dark:border-gray-500">
+            "This is a blockquote within an accordion, for example."
+        </blockquote>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

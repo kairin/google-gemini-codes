@@ -1,0 +1,31 @@
+---
+// src/pages/showcase/accordions/variation-12.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 12 - Nested Accordions" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This demonstrates nesting accordions. The main accordion item's content slot contains another instance of the <code>ShowcaseAccordion</code>.
+    </p>
+
+    <ShowcaseAccordion title="Outer Accordion - Level 1" isOpen={true} colorScheme="default" borderStyle="full">
+        <p class="mb-2">This is the content of the first level accordion. Below is a nested accordion set:</p>
+
+        <div class="ml-4 border-l-2 border-blue-500 pl-4">
+            <ShowcaseAccordion title="Nested Accordion - Level 2.1" colorScheme="muted-green" iconSet="plus-minus" borderStyle="minimal-bottom">
+                <p>Content for nested item 2.1. This shows that accordions can be placed within each other to create hierarchical collapsible sections.</p>
+            </ShowcaseAccordion>
+
+            <ShowcaseAccordion title="Nested Accordion - Level 2.2" colorScheme="muted-green" iconSet="plus-minus" borderStyle="minimal-bottom">
+                <p>Content for nested item 2.2. Each nested accordion maintains its own state independently.</p>
+                <ShowcaseAccordion title="Even Deeper - Level 3.1" colorScheme="functional-gray" iconSet="chevron" iconPosition="left" borderStyle="none" customHeaderClasses="text-sm py-1" customContentClasses="text-xs pl-3 py-1">
+                    <p>Tiny details at level 3!</p>
+                </ShowcaseAccordion>
+            </ShowcaseAccordion>
+        </div>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Another Outer Accordion Item" colorScheme="default" borderStyle="full">
+        <p>Standard content for another top-level item, to show it operates independently of the one with nested items.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

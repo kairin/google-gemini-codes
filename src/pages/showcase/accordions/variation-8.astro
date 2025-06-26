@@ -1,0 +1,18 @@
+---
+// src/pages/showcase/accordions/variation-8.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 8 - Fancy Shadow" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation uses the 'fancy-shadow' border style, where the accordion item is distinguished by a prominent shadow rather than lines.
+    </p>
+
+    <ShowcaseAccordion title="Shadowed Item One" isOpen={true} borderStyle="fancy-shadow" colorScheme="default">
+        <p>The item floats with a shadow. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Shadowed Item Two" borderStyle="fancy-shadow" colorScheme="functional-gray" customHeaderClasses="font-mono" customContentClasses="text-sm">
+        <p>Another item with the fancy shadow style, perhaps with a slightly different internal color scheme or typography for contrast.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

@@ -1,0 +1,18 @@
+---
+// src/pages/showcase/accordions/variation-7.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 7 - No Icons" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        A very clean version of the accordion that omits any visual open/close indicator icons. Interaction relies solely on clicking the header.
+    </p>
+
+    <ShowcaseAccordion title="No Icon - Question 1" isOpen={true} iconSet="none" borderStyle="minimal-bottom">
+        <p>This accordion item has no icon. The header itself is the clickable target to toggle content visibility.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="No Icon - Question 2" iconSet="none" borderStyle="minimal-bottom">
+        <p>This approach can be useful for FAQs or other content where icons might be considered visual noise.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

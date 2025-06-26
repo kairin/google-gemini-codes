@@ -1,0 +1,33 @@
+---
+// src/pages/showcase/accordions/variation-3.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 3 - Minimalist Style" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation showcases a minimalist accordion style: no item borders, minimal padding (handled by custom classes or specific props if implemented), and plus/minus icons.
+    </p>
+
+    <ShowcaseAccordion
+        title="Minimal Accordion - Section 1"
+        isOpen={true}
+        colorScheme="default"
+        borderStyle="minimal-bottom"
+        iconSet="plus-minus"
+        customHeaderClasses="py-2"
+        customContentClasses="py-2 pl-2"
+    >
+        <p>This is content for the first minimalist accordion item. It focuses on clean typography and less visual clutter.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion
+        title="Minimal Accordion - Section 2"
+        colorScheme="default"
+        borderStyle="minimal-bottom"
+        iconSet="plus-minus"
+        customHeaderClasses="py-2"
+        customContentClasses="py-2 pl-2"
+    >
+        <p>Another section in the minimalist style. The separation is primarily achieved by the header's bottom border and typography.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>

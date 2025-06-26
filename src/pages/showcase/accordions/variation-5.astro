@@ -1,0 +1,18 @@
+---
+// src/pages/showcase/accordions/variation-5.astro
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import ShowcaseAccordion from '@/components/showcase/accordions/ShowcaseAccordion.astro';
+---
+<ShowcaseLayout title="Accordion: Variation 5 - Muted Green Theme" showcaseItemName="Accordions">
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        This variation uses soft, muted green tones for a calm and organic feel.
+    </p>
+
+    <ShowcaseAccordion title="Muted Green - Info Section" isOpen={true} colorScheme="muted-green">
+        <p>This style is suitable for informational content where a less intrusive design is preferred. Lorem ipsum dolor sit amet.</p>
+    </ShowcaseAccordion>
+
+    <ShowcaseAccordion title="Muted Green - Further Details" colorScheme="muted-green">
+        <p>The subtle color changes help differentiate sections without being overwhelming. Ut enim ad minim veniam.</p>
+    </ShowcaseAccordion>
+</ShowcaseLayout>
