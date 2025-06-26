@@ -1,0 +1,71 @@
+<!DOCTYPE html><meta charset="utf-8"><h1 id="how-to-add-a-new-project-via-github-issue">How to Add a New Project via GitHub Issue <span style="font-size:1.5em;vertical-align:middle;">📝</span></h1>
+<p>Want to add a new project to this site? You can do it in just a few steps—no coding required!</p>
+<hr>
+<h2 id="step-1-open-a-new-project-issue">Step 1: Open a New Project Issue <span style="font-size:1.3em;vertical-align:middle;">➕</span></h2>
+<ul>
+<li>Click the <baselink href="https://github.com/kairin/google-gemini-codes/issues/new?template=new-project.md">Add New Project</baselink> button (or use the link in the site navigation).</li>
+<li>Fill out the form with your project details:
+<ul>
+<li><strong>Project Title</strong></li>
+<li><strong>Description</strong></li>
+<li><strong>Tags</strong> (comma-separated)</li>
+<li><strong>Hero Image URL</strong> (optional)</li>
+<li><strong>Sections</strong> (optional, use <code>&#x3C;!-- PAGEBREAK --></code> to split into multiple pages)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="step-2-submit-the-issue">Step 2: Submit the Issue <span style="font-size:1.3em;vertical-align:middle;">📤</span></h2>
+<ul>
+<li>Click <strong>Submit new issue</strong>.</li>
+<li>Your issue will be labeled <code>new project</code> automatically (or a maintainer will add the label).</li>
+</ul>
+<hr>
+<h2 id="step-3-automation-magic">Step 3: Automation Magic <span style="font-size:1.3em;vertical-align:middle;">🤖</span></h2>
+<ul>
+<li>The GitHub Actions workflow will:
+<ol>
+<li>Create a new markdown file in <code>src/content/projects/</code> with your details</li>
+<li>Commit and push the file to the repository</li>
+<li>Close your issue with a confirmation comment</li>
+<li>Trigger a site rebuild</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="step-4-see-your-project-live">Step 4: See Your Project Live! <span style="font-size:1.3em;vertical-align:middle;">🚀</span></h2>
+<ul>
+<li>After a few minutes, your project will appear on the homepage, sitemap, and project lists.</li>
+<li>If you need to edit or update your project, just open a new issue or submit a pull request.</li>
+</ul>
+<hr>
+<h2 id="example-project-issue-template">Example: Project Issue Template <span style="font-size:1.3em;vertical-align:middle;">📋</span></h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#79B8FF;font-weight:bold">---</span></span>
+<span class="line"><span style="color:#E1E4E8">title: "[</span><span style="color:#DBEDFF;text-decoration:underline">Project</span><span style="color:#E1E4E8">] My Awesome Project"</span></span>
+<span class="line"><span style="color:#E1E4E8">labels: ["new project"]</span></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8;font-weight:bold">**Project Title:**</span></span>
+<span class="line"><span style="color:#E1E4E8">My Awesome Project</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8;font-weight:bold">**Description:**</span></span>
+<span class="line"><span style="color:#E1E4E8">A short description of my project.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8;font-weight:bold">**Tags:**</span></span>
+<span class="line"><span style="color:#E1E4E8">astro, automation, github</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8;font-weight:bold">**Hero Image URL (optional):**</span></span>
+<span class="line"><span style="color:#E1E4E8">https://example.com/image.svg</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8;font-weight:bold">**Sections (optional, use &#x3C;!-- PAGEBREAK --> to split):**</span></span>
+<span class="line"><span style="color:#E1E4E8">Introduction</span></span>
+<span class="line"><span style="color:#6A737D">&#x3C;!-- PAGEBREAK --></span></span>
+<span class="line"><span style="color:#E1E4E8">Details</span></span></code></pre>
+<hr>
+<h2 id="need-help">Need Help?</h2>
+<ul>
+<li>See the <baselink href="/blog/how-to-add-projects-online">full automation guide</baselink> for technical details.</li>
+<li>Or open an issue with your question!</li>
+</ul>
+<hr>
+<p>Happy building! <span style="font-size:1.5em;vertical-align:middle;">✨</span></p>

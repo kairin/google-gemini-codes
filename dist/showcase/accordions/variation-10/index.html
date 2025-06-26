@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ib64keai> <head><meta charset="UTF-8"><meta name="description" content="Showcase: Accordion: Variation 10 - Custom SVG Icons"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>Accordion: Variation 10 - Custom SVG Icons | Component Showcase</title><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css">
+<style>.accordion-content.max-h-screen{max-height:100vh}.plus-minus-icon{display:inline-block;width:1.25em;text-align:center;font-weight:700}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif}
+</style></head> <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200" data-astro-cid-ib64keai> <header class="bg-slate-200 dark:bg-slate-800 shadow-md" data-astro-cid-ib64keai> <nav class="container mx-auto px-6 py-3 flex justify-between items-center" data-astro-cid-ib64keai> <div data-astro-cid-ib64keai> <a href="/google-gemini-codes/showcase" class="text-xl font-bold hover:text-blue-600 dark:hover:text-blue-400" data-astro-cid-ib64keai>Component Showcase</a> </div> <div class="flex space-x-4" data-astro-cid-ib64keai> <a href="/google-gemini-codes/" data-astro-cid-ib64keai="true">Main Site Home</a> <a href="/google-gemini-codes/google-gemini-codes/showcase" data-astro-cid-ib64keai="true">Showcase Home</a> <a href="/google-gemini-codes/google-gemini-codes/showcase/accordions" data-astro-cid-ib64keai="true">Accordions Gallery</a> </div> </nav> </header> <main class="container mx-auto px-6 py-8" data-astro-cid-ib64keai> <h1 class="text-3xl font-bold mb-6 text-center header-text" data-astro-cid-ib64keai>Accordion: Variation 10 - Custom SVG Icons</h1> <div class="bg-white dark:bg-slate-800 shadow-xl rounded-lg p-6 min-h-[calc(100vh-20rem)]" data-astro-cid-ib64keai>  <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+This variation demonstrates using custom inline SVG strings for the open and close indicator icons.
+</p> <div class="accordion-item mb-2 bg-gray-200 text-gray-800 border rounded-lg border-gray-300 dark:border-slate-600"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-300 flex-row-reverse" aria-expanded="false" aria-controls="accordion-pawi5pq37-content" data-accordion-header-for="accordion-pawi5pq37"> <h3 class="font-semibold flex-grow text-gray-900 text-right">Accordion with Custom SVG Folder Icons</h3> <span class="transform transition-transform duration-300 mr-2 w-6 h-6">   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-plus"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L8.6 3.3a2 2 0 0 0-1.69-.9H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path><line x1="12" x2="12" y1="10" y2="16"></line><line x1="9" x2="15" y1="13" y2="13"></line></svg> </span> </div> <div id="accordion-pawi5pq37-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-100 border-gray-300 border-t max-h-0 opacity-0" aria-labelledby="accordion-pawi5pq37-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>The icon for this accordion is a custom SVG (a folder icon that changes from plus to minus). This allows for complete control over the icon's appearance.</p>  </div> </div> </div> <script>(function(){const iconSet = "custom-svg";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>  <div class="accordion-item mb-2 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-50 dark:hover:bg-slate-700 border-b border-gray-200 dark:border-slate-700 flex-row" aria-expanded="true" aria-controls="accordion-ifzhhgmbw-content" data-accordion-header-for="accordion-ifzhhgmbw"> <h3 class="font-semibold flex-grow">Another Custom SVG Example</h3> <span class="transform transition-transform duration-300 rotate-180 w-5 h-5">   <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg> </span> </div> <div id="accordion-ifzhhgmbw-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600" aria-labelledby="accordion-ifzhhgmbw-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>This one uses simple up/down arrow SVGs.</p>  </div> </div> </div> <script>(function(){const iconSet = "custom-svg";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>   </div> </main> <footer class="text-center py-8 mt-12 border-t border-slate-300 dark:border-slate-700" data-astro-cid-ib64keai> <p class="text-sm text-slate-600 dark:text-slate-400" data-astro-cid-ib64keai>&copy; 2025 Showcase Area</p> </footer> </body></html>

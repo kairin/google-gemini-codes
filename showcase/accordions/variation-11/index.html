@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ib64keai> <head><meta charset="UTF-8"><meta name="description" content="Showcase: Accordion: Variation 11 - Image &#38; Text Content"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>Accordion: Variation 11 - Image &amp; Text Content | Component Showcase</title><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css">
+<style>.accordion-content.max-h-screen{max-height:100vh}.plus-minus-icon{display:inline-block;width:1.25em;text-align:center;font-weight:700}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif}
+</style></head> <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200" data-astro-cid-ib64keai> <header class="bg-slate-200 dark:bg-slate-800 shadow-md" data-astro-cid-ib64keai> <nav class="container mx-auto px-6 py-3 flex justify-between items-center" data-astro-cid-ib64keai> <div data-astro-cid-ib64keai> <a href="/google-gemini-codes/showcase" class="text-xl font-bold hover:text-blue-600 dark:hover:text-blue-400" data-astro-cid-ib64keai>Component Showcase</a> </div> <div class="flex space-x-4" data-astro-cid-ib64keai> <a href="/google-gemini-codes/" data-astro-cid-ib64keai="true">Main Site Home</a> <a href="/google-gemini-codes/google-gemini-codes/showcase" data-astro-cid-ib64keai="true">Showcase Home</a> <a href="/google-gemini-codes/google-gemini-codes/showcase/accordions" data-astro-cid-ib64keai="true">Accordions Gallery</a> </div> </nav> </header> <main class="container mx-auto px-6 py-8" data-astro-cid-ib64keai> <h1 class="text-3xl font-bold mb-6 text-center header-text" data-astro-cid-ib64keai>Accordion: Variation 11 - Image &amp; Text Content</h1> <div class="bg-white dark:bg-slate-800 shadow-xl rounded-lg p-6 min-h-[calc(100vh-20rem)]" data-astro-cid-ib64keai>  <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+This variation shows how an accordion item can handle mixed content, like an image alongside text, within its slot.
+</p> <div class="accordion-item mb-2 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200 rounded-lg shadow-xl"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-50 dark:hover:bg-slate-700 flex-row" aria-expanded="true" aria-controls="accordion-r5m2zsk0f-content" data-accordion-header-for="accordion-r5m2zsk0f"> <h3 class="font-semibold flex-grow">Item with Featured Image</h3> <span class="transform transition-transform duration-300 rotate-180"> <i class="fas fa-chevron-down"></i>   </span> </div> <div id="accordion-r5m2zsk0f-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600" aria-labelledby="accordion-r5m2zsk0f-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <div class="flex flex-col md:flex-row gap-4 items-start"> <img src="https://via.placeholder.com/300x200.png?text=Sample+Image" alt="Placeholder Image" class="w-full md:w-1/3 rounded shadow-md"> <div class="flex-grow"> <h4 class="font-semibold text-lg mb-2">Image Title or Sub-heading</h4> <p>This content area includes a placeholder image and accompanying text. Accordions can be versatile in displaying various types of media and information layouts.</p> <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Image dimensions and text flow can be controlled using standard HTML and CSS within the slot.</p> </div> </div>  </div> </div> </div> <script>(function(){const iconSet = "chevron";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>  <div class="accordion-item mb-2 bg-gray-200 text-gray-800 border rounded-lg border-gray-300 dark:border-slate-600"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-300 flex-row" aria-expanded="false" aria-controls="accordion-owc1l5o6l-content" data-accordion-header-for="accordion-owc1l5o6l"> <h3 class="font-semibold flex-grow text-gray-900">Another Mixed Content Example</h3> <span class="transform transition-transform duration-300"> <i class="fas fa-chevron-down"></i>   </span> </div> <div id="accordion-owc1l5o6l-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-100 border-gray-300 border-t max-h-0 opacity-0" aria-labelledby="accordion-owc1l5o6l-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>Simple text can be combined with more complex layouts if needed.</p> <blockquote class="mt-2 p-2 border-l-4 border-gray-400 bg-gray-100 dark:bg-gray-700 dark:border-gray-500">
+"This is a blockquote within an accordion, for example."
+</blockquote>  </div> </div> </div> <script>(function(){const iconSet = "chevron";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>   </div> </main> <footer class="text-center py-8 mt-12 border-t border-slate-300 dark:border-slate-700" data-astro-cid-ib64keai> <p class="text-sm text-slate-600 dark:text-slate-400" data-astro-cid-ib64keai>&copy; 2025 Showcase Area</p> </footer> </body></html>

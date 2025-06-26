@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Astro description"><meta name="viewport" content="width=device-width"><!--
+    Favicon is in public/, so reference it using the hardcoded subdirectory path for guaranteed correctness.
+    Do NOT use Astro.base for favicon path due to repeated issues.
+  --><link rel="icon" type="image/svg+xml" href="/google-gemini-codes/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>Astro Dynamic Route Param Mapping: Best Practice</title><!--
+  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
+  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
+  - base: {SITE_DEPLOYMENT_INFO.base}
+  - All navigation and asset links must use Astro.base
+  - All assets in src/assets/ must be imported using @ alias
+  - Never use root-relative paths for internal links or assets
+  - If you change deployment location, update this file and all configs
+--><div style="display:none"> <!-- Deployment Info (for maintainers):
+    {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+    See src/SITE_DEPLOYMENT_INFO.ts for details.
+  --> </div><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css"></head><body> <nav class="site-nav flex gap-6 py-4 px-6 border-b border-gray-200 mb-8"> <a href="/google-gemini-codes/">Home</a> <a href="/google-gemini-codes/projects/astro-rebuild-guide/1">Projects</a> <a href="/google-gemini-codes/blog/first-post/1">Blog</a> <a href="/google-gemini-codes/sitemap">Sitemap</a> </nav> <!--
+		  Deployment Info (visible for all contributors):
+		  {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+		  See src/SITE_DEPLOYMENT_INFO.ts for details.
+		-->  <main class="prose mx-auto px-4 py-10"> <h1>Astro Dynamic Route Param Mapping: Robust Best Practice</h1> <p><strong>Why is this important?</strong> Astro requires the param name in <code>params</code> (from <code>getStaticPaths</code>) to match the filename of your dynamic route. If they don’t match, your build will fail.</p> <h2>Centralized Mapping</h2> <p>To keep your code DRY and robust, use a single mapping file for all dynamic route param names. This ensures your static path generation and route files always stay in sync.</p> <pre><code>// src/utils/routeParamMap.js
+
+export const routeParamMap = {
+  blog: &#39;blogslug&#39;,      // for src/pages/blog/[...blogslug].astro
+  projects: &#39;slug&#39;,      // for src/pages/projects/[...slug].astro
+  // Add more as needed
+};</code></pre> <h2>How to Use</h2> <ol> <li>Import <code>routeParamMap</code> in your static path generator.</li> <li>Always use the mapped param name for <code>params</code> in <code>getStaticPaths</code>.</li> <li>Make sure your dynamic route filename matches the param name.</li> </ol> <h2>Reusable Component</h2> <p>Use the <code>RouteParamInfo</code> component below to display this mapping anywhere in your docs or contributor pages.</p> <table class="table-auto border mt-6"> <thead> <tr> <th class="border px-4 py-2">Route</th> <th class="border px-4 py-2">Param Name</th> <th class="border px-4 py-2">Example Path</th> </tr> </thead> <tbody> <tr> <td class="border px-4 py-2">/blog/[...blogslug].astro</td> <td class="border px-4 py-2">blogslug</td> <td class="border px-4 py-2">/blog/my-post/1</td> </tr> <tr> <td class="border px-4 py-2">/projects/[...slug].astro</td> <td class="border px-4 py-2">slug</td> <td class="border px-4 py-2">/projects/my-project/1</td> </tr> </tbody> </table> <h2>Key Takeaway</h2> <p><strong>Never change a dynamic route filename or param name without updating the mapping in <code>routeParamMap.js</code>!</strong></p> </main>  <footer class="site-footer text-center py-8 mt-12 border-t border-gray-200">  <p class="text-sm subheader-text">&copy; 2025 Kairin's Astro Site &mdash; <a href="/google-gemini-codes/sitemap">Sitemap</a></p>  </footer> </body></html>

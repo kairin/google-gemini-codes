@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ib64keai> <head><meta charset="UTF-8"><meta name="description" content="Showcase: Accordion: Variation 12 - Nested Accordions"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>Accordion: Variation 12 - Nested Accordions | Component Showcase</title><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css">
+<style>.accordion-content.max-h-screen{max-height:100vh}.plus-minus-icon{display:inline-block;width:1.25em;text-align:center;font-weight:700}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif}
+</style></head> <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200" data-astro-cid-ib64keai> <header class="bg-slate-200 dark:bg-slate-800 shadow-md" data-astro-cid-ib64keai> <nav class="container mx-auto px-6 py-3 flex justify-between items-center" data-astro-cid-ib64keai> <div data-astro-cid-ib64keai> <a href="/google-gemini-codes/showcase" class="text-xl font-bold hover:text-blue-600 dark:hover:text-blue-400" data-astro-cid-ib64keai>Component Showcase</a> </div> <div class="flex space-x-4" data-astro-cid-ib64keai> <a href="/google-gemini-codes/" data-astro-cid-ib64keai="true">Main Site Home</a> <a href="/google-gemini-codes/google-gemini-codes/showcase" data-astro-cid-ib64keai="true">Showcase Home</a> <a href="/google-gemini-codes/google-gemini-codes/showcase/accordions" data-astro-cid-ib64keai="true">Accordions Gallery</a> </div> </nav> </header> <main class="container mx-auto px-6 py-8" data-astro-cid-ib64keai> <h1 class="text-3xl font-bold mb-6 text-center header-text" data-astro-cid-ib64keai>Accordion: Variation 12 - Nested Accordions</h1> <div class="bg-white dark:bg-slate-800 shadow-xl rounded-lg p-6 min-h-[calc(100vh-20rem)]" data-astro-cid-ib64keai>  <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+This demonstrates nesting accordions. The main accordion item's content slot contains another instance of the <code>ShowcaseAccordion</code>.
+</p> <div class="accordion-item mb-2 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200 border rounded-lg border-gray-300 dark:border-slate-600"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-50 dark:hover:bg-slate-700 flex-row" aria-expanded="true" aria-controls="accordion-8vcro6bci-content" data-accordion-header-for="accordion-8vcro6bci"> <h3 class="font-semibold flex-grow">Outer Accordion - Level 1</h3> <span class="transform transition-transform duration-300 rotate-180"> <i class="fas fa-chevron-down"></i>   </span> </div> <div id="accordion-8vcro6bci-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600 border-t" aria-labelledby="accordion-8vcro6bci-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p class="mb-2">This is the content of the first level accordion. Below is a nested accordion set:</p> <div class="ml-4 border-l-2 border-blue-500 pl-4"> <div class="accordion-item mb-2 bg-green-100 text-green-800"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-green-200 border-b border-gray-200 dark:border-slate-700 flex-row" aria-expanded="false" aria-controls="accordion-3t8uxl2o2-content" data-accordion-header-for="accordion-3t8uxl2o2"> <h3 class="font-semibold flex-grow text-green-900">Nested Accordion - Level 2.1</h3> <span class="transform transition-transform duration-300">  <span class="plus-minus-icon">+</span>  </span> </div> <div id="accordion-3t8uxl2o2-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-green-50 border-green-200 max-h-0 opacity-0" aria-labelledby="accordion-3t8uxl2o2-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>Content for nested item 2.1. This shows that accordions can be placed within each other to create hierarchical collapsible sections.</p>  </div> </div> </div> <script>(function(){const iconSet = "plus-minus";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>  <div class="accordion-item mb-2 bg-green-100 text-green-800"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-green-200 border-b border-gray-200 dark:border-slate-700 flex-row" aria-expanded="false" aria-controls="accordion-6y5jo9ijj-content" data-accordion-header-for="accordion-6y5jo9ijj"> <h3 class="font-semibold flex-grow text-green-900">Nested Accordion - Level 2.2</h3> <span class="transform transition-transform duration-300">  <span class="plus-minus-icon">+</span>  </span> </div> <div id="accordion-6y5jo9ijj-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-green-50 border-green-200 max-h-0 opacity-0" aria-labelledby="accordion-6y5jo9ijj-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>Content for nested item 2.2. Each nested accordion maintains its own state independently.</p> <div class="accordion-item mb-2 bg-gray-200 text-gray-800"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-300 flex-row-reverse text-sm py-1" aria-expanded="false" aria-controls="accordion-un4qgvsq0-content" data-accordion-header-for="accordion-un4qgvsq0"> <h3 class="font-semibold flex-grow text-gray-900 text-right">Even Deeper - Level 3.1</h3> <span class="transform transition-transform duration-300"> <i class="fas fa-chevron-down"></i>   </span> </div> <div id="accordion-un4qgvsq0-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-100 border-gray-300 max-h-0 opacity-0 text-xs pl-3 py-1" aria-labelledby="accordion-un4qgvsq0-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>Tiny details at level 3!</p>  </div> </div> </div> <script>(function(){const iconSet = "chevron";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>   </div> </div> </div> <script>(function(){const iconSet = "plus-minus";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>  </div>  </div> </div> </div> <script>(function(){const iconSet = "chevron";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>  <div class="accordion-item mb-2 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200 border rounded-lg border-gray-300 dark:border-slate-600"> <div class="accordion-header flex items-center cursor-pointer p-4 hover:bg-gray-50 dark:hover:bg-slate-700 flex-row" aria-expanded="false" aria-controls="accordion-7nnzx9eda-content" data-accordion-header-for="accordion-7nnzx9eda"> <h3 class="font-semibold flex-grow">Another Outer Accordion Item</h3> <span class="transform transition-transform duration-300"> <i class="fas fa-chevron-down"></i>   </span> </div> <div id="accordion-7nnzx9eda-content" class="accordion-content overflow-hidden transition-all duration-300 ease-out p-4 bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600 border-t max-h-0 opacity-0" aria-labelledby="accordion-7nnzx9eda-header"> <div class="inner-content py-1"> <!-- Added padding to inner content div for better appearance during animation -->  <p>Standard content for another top-level item, to show it operates independently of the one with nested items.</p>  </div> </div> </div> <script>(function(){const iconSet = "chevron";
+
+    // Making the script more robust and specific to each accordion instance
+    // Using data attributes to link header to content for multiple accordions on a page.
+
+    function toggleAccordion(headerElement) {
+        const accordionId = headerElement.dataset.accordionHeaderFor;
+        if (!accordionId) return;
+
+        const content = document.getElementById(accordionId + "-content");
+        const iconContainer = headerElement.querySelector('span[class*="transform"]'); // More specific selector
+        const plusMinusIcon = headerElement.querySelector('span.plus-minus-icon');
+
+        const isOpen = content.classList.contains('max-h-screen'); // Check based on a class that indicates open
+
+        if (isOpen) {
+            content.classList.remove('max-h-screen', 'opacity-100');
+            content.classList.add('max-h-0', 'opacity-0');
+            headerElement.setAttribute('aria-expanded', 'false');
+            if (iconContainer) iconContainer.classList.remove('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '+';
+            // Custom SVG state change would need more complex handling if SVGs are not swapped by Astro
+        } else {
+            content.classList.remove('max-h-0', 'opacity-0');
+            content.classList.add('max-h-screen', 'opacity-100'); // Use a large max-h value
+            headerElement.setAttribute('aria-expanded', 'true');
+            if (iconContainer) iconContainer.classList.add('rotate-180');
+            if (plusMinusIcon) plusMinusIcon.textContent = '-';
+        }
+    }
+
+    // Initialize accordions based on their isOpen prop (for server-rendered state)
+    // and set up click listeners
+    document.querySelectorAll('[data-accordion-header-for]').forEach(header => {
+        const accordionId = header.dataset.accordionHeaderFor;
+        const content = document.getElementById(accordionId + "-content");
+        const isInitiallyOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+            if (isInitiallyOpen) {
+                 content.classList.remove('max-h-0', 'opacity-0');
+                 content.classList.add('max-h-screen', 'opacity-100'); // Ensure it's visually open
+            } else {
+                 content.classList.add('max-h-0', 'opacity-0'); // Ensure it's visually closed
+            }
+        }
+
+        header.addEventListener('click', () => toggleAccordion(header));
+    });
+})();</script>   </div> </main> <footer class="text-center py-8 mt-12 border-t border-slate-300 dark:border-slate-700" data-astro-cid-ib64keai> <p class="text-sm text-slate-600 dark:text-slate-400" data-astro-cid-ib64keai>&copy; 2025 Showcase Area</p> </footer> </body></html>

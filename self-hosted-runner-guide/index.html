@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Astro description"><meta name="viewport" content="width=device-width"><!--
+    Favicon is in public/, so reference it using the hardcoded subdirectory path for guaranteed correctness.
+    Do NOT use Astro.base for favicon path due to repeated issues.
+  --><link rel="icon" type="image/svg+xml" href="/google-gemini-codes/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>GitHub Actions Self-Hosted Runner Guide</title><!--
+  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
+  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
+  - base: {SITE_DEPLOYMENT_INFO.base}
+  - All navigation and asset links must use Astro.base
+  - All assets in src/assets/ must be imported using @ alias
+  - Never use root-relative paths for internal links or assets
+  - If you change deployment location, update this file and all configs
+--><div style="display:none"> <!-- Deployment Info (for maintainers):
+    {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+    See src/SITE_DEPLOYMENT_INFO.ts for details.
+  --> </div><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css"></head><body> <nav class="site-nav flex gap-6 py-4 px-6 border-b border-gray-200 mb-8"> <a href="/google-gemini-codes/">Home</a> <a href="/google-gemini-codes/projects/astro-rebuild-guide/1">Projects</a> <a href="/google-gemini-codes/blog/first-post/1">Blog</a> <a href="/google-gemini-codes/sitemap">Sitemap</a> </nav> <!--
+		  Deployment Info (visible for all contributors):
+		  {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+		  See src/SITE_DEPLOYMENT_INFO.ts for details.
+		-->  <main class="prose mx-auto px-4 py-10"> <h1>Using a GitHub Actions Self-Hosted Runner</h1> <p>This guide explains how to set up and use a self-hosted runner for your project to avoid GitHub-hosted runner costs.</p> <h2>1. Register Your Runner</h2> <ol> <li>Go to <b>Settings → Actions → Runners</b> in your GitHub repository.</li> <li>Click <b>"New self-hosted runner"</b> and follow the instructions for your OS.</li> <li>When prompted, you can add a custom label (e.g. <code>Linux-Ubuntu</code>).</li> <li>Start the runner with <code>./run.sh</code> in the <code>actions-runner</code> directory.</li> </ol> <h2>2. Workflow Configuration</h2> <p>Your workflow file should use your custom label:</p> <pre><code>runs-on: [self-hosted, Linux-Ubuntu]</code></pre> <p>Example workflow:</p> <pre><code>name: Build Locally
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux-Ubuntu]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f &quot;${{ github.workspace }}/yarn.lock&quot; ]; then
+            echo &quot;manager=yarn&quot; &gt;&gt; $GITHUB_OUTPUT
+            echo &quot;command=install&quot; &gt;&gt; $GITHUB_OUTPUT
+            echo &quot;runner=yarn&quot; &gt;&gt; $GITHUB_OUTPUT
+            echo &quot;lockfile=yarn.lock&quot; &gt;&gt; $GITHUB_OUTPUT
+            exit 0
+          elif [ -f &quot;${{ github.workspace }}/package.json&quot; ]; then
+            echo &quot;manager=npm&quot; &gt;&gt; $GITHUB_OUTPUT
+            echo &quot;command=ci&quot; &gt;&gt; $GITHUB_OUTPUT
+            echo &quot;runner=npx --no-install&quot; &gt;&gt; $GITHUB_OUTPUT
+            echo &quot;lockfile=package-lock.json&quot; &gt;&gt; $GITHUB_OUTPUT
+            exit 0
+          else
+            echo &quot;Unable to determine package manager&quot;
+            exit 1
+          fi
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: &quot;20&quot;
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: ${{ steps.detect-package-manager.outputs.lockfile }}
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Install marked
+        run: npm install marked --save
+      - name: Build with Astro
+        run: ${{ steps.detect-package-manager.outputs.runner }} astro build
+</code></pre> <h2>3. Running the Workflow</h2> <ol> <li>Start your runner with <code>./run.sh</code> (leave this terminal open).</li> <li>Go to the <b>Actions</b> tab in your repo and click <b>Run workflow</b> for <b>Build Locally</b>.</li> <li>The workflow will run on your local/server machine, not on GitHub-hosted infrastructure.</li> </ol> <h2>4. Tips</h2> <ul> <li>You can add more custom labels to target specific runners.</li> <li>Monitor your runner status in <b>Settings → Actions → Runners</b>.</li> <li>Stop the runner with <code>Ctrl+C</code> when not in use.</li> </ul> <h2>5. Why Use a Self-Hosted Runner?</h2> <ul> <li><b>No GitHub-hosted runner costs</b> for private repos or heavy usage.</li> <li>Full control over the build environment.</li> <li>Can use your own hardware or cloud VM.</li> </ul> </main>  <footer class="site-footer text-center py-8 mt-12 border-t border-gray-200">  <p class="text-sm subheader-text">&copy; 2025 Kairin's Astro Site &mdash; <a href="/google-gemini-codes/sitemap">Sitemap</a></p>  </footer> </body></html>

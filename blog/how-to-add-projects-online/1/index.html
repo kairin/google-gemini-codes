@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Astro description"><meta name="viewport" content="width=device-width"><!--
+    Favicon is in public/, so reference it using the hardcoded subdirectory path for guaranteed correctness.
+    Do NOT use Astro.base for favicon path due to repeated issues.
+  --><link rel="icon" type="image/svg+xml" href="/google-gemini-codes/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>How to Add New Projects Online: GitHub Actions &amp; Static Sites 🛠️✨</title><!--
+  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
+  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
+  - base: {SITE_DEPLOYMENT_INFO.base}
+  - All navigation and asset links must use Astro.base
+  - All assets in src/assets/ must be imported using @ alias
+  - Never use root-relative paths for internal links or assets
+  - If you change deployment location, update this file and all configs
+--><div style="display:none"> <!-- Deployment Info (for maintainers):
+    {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+    See src/SITE_DEPLOYMENT_INFO.ts for details.
+  --> </div><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css"></head><body> <nav class="site-nav flex gap-6 py-4 px-6 border-b border-gray-200 mb-8"> <a href="/google-gemini-codes/">Home</a> <a href="/google-gemini-codes/projects/astro-rebuild-guide/1">Projects</a> <a href="/google-gemini-codes/blog/first-post/1">Blog</a> <a href="/google-gemini-codes/sitemap">Sitemap</a> </nav> <!--
+		  Deployment Info (visible for all contributors):
+		  {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+		  See src/SITE_DEPLOYMENT_INFO.ts for details.
+		-->  <main class="prose mx-auto px-4 py-10"> <h1>How to Add New Projects Online: GitHub Actions &amp; Static Sites 🛠️✨</h1> <p>A step-by-step guide to enabling user-generated content for Astro + GitHub Pages using GitHub Issues, Actions, and DRY components.</p> <hr> <nav class="mb-8 flex flex-wrap gap-2"> <a href="/google-gemini-codes/blog/how-to-add-projects-online/1" class="font-bold underline text-blue-700">How to Add New Projects Online: GitHub Actions &amp; Static Sites &lt;span style=&quot;font-size:2em;vertical-align:middle;&quot;&gt;🛠️✨&lt;/span&gt;</a><a href="/google-gemini-codes/blog/how-to-add-projects-online/2" class="text-blue-600 hover:underline">3. Automate with GitHub Actions &lt;span style=&quot;font-size:1.2em;vertical-align:middle;&quot;&gt;🤖&lt;/span&gt;</a><a href="/google-gemini-codes/blog/how-to-add-projects-online/3" class="text-blue-600 hover:underline">Example SVG: Static vs Dynamic &lt;span style=&quot;font-size:1.5em;vertical-align:middle;&quot;&gt;🖌️&lt;/span&gt;</a> </nav> <div class="prose mx-auto px-4 py-10"> <div innerHTML="<h1>How to Add New Projects Online: GitHub Actions &#38;amp; Static Sites <span style=&#34;font-size:2em;vertical-align:middle;&#34;>🛠️✨</span></h1>
+<blockquote>
+<p>Enable user-generated content for your Astro + GitHub Pages site—no backend required! <span style=&#34;font-size:1.5em;vertical-align:middle;&#34;>🚀</span></p>
+</blockquote>
+<hr>
+<h2>Why Can&#38;#39;t Static Sites Edit Content Online? <span style=&#34;font-size:1.5em;vertical-align:middle;&#34;>🤔</span></h2>
+<p><img src=&#34;https://raw.githubusercontent.com/kairin/google-gemini-codes/main/src/assets/static-vs-dynamic.svg&#34; alt=&#34;Static vs Dynamic&#34;></p>
+<p>Static sites (like Astro + GitHub Pages) are fast and secure, but they can&#38;#39;t write new files from the browser. All content must be added as markdown files in your repo.</p>
+<hr>
+<h2>Solution: GitHub-Powered Content Creation <span style=&#34;font-size:1.5em;vertical-align:middle;&#34;>📝</span></h2>
+<p>You can let users propose new projects or blog posts by combining:</p>
+<ul>
+<li><span style=&#34;font-size:1.3em;vertical-align:middle;&#34;>🟦</span> A button on your site that opens a pre-filled GitHub Issue or Pull Request template</li>
+<li><span style=&#34;font-size:1.3em;vertical-align:middle;&#34;>🤖</span> A GitHub Actions workflow that turns those issues/PRs into markdown files</li>
+<li><span style=&#34;font-size:1.3em;vertical-align:middle;&#34;>🧩</span> Your existing DRY Astro components to render the new content</li>
+</ul>
+<hr>
+<h2>Step-by-Step: Add a &#38;quot;New Project&#38;quot; Button <span style=&#34;font-size:1.5em;vertical-align:middle;&#34;>➕</span></h2>
+<h3>1. Add a Button to Your Site</h3>
+<pre><code class=&#34;language-astro&#34;>&#38;lt;BaseLink href=&#38;quot;https://github.com/kairin/google-gemini-codes/issues/new?template=new-project.md&#38;quot;&#38;gt;➕ Add New Project&#38;lt;/BaseLink&#38;gt;
+</code></pre>
+<p>This opens a GitHub Issue with a template for new project details.</p>
+<h3>2. Create a GitHub Issue Template <span style=&#34;font-size:1.2em;vertical-align:middle;&#34;>📝</span></h3>
+<p>Add <code>.github/ISSUE_TEMPLATE/new-project.md</code>:</p>
+<pre><code class=&#34;language-markdown&#34;>---
+title: &#38;quot;[Project] &#38;lt;Project Title&#38;gt;&#38;quot;
+labels: [&#38;quot;new project&#38;quot;]
+---
+
+**Project Title:**
+
+**Description:**
+
+**Tags:**
+
+**Hero Image URL (optional):**
+
+**Sections (optional, use &#38;lt;!-- PAGEBREAK --&#38;gt;
+</code></pre>
+"></div> </div> <nav class="mt-8"> <a href="/google-gemini-codes/">← Back to Home</a> <a href="/google-gemini-codes/sitemap" class="ml-4">Sitemap</a> </nav> </main>  <footer class="site-footer text-center py-8 mt-12 border-t border-gray-200">  <p class="text-sm subheader-text">&copy; 2025 Kairin's Astro Site &mdash; <a href="/google-gemini-codes/sitemap">Sitemap</a></p>  </footer> </body></html>

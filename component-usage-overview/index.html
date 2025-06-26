@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Astro description"><meta name="viewport" content="width=device-width"><!--
+    Favicon is in public/, so reference it using the hardcoded subdirectory path for guaranteed correctness.
+    Do NOT use Astro.base for favicon path due to repeated issues.
+  --><link rel="icon" type="image/svg+xml" href="/google-gemini-codes/favicon.svg"><meta name="generator" content="Astro v5.10.0"><title>Component Usage Overview</title><!--
+  IMPORTANT: Deployment and routing settings are defined in src/SITE_DEPLOYMENT_INFO.ts
+  - siteUrl: {SITE_DEPLOYMENT_INFO.siteUrl}
+  - base: {SITE_DEPLOYMENT_INFO.base}
+  - All navigation and asset links must use Astro.base
+  - All assets in src/assets/ must be imported using @ alias
+  - Never use root-relative paths for internal links or assets
+  - If you change deployment location, update this file and all configs
+--><div style="display:none"> <!-- Deployment Info (for maintainers):
+    {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+    See src/SITE_DEPLOYMENT_INFO.ts for details.
+  --> </div><link rel="stylesheet" href="/google-gemini-codes/_astro/_blogslug_.BHJsMVgE.css"></head><body> <nav class="site-nav flex gap-6 py-4 px-6 border-b border-gray-200 mb-8"> <a href="/google-gemini-codes/">Home</a> <a href="/google-gemini-codes/projects/astro-rebuild-guide/1">Projects</a> <a href="/google-gemini-codes/blog/first-post/1">Blog</a> <a href="/google-gemini-codes/sitemap">Sitemap</a> </nav> <!--
+		  Deployment Info (visible for all contributors):
+		  {SITE_DEPLOYMENT_INFO.siteUrl} | base: {SITE_DEPLOYMENT_INFO.base}
+		  See src/SITE_DEPLOYMENT_INFO.ts for details.
+		-->  <h1>🧩 Component Usage Overview</h1> <p>This page helps visualize and plan which components should be loaded at the <b>top</b>, <b>middle</b>, and <b>bottom</b> of each page. Use this as a checklist and planning tool for DRY, maintainable layouts.</p> <hr> <h2>Top of Page</h2> <ul> <li><code>CommonImports.astro</code> (shared imports)</li> <li><code>BaseLink.astro</code> (internal link logic)</li> <li><code>Header</code> / Navigation components</li> <li>Any global context providers (if used)</li> </ul> <hr> <h2>Middle of Page</h2> <ul> <li>Page-specific content components (e.g., blog post, project details)</li> <li>Lists (e.g., <code>SitemapList.astro</code>)</li> <li>Visualizations (e.g., <code>ImportRelationships.jsx</code>, <code>TreeMap.jsx</code>, <code>FileRelationships.jsx</code>)</li> <li>Markdown content (from <code>.md</code> or <code>.mdx</code> files)</li> </ul> <hr> <h2>Bottom of Page</h2> <ul> <li><code>CommonFooterImports.astro</code> (shared footer imports)</li> <li>Footer component (copyright, links)</li> <li>Any analytics or tracking scripts (if needed)</li> </ul> <hr> <h2>How to Use This Page</h2> <ul> <li>Use the lists above to plan what should be included in each section of your pages.</li> <li>Audit existing pages to see which components they use and where.</li> <li>Update this page as your conventions evolve.</li> </ul> <hr> <p><i>Generated on: 2025-06-22</i></p>  <footer class="site-footer text-center py-8 mt-12 border-t border-gray-200">  <p class="text-sm subheader-text">&copy; 2025 Kairin's Astro Site &mdash; <a href="/google-gemini-codes/sitemap">Sitemap</a></p>  </footer> </body></html>
