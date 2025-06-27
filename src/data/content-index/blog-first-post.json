@@ -283,10 +283,16 @@
       "pubDateLocal": "6/22/2025, 8:00:00 AM",
       "updated": "2025-06-26T23:55:10.500Z",
       "updatedLocal": "6/27/2025, 7:55:10 AM"
+    },
+    {
+      "pubDate": "2025-06-22T00:00:00.000Z",
+      "pubDateLocal": "6/22/2025, 8:00:00 AM",
+      "updated": "2025-06-27T00:14:32.407Z",
+      "updatedLocal": "6/27/2025, 8:14:32 AM"
     }
   ],
-  "fileCreated": "2025-06-26T23:54:09.360Z",
-  "fileModified": "2025-06-26T23:54:09.360Z",
+  "fileCreated": "2025-06-26T23:57:31.197Z",
+  "fileModified": "2025-06-26T23:57:31.197Z",
   "filePath": "src/content/blog/first-post.md",
   "body": "\n# Welcome to the Blog!\n\nThis is the first post in the blog collection. You can write Markdown content here, and it will be automatically picked up by Astro's content collections.\n\n- Astro makes content management easy.\n- You can add more posts by creating new markdown files in this folder.\n\nEnjoy blogging!\n",
   "sections": [
