@@ -9,6 +9,10 @@
           "name": "AGENTS.MD"
         },
         {
+          "type": "file",
+          "name": "SITE_DEPLOYMENT_INFO.ts"
+        },
+        {
           "type": "directory",
           "name": "assets",
           "contents": [
@@ -35,20 +39,6 @@
               "name": "BaseLink.astro"
             },
             {
-              "type": "directory",
-              "name": "cards",
-              "contents": [
-                {
-                  "type": "file",
-                  "name": "BlogCard.astro"
-                },
-                {
-                  "type": "file",
-                  "name": "ProjectCard.astro"
-                }
-              ]
-            },
-            {
               "type": "file",
               "name": "CommonFooterImports.astro"
             },
@@ -69,16 +59,6 @@
               "name": "ImportRelationships.jsx"
             },
             {
-              "type": "directory",
-              "name": "lists",
-              "contents": [
-                {
-                  "type": "file",
-                  "name": "SitemapList.astro"
-                }
-              ]
-            },
-            {
               "type": "file",
               "name": "MarkdownPage.astro"
             },
@@ -89,22 +69,6 @@
             {
               "type": "file",
               "name": "SectionedMarkdown.astro"
-            },
-            {
-              "type": "directory",
-              "name": "showcase",
-              "contents": [
-                {
-                  "type": "directory",
-                  "name": "accordions",
-                  "contents": [
-                    {
-                      "type": "file",
-                      "name": "ShowcaseAccordion.astro"
-                    }
-                  ]
-                }
-              ]
             },
             {
               "type": "file",
@@ -121,6 +85,46 @@
             {
               "type": "file",
               "name": "Welcome.astro"
+            },
+            {
+              "type": "directory",
+              "name": "cards",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "BlogCard.astro"
+                },
+                {
+                  "type": "file",
+                  "name": "ProjectCard.astro"
+                }
+              ]
+            },
+            {
+              "type": "directory",
+              "name": "lists",
+              "contents": [
+                {
+                  "type": "file",
+                  "name": "SitemapList.astro"
+                }
+              ]
+            },
+            {
+              "type": "directory",
+              "name": "showcase",
+              "contents": [
+                {
+                  "type": "directory",
+                  "name": "accordions",
+                  "contents": [
+                    {
+                      "type": "file",
+                      "name": "ShowcaseAccordion.astro"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -139,10 +143,6 @@
                 {
                   "type": "file",
                   "name": "how-to-add-projects-online.md"
-                },
-                {
-                  "type": "file",
-                  "name": "testingtesting-1.md"
                 }
               ]
             },
@@ -177,10 +177,6 @@
                 {
                   "type": "file",
                   "name": "blog-how-to-add-projects-online.json"
-                },
-                {
-                  "type": "file",
-                  "name": "blog-testingtesting-1.json"
                 },
                 {
                   "type": "directory",
@@ -248,7 +244,7 @@
             },
             {
               "type": "file",
-              "name": "AGENTS.MD"
+              "name": "_AGENTS.MD"
             },
             {
               "type": "directory",
@@ -320,6 +316,10 @@
                     },
                     {
                       "type": "file",
+                      "name": "variation-1.astro"
+                    },
+                    {
+                      "type": "file",
                       "name": "variation-10.astro"
                     },
                     {
@@ -329,10 +329,6 @@
                     {
                       "type": "file",
                       "name": "variation-12.astro"
-                    },
-                    {
-                      "type": "file",
-                      "name": "variation-1.astro"
                     },
                     {
                       "type": "file",
@@ -394,6 +390,10 @@
             },
             {
               "type": "file",
+              "name": "README.md"
+            },
+            {
+              "type": "file",
               "name": "check-content-index.js"
             },
             {
@@ -407,16 +407,8 @@
             {
               "type": "file",
               "name": "generate-trees.js"
-            },
-            {
-              "type": "file",
-              "name": "README.md"
             }
           ]
-        },
-        {
-          "type": "file",
-          "name": "SITE_DEPLOYMENT_INFO.ts"
         },
         {
           "type": "directory",
@@ -451,7 +443,7 @@
     {
       "type": "report",
       "directories": 22,
-      "files": 79
+      "files": 77
     }
   ],
   "scripts": [
@@ -562,19 +554,23 @@
           "contents": [
             {
               "type": "file",
-              "name": "_blogslug_.BHJsMVgE.css"
-            },
-            {
-              "type": "file",
-              "name": "client.KJlOPP84.js"
-            },
-            {
-              "type": "file",
               "name": "FileRelationships.DisWO9Lb.js"
             },
             {
               "type": "file",
               "name": "ImportRelationships.BnRw106F.js"
+            },
+            {
+              "type": "file",
+              "name": "TreeMap.COfI-uR9.js"
+            },
+            {
+              "type": "file",
+              "name": "_blogslug_.BHJsMVgE.css"
+            },
+            {
+              "type": "file",
+              "name": "client.KJlOPP84.js"
             },
             {
               "type": "file",
@@ -587,10 +583,6 @@
             {
               "type": "file",
               "name": "jsx-runtime.D_zvdyIk.js"
-            },
-            {
-              "type": "file",
-              "name": "TreeMap.COfI-uR9.js"
             }
           ]
         },
@@ -653,22 +645,6 @@
             {
               "type": "file",
               "name": "index.html"
-            },
-            {
-              "type": "directory",
-              "name": "null",
-              "contents": [
-                {
-                  "type": "directory",
-                  "name": "1",
-                  "contents": [
-                    {
-                      "type": "file",
-                      "name": "index.html"
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -1006,8 +982,8 @@
     },
     {
       "type": "report",
-      "directories": 44,
-      "files": 48
+      "directories": 42,
+      "files": 47
     }
   ]
 }

@@ -102,7 +102,7 @@ Set up a workflow to convert new issues into markdown files in `src/content/proj
 
 ## Example SVG: Static vs Dynamic <span style="font-size:1.5em;vertical-align:middle;">🖌️</span>
 
-```svg
+```xml
 <svg width="320" height="120" xmlns="http://www.w3.org/2000/svg">
   <rect x="10" y="20" width="120" height="80" fill="#e0e7ef" stroke="#333"/>
   <text x="70" y="55" font-size="16" text-anchor="middle" fill="#333">Static Site 🏝️</text>

@@ -4,9 +4,21 @@ import path from 'path';
 import fs from 'fs/promises';
 import fsSync from 'fs'; // For sync file existence check
 
+// Clean up old index files
+const outputDir = resolvePath('data/content-index');
+try {
+    const files = await fs.readdir(outputDir);
+    for (const file of files) {
+        if (file.endsWith('.json')) {
+            await fs.unlink(path.join(outputDir, file));
+        }
+    }
+} catch (err) {
+    // Ignore errors if the directory doesn't exist
+}
+
 const allFiles = await getAllMarkdownFiles();
 console.log('Discovered markdown files:', allFiles);
-const outputDir = resolvePath('data/content-index'); // Write to src/data/content-index
 console.log('Output directory:', outputDir);
 await fs.mkdir(outputDir, { recursive: true });
 

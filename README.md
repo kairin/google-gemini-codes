@@ -242,6 +242,7 @@ To avoid GitHub-hosted runner costs, this project is configured to use a self-ho
 ## How to Get Help
 
 - Read the `/docs` page and this README for setup and usage.
+- See [SPEC.md](./SPEC.md) for the application's functional and non-functional requirements.
 - See [DOCUMENTATION.md](./DOCUMENTATION.md) for architecture and automation details.
 - For canonical linking/asset rules, see [LINKING_GUIDE.md](./LINKING_GUIDE.md).
 - If you encounter a new error, please document it in the Troubleshooting section and/or open an issue.

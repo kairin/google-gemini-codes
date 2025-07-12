@@ -51,6 +51,7 @@ This project is a modern, DRY, scalable Astro site for technical projects, guide
 
 ## For Contributors
 - See `README.md` for quickstart and usage.
+- See `SPEC.md` for the application's functional and non-functional requirements.
 - See this file for architecture and automation details.
 
 ## GitHub Actions: Self-Hosted Runner Setup
@@ -87,6 +88,7 @@ To avoid incurring costs from GitHub-hosted runners, this project uses a self-ho
 ## How to Get Help
 - Read `/docs` and this file for setup and usage.
 - See [README.md](./README.md) for quickstart.
+- See [SPEC.md](./SPEC.md) for the application's functional and non-functional requirements.
 - For architecture, see this file and `/docs`.
 - For linking/asset rules, see [LINKING_GUIDE.md](./LINKING_GUIDE.md).
 - Document new errors in Troubleshooting and/or open an issue.
